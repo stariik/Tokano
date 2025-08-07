@@ -1,0 +1,23 @@
+.left-gradient {
+  background: linear-gradient(93.4deg, #28178b 1.34%, #2d2369 126%);
+}
+
+.top-gradient {
+  background: linear-gradient(139.03deg, #170d56 14.46%, #432ccd 99.56%);
+}
+
+.custom-gradient {
+  background: linear-gradient(220.07deg, #5134ce 21.91%, #1b1f60 49.13%);
+}
+
+.green-gradient {
+  background: linear-gradient(270deg, #047c60 3.37%, #2b923e 100%);
+}
+
+.line1-gradient {
+  background: linear-gradient(270deg, #0CE0CF 21.29%, #04587C 47.67%, #074BA3 70.19%);
+}
+
+.line2-gradient {
+  background: linear-gradient(270deg, #FFD42A 20.21%, #F92C9D 58.17%, #6D11B3 88.65%);
+}

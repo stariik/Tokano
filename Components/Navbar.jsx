@@ -1,0 +1,89 @@
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+
+function Navbar() {
+  const NavigationButtonStyle = "hover:text-primary transition cursor-pointer";
+  const navigationItems = [
+    { name: "HOME", href: "/" },
+    { name: "STAKE", href: "/stake" },
+    { name: "STAKENOMICS", href: "/stakenomics" },
+    { name: "PORTFOLIO", href: "/portfolio" },
+  ];
+
+  return (
+    <>
+      {/* Top Section - Logo and Wallet (Always visible at top on small, static on large) */}
+      <div className="w-full z-50 fixed top-0 bg-dark text-light py-4 md:hidden">
+        <div className="flex items-center justify-between px-4 md:justify-center md:gap-40">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.svg" alt="TOKANO Logo" width={32} height={32} />
+            <h1 className="md:text-2xl text-xl font-bold">TOKANO</h1>
+          </Link>
+
+          {/* Wallet Button */}
+          <button className="text-light hover:brightness-110 transition cursor-pointer md:hidden">
+            CONNECT WALLET
+          </button>
+        </div>
+      </div>
+
+      {/* Navigation Section */}
+      <div className="hidden md:grid grid-cols-3 items-center bg-dark text-light py-10">
+        {/* Logo (centered only on large screens) */}
+        <div className="flex items-center gap-2 justify-center">
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.svg" alt="TOKANO Logo" width={32} height={32} />
+            <h1 className="md:text-2xl text-xl font-bold">TOKANO</h1>
+          </Link>
+        </div>
+
+        {/* Navigation Links */}
+        <div className="flex md:gap-8 gap-4 justify-center md:text-xl text-md font-medium">
+          {navigationItems
+            .filter((item) => item.name !== "HOME")
+            .map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={NavigationButtonStyle}
+              >
+                {item.name}
+              </Link>
+            ))}
+        </div>
+
+        {/* Wallet Section */}
+        <div className="flex justify-center">
+          <button className="text-light hover:brightness-110 transition cursor-pointer">
+            CONNECT WALLET
+          </button>
+        </div>
+      </div>
+
+      {/* Bottom Navigation for Small Screens */}
+      <div
+        className="md:hidden fixed bottom-0 w-full text-light py-3 z-50"
+        style={{
+          background:
+            "linear-gradient(90deg, #292B8C 0%, #2A2B8D 99.99%, rgba(78, 52, 222, 0) 100%)",
+        }}
+      >
+        <div className="flex justify-around items-center text-sm">
+          {navigationItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={NavigationButtonStyle}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Navbar;

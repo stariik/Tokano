@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark: #101121;
+  --color-light: #eeeded;
+  --color-secondary: #6d6fdf;
+  --color-primary: #424173;
+  --color-dark-200: #18182a;
+}
+
+.custom-header-gradient {
+  background: linear-gradient(90deg, #240091 0%, rgba(39, 34, 65, 0) 100%);
+}
+.custom-header2-gradient {
+  background: linear-gradient(270deg, #940470 0%, #231570 51.92%, #ba0a9a 100%);
+}
