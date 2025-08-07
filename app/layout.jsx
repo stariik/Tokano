@@ -27,6 +27,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-dark`}
       >
+        <Analytics/>
         <Navbar />
         <Banner src={"banner1.png"} />
 
