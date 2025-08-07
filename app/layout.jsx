@@ -3,8 +3,8 @@ import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 import Banner from "@/Components/Banner";
-import Live from "@/Components/Live/Live";
-import PlatrformStats from "@/Components/PlatformStats/PlatrformStats";
+import { Analytics } from "@vercel/analytics/next"
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
