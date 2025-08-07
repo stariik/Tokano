@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         <Banner src={"banner1.png"} />
 
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-2 xl:grid-cols-3">
           <div className="col-span-2">{children}</div>
           <div className="pr-4 py-18 md:py-6 text-light">
             <RightMenu />
