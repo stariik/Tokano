@@ -6,7 +6,6 @@ function Navbar() {
   const NavigationButtonStyle = "hover:text-primary transition cursor-pointer";
   const navigationItems = [
     { name: "HOME", href: "/" },
-    { name: "STAKE", href: "/stake" },
     { name: "STAKENOMICS", href: "/stakenomics" },
     { name: "PORTFOLIO", href: "/portfolio" },
   ];

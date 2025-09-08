@@ -12,7 +12,7 @@ function RightMenu() {
   const [show, setShow] = useState(false);
 
   return (
-    <>
+    <div className={`${khandMedium.className}`}>
       {/* Toggle button - mobile only */}
       <button
         onClick={() => setShow(!show)}
@@ -47,7 +47,7 @@ function RightMenu() {
         }}
       >
         <div
-          className={`flex justify-start py-3 px-6 text-3xl ${khandMedium.className} rounded-tr-4xl border-b-2 border-secondary`}
+          className={`flex justify-start py-3 px-6 text-4xl rounded-tr-4xl border-b-2 border-secondary`}
         >
           <h1>TOKANO</h1>
         </div>
@@ -60,7 +60,7 @@ function RightMenu() {
             <GlobalDataRow />
           </TokanoToken>
         </div>
-        <div className="w-full pl-4 text-lg border-y-2 border-secondary py-2 font-semibold">
+        <div className="w-full pl-4 text-3xl border-y-2 border-secondary py-2">
           TOKANO
         </div>
         <div className="md:px-6">
@@ -71,7 +71,7 @@ function RightMenu() {
           <DataStat />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
