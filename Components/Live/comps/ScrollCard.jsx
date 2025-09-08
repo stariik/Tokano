@@ -15,9 +15,7 @@ function ScrollCard({ key, title, created, marketCap, wallet }) {
           <div className="flex flex-col justify-between items-end h-[120px] p-4">
             <CiPill color="#5ecb89" size={35} />
             <StarIcon />
-            <div className="h-6 green-gradient w-14 absolute bottom-28 md:bottom-32 right-0 rounded-l-xl text-center">
-              <p className="text-sm">up24%</p>
-            </div>
+           
           </div>
         </div>
         {/* extra */}
@@ -75,17 +73,6 @@ function ScrollCard({ key, title, created, marketCap, wallet }) {
                 <span className="font-semibold">Market Cap: </span>
                 {marketCap}
               </p>
-
-              <div className={`${khandMedium.className} pt-4`}>
-                <p className="flex font-semibold items-center">
-                  <FIcon />
-                  Locked: {marketCap}
-                </p>
-                <p className="flex font-semibold items-center">
-                  <SIcon />
-                  Vested: {marketCap}
-                </p>
-              </div>
             </div>
             <div className="flex justify-end pr-2 md:mt-0 mt-6">
               <h1 className={`md:text-5xl text-4xl ${khandSemibold.className}`}>
