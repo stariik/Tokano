@@ -1,14 +1,14 @@
 import React from "react";
 import "@/Components/Live/styles/scrollcard.css";
-import { FIcon, SIcon, StakeIcon, StarIcon } from "../../icons";
+import { FIcon, SIcon, StakeIcon, StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { Khand } from "next/font/google";
-import ProgressItem from "./ProgressItem";
+import ProgressItem from "../Live/comps/ProgressItem";
 
 const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
-function ScrollCard({ key, title, created, marketCap, wallet }) {
+function StakeCard({ key, title, created, marketCap, wallet }) {
   return (
     <div className="relative">
       <div
@@ -30,7 +30,9 @@ function ScrollCard({ key, title, created, marketCap, wallet }) {
           <div className="row-span-5 rounded-l-4xl left-gradient text-white justify-center flex items-center flex-col md:gap-4 gap-12">
             <img src="/fired.png" className=" w-22 md:w-36" />
             <div className="m-4">
-              <p className={`text-2xl md:text-4xl ${khandSemibold.className} `}>STAKE</p>
+              <p className={`text-2xl md:text-4xl ${khandSemibold.className} `}>
+                STAKE
+              </p>
             </div>
           </div>
           <div className="col-span-2 top-gradient row-span-4 rounded-tr-4xl rounded-br-2xl">
@@ -67,7 +69,9 @@ function ScrollCard({ key, title, created, marketCap, wallet }) {
             </div>
           </div>
           <div className="flex justify-end items-center col-span-2 custom-gradient rounded-br-4xl px-6 md:py-2">
-            <h1 className={`font-semibold text-2xl lg:text-3xl ${khandSemibold.className}`}>
+            <h1
+              className={`font-semibold text-2xl lg:text-3xl ${khandSemibold.className}`}
+            >
               stakers
             </h1>
           </div>
@@ -77,7 +81,7 @@ function ScrollCard({ key, title, created, marketCap, wallet }) {
   );
 }
 
-export default ScrollCard;
+export default StakeCard;
 
 {
   /* extra */

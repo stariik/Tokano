@@ -1,7 +1,7 @@
 import React from "react";
 import { Khand } from "next/font/google";
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
-import ScrollableCards from "./ui/ScrollableCards";
+import ScrollingCards from "./ui/ScrollingCards";
 import { cardData } from "@/data/data";
 
 function Live() {
@@ -13,7 +13,7 @@ function Live() {
         >
           <h1>LIVE</h1>
         </div>
-        <ScrollableCards cards={cardData} />
+        <ScrollingCards cards={cardData} />
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ function PlatrformStats() {
       <div
         className={`lg:border-1 border-secondary flex justify-center py-4 text-2xl ${khandMedium.className} custom-header-gradient col-span-3`}
       >
-        <h1>PLATFORM STATS</h1>
+        <h1>| Launching Soon |</h1>
       </div>
       <div className="grid grid-cols-3 gap-2">
         {firstTables.map((props, idx) => (
