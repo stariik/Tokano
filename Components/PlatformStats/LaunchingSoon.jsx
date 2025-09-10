@@ -26,35 +26,16 @@ const secondTables = [
   { header: "name3", columns: ColumnNames2, tableData: table3Data },
 ];
 
-function PlatrformStats() {
+function LaunchingSoon() {
   return (
-    <div className="lg:border-1 border-secondary pb-4 hidden lg:block">
+    <div className="hidden lg:block">
       <div
-        className={`lg:border-1 border-secondary flex justify-center py-4 text-2xl ${khandMedium.className} custom-header-gradient col-span-3`}
+        className={`lg:border-b-2 lg:border-r-2 border-secondary flex justify-center py-4 text-2xl ${khandMedium.className} custom-header-gradient col-span-3`}
       >
         <h1>| Launching Soon |</h1>
-      </div>
-      <div className="grid grid-cols-3 gap-2">
-        {firstTables.map((props, idx) => (
-          <div key={idx}>
-            <TokenTable {...props} />
-          </div>
-        ))}
-      </div>
-
-      <div className="my-2">
-        <Banner src={"banner2.png"} />
-      </div>
-
-      <div className="grid grid-cols-3 gap-x-2 mb-4">
-        {secondTables.map((props, idx) => (
-          <div key={idx}>
-            <TokenTable {...props} />
-          </div>
-        ))}
       </div>
     </div>
   );
 }
 
-export default PlatrformStats;
+export default LaunchingSoon;

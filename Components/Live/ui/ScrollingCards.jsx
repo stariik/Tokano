@@ -2,6 +2,7 @@ import React from "react";
 import "@/Components/Live/styles/scrollbar.css";
 import StakeCard from "../../Tokens/StakeCard";
 import VestCard from "@/Components/Tokens/VestCard";
+import LockCard from "@/Components/Tokens/LockCard";
 
 function ScrollingCards({ cards }) {
   return (
@@ -15,6 +16,12 @@ function ScrollingCards({ cards }) {
             wallet={item.wallet}
           />
           <StakeCard
+            title={item.title}
+            created={item.created}
+            marketCap={item.marketCap}
+            wallet={item.wallet}
+          />
+          <LockCard
             title={item.title}
             created={item.created}
             marketCap={item.marketCap}
