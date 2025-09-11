@@ -1,5 +1,4 @@
 import Banner from "@/Components/Banner";
-import TokenTable from "@/Components/PlatformStats/ui/TokenTable";
 import {
   ColumnNames1,
   ColumnNames2,
@@ -8,6 +7,9 @@ import {
   tableOneData,
 } from "@/data/data";
 import { Khand } from "next/font/google";
+import ScrollingCards from "../Live/ui/ScrollingCards";
+import { cardData } from "@/data/data";
+
 
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
@@ -28,12 +30,13 @@ const secondTables = [
 
 function LaunchingSoon() {
   return (
-    <div className="hidden lg:block">
+    <div className="hidden lg:block border-r-2 border-secondary">
       <div
-        className={`lg:border-b-2 lg:border-r-2 border-secondary flex justify-center py-4 text-2xl ${khandMedium.className} custom-header-gradient col-span-3`}
+        className={`lg:border-b-2 border-secondary flex justify-center py-4 text-2xl ${khandMedium.className} custom-header-gradient `}
       >
         <h1>| Launching Soon |</h1>
       </div>
+      <ScrollingCards cards={cardData} />
     </div>
   );
 }

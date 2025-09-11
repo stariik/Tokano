@@ -3,6 +3,7 @@ import "@/Components/Live/styles/scrollbar.css";
 import StakeCard from "../../Tokens/StakeCard";
 import VestCard from "@/Components/Tokens/VestCard";
 import LockCard from "@/Components/Tokens/LockCard";
+import SoonCard from "@/Components/Tokens/SoonCard";
 
 function ScrollingCards({ cards }) {
   return (
@@ -21,6 +22,7 @@ function ScrollingCards({ cards }) {
             marketCap={item.marketCap}
             wallet={item.wallet}
           />
+          <SoonCard />
           <LockCard
             title={item.title}
             created={item.created}

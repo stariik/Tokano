@@ -4,6 +4,7 @@ import { FIcon, SIcon, StakeIcon, StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { Khand } from "next/font/google";
 
+
 const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
