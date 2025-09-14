@@ -7,7 +7,7 @@ import {
   tableOneData,
 } from "@/data/data";
 import { Khand } from "next/font/google";
-import ScrollingCards from "../Live/ui/ScrollingCards";
+import ScrollingSoonCards from "../Live/ui/ScrollingSoonCards";
 import { cardData } from "@/data/data";
 
 
@@ -36,7 +36,7 @@ function LaunchingSoon() {
       >
         <h1>| Launching Soon |</h1>
       </div>
-      <ScrollingCards cards={cardData} />
+      <ScrollingSoonCards cards={cardData} />
     </div>
   );
 }

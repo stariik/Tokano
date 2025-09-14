@@ -22,7 +22,6 @@ function ScrollingCards({ cards }) {
             marketCap={item.marketCap}
             wallet={item.wallet}
           />
-          <SoonCard />
           <LockCard
             title={item.title}
             created={item.created}

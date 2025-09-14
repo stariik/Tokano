@@ -5,8 +5,6 @@ export const tableOneData = [
   { id: 5, token: "BTC", price: "$65,000" },
   { id: 2, token: "BTC", price: "$65,000" },
   { id: 6, token: "BTC", price: "$65,000" },
-  { id: 7, token: "BTC", price: "$65,000" },
-  { id: 8, token: "BTC", price: "$65,000" },
 ];
 
 export const tableTwoData = [
@@ -39,16 +37,6 @@ export const tableTwoData = [
     id: 6,
     token: "eku",
     price: "65.3k",
-  },
-  {
-    id: 7,
-    token: "da",
-    price: "81.3k",
-  },
-  {
-    id: 8,
-    token: "losa",
-    price: "87.3k",
   },
 ];
 
@@ -361,40 +349,48 @@ export const tokens = [
 ];
 
 export const stakedData = [
-  [{
-    id: 1,
-    staked: 0.00,
-    date: "21.04.2025",
-    rewards: "7.00.484.200",
-    anonNum: 1234,
-    unstaked: "-700.123.000",
-    days: "5d"
-  }],
-  [{
-    id: 1,
-    staked: 0.00,
-    date: "21.04.2025",
-    rewards: "7.00.484.200",
-    anonNum: 1234,
-    unstaked: "-700.123.000",
-    days: "5d"
-  },],
-  [{
-    id: 1,
-    staked: 0.00,
-    date: "21.04.2025",
-    rewards: "7.00.484.200",
-    anonNum: 1234,
-    unstaked: "-700.123.000",
-    days: "5d"
-  },],
-  [{
-    id: 1,
-    staked: 0.00,
-    date: "21.04.2025",
-    rewards: "7.00.484.200",
-    anonNum: 1234,
-    unstaked: "-700.123.000",
-    days: "5d"
-  },]
+  [
+    {
+      id: 1,
+      staked: 0.0,
+      date: "21.04.2025",
+      rewards: "7.00.484.200",
+      anonNum: 1234,
+      unstaked: "-700.123.000",
+      days: "5d",
+    },
+  ],
+  [
+    {
+      id: 1,
+      staked: 0.0,
+      date: "21.04.2025",
+      rewards: "7.00.484.200",
+      anonNum: 1234,
+      unstaked: "-700.123.000",
+      days: "5d",
+    },
+  ],
+  [
+    {
+      id: 1,
+      staked: 0.0,
+      date: "21.04.2025",
+      rewards: "7.00.484.200",
+      anonNum: 1234,
+      unstaked: "-700.123.000",
+      days: "5d",
+    },
+  ],
+  [
+    {
+      id: 1,
+      staked: 0.0,
+      date: "21.04.2025",
+      rewards: "7.00.484.200",
+      anonNum: 1234,
+      unstaked: "-700.123.000",
+      days: "5d",
+    },
+  ],
 ];

@@ -4,14 +4,13 @@ import { FIcon, SIcon, StakeIcon, StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { Khand } from "next/font/google";
 
-
 const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
 function LockCard({ key, title, created, marketCap, wallet }) {
   return (
     <div
-      className={` ${khandSemibold.className} rounded-4xl`}
+      className={`${khandSemibold.className} rounded-4xl`}
       style={{
         background: "linear-gradient(90deg, #5d9beb 0%, #041d33 100%);",
       }}
@@ -50,7 +49,6 @@ function LockCard({ key, title, created, marketCap, wallet }) {
         <p className="absolute right-5 text-[#FFB01C] bottom-0 text-xl">120M</p>
       </div>
       <div className="pb-2 pr-4 flex justify-end items-center gap-6">
-        
         <p className="text-lg">locked</p>
       </div>
 
