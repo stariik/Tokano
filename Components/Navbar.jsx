@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import usePhantom from "@/hooks/usePhantom"; // import the hook
 
 function Navbar() {
   const NavigationButtonStyle = "hover:text-primary transition cursor-pointer";
@@ -10,27 +13,33 @@ function Navbar() {
     { name: "PORTFOLIO", href: "/portfolio" },
   ];
 
+  const { publicKey, connectWallet, disconnectWallet } = usePhantom();
+
+  const shortKey = publicKey
+    ? publicKey.slice(0, 4) + "..." + publicKey.slice(-4)
+    : null;
+
   return (
     <>
-      {/* Top Section - Logo and Wallet (Always visible at top on small, static on large) */}
+      {/* Top Section - Mobile Header */}
       <div className="w-full z-50 fixed top-0 bg-dark text-light py-4 md:hidden">
         <div className="flex items-center justify-between px-4 md:justify-center md:gap-40">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.svg" alt="TOKANO Logo" width={32} height={32} />
             <h1 className="md:text-2xl text-xl font-bold">TOKANO</h1>
           </Link>
 
-          {/* Wallet Button */}
-          <button className="text-light hover:brightness-110 transition cursor-pointer md:hidden">
-            CONNECT WALLET
+          <button
+            onClick={publicKey ? disconnectWallet : connectWallet}
+            className="text-light hover:brightness-110 transition cursor-pointer md:hidden"
+          >
+            {publicKey ? shortKey : "CONNECT WALLET"}
           </button>
         </div>
       </div>
 
-      {/* Navigation Section */}
+      {/* Navigation Section - Desktop */}
       <div className="hidden md:grid grid-cols-3 items-center bg-dark text-light py-10">
-        {/* Logo (centered only on large screens) */}
         <div className="flex items-center gap-2 justify-center">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.svg" alt="TOKANO Logo" width={32} height={32} />
@@ -38,7 +47,6 @@ function Navbar() {
           </Link>
         </div>
 
-        {/* Navigation Links */}
         <div className="flex md:gap-8 gap-4 justify-center md:text-xl text-md font-medium">
           {navigationItems
             .filter((item) => item.name !== "HOME")
@@ -53,10 +61,12 @@ function Navbar() {
             ))}
         </div>
 
-        {/* Wallet Section */}
         <div className="flex justify-center">
-          <button className="text-light hover:brightness-110 transition cursor-pointer">
-            CONNECT WALLET
+          <button
+            onClick={publicKey ? disconnectWallet : connectWallet}
+            className="text-light hover:brightness-110 transition cursor-pointer"
+          >
+            {publicKey ? shortKey : "CONNECT WALLET"}
           </button>
         </div>
       </div>
