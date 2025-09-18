@@ -1,16 +1,21 @@
+"use client";
+
 import React from "react";
+import Link from "next/link";
 import "@/Components/Live/styles/scrollcard.css";
 import { FIcon, SIcon, StakeIcon, StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { Khand } from "next/font/google";
-import ProgressItem from "../Live/comps/ProgressItem";
 
 const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
-function StakeCard({ key, title, created, marketCap, wallet }) {
+function StakeCard({ id, title, created, marketCap, wallet }) {
   return (
-    <div className="relative">
+    <Link
+      href={`/card/stake`}
+      className="relative block cursor-pointer hover:opacity-90 transition"
+    >
       <div
         className={`absolute top-1/4 bg-[#2B923E] p-1 rounded-l-2xl pl-2 right-0 text-xs md:text-sm ${khandSemibold.className}`}
       >
@@ -19,18 +24,18 @@ function StakeCard({ key, title, created, marketCap, wallet }) {
       <div className="absolute top-3/7 right-2 md:right-4">
         <StarIcon />
       </div>
-      <div className=" w-full h-full absolute z-10">
+      <div className="w-full h-full absolute z-10">
         <div className="flex justify-end">
           <div className="flex flex-col justify-between items-end h-[120px] p-4"></div>
         </div>
       </div>
 
-      <div key={key} className="text-white shadow bg-[#5951ce] rounded-4xl">
+      <div className="text-white shadow bg-[#5951ce] rounded-4xl">
         <div className="grid grid-cols-3 grid-rows-5 md:h-[270px] h-[250px]">
           <div className="row-span-5 rounded-l-4xl left-gradient text-white justify-center flex items-center flex-col md:gap-4 gap-12">
-            <img src="/fired.png" className=" w-22 md:w-36" />
+            <img src="/fired.png" className="w-22 md:w-36" />
             <div className="m-4">
-              <p className={`text-2xl md:text-4xl ${khandSemibold.className} `}>
+              <p className={`text-2xl md:text-4xl ${khandSemibold.className}`}>
                 STAKE
               </p>
             </div>
@@ -51,8 +56,7 @@ function StakeCard({ key, title, created, marketCap, wallet }) {
                 <span className="font-semibold">Pool ID: </span> {wallet}
               </p>
               <p>
-                <span className="font-semibold">Token ID: </span>
-                {created}
+                <span className="font-semibold">Token ID: </span> {created}
               </p>
 
               <p className="mt-6">
@@ -77,7 +81,7 @@ function StakeCard({ key, title, created, marketCap, wallet }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

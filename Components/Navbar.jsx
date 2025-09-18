@@ -61,7 +61,7 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Bottom Navigation for Small Screens */}
+      {/* Bottom Navigation for Mobile */}
       <div
         className="md:hidden fixed bottom-0 w-full text-light py-3 z-50"
         style={{

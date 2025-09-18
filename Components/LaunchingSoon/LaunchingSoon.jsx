@@ -30,7 +30,7 @@ const secondTables = [
 
 function LaunchingSoon() {
   return (
-    <div className="hidden lg:block border-r-2 border-secondary">
+    <div className="hidden md:block border-r-2 border-secondary">
       <div
         className={`lg:border-b-2 border-secondary flex justify-center py-4 text-2xl ${khandMedium.className} custom-header-gradient `}
       >

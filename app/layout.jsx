@@ -3,8 +3,7 @@ import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 import Banner from "@/Components/Banner";
-import { Analytics } from "@vercel/analytics/next"
-
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,13 +26,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-dark`}
       >
-        <Analytics/>
+        {/* vercel analitics */}
+        <Analytics />
         <Navbar />
         <Banner src={"banner1.png"} />
 
-        <div className="grid grid-cols-2 xl:grid-cols-3">
-          <div className="col-span-2">{children}</div>
-          <div className="pr-4 py-18 md:py-6 text-light">
+        <div className="flex">
+          <div className="w-full">{children}</div>
+          <div className="pr-4 py-18 md:py-6 text-light absolute right-0 w-1/3 2xl:w-4/13">
             <RightMenu />
           </div>
         </div>
