@@ -1,73 +1,20 @@
 "use client";
 import { React, useState } from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
-import CryptoWallet from "./comps/test";
-import FundCards from "./comps/fundCards";
+import CryptoWallet from "@/Components/stakenomics/CryptoWallet";
+import FundCards from "@/Components/stakenomics/FundCards";
+import ResultsDisplay from "@/Components/stakenomics/ResultsDisplay";
+import { TOKENS, getTokenById } from "../../lib/constants";
 
 function page() {
-  const [selectedToken, setSelectedToken] = useState(2); // LIMASIRA is selected by default
+  const [selectedToken, setSelectedToken] = useState(3); // LIMASIRA is selected by default
+  const [filledData, setFilledData] = useState(null);
 
-  const walletAddress = "0xHbahb....35Uenu";
-  const solanaBalance = "0.002 SOL";
+  const handleDataFilled = (data) => {
+    setFilledData(data);
+  };
 
-  const tokens = [
-    {
-      id: 1,
-      name: "FIRED",
-      icon: "🍔",
-      balance: "45,230,000.123",
-      ticker: "FIRED",
-      tokenId: "0xabc1...def2",
-      platform: "pump.fun",
-    },
-    {
-      id: 2,
-      name: "RAMSA",
-      icon: "🐻",
-      balance: "87,450,000.567",
-      ticker: "RAMSA",
-      tokenId: "0xdef3...abc4",
-      platform: "pump.fun",
-    },
-    {
-      id: 3,
-      name: "LIMASIRA",
-      icon: "👨‍💼",
-      balance: "123,000,000.234",
-      ticker: "LIMAS",
-      tokenId: "0xfca9...ed1d",
-      platform: "pump.fun",
-    },
-    {
-      id: 4,
-      name: "SYRIA",
-      icon: "🌍",
-      balance: "56,780,000.891",
-      ticker: "SYRIA",
-      tokenId: "0x1234...5678",
-      platform: "pump.fun",
-    },
-    {
-      id: 5,
-      name: "NOGA",
-      icon: "🦊",
-      balance: "34,560,000.445",
-      ticker: "NOGA",
-      tokenId: "0x9876...4321",
-      platform: "pump.fun",
-    },
-    {
-      id: 6,
-      name: "GAMNABULIN",
-      icon: "🎮",
-      balance: "78,920,000.667",
-      ticker: "GAMNA",
-      tokenId: "0xabcd...efgh",
-      platform: "pump.fun",
-    },
-  ];
-
-  const selectedTokenData = tokens.find((token) => token.id === selectedToken);
+  const selectedTokenData = getTokenById(selectedToken);
 
   return (
     <div className="xl:grid-cols-3 md:grid-cols-2 grid py-18 md:py-6 md:px-6 2xl:px-2">
@@ -78,10 +25,22 @@ function page() {
 
         <div className="col-span-4">
           <div className="mt-8">
-            <CryptoWallet />
+            <CryptoWallet
+              selectedToken={selectedToken}
+              setSelectedToken={setSelectedToken}
+              tokens={TOKENS}
+            />
           </div>
           <div>
-            <FundCards />
+            <FundCards
+              onDataFilled={handleDataFilled}
+              selectedToken={selectedToken}
+              selectedTokenData={selectedTokenData}
+            />
+            <ResultsDisplay
+              filledData={filledData}
+              selectedToken={selectedTokenData}
+            />
           </div>
         </div>
       </div>

@@ -1,14 +1,13 @@
 import React from "react";
 import Image from "next/image";
 
-
 function TokenCard({ token }) {
   return (
     <div className="bg-[#23264A] rounded border-2 border-[#292B8C] flex flex-col w-[220px] overflow-hidden relative shadow-lg">
       {/* Token Image */}
       <div className="w-full aspect-[1.6/1] bg-black relative">
         <Image
-          src={token.image}
+          src="/image.png"
           alt={token.name}
           fill
           className="object-cover"

@@ -29,7 +29,7 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full mt-6">
-        <TokenGrid hideOnMobile={false} gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" />
+        <TokenGrid hideOnMobile={false} gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7" />
       </div>
     </main>
   );

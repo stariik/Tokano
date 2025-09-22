@@ -1,58 +1,11 @@
 "use client";
-import { useState } from "react";
-import LockFundsComponent from "./LockFundsComp";
-import VestFundsComponent from "./VestFundsComp";
-import StakingPoolComponent from "./StakingPoolComp";
+import { useState, useCallback } from "react";
+import { FUND_TYPES } from "../../lib/constants";
+import GenericForm from "@/Components/forms/GenericForm";
 
-export default function FundCards({ selectedToken, onDataFilled }) {
+export default function FundCards({ selectedToken, selectedTokenData, onDataFilled }) {
   const [selectedFund, setSelectedFund] = useState(null);
-
-  const tokens = [
-    { id: 1, name: "FIRED", icon: "🍔", ticker: "FIRED" },
-    { id: 2, name: "RAMSA", icon: "🐻", ticker: "RAMSA" },
-    { id: 3, name: "LIMASIRA", icon: "👨‍💼", ticker: "LIMAS" },
-    { id: 4, name: "SYRIA", icon: "🌍", ticker: "SYRIA" },
-    { id: 5, name: "NOGA", icon: "🦊", ticker: "NOGA" },
-    { id: 6, name: "GAMNABULIN", icon: "🎮", ticker: "GAMNA" },
-  ];
-
-  const selectedTokenData = tokens.find((t) => t.id === selectedToken);
-
-  const fundTypes = [
-    {
-      id: 1,
-      title: "STAKING POOL",
-      bgColor: "bg-gradient-to-br from-gray-200 to-gray-300",
-      textColor: "text-gray-600",
-      buttonColor: "bg-purple-500 hover:bg-purple-600",
-      iconBg: "bg-white bg-opacity-50",
-    },
-    {
-      id: 2,
-      title: "COMING SOON",
-      bgColor: "bg-gradient-to-br from-purple-200 to-purple-300",
-      textColor: "text-gray-600",
-      buttonColor: "bg-gray-400 cursor-not-allowed",
-      iconBg: "bg-white bg-opacity-50",
-      disabled: true,
-    },
-    {
-      id: 3,
-      title: "LOCK FUNDS",
-      bgColor: "bg-gradient-to-br from-pink-200 to-pink-300",
-      textColor: "text-gray-600",
-      buttonColor: "bg-pink-500 hover:bg-pink-600",
-      iconBg: "bg-white bg-opacity-50",
-    },
-    {
-      id: 4,
-      title: "VEST FUNDS",
-      bgColor: "bg-gradient-to-br from-purple-600 to-purple-700",
-      textColor: "text-white",
-      buttonColor: "bg-purple-800 hover:bg-purple-900",
-      iconBg: "bg-white bg-opacity-20",
-    },
-  ];
+  const [currentFormData, setCurrentFormData] = useState(null);
 
   const handleCardClick = (fundType) => {
     if (fundType.disabled) return;
@@ -69,29 +22,37 @@ export default function FundCards({ selectedToken, onDataFilled }) {
     }
 
     console.log(`Creating ${fundType.title} for token ID ${selectedToken}`);
-    onDataFilled?.({ fundType: fundType.title, tokenId: selectedToken });
   };
+
+  const handleFormDataChange = useCallback((data) => {
+    setCurrentFormData(data);
+    if (selectedFund && selectedTokenData) {
+      onDataFilled?.({
+        fundType: selectedFund.title,
+        token: selectedTokenData,
+        formData: data,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  }, [selectedFund, selectedTokenData, onDataFilled]);
 
   const renderFundComponent = () => {
     if (!selectedFund) return null;
 
-    switch (selectedFund.title) {
-      case "STAKING POOL":
-        return <StakingPoolComponent token={selectedTokenData} />;
-      case "LOCK FUNDS":
-        return <LockFundsComponent tokenId={selectedToken} />;
-      case "VEST FUNDS":
-        return <VestFundsComponent tokenId={selectedToken} />;
-      default:
-        return null;
-    }
+    return (
+      <GenericForm
+        fundType={selectedFund.title}
+        token={selectedTokenData}
+        onDataChange={handleFormDataChange}
+      />
+    );
   };
 
   return (
     <div className="max-w-4xl mx-auto">
       {/* Fund Cards */}
       <div className="grid grid-cols-4 gap-4 p-6">
-        {fundTypes.map((fund) => (
+        {FUND_TYPES.map((fund) => (
           <div
             key={fund.id}
             onClick={() => handleCardClick(fund)}

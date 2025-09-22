@@ -1,7 +1,11 @@
 import React from "react";
-import TokenCard from "./TokenCard";
+// import TokenCard from "./TokenCard";
+import Lock from "./TokenCards/Lock";
+import Soon from "./TokenCards/Soon";
+import Stake from "./TokenCards/Stake";
 import GridFilter from "./GridFilter";
 import { tokens } from "@/data/data";
+import Vest from "./TokenCards/Vest";
 
 function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
@@ -12,26 +16,41 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
     >
       <GridFilter />
       <div
-        className="overflow-y-auto"
+        className="overflow-y-auto text-white"
         style={{ maxHeight: "70vh", minHeight: "400px" }}
       >
         <div className={`grid gap-3 ${gridCols}`}>
           {tokens.map((token, idx) => (
-            <TokenCard
-              key={idx}
-              token={{
-                image: token.image,
-                name: token.name,
-                mcap: token.mcap,
-                staked: token.staked,
-                stakedPercent: token.stakedPercent,
-                frozen: token.frozen,
-                frozenPercent: token.frozenPercent,
-                stakers: token.stakers,
-                timeLeft: token.timeLeft,
-                percent: token.percent,
-              }}
-            />
+            <React.Fragment key={idx}>
+              <Lock
+                token={{
+                  image: token.image,
+                  name: token.name,
+                  mcap: token.mcap,
+                  staked: token.staked,
+                  stakedPercent: token.stakedPercent,
+                  frozen: token.frozen,
+                  frozenPercent: token.frozenPercent,
+                  stakers: token.stakers,
+                  timeLeft: token.timeLeft,
+                  percent: token.percent,
+                }}
+              />
+              <Vest
+                token={{
+                  image: token.image,
+                  name: token.name,
+                  mcap: token.mcap,
+                  staked: token.staked,
+                  stakedPercent: token.stakedPercent,
+                  frozen: token.frozen,
+                  frozenPercent: token.frozenPercent,
+                  stakers: token.stakers,
+                  timeLeft: token.timeLeft,
+                  percent: token.percent,
+                }}
+              />
+            </React.Fragment>
           ))}
         </div>
       </div>
