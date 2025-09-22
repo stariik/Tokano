@@ -1,27 +1,51 @@
 "use client";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { StakingClient } from "./StakingClient";
 import { BN } from "@coral-xyz/anchor";
+import { PublicKey } from "@solana/web3.js";
+import useAnchorProvider from "../../hooks/useAnchorProvider";
 
 export default function MyComponent() {
-  const { connection } = useConnection();
-  const wallet = useWallet();
-
-  const stakingClient = new StakingClient(connection, wallet);
+  const { provider, stakingProgram } = useAnchorProvider();
+  const stakingClient = stakingProgram ? new StakingClient(stakingProgram) : null;
 
   const handleStake = async () => {
-    const poolState = new PublicKey("POOL_STATE_PUBKEY");
-    const userState = new PublicKey("USER_STATE_PUBKEY");
-    const tokenAccount = new PublicKey("YOUR_ASSOCIATED_TOKEN_ACCOUNT");
-
-    const tx = await stakingClient.stake(
-      poolState,
-      userState,
-      new BN(1000),
-      tokenAccount
-    );
-    console.log("Staked!", tx);
+    console.log("handleStake!");
   };
 
-  return <button  className="text-white p-4 border-2 rounded-2xl cursor-pointer" onClick={handleStake}>Stake</button>;
+  const handleListPools = async () => {
+    if (!stakingClient || !provider?.publicKey) {
+      console.error("Wallet not connected. Please connect your wallet first.");
+      return;
+    }
+
+    console.log("handleListPools!");
+    const pools = await stakingClient.loadPools();
+    console.log(pools);
+  };
+
+  const handleListUserAccounts = async () => {
+    if (!stakingClient || !provider?.publicKey) {
+      console.error("Wallet not connected. Please connect your wallet first.");
+      return;
+    }
+    
+    console.log("handleListUserAccounts!");
+    console.log("Wallet public key:", provider.publicKey.toString());
+    const userAccounts = await stakingClient.loadUserAccounts(provider.publicKey);
+    console.log(userAccounts);
+  };
+
+  return (
+    <div className="flex gap-4">
+      <button className="text-white p-4 border-2 rounded-2xl cursor-pointer" onClick={handleStake}>
+        Stake
+      </button>
+      <button className="text-white p-4 border-2 rounded-2xl cursor-pointer" onClick={handleListPools}>
+        List Pools
+      </button>
+      <button className="text-white p-4 border-2 rounded-2xl cursor-pointer" onClick={handleListUserAccounts}>
+        List User Accounts
+      </button>
+    </div>
+  );
 }
