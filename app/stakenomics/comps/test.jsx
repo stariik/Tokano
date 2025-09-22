@@ -1,9 +1,7 @@
 "use client";
-import { useState } from "react";
+import React from "react";
 
-export default function CryptoWallet() {
-  const [selectedToken, setSelectedToken] = useState(2); // LIMASIRA is selected by default
-
+export default function CryptoWallet({ selectedToken, setSelectedToken }) {
   const walletAddress = "0xHbahb....35Uenu";
   const solanaBalance = "0.002 SOL";
 
@@ -101,44 +99,47 @@ export default function CryptoWallet() {
 
         {/* Token Details */}
         <div className="space-y-4">
-          {/* Balance Display */}
-          <div className="bg-white bg-opacity-40 rounded-2xl p-6">
-            <div className="text-right">
-              <div className="text-3xl font-bold text-gray-800 mb-2">
-                {selectedTokenData?.balance} {selectedTokenData?.ticker}
+          {selectedTokenData ? (
+            <>
+              <div className="bg-white bg-opacity-40 rounded-2xl p-6">
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-gray-800 mb-2">
+                    {selectedTokenData.balance} {selectedTokenData.ticker}
+                  </div>
+                </div>
               </div>
+              <div className="bg-white bg-opacity-40 rounded-2xl p-6 space-y-3">
+                <div>
+                  <span className="text-gray-700 font-medium">token ID: </span>
+                  <span className="text-gray-800 font-semibold">
+                    {selectedTokenData.tokenId}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-gray-700 font-medium">name: </span>
+                  <span className="text-gray-800 font-semibold">
+                    {selectedTokenData.name}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-gray-700 font-medium">ticker: </span>
+                  <span className="text-gray-800 font-semibold">
+                    {selectedTokenData.ticker}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-gray-700 font-medium">platform: </span>
+                  <span className="text-gray-800 font-semibold">
+                    {selectedTokenData.platform}
+                  </span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="text-gray-700 font-medium p-6">
+              Select a token to see details
             </div>
-          </div>
-
-          {/* Token Information */}
-          <div className="bg-white bg-opacity-40 rounded-2xl p-6">
-            <div className="space-y-3">
-              <div>
-                <span className="text-gray-700 font-medium">token ID: </span>
-                <span className="text-gray-800 font-semibold">
-                  {selectedTokenData?.tokenId}
-                </span>
-              </div>
-              <div>
-                <span className="text-gray-700 font-medium">name: </span>
-                <span className="text-gray-800 font-semibold">
-                  {selectedTokenData?.name}
-                </span>
-              </div>
-              <div>
-                <span className="text-gray-700 font-medium">ticker: </span>
-                <span className="text-gray-800 font-semibold">
-                  {selectedTokenData?.ticker}
-                </span>
-              </div>
-              <div>
-                <span className="text-gray-700 font-medium">platform: </span>
-                <span className="text-gray-800 font-semibold">
-                  {selectedTokenData?.platform}
-                </span>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

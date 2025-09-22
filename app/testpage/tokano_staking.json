@@ -1,0 +1,1000 @@
+{
+  "address": "Hpx8uRMgS8PAcANE223eMf4okXRCrCm5UT2W4Nv3PXAH",
+  "metadata": {
+    "name": "tokano_staking",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "close_pool_state",
+      "discriminator": [
+        132,
+        78,
+        46,
+        12,
+        65,
+        129,
+        110,
+        98
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state.initializer",
+                "account": "PoolState"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.token_mint",
+                "account": "PoolState"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.extra_seed",
+                "account": "PoolState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_user_state",
+      "discriminator": [
+        127,
+        206,
+        172,
+        187,
+        146,
+        179,
+        215,
+        194
+      ],
+      "accounts": [
+        {
+          "name": "user_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "user_state.pool_address",
+                "account": "UserState"
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "user_state.random_seed",
+                "account": "UserState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "get_reward",
+      "discriminator": [
+        221,
+        63,
+        124,
+        201,
+        96,
+        218,
+        238,
+        29
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state.initializer",
+                "account": "PoolState"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.token_mint",
+                "account": "PoolState"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.extra_seed",
+                "account": "PoolState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state"
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "user_state.random_seed",
+                "account": "UserState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "rewards_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state.initializer",
+                "account": "PoolState"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.token_mint",
+                "account": "PoolState"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  119,
+                  97,
+                  114,
+                  100,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.extra_seed",
+                "account": "PoolState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "rewards_to_account",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "init_stake",
+      "discriminator": [
+        177,
+        156,
+        4,
+        57,
+        220,
+        174,
+        174,
+        155
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state.initializer",
+                "account": "PoolState"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.token_mint",
+                "account": "PoolState"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.extra_seed",
+                "account": "PoolState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state"
+              },
+              {
+                "kind": "account",
+                "path": "staker_user"
+              },
+              {
+                "kind": "arg",
+                "path": "random_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "staker_user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "random_seed",
+          "type": {
+            "array": [
+              "u8",
+              16
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_pool",
+      "discriminator": [
+        95,
+        180,
+        10,
+        172,
+        84,
+        174,
+        232,
+        40
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "initializer"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "extra_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool_tokens_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "initializer"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  115
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "extra_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "rewards_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "initializer"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  119,
+                  97,
+                  114,
+                  100,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "extra_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "reward_token_mint"
+        },
+        {
+          "name": "initializer_reward_token_account",
+          "writable": true
+        },
+        {
+          "name": "platform_wallet",
+          "writable": true
+        },
+        {
+          "name": "platform_spl_account",
+          "writable": true
+        },
+        {
+          "name": "initializer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "reward",
+          "type": "u128"
+        },
+        {
+          "name": "reward_period_in_seconds",
+          "type": "u64"
+        },
+        {
+          "name": "locking_period_for_stakers",
+          "type": "u64"
+        },
+        {
+          "name": "start_time_stamp",
+          "type": "i64"
+        },
+        {
+          "name": "extra_seed",
+          "type": {
+            "array": [
+              "u8",
+              8
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "stake",
+      "discriminator": [
+        206,
+        176,
+        202,
+        18,
+        200,
+        209,
+        179,
+        108
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state.initializer",
+                "account": "PoolState"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.token_mint",
+                "account": "PoolState"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.extra_seed",
+                "account": "PoolState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state"
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "user_state.random_seed",
+                "account": "UserState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool_tokens_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state.initializer",
+                "account": "PoolState"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.token_mint",
+                "account": "PoolState"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.extra_seed",
+                "account": "PoolState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokens_from_account",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "pool_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state.initializer",
+                "account": "PoolState"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.token_mint",
+                "account": "PoolState"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.extra_seed",
+                "account": "PoolState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state"
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "user_state.random_seed",
+                "account": "UserState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool_tokens_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state.initializer",
+                "account": "PoolState"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.token_mint",
+                "account": "PoolState"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool_state.extra_seed",
+                "account": "PoolState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokens_to_account",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PoolState",
+      "discriminator": [
+        247,
+        237,
+        227,
+        245,
+        215,
+        195,
+        222,
+        70
+      ]
+    },
+    {
+      "name": "UserState",
+      "discriminator": [
+        72,
+        177,
+        85,
+        249,
+        76,
+        167,
+        186,
+        126
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidNumericConversion",
+      "msg": "Invalid numeric conversion"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidPlatformWallet",
+      "msg": "Invalid platform wallet"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidPlatformSplAccount",
+      "msg": "Invalid platform SPL account"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidRewardPeriod",
+      "msg": "Invalid reward period"
+    },
+    {
+      "code": 6004,
+      "name": "StakingNotStarted",
+      "msg": "Staking not started"
+    },
+    {
+      "code": 6005,
+      "name": "StakingEnded",
+      "msg": "Staking ended"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidRewardTokenMint",
+      "msg": "Invalid reward token mint"
+    },
+    {
+      "code": 6007,
+      "name": "ZeroWithdrawAmount",
+      "msg": "Zero withdraw amount"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidWithdrawAmount",
+      "msg": "Invalid withdraw amount"
+    },
+    {
+      "code": 6009,
+      "name": "ReleaseTimeHasNotPassed",
+      "msg": "Release time has not passed"
+    },
+    {
+      "code": 6010,
+      "name": "WithdrawBeforeClose",
+      "msg": "Withdraw before close"
+    },
+    {
+      "code": 6011,
+      "name": "UsersStillHaveTokens",
+      "msg": "Users still have tokens"
+    }
+  ],
+  "types": [
+    {
+      "name": "PoolState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "initializer",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "reward_token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_token_staked",
+            "type": "u128"
+          },
+          {
+            "name": "reward_per_token_stored",
+            "type": "u128"
+          },
+          {
+            "name": "reward_rate",
+            "type": "u64"
+          },
+          {
+            "name": "last_update_time",
+            "type": "i64"
+          },
+          {
+            "name": "reward_distributed",
+            "type": "u128"
+          },
+          {
+            "name": "locking_period_for_stakers",
+            "type": "u64"
+          },
+          {
+            "name": "start_time_stamp",
+            "type": "i64"
+          },
+          {
+            "name": "end_time_stamp",
+            "type": "i64"
+          },
+          {
+            "name": "extra_seed",
+            "type": {
+              "array": [
+                "u8",
+                8
+              ]
+            }
+          },
+          {
+            "name": "pool_state_bump",
+            "type": "u8"
+          },
+          {
+            "name": "pool_tokens_bump",
+            "type": "u8"
+          },
+          {
+            "name": "rewards_account_bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "staker_user",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool_address",
+            "type": "pubkey"
+          },
+          {
+            "name": "staked_token_balance",
+            "type": "u128"
+          },
+          {
+            "name": "reward_per_token_paid",
+            "type": "u128"
+          },
+          {
+            "name": "rewards",
+            "type": "u64"
+          },
+          {
+            "name": "release_time",
+            "type": "i64"
+          },
+          {
+            "name": "last_reward_get_time",
+            "type": "i64"
+          },
+          {
+            "name": "random_seed",
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          },
+          {
+            "name": "user_state_bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

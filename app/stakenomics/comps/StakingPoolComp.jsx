@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-export default function StakingPoolComponent() {
+export default function StakingPoolComponent({ token }) {
+  if (!token) {
+    return (
+      <div className="p-6 text-center text-gray-600">No token selected</div>
+    );
+  }
+
   const [formData, setFormData] = useState({
     activationDate: "",
     activationTime: "",
@@ -27,12 +33,12 @@ export default function StakingPoolComponent() {
           Fill the form to create staking pool for:
         </span>
         <div className="flex items-center">
-          <span className="text-2xl mr-2">👨‍💼</span>
-          <span className="text-purple-900 font-bold">LIMASIRA</span>
+          <span className="text-2xl mr-2">{token.icon}</span>
+          <span className="text-purple-900 font-bold">{token.name}</span>
         </div>
       </div>
 
-      {/* Form Container */}
+      {/* Form (same as before) */}
       <div className="bg-white bg-opacity-40 rounded-2xl p-6 mb-6">
         {/* Pool Activation */}
         <div className="mb-6 p-4 bg-white bg-opacity-30 rounded-xl">
