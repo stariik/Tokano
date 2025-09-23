@@ -101,7 +101,7 @@ function TestPageContent() {
           tokenMint: tokenMint,
           rewardTokenMint: rewardTokenMint,
           initializerRewardTokenAccount: initializerRewardTokenAccount,
-          platformWallet: platformWallet,
+          platformWallet: PLATFORM_WALLET,
           platformSplAccount: platformSplAccount,
           initializer: publicKey
         }).instruction());
