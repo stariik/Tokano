@@ -2,8 +2,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY, SYSVAR_CLOCK_PUBKEY } from '@solana/web3.js';
-import { TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token';
+import { PublicKey, SystemProgram, Transaction, SYSVAR_CLOCK_PUBKEY } from '@solana/web3.js';
+import { TOKEN_PROGRAM_ID, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction } from '@solana/spl-token';
 import { BN } from '@coral-xyz/anchor';
 import {
   getProgram,
@@ -18,6 +18,7 @@ import {
 function TestPageContent() {
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
+  const PLATFORM_WALLET = new PublicKey("EvM5PDcJYoNqhpWubySbK3saRyELSieoM23Tf4B8CkSG")
 
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
@@ -56,6 +57,7 @@ function TestPageContent() {
     try {
       setLoading(true);
       addLog('Initializing pool...', 'info');
+      console.log('Initializing pool...');
 
       const program = getProgram({ publicKey, signTransaction: sendTransaction });
 
@@ -63,25 +65,31 @@ function TestPageContent() {
       const rewardTokenMint = new PublicKey(poolParams.rewardTokenMint);
       const extraSeed = generateExtraSeed();
 
-      // Derive PDAs
-      const [poolState] = await getPoolStatePDA(publicKey, tokenMint, extraSeed);
-      const [poolTokensAccount] = await getPoolTokensAccountPDA(publicKey, tokenMint, extraSeed);
-      const [rewardsAccount] = await getRewardsAccountPDA(publicKey, tokenMint, extraSeed);
-
       // Get associated token accounts
       const initializerRewardTokenAccount = await getAssociatedTokenAddress(
         rewardTokenMint,
         publicKey
       );
 
-      // Platform accounts (you might need to adjust these)
-      const platformWallet = publicKey; // Using connected wallet as platform wallet for test
+      const tx = new Transaction();
       const platformSplAccount = await getAssociatedTokenAddress(
         tokenMint,
-        publicKey
+        PLATFORM_WALLET
       );
+      let accountInfo = await connection.getAccountInfo(platformSplAccount);
+      if (!accountInfo) {
+        console.log('Associated Token Account does not exist, creating...');
+        tx.add(
+          createAssociatedTokenAccountInstruction(
+            publicKey,
+            platformSplAccount,
+            PLATFORM_WALLET,
+            tokenMint
+          )
+        );
+      }
 
-      const tx = await program.methods
+      tx.add(await program.methods
         .initializePool(
           new BN(poolParams.reward),
           new BN(poolParams.rewardPeriodInSeconds),
@@ -90,27 +98,18 @@ function TestPageContent() {
           extraSeed
         )
         .accounts({
-          poolState,
-          poolTokensAccount,
-          rewardsAccount,
-          tokenMint,
-          rewardTokenMint,
-          initializerRewardTokenAccount,
-          platformWallet,
-          platformSplAccount,
-          initializer: publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          systemProgram: SystemProgram.programId,
-          rent: SYSVAR_RENT_PUBKEY,
-        })
-        .rpc();
-
-      addLog(`Pool initialized successfully! TX: ${tx}`, 'success');
-      addLog(`Pool Address: ${poolState.toString()}`, 'info');
-
+          tokenMint: tokenMint,
+          rewardTokenMint: rewardTokenMint,
+          initializerRewardTokenAccount: initializerRewardTokenAccount,
+          platformWallet: platformWallet,
+          platformSplAccount: platformSplAccount,
+          initializer: publicKey
+        }).instruction());
+      const txHash = await sendTransaction(tx, connection);
+      console.log("txHash:", txHash);
     } catch (error) {
-      addLog(`Error initializing pool: ${error.message}`, 'error');
-      console.error(error);
+      console.error("error:", error);
+      addLog(`Error initializing pool: ${error}`, 'error');
     } finally {
       setLoading(false);
     }
