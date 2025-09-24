@@ -1,32 +1,22 @@
 "use client";
-import { useState, useCallback, useEffect } from 'react';
-import { useWallet, useConnection } from '@solana/wallet-adapter-react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { PublicKey, SystemProgram, Transaction, SYSVAR_CLOCK_PUBKEY } from '@solana/web3.js';
-import { TOKEN_PROGRAM_ID, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction } from '@solana/spl-token';
-import { BN } from '@coral-xyz/anchor';
-import {
-  getProgram,
-  getPoolStatePDA,
-  getUserStatePDA,
-  getPoolTokensAccountPDA,
-  getRewardsAccountPDA,
-  generateRandomSeed,
-  generateExtraSeed,
-} from '../../lib/web3';
+import useStakingClient from '../../Components/StakingCard/StakingClient';
+import TokenSelector from '../../Components/StakingCard/TokenSelector';
 
 function TestPageContent() {
-  const { connection } = useConnection();
-  const { publicKey, sendTransaction } = useWallet();
-  const PLATFORM_WALLET = new PublicKey("EvM5PDcJYoNqhpWubySbK3saRyELSieoM23Tf4B8CkSG")
+  const { publicKey } = useWallet();
 
-  const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
+  const [tokenAccounts, setTokenAccounts] = useState([]);
+  const [loadingTokens, setLoadingTokens] = useState(false);
+  const [userAccounts, setUserAccounts] = useState([]);
+  const [loadingUserAccounts, setLoadingUserAccounts] = useState(false);
 
   // Form states
   const [poolParams, setPoolParams] = useState({
     tokenMint: '',
-    rewardTokenMint: '',
     reward: '',
     rewardPeriodInSeconds: '',
     lockingPeriodForStakers: '',
@@ -48,270 +38,125 @@ function TestPageContent() {
     setLogs(prev => [...prev, { message, type, timestamp }]);
   }, []);
 
-  const handleInitializePool = async () => {
-    if (!publicKey) {
-      addLog('Please connect wallet first', 'error');
-      return;
-    }
+  const stakingClient = useStakingClient({ onLog: addLog });
 
+  const fetchTokenAccounts = useCallback(async () => {
+    if (!publicKey || !stakingClient.getUserTokenAccounts) return;
+
+    setLoadingTokens(true);
     try {
-      setLoading(true);
-      addLog('Initializing pool...', 'info');
-      console.log('Initializing pool...');
+      const accounts = await stakingClient.getUserTokenAccounts();
+      setTokenAccounts(accounts);
+    } catch (error) {
+      console.error('Error fetching token accounts:', error);
+    } finally {
+      setLoadingTokens(false);
+    }
+  }, [publicKey, stakingClient]);
 
-      const program = getProgram({ publicKey, signTransaction: sendTransaction });
+  const fetchUserAccounts = useCallback(async () => {
+    if (!publicKey || !stakingClient.getAllUserStates) return;
 
-      const tokenMint = new PublicKey(poolParams.tokenMint);
-      const rewardTokenMint = new PublicKey(poolParams.rewardTokenMint);
-      const extraSeed = generateExtraSeed();
-
-      // Get associated token accounts
-      const initializerRewardTokenAccount = await getAssociatedTokenAddress(
-        rewardTokenMint,
-        publicKey
+    setLoadingUserAccounts(true);
+    try {
+      const allUserStates = await stakingClient.getAllUserStates();
+      // Filter to show only accounts for the connected wallet
+      const myUserStates = allUserStates.filter(
+        userState => userState.account.stakerUser.toString() === publicKey.toString()
       );
+      setUserAccounts(myUserStates);
+    } catch (error) {
+      console.error('Error fetching user accounts:', error);
+    } finally {
+      setLoadingUserAccounts(false);
+    }
+  }, [publicKey, stakingClient]);
 
-      const tx = new Transaction();
-      const platformSplAccount = await getAssociatedTokenAddress(
-        tokenMint,
-        PLATFORM_WALLET
-      );
-      let accountInfo = await connection.getAccountInfo(platformSplAccount);
-      if (!accountInfo) {
-        console.log('Associated Token Account does not exist, creating...');
-        tx.add(
-          createAssociatedTokenAccountInstruction(
-            publicKey,
-            platformSplAccount,
-            PLATFORM_WALLET,
-            tokenMint
-          )
-        );
+  // Fetch accounts when wallet connects - only depend on publicKey
+  useEffect(() => {
+    if (!publicKey) return;
+
+    const fetchData = async () => {
+      // Fetch token accounts
+      setLoadingTokens(true);
+      try {
+        const accounts = await stakingClient.getUserTokenAccounts();
+        setTokenAccounts(accounts);
+      } catch (error) {
+        console.error('Error fetching token accounts:', error);
+      } finally {
+        setLoadingTokens(false);
       }
 
-      tx.add(await program.methods
-        .initializePool(
-          new BN(poolParams.reward),
-          new BN(poolParams.rewardPeriodInSeconds),
-          new BN(poolParams.lockingPeriodForStakers),
-          new BN(poolParams.startTimeStamp),
-          extraSeed
-        )
-        .accounts({
-          tokenMint: tokenMint,
-          rewardTokenMint: rewardTokenMint,
-          initializerRewardTokenAccount: initializerRewardTokenAccount,
-          platformWallet: PLATFORM_WALLET,
-          platformSplAccount: platformSplAccount,
-          initializer: publicKey
-        }).instruction());
-      const txHash = await sendTransaction(tx, connection);
-      console.log("txHash:", txHash);
+      // Fetch user accounts
+      setLoadingUserAccounts(true);
+      try {
+        const allUserStates = await stakingClient.getAllUserStates();
+        const myUserStates = allUserStates.filter(
+          userState => userState.account.stakerUser.toString() === publicKey.toString()
+        );
+        setUserAccounts(myUserStates);
+      } catch (error) {
+        console.error('Error fetching user accounts:', error);
+      } finally {
+        setLoadingUserAccounts(false);
+      }
+    };
+
+    fetchData();
+  }, [publicKey]); // Only depend on publicKey
+
+  const handleInitializePool = async () => {
+    try {
+      await stakingClient.initializePool(poolParams);
     } catch (error) {
-      console.error("error:", error);
-      addLog(`Error initializing pool: ${error}`, 'error');
-    } finally {
-      setLoading(false);
+      console.error("Pool initialization error:", error);
     }
   };
 
   const handleInitStake = async () => {
-    if (!publicKey) {
-      addLog('Please connect wallet first', 'error');
-      return;
-    }
-
     try {
-      setLoading(true);
-      addLog('Initializing stake...', 'info');
-
-      const program = getProgram({ publicKey, signTransaction: sendTransaction });
-      const poolState = new PublicKey(stakeParams.poolAddress);
-      const randomSeed = generateRandomSeed();
-
-      // Derive user state PDA
-      const [userState] = await getUserStatePDA(poolState, publicKey, randomSeed);
-
-      const tx = await program.methods
-        .initStake(randomSeed)
-        .accounts({
-          poolState,
-          userState,
-          stakerUser: publicKey,
-          systemProgram: SystemProgram.programId,
-          clock: SYSVAR_CLOCK_PUBKEY,
-        })
-        .rpc();
-
-      addLog(`Stake initialized successfully! TX: ${tx}`, 'success');
-      addLog(`User State: ${userState.toString()}`, 'info');
-
+      await stakingClient.initStake(stakeParams.poolAddress);
+      // Refresh user accounts after successful init
+      fetchUserAccounts();
     } catch (error) {
-      addLog(`Error initializing stake: ${error.message}`, 'error');
-      console.error(error);
-    } finally {
-      setLoading(false);
+      console.error("Stake initialization error:", error);
     }
   };
 
   const handleStake = async () => {
-    if (!publicKey) {
-      addLog('Please connect wallet first', 'error');
-      return;
-    }
-
     try {
-      setLoading(true);
-      addLog('Staking tokens...', 'info');
-
-      const program = getProgram({ publicKey, signTransaction: sendTransaction });
-      const poolState = new PublicKey(stakeParams.poolAddress);
-
-      // You'll need to get the user state address - this is simplified
-      // In practice, you'd store this or derive it from known parameters
-      const randomSeed = generateRandomSeed(); // This should be the same as used in initStake
-      const [userState] = await getUserStatePDA(poolState, publicKey, randomSeed);
-
-      // Get pool state data to derive other accounts
-      const poolStateData = await program.account.poolState.fetch(poolState);
-      const [poolTokensAccount] = await getPoolTokensAccountPDA(
-        poolStateData.initializer,
-        poolStateData.tokenMint,
-        poolStateData.extraSeed
-      );
-
-      // User's token account
-      const tokensFromAccount = await getAssociatedTokenAddress(
-        poolStateData.tokenMint,
-        publicKey
-      );
-
-      const tx = await program.methods
-        .stake(new BN(stakeParams.amount))
-        .accounts({
-          poolState,
-          userState,
-          poolTokensAccount,
-          tokensFromAccount,
-          signer: publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          systemProgram: SystemProgram.programId,
-          clock: SYSVAR_CLOCK_PUBKEY,
-        })
-        .rpc();
-
-      addLog(`Tokens staked successfully! TX: ${tx}`, 'success');
-
+      await stakingClient.stake(stakeParams);
+      // Refresh user accounts after successful stake
+      fetchUserAccounts();
     } catch (error) {
-      addLog(`Error staking: ${error.message}`, 'error');
-      console.error(error);
-    } finally {
-      setLoading(false);
+      console.error("Staking error:", error);
+    }
+  };
+
+  const handleStakeWithInit = async () => {
+    try {
+      await stakingClient.stakeWithInit(stakeParams);
+      // Refresh user accounts after successful combined stake
+      fetchUserAccounts();
+    } catch (error) {
+      console.error("Stake with init error:", error);
     }
   };
 
   const handleWithdraw = async () => {
-    if (!publicKey) {
-      addLog('Please connect wallet first', 'error');
-      return;
-    }
-
     try {
-      setLoading(true);
-      addLog('Withdrawing tokens...', 'info');
-
-      const program = getProgram({ publicKey, signTransaction: sendTransaction });
-      const poolState = new PublicKey(withdrawParams.poolAddress);
-
-      // Similar to stake, you'd need the correct user state
-      const randomSeed = generateRandomSeed(); // This should be the correct one
-      const [userState] = await getUserStatePDA(poolState, publicKey, randomSeed);
-
-      const poolStateData = await program.account.poolState.fetch(poolState);
-      const [poolTokensAccount] = await getPoolTokensAccountPDA(
-        poolStateData.initializer,
-        poolStateData.tokenMint,
-        poolStateData.extraSeed
-      );
-
-      const tokensToAccount = await getAssociatedTokenAddress(
-        poolStateData.tokenMint,
-        publicKey
-      );
-
-      const tx = await program.methods
-        .withdraw(new BN(withdrawParams.amount))
-        .accounts({
-          poolState,
-          userState,
-          poolTokensAccount,
-          tokensToAccount,
-          signer: publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          systemProgram: SystemProgram.programId,
-          clock: SYSVAR_CLOCK_PUBKEY,
-        })
-        .rpc();
-
-      addLog(`Tokens withdrawn successfully! TX: ${tx}`, 'success');
-
+      await stakingClient.withdraw(withdrawParams);
     } catch (error) {
-      addLog(`Error withdrawing: ${error.message}`, 'error');
-      console.error(error);
-    } finally {
-      setLoading(false);
+      console.error("Withdrawal error:", error);
     }
   };
 
   const handleGetReward = async () => {
-    if (!publicKey) {
-      addLog('Please connect wallet first', 'error');
-      return;
-    }
-
     try {
-      setLoading(true);
-      addLog('Claiming rewards...', 'info');
-
-      const program = getProgram({ publicKey, signTransaction: sendTransaction });
-      const poolState = new PublicKey(stakeParams.poolAddress);
-
-      const randomSeed = generateRandomSeed(); // This should be the correct one
-      const [userState] = await getUserStatePDA(poolState, publicKey, randomSeed);
-
-      const poolStateData = await program.account.poolState.fetch(poolState);
-      const [rewardsAccount] = await getRewardsAccountPDA(
-        poolStateData.initializer,
-        poolStateData.tokenMint,
-        poolStateData.extraSeed
-      );
-
-      const rewardsToAccount = await getAssociatedTokenAddress(
-        poolStateData.rewardTokenMint,
-        publicKey
-      );
-
-      const tx = await program.methods
-        .getReward()
-        .accounts({
-          poolState,
-          userState,
-          rewardsAccount,
-          rewardsToAccount,
-          signer: publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          systemProgram: SystemProgram.programId,
-          clock: SYSVAR_CLOCK_PUBKEY,
-        })
-        .rpc();
-
-      addLog(`Rewards claimed successfully! TX: ${tx}`, 'success');
-
+      await stakingClient.getReward(stakeParams.poolAddress);
     } catch (error) {
-      addLog(`Error claiming rewards: ${error.message}`, 'error');
-      console.error(error);
-    } finally {
-      setLoading(false);
+      console.error("Reward claiming error:", error);
     }
   };
 
@@ -335,18 +180,15 @@ function TestPageContent() {
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">Initialize Pool</h2>
           <div className="grid grid-cols-2 gap-4">
-            <input
-              placeholder="Token Mint Address"
-              value={poolParams.tokenMint}
-              onChange={(e) => setPoolParams(prev => ({ ...prev, tokenMint: e.target.value }))}
-              className="border rounded px-3 py-2"
+            <TokenSelector
+              label="Token (for staking and rewards)"
+              tokenAccounts={tokenAccounts}
+              selectedToken={poolParams.tokenMint}
+              onTokenChange={(tokenMint) => setPoolParams(prev => ({ ...prev, tokenMint }))}
+              loading={loadingTokens}
+              onRefresh={fetchTokenAccounts}
             />
-            <input
-              placeholder="Reward Token Mint Address"
-              value={poolParams.rewardTokenMint}
-              onChange={(e) => setPoolParams(prev => ({ ...prev, rewardTokenMint: e.target.value }))}
-              className="border rounded px-3 py-2"
-            />
+            <div></div>
             <input
               placeholder="Total Reward Amount"
               value={poolParams.reward}
@@ -374,7 +216,7 @@ function TestPageContent() {
           </div>
           <button
             onClick={handleInitializePool}
-            disabled={loading || !publicKey}
+            disabled={stakingClient.loading || !publicKey}
             className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
           >
             Initialize Pool
@@ -401,17 +243,24 @@ function TestPageContent() {
             <div className="space-y-2">
               <button
                 onClick={handleInitStake}
-                disabled={loading || !publicKey}
+                disabled={stakingClient.loading || !publicKey}
                 className="w-full bg-green-500 text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 1. Initialize Stake
               </button>
               <button
                 onClick={handleStake}
-                disabled={loading || !publicKey}
+                disabled={stakingClient.loading || !publicKey}
                 className="w-full bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 2. Stake Tokens
+              </button>
+              <button
+                onClick={handleStakeWithInit}
+                disabled={stakingClient.loading || !publicKey}
+                className="w-full bg-purple-500 text-white px-4 py-2 rounded disabled:opacity-50"
+              >
+                🚀 Init + Stake (Combined)
               </button>
             </div>
           </div>
@@ -434,20 +283,79 @@ function TestPageContent() {
             <div className="space-y-2">
               <button
                 onClick={handleWithdraw}
-                disabled={loading || !publicKey}
+                disabled={stakingClient.loading || !publicKey}
                 className="w-full bg-red-500 text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 Withdraw Tokens
               </button>
               <button
                 onClick={handleGetReward}
-                disabled={loading || !publicKey}
+                disabled={stakingClient.loading || !publicKey}
                 className="w-full bg-purple-500 text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 Claim Rewards
               </button>
             </div>
           </div>
+        </div>
+
+        {/* User Accounts */}
+        <div className="bg-white rounded-lg shadow p-6 mt-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold">My Staking Accounts</h2>
+            <button
+              onClick={fetchUserAccounts}
+              disabled={loadingUserAccounts}
+              className="text-sm bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 disabled:opacity-50"
+            >
+              {loadingUserAccounts ? 'Loading...' : '↻ Refresh'}
+            </button>
+          </div>
+
+          {loadingUserAccounts ? (
+            <div className="text-center py-4">Loading user accounts...</div>
+          ) : userAccounts.length === 0 ? (
+            <div className="text-center py-4 text-gray-500">
+              No staking accounts found. Start staking to see your accounts here.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Account</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Pool</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Staked Balance</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Rewards</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Release Time</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {userAccounts.map((userAccount, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
+                      <td className="px-3 py-2 text-xs font-mono text-gray-900">
+                        {userAccount.publicKey.toString().slice(0, 8)}...
+                        {userAccount.publicKey.toString().slice(-8)}
+                      </td>
+                      <td className="px-3 py-2 text-xs font-mono text-gray-900">
+                        {userAccount.account.poolAddress.toString().slice(0, 8)}...
+                        {userAccount.account.poolAddress.toString().slice(-8)}
+                      </td>
+                      <td className="px-3 py-2 text-sm text-gray-900">
+                        {(userAccount.account.stakedTokenBalance / Math.pow(10, 9)).toLocaleString()}
+                      </td>
+                      <td className="px-3 py-2 text-sm text-gray-900">
+                        {userAccount.account.rewards.toString()}
+                      </td>
+                      <td className="px-3 py-2 text-xs text-gray-900">
+                        {new Date(userAccount.account.releaseTime * 1000).toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         {/* Logs */}
