@@ -113,7 +113,7 @@ function Details() {
             <div className="w-0.5 h-full bg-gray-700/20 rounded-full relative">
               <div
                 ref={scrollIndicatorRef}
-                className="absolute right-0 w-0.5 bg-purple-500 rounded-full"
+                className="absolute right-0 w-0.5 bg-purple-500 mt-2 mb-4 rounded-full"
                 style={{ minHeight: "15px", transition: "none" }}
               ></div>
             </div>
@@ -275,7 +275,6 @@ function Details() {
                             {popup.type === "unstake" ? "UNSTAKE?" : "CLAIM?"}
                           </div>
                         </div>
-
                         <div className="flex flex-col space-y-2">
                           <button
                             className={`px-6 py-2 rounded-full text-white font-bold text-sm ${
@@ -296,7 +295,6 @@ function Details() {
                           >
                             YES
                           </button>
-
                           <button
                             className="px-6 py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-white font-bold text-sm"
                             onClick={() =>
@@ -335,11 +333,10 @@ function Details() {
         </div>
 
         {/* History Button */}
-        <div className="bg-secondary px-4 py-2 text-center">
+        <div className="bg-secondary px-4 py-2 text-center relative z-50">
           <button className="text-white font-semibold">▼ History</button>
         </div>
       </div>
-
     </div>
   );
 }
