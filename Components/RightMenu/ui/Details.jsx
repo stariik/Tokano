@@ -340,13 +340,6 @@ function Details() {
         </div>
       </div>
 
-      {/* Background Overlay for Popup */}
-      {popup.show && (
-        <div
-          className="fixed inset-0 bg-black/30 z-60"
-          onClick={() => setPopup({ show: false, type: "", positionId: null })}
-        />
-      )}
     </div>
   );
 }
