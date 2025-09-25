@@ -108,6 +108,10 @@ function TestPageContent() {
 
   const handleInitializePool = async () => {
     try {
+      // Added just for debugging purposes
+      const accounts = await stakingClient.getAllPoolStates()
+      const accountsAddresses = accounts.map(pool => pool.publicKey.toBase58());
+      console.log('accountsAddresses:', accountsAddresses);
       await stakingClient.initializePool(poolParams);
     } catch (error) {
       console.error("Pool initialization error:", error);

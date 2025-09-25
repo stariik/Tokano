@@ -241,12 +241,10 @@ export default function useStakingClient({ onLog }: StakingClientProps) {
       // First instruction: Initialize stake
       tx.add(await program.methods
         .initStake(randomSeed)
-        .accounts({
-          poolState,
-          userState,
+        .accountsPartial({
+          poolState: poolState,
+          userState: userState,
           stakerUser: publicKey,
-          systemProgram: SystemProgram.programId,
-          clock: SYSVAR_CLOCK_PUBKEY,
         })
         .instruction());
 
@@ -273,9 +271,6 @@ export default function useStakingClient({ onLog }: StakingClientProps) {
           poolTokensAccount,
           tokensFromAccount,
           signer: publicKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          systemProgram: SystemProgram.programId,
-          clock: SYSVAR_CLOCK_PUBKEY,
         })
         .instruction());
 
@@ -468,7 +463,7 @@ export default function useStakingClient({ onLog }: StakingClientProps) {
       const poolStates = await program.account.poolState.all();
 
       addLog(`Found ${poolStates.length} pool states`, 'success');
-
+      console.log('poolStates:', poolStates);
       return poolStates;
     } catch (error: any) {
       addLog(`Error fetching all pool states: ${error.message}`, 'error');
