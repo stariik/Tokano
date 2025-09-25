@@ -1,10 +1,10 @@
 import React from 'react'
-import DataStatsRow from '../comps/DataStatsRow'
+// import DataStatsRow from '../comps/DataStatsRow'
 
 function DataStat() {
   return (
     <div>
-      <DataStatsRow />
+      {/* <DataStatsRow /> */}
     </div>
   )
 }

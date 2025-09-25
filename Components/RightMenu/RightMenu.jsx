@@ -32,8 +32,8 @@ function RightMenu() {
 
       {/* Right-side menu */}
       <div
+      // overflow-y-auto
         className={`
-          overflow-y-auto
           bg-[#12002a] border-2 border-secondary
           fixed top-2 right-0 z-50 w-[85vw] 
           transition-transform duration-300 ease-in-out
@@ -60,11 +60,14 @@ function RightMenu() {
           <TokanoBalance />
         </div>
         <div>
-          <div className="p-4 border-2 border-secondary mx-6">Details</div>
-          <DataStat />
+          {/* <div className="p-4 border-2 border-secondary mx-6">Details</div>
+          <DataStat /> */}
         </div>
         <Details />
         {/* Staking Positions List */}
+        <div className="border-t-1 border-secondary py-2 pl-14 text-2xl">
+          TOKANO
+        </div>
       </div>
     </div>
   );

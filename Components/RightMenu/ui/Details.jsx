@@ -85,8 +85,8 @@ function Details() {
 
   return (
     <div>
-      <div className="mx-6 mt-4 border-2 border-secondary rounded">
-        <div className="bg-gradient-to-r from-[#4000FF] to-[#272241] px-4 py-3">
+      <div className="mx-6 border-2 border-t-0 border-secondary">
+        <div className="bg-gradient-to-r from-[#2f01ba] to-[#0C0D1C] px-4 py-3">
           <h2 className="text-xl font-medium">Details</h2>
         </div>
 
@@ -333,7 +333,7 @@ function Details() {
         </div>
 
         {/* History Button */}
-        <div className="bg-secondary px-4 py-2 text-center relative z-50">
+        <div className="bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-50 mb-2">
           <button className="text-white font-semibold">▼ History</button>
         </div>
       </div>
