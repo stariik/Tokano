@@ -81,7 +81,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
               <StakeIcon />
               <div className="flex flex-col lg:text-sm text-xs mt-2">
                 <div
-                  className="pr-8 lg:pr-24 pl-8 -ml-6 -z-1 rounded-full text-white"
+                  className="pr-14 lg:pr-24 pl-8 -ml-6 -z-1 rounded-full text-white"
                   style={{
                     background:
                       "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
