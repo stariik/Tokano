@@ -50,17 +50,17 @@ function SoonCard({ id }) {
           <img
             src="/image.png"
             alt=""
-            className="rounded-4xl ml-4 md:ml-8 mt-2 md:mt-4 lg:w-36 md:w-24 w-18"
+            className="rounded-4xl ml-4 md:ml-8 mt-2 md:mt-4 lg:w-36 w-24"
           />
         </div>
 
         <div className="col-span-2">
-          <div className="flex w-1/5 md:w-1/4 justify-center relative pl-8 md:pl-0">
+          <div className="flex w-1/5 md:w-1/4 justify-center relative  md:pl-0">
             <CiPill color="#5ecb89" size={25} className="absolute top-1" />
           </div>
           <div className="flex-col justify-center items-center text-center">
             <p
-              className={`text-md md:text-lg lg:text-xl 2xl:text-2xl font-semibold ${khandSemibold.className}`}
+              className={`text-md md:text-lg lg:text-xl 2xl:text-2xl font-semibold mt-2 ${khandSemibold.className}`}
             >
               YOU'RE FIRED (FIRED)
             </p>

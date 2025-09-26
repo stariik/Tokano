@@ -28,7 +28,20 @@ const secondTables = [
   { header: "name3", columns: ColumnNames2, tableData: table3Data },
 ];
 
-function LaunchingSoon() {
+function LaunchingSoon({ isMobile = false }) {
+  if (isMobile) {
+    return (
+      <div className="border-secondary">
+        <div
+          className={`flex justify-center py-4 text-xl ${khandMedium.className} custom-header-gradient`}
+        >
+          <h1>| Launching Soon |</h1>
+        </div>
+        <ScrollingSoonCards cards={cardData} />
+      </div>
+    );
+  }
+
   return (
     <div className="hidden md:block border-r-2 border-secondary">
       <div
