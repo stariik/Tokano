@@ -39,7 +39,7 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="md:hidden fixed bottom-4 left-4 bg-secondary text-light px-3 py-2 rounded-lg text-sm font-medium z-40 hover:opacity-90 transition-opacity"
+        className="md:hidden fixed bottom-18 left-4 bg-secondary text-light px-3 py-2 rounded-lg text-sm font-medium z-40 hover:opacity-90 transition-opacity"
       >
         Menu
       </button>

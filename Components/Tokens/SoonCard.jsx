@@ -81,14 +81,16 @@ function SoonCard({ id }) {
         </div>
         <div className="mx-auto relative my-6">
           <div className="absolute flex gap-2 -left-[30px] lg:-left-[50px] -top-[20px]">
-            <div className={`text-xl lg:text-3xl mt-4 ${khandSemibold.className}`}>
+            <div
+              className={`text-xl lg:text-3xl mt-4 ${khandSemibold.className}`}
+            >
               STAKE
             </div>
             <div className="bg-[#2A1C7B] rounded-full pr-0 p-1 pl-2 z-10">
               <StakeIcon />
             </div>
           </div>
-          <div className="absolute left-[80px] top-[20px] z-100 xl:w-[100px] 2xl:w-[330px] h-[3px] rounded-full bg-gradient-to-r from-[#190E79] from-25% to-[#8B0000]"></div>
+          <div className="absolute left-[80px] top-[20px] xl:w-[100px] 2xl:w-[330px] h-[3px] rounded-full bg-gradient-to-r from-[#190E79] from-25% to-[#8B0000]"></div>
         </div>
         <div
           className={`${khandMedium.className} pl-4 mt-4 text-xs lg:text-base`}
