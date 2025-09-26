@@ -236,7 +236,7 @@ function Details() {
                 }`}
               >
                 <div className="flex cursor-pointer ">
-                  <div className="flex items-center justify-center border-r border-secondary px-2 min-w-[30px]">
+                  <div className="flex items-center justify-center border-r border-secondary mx-auto min-w-[30px]">
                     <span className="text-sm font-semibold text-white">
                       {index + 1}
                     </span>

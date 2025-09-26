@@ -3,6 +3,7 @@ import { React, useState } from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import CryptoWallet from "@/Components/stakenomics/CryptoWallet";
 import { TOKENS } from "../../lib/constants";
+import Live from "@/Components/Live/Live";
 
 function page() {
   const [selectedToken, setSelectedToken] = useState(3); // LIMASIRA is selected by default
@@ -20,6 +21,9 @@ function page() {
               setSelectedToken={setSelectedToken}
               tokens={TOKENS}
             />
+          </div>
+          <div className="mt-4">
+            <Live />
           </div>
         </div>
       </div>

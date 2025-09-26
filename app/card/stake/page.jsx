@@ -2,6 +2,7 @@ import React from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import StakingCard from "@/Components/StakingCard/StakingCard";
 import StakingModule from "@/Components/StakingCard/StakingModule";
+import MyStaking from "./comps/MyStaking";
 
 function page() {
   return (
@@ -17,6 +18,7 @@ function page() {
           <div className="mt-8">
             <StakingModule />
           </div>
+          <MyStaking />
         </div>
       </div>
     </div>

@@ -4,7 +4,6 @@ import { Khand } from "next/font/google";
 import GlobalDataRow from "./comps/GlobalDataRow";
 import TokanoBalance from "./ui/TokanoBalance";
 import Details from "./ui/Details";
-import DataStat from "./ui/DataStat";
 import GlobalData from "./ui/GlobalData";
 
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });

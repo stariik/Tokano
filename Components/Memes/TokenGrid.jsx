@@ -1,8 +1,6 @@
 import React from "react";
 // import TokenCard from "./TokenCard";
 import Lock from "./TokenCards/Lock";
-import Soon from "./TokenCards/Soon";
-import Stake from "./TokenCards/Stake";
 import GridFilter from "./GridFilter";
 import { tokens } from "@/data/data";
 import Vest from "./TokenCards/Vest";
@@ -17,7 +15,7 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
       <GridFilter />
       <div
         className="overflow-y-auto text-white"
-        style={{ maxHeight: "70vh", minHeight: "400px" }}
+        style={{ maxHeight: "100vh", minHeight: "400px" }}
       >
         <div className={`grid gap-3 ${gridCols}`}>
           {tokens.map((token, idx) => (
