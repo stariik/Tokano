@@ -73,7 +73,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
         <div className="flex flex-col relative justify-start ml-2 md:ml-0 lg:ml-2">
           <img
             src="/fired.png"
-            className="w-20  md:w-24 lg:w-28  lg:h-28 rounded-2xl md:rounded-3xl lg:rounded-4xl mr-4 lg:mr-2 md:mr-4"
+            className="w-20  md:w-24 lg:w-38 rounded-2xl md:rounded-3xl lg:rounded-4xl mr-4 lg:mr-2 md:mr-4"
           />
           <div className="mt-8 lg:mt-6">
             <div className="absolute left-0 w-80 z-5 flex">

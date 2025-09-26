@@ -45,7 +45,7 @@ function VestCard({ id, title, created, marketCap, wallet }) {
         <div className="flex justify-end mr-12">
           <img
             src="/vest.png"
-            className="w-22 md:w-28 h-22 md:h-28 rounded-3xl md:rounded-4xl ml-2 lg:ml-4 xl:ml-8"
+            className="w-22 md:w-28  rounded-3xl md:rounded-4xl ml-2 lg:ml-4 xl:ml-8"
           />
         </div>
         <p className="absolute right-5 text-[#FFB01C] bottom-0 text-xl">120M</p>
