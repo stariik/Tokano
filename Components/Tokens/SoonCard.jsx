@@ -88,7 +88,7 @@ function SoonCard({ id }) {
               <StakeIcon />
             </div>
           </div>
-          <div className="absolute left-[80px] top-[20px]  xl:w-[100px] 2xl:w-[330px] h-[3px] rounded-full bg-gradient-to-r from-[#190E79] from-25% to-[#8B0000]"></div>
+          <div className="absolute left-[80px] top-[20px] z-100 xl:w-[100px] 2xl:w-[330px] h-[3px] rounded-full bg-gradient-to-r from-[#190E79] from-25% to-[#8B0000]"></div>
         </div>
         <div
           className={`${khandMedium.className} pl-4 mt-4 text-xs lg:text-base`}
