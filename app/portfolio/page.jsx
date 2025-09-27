@@ -3,7 +3,7 @@ import { React, useState } from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import CryptoWallet from "@/Components/stakenomics/CryptoWallet";
 import { TOKENS } from "../../lib/constants";
-import Live from "@/Components/Live/Live";
+import StakingScroll from "./comps/StakingScroll";
 
 function page() {
   const [selectedToken, setSelectedToken] = useState(3); // LIMASIRA is selected by default
@@ -15,7 +15,7 @@ function page() {
           <TokenGrid gridCols="grid-cols-2" />
         </div>
         <div className="col-span-4">
-          <div className="mt-8">
+          <div className="">
             <CryptoWallet
               selectedToken={selectedToken}
               setSelectedToken={setSelectedToken}
@@ -23,7 +23,7 @@ function page() {
             />
           </div>
           <div className="mt-4">
-            <Live />
+            <StakingScroll />
           </div>
         </div>
       </div>

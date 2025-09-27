@@ -24,7 +24,7 @@ function page() {
         </div>
 
         <div className="col-span-4">
-          <div className="mt-8">
+          <div className="">
             <CryptoWallet
               selectedToken={selectedToken}
               setSelectedToken={setSelectedToken}

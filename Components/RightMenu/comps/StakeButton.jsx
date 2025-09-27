@@ -10,7 +10,7 @@ function StakeButton() {
           sm:pr-4 sm:pl-2 sm:py-2
           rounded-full
           border-2 sm:border-4 border-white
-          cursor-pointer justify-end
+          cursor-pointer justify-between
           transition-all duration-200
           text-xs sm:text-base md:text-xl
           min-w-[80px] sm:min-w-[120px] md:min-w-[160px]
