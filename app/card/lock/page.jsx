@@ -1,6 +1,6 @@
 import React from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
-import StakingCard from "@/Components/StakingCard/StakingCard";
+import Lock from "./Lock";
 
 function page() {
   return (
@@ -11,7 +11,7 @@ function page() {
         </div>
         <div className="col-span-4">
           <div className="">
-            <StakingCard />
+            <Lock />
           </div>
         </div>
       </div>
