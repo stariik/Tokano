@@ -1,7 +1,6 @@
 import React from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
-import StakingCard from "@/Components/StakingCard/StakingCard";
-import StakingModule from "@/Components/StakingCard/StakingModule";
+import Vest from "./Vest";
 
 function page() {
   return (
@@ -12,9 +11,8 @@ function page() {
         </div>
         <div className="col-span-4">
           <div className="">
-            <StakingCard />
+            <Vest />
           </div>
-          
         </div>
       </div>
     </div>

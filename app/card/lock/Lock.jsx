@@ -52,7 +52,7 @@ function Lock({ id, title, created, marketCap, wallet }) {
 
   return (
     <div
-      className="rounded-3xl pb-8 border-1 border-secondary text-white"
+      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
       style={{
         background: "linear-gradient(90deg, #5d9beb 10%, #041d33 80%)",
       }}
@@ -63,7 +63,7 @@ function Lock({ id, title, created, marketCap, wallet }) {
           background: "linear-gradient(45deg, #5d9beb 0%, #041d33 100%)",
         }}
       >
-        <div className="absolute top-16 left-4 flex flex-col gap-4">
+        <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
           <div className="bg-[#0088cc] rounded-full p-1">
             <FaTelegramPlane />
           </div>
@@ -76,17 +76,16 @@ function Lock({ id, title, created, marketCap, wallet }) {
         </div>
 
         <div className="flex">
-          <div className=""></div>
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-38 lg:rounded-3xl rounded-2xl ml-2 lg:ml-4 xl:ml-8 mb-4"
+            className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
-          <div className={`${khandMedium.className} ml-8`}>
-            <h1 className={`${khandSemibold.className} text-4xl`}>
+          <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
+            <h1 className={`${khandSemibold.className} lg:text-4xl text-2xl`}>
               YOU'RE FIRED (FIRED)
             </h1>
 
-            <div className="pl-1 text-xl mt-1">
+            <div className="pl-1 text-lg lg:text-xl mt-1">
               <p>Pool ID: 0x4v49...hssdas</p>
               <p>Creator: Anonymouse</p>
               <p>Token ID: 0x4v49...hssdas</p>
@@ -95,7 +94,7 @@ function Lock({ id, title, created, marketCap, wallet }) {
           </div>
         </div>
         <div className="absolute top-10 right-0">
-          <div className="mr-12">
+          <div className="ml-4 lg:mr-12">
             <CiPill size={28} />
           </div>
 
@@ -120,7 +119,7 @@ function Lock({ id, title, created, marketCap, wallet }) {
             className={`flex flex-col lg:text-sm text-xs my-auto w-full ${khandMedium.className}`}
           >
             <div
-              className={`pl-4 pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between ${khandNormal.className}`}
+              className={`pl-6 pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between ${khandNormal.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%)",
@@ -133,13 +132,15 @@ function Lock({ id, title, created, marketCap, wallet }) {
         </div>
 
         <div
-          className={`text-[#FFB01C] text-end text-3xl ${khandSemibold.className} mr-4 mt-16`}
+          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 mt-12 lg:mt-16`}
         >
           120M
         </div>
       </div>
 
-      <div className={`mr-12 text-end text-2xl ${khandNormal.className}`}>
+      <div
+        className={`mr-12 text-end text-xl lg:text-2xl ${khandNormal.className}`}
+      >
         locked
       </div>
     </div>

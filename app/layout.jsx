@@ -31,9 +31,9 @@ export default function RootLayout({ children }) {
         <Navbar />
         <Banner src={"banner1.png"} />
 
-        <div className="flex">
+        <div className="relative">
           <div className="">{children}</div>
-          <div className="pr-4 py-18 md:py-6 text-light absolute right-0 w-1/3 2xl:w-6/19">
+          <div className="pr-4 py-18 md:py-6 text-light absolute right-0 top-0 w-1/3 2xl:w-6/19">
             <RightMenu />
           </div>
         </div>
