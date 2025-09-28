@@ -9,12 +9,35 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
 
   return (
-    <div
-      className={`bg-[#13153A] p-4 rounded-2xl border border-[#292B8C] ${visibilityClass}`}
-    >
+    <>
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #8b5cf6;
+          border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #7c3aed;
+        }
+        .custom-scrollbar::-webkit-scrollbar-button {
+          display: none;
+        }
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #8b5cf6 transparent;
+        }
+      `}</style>
+      <div
+        className={`bg-[#13153A] p-4 rounded-2xl border border-[#292B8C] ${visibilityClass}`}
+      >
       <GridFilter />
       <div
-        className="overflow-y-auto text-white"
+        className="overflow-y-auto text-white custom-scrollbar"
         style={{ maxHeight: "100vh", minHeight: "400px" }}
       >
         <div className={`grid gap-3 ${gridCols}`}>
@@ -52,7 +75,8 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

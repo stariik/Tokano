@@ -94,7 +94,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
                   className="pr-0 pl-8 -ml-6 -z-1 mr-2 rounded-full text-white"
                   style={{
                     background:
-                      "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%);",
+                      "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
                   }}
                 >
                   LEFT: |56%
