@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 import StakeCard from '../../../Components/Tokens/StakeCard'
 import { cardData } from "@/data/data";

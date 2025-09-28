@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 // import TokenCard from "./TokenCard";
 import Lock from "./TokenCards/Lock";
