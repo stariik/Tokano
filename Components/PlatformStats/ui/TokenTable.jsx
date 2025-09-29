@@ -14,11 +14,11 @@ function TokenTable({ header, columns, rowNum, tableData = [] }) {
         {tableData.map((row) => (
           <div
             key={row.id}
-            className="col-span-3"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(26, 27, 107, 1) 0%, rgba(0, 0, 0, 1) 81%)",
-            }}
+            className="col-span-3 bg-[#120e21]"
+            // style={{
+            //   background:
+            //     "linear-gradient(90deg, rgba(26, 27, 107, 1) 0%, rgba(0, 0, 0, 1) 81%)",
+            // }}
           >
             <TokenRow data={row} />
           </div>

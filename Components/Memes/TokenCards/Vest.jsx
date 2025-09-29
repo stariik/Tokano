@@ -9,7 +9,7 @@ const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 function Lock({ token }) {
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-[220px] overflow-hidden relative shadow-lg"
+      className="rounded border-2 border-[#292B8C] flex flex-col w-[180px] lg:w-[220px] overflow-hidden relative shadow-lg"
       style={{
         background: "linear-gradient(45deg, #88048B 10%, #110C58 65%)",
       }}
@@ -40,7 +40,7 @@ function Lock({ token }) {
         <div
           className={`flex items-center justify-between mb-1 ${khandSemibold.className}`}
         >
-          <div className="text-2xl flex">LOCK</div>
+          <div className="text-xl lg:text-2xl flex">Vest</div>
           <div className="bg-white rounded-3xl">
             <div className="bg-[#190E79] p-2 m-2 rounded-2xl">
               <FaStairs size={14} />
@@ -59,7 +59,7 @@ function Lock({ token }) {
       {/* Bottom Bar */}
       <div className="flex justify-between flex-row gap-1">
         <div
-          className={`"h-6 w rounded-r-xl basis-40 text-center ${khandMedium.className}`}
+          className={`"h-6 w rounded-r-xl basis-40 text-center text-sm lg:text-base ${khandMedium.className}`}
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
@@ -67,7 +67,7 @@ function Lock({ token }) {
           TYPE: LIN/MONTHLY
         </div>
         <div
-          className={`"h-6 w-30 rounded-l-xl text-center ${khandMedium.className}`}
+          className={`"h-6 w-30 rounded-l-xl text-center text-sm lg:text-base ${khandMedium.className}`}
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}

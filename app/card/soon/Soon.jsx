@@ -122,7 +122,7 @@ function Soon() {
               className={`pl-2 lg:pl-6 lg:pr-5 pr-2 ml-0 lg:-ml-4 py-1 -z-1 rounded-full text-[#6D11B3] lg:text-base text-xs flex justify-between ${khandNormal.className}`}
               style={{
                 background:
-                  "linear-gradient(90deg, rgba(255, 199, 51, 1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(255, 212, 42, 1) 90%)",
+                  "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)",
               }}
             >
               <div>LOCKED: 21.04.2025</div>

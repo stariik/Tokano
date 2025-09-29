@@ -9,7 +9,7 @@ const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 function Lock({ token }) {
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-[220px] overflow-hidden relative shadow-lg"
+      className="rounded border-2 border-[#292B8C] flex flex-col w-[180px] lg:w-[220px] overflow-hidden relative shadow-lg"
       style={{
         background: "linear-gradient(45deg, #5d9beb 10%, #041d33 65%)",
       }}
@@ -40,11 +40,10 @@ function Lock({ token }) {
         <div
           className={`flex items-center justify-between mb-1 ${khandSemibold.className}`}
         >
-          <div className="text-2xl flex">LOCK</div>
+          <div className="text-xl lg:text-2xl flex">LOCK</div>
           <div className="bg-white rounded-3xl">
             <div className="bg-[#190E79] p-2 m-2 rounded-2xl">
               <SiVerizon size={14} />
-
             </div>
           </div>
           <div className="flex flex-col items-center">
