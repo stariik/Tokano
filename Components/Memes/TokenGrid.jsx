@@ -6,6 +6,7 @@ import GridFilter from "./GridFilter";
 import { tokens } from "@/data/data";
 import Vest from "./TokenCards/Vest";
 import Soon from "./TokenCards/Soon";
+import Stake from "./TokenCards/Stake";
 
 function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
@@ -45,6 +46,20 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
           <div className={`grid gap-3 ${gridCols}`}>
             {tokens.map((token, idx) => (
               <React.Fragment key={idx}>
+                <Stake
+                  token={{
+                    image: token.image,
+                    name: token.name,
+                    mcap: token.mcap,
+                    staked: token.staked,
+                    stakedPercent: token.stakedPercent,
+                    frozen: token.frozen,
+                    frozenPercent: token.frozenPercent,
+                    stakers: token.stakers,
+                    timeLeft: token.timeLeft,
+                    percent: token.percent,
+                  }}
+                />
                 <Soon
                   token={{
                     image: token.image,
