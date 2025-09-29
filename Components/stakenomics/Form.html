@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Staking Pool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-gradient-main {
+            background: linear-gradient(135deg, #6b7fd7 0%, #8b6db8 100%);
+        }
+        .bg-gradient-container {
+            background: linear-gradient(180deg, #9b8fd4 0%, #b5a8e3 100%);
+        }
+        .bg-gradient-avatar {
+            background: linear-gradient(135deg, #f4c96b 0%, #3d7fa6 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-main min-h-screen flex justify-center items-center p-5">
+    <div class="bg-gradient-container border-3 border-[#7d6eb8] rounded-3xl p-4 w-full max-w-[500px] shadow-2xl">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4 px-1">
+            <div class="flex items-center gap-3">
+                <div class="bg-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-[#6b4d9f] text-base flex-shrink-0">
+                    i
+                </div>
+                <div class="text-[#1a0a33] text-sm font-semibold">
+                    Fill the form to Create Staking Pool for:
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-[30px] h-[30px] rounded-full bg-gradient-avatar flex items-center justify-center overflow-hidden">
+                    <div class="w-5 h-5 rounded-full" style="background: radial-gradient(circle, #f4d16b 40%, #5a8fb8 100%);"></div>
+                </div>
+                <div class="text-[#1a0a33] font-bold text-sm">
+                    LIMASIRA
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Box -->
+        <div class="bg-[#f5f3fb] rounded-2xl p-6 border-2 border-[#d4c9e8]">
+            <!-- Form Item 1 -->
+            <div class="mb-5">
+                <label class="block text-[#1a0a33] font-bold text-[13px] mb-2">
+                    <span class="text-[#6b4d9f] font-bold mr-1">1.</span>Pool activation date (UTC):
+                </label>
+                <div class="flex gap-2 items-center mb-1.5">
+                    <input type="text" class="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold flex-1 max-w-[280px]" value="mm/dd/yyyy   hh:mm" readonly>
+                </div>
+                <div class="text-[#4a3d6b] text-[10px] leading-tight mt-1.5 font-medium">
+                    Before this date, the pool will show "Launching Soon", or choose to make staking available immediately.
+                </div>
+            </div>
+
+            <!-- Form Item 2 -->
+            <div class="mb-5">
+                <label class="block text-[#1a0a33] font-bold text-[13px] mb-2">
+                    <span class="text-[#6b4d9f] font-bold mr-1">2.</span>Total reward token amount:
+                </label>
+                <div class="flex gap-2 items-center mb-1.5">
+                    <input type="text" class="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold w-40" value="120,234,221.23" readonly>
+                    <span class="text-[#1a0a33] font-bold text-[13px]">tokens</span>
+                </div>
+                <div class="text-[#4a3d6b] text-[10px] leading-tight mt-1.5 font-medium">
+                    Enter the total number of tokens you wish to allocate as rewards. These will be distributed to stakers while the pool is active.
+                </div>
+            </div>
+
+            <!-- Form Item 3 -->
+            <div class="mb-5">
+                <label class="block text-[#1a0a33] font-bold text-[13px] mb-2">
+                    <span class="text-[#6b4d9f] font-bold mr-1">3.</span>Duration of total reward distribution :
+                </label>
+                <div class="flex gap-2 items-center mb-1.5">
+                    <input type="text" class="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold w-[60px] text-center" value="123" readonly>
+                    <span class="text-[#1a0a33] font-bold text-[13px]">days</span>
+                </div>
+                <div class="text-[#4a3d6b] text-[10px] leading-tight mt-1.5 font-medium">
+                    Define the time period over which rewards will be fully distributed to stakers.
+                </div>
+            </div>
+
+            <!-- Form Item 4 -->
+            <div class="mb-4">
+                <label class="block text-[#1a0a33] font-bold text-[13px] mb-2">
+                    <span class="text-[#6b4d9f] font-bold mr-1">4.</span>Unstaking becomes available in :
+                </label>
+                <div class="flex gap-2 items-center mb-1.5">
+                    <input type="text" class="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold w-[60px] text-center" value="00" readonly>
+                    <span class="text-[#1a0a33] font-bold text-[13px]">days</span>
+                    <input type="text" class="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold w-[60px] text-center" value="12" readonly>
+                    <span class="text-[#1a0a33] font-bold text-[13px]">hours</span>
+                </div>
+                <div class="text-[#4a3d6b] text-[10px] leading-tight mt-1.5 font-medium">
+                    Once users stake their tokens in this pool, they will only be able to unstake them after this lock period has elapsed.
+                </div>
+            </div>
+
+            <!-- Warning Box -->
+            <div class="bg-[#fff9f9] border-2 border-[#ff9999] rounded-xl p-4 mt-2">
+                <div class="flex items-center justify-center gap-2 text-[#cc0000] font-bold text-xs mb-3">
+                    <span class="text-sm">⚠️</span>
+                    <span>ATTENTION</span>
+                    <span class="text-sm">⚠️</span>
+                </div>
+                <ul class="list-none">
+                    <li class="text-[#b30000] text-[10px] leading-relaxed mb-2.5 pl-3 relative font-medium">
+                        <span class="absolute left-0 font-bold">1.</span>
+                        <span class="font-bold">Reward Claim Frequency:</span> Stakers can claim their rewards once every 24 hours.
+                    </li>
+                    <li class="text-[#b30000] text-[10px] leading-relaxed mb-2.5 pl-3 relative font-medium">
+                        <span class="absolute left-0 font-bold">2.</span>
+                        <span class="font-bold">Unclaimed Rewards:</span> Rewards not claimed within 365 days will be converted to Takana native tokens. After conversion, users must contact support to retrieve them.
+                    </li>
+                    <li class="text-[#b30000] text-[10px] leading-relaxed pl-3 relative font-medium">
+                        <span class="absolute left-0 font-bold">3.</span>
+                        <span class="font-bold">Undistributed Tokens:</span> Any undistributed tokens remaining in the pool will be available for extraction to the creator's wallet for 365 days after the pool's distribution period ends. After this period, tokens will be converted to Takana native tokens, and the creator must contact support to retrieve them.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

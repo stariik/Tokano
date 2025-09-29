@@ -44,6 +44,7 @@ export default function FundCards({ selectedToken, selectedTokenData, onDataFill
         fundType={selectedFund.title}
         token={selectedTokenData}
         onDataChange={handleFormDataChange}
+        onClose={() => setSelectedFund(null)}
       />
     );
   };
@@ -87,20 +88,7 @@ export default function FundCards({ selectedToken, selectedTokenData, onDataFill
       {/* Selected Fund Component */}
       {selectedFund && (
         <div className="px-6 pb-6">
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">
-                {selectedFund.title}
-              </h2>
-              <button
-                onClick={() => setSelectedFund(null)}
-                className="text-gray-500 hover:text-gray-700 transition-colors"
-              >
-                ✖
-              </button>
-            </div>
-            {renderFundComponent()}
-          </div>
+          {renderFundComponent()}
         </div>
       )}
     </div>
