@@ -45,7 +45,7 @@ function Stake({ token }) {
     <div
       className="rounded border-2 border-[#292B8C] flex flex-col w-[180px] lg:w-[220px] overflow-hidden relative shadow-lg"
       style={{
-        background: "linear-gradient(45deg, #170D56 10%, #622CCD 65%)",
+        background: "linear-gradient(45deg,#170D56 10%, #432CCD  65%)",
       }}
     >
       {/* Token Image */}
