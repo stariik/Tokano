@@ -3,6 +3,7 @@ import React from "react";
 import TokenCard from "@/Components/Memes/TokenCard";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import StakingCard from "@/Components/StakingCard/StakingCard";
+import Soon from "./Soon";
 
 function page() {
   return (
@@ -13,7 +14,7 @@ function page() {
         </div>
         <div className="col-span-4">
           <div className="">
-            <StakingCard />
+            <Soon />
           </div>
           
         </div>
