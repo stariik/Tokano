@@ -64,11 +64,12 @@ export default function FundCards({ selectedToken, selectedTokenData, onDataFill
                 ? "ring-4 ring-purple-500 ring-opacity-50"
                 : ""
             } ${fund.disabled ? "cursor-not-allowed opacity-75" : ""}`}
+            style={fund.gradientStyle}
           >
             <button
               onClick={(e) => handleCreateClick(e, fund)}
               disabled={fund.disabled}
-              className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold text-white transition-colors duration-200 ${fund.buttonColor}`}
+              className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold transition-colors duration-200 ${fund.buttonColor}`}
             >
               CREATE
             </button>
