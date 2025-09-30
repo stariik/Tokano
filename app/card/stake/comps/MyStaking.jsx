@@ -100,7 +100,7 @@ function MyStaking() {
           <div className="w-0.5 h-full bg-gray-700/20 rounded-full relative">
             <div
               ref={scrollIndicatorRef}
-              className="absolute right-0 w-0.5 bg-purple-500 mt-2 mb-4 rounded-full"
+              className="absolute right-0 w-0.5 bg-purple-500  mb-4 rounded-full"
               style={{ minHeight: "15px", transition: "none" }}
             ></div>
           </div>
