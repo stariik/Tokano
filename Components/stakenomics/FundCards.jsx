@@ -54,12 +54,12 @@ export default function FundCards({ selectedToken, selectedTokenData, onDataFill
   return (
     <div className="max-w-4xl mx-auto">
       {/* Fund Cards */}
-      <div className="grid grid-cols-4 gap-4 p-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6">
         {FUND_TYPES.map((fund) => (
           <div
             key={fund.id}
             onClick={() => handleCardClick(fund)}
-            className={`relative w-38 h-32 ${
+            className={`relative w-full h-32 ${
               fund.bgColor
             } rounded-2xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer ${
               selectedFund?.id === fund.id
@@ -71,17 +71,19 @@ export default function FundCards({ selectedToken, selectedTokenData, onDataFill
             <button
               onClick={(e) => handleCreateClick(e, fund)}
               disabled={fund.disabled}
-              className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold transition-colors duration-200 ${fund.buttonColor}`}
+              className={`absolute top-2 left-2 md:top-3 md:left-3 px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold transition-colors duration-200 ${fund.buttonColor}`}
             >
               CREATE
             </button>
 
             {/* Title */}
-            <div className="absolute bottom-4 left-4 right-4">
+            <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4">
               <h3
-                className={`text-lg font-bold ${fund.textColor} leading-tight`}
+                className={`text-xl md:text-base lg:text-lg font-bold ${fund.textColor} leading-tight`}
               >
-                {fund.title}
+                {fund.title.split(' ').map((word, index) => (
+                  <span key={index} className="block">{word}</span>
+                ))}
               </h3>
             </div>
           </div>
