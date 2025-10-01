@@ -16,7 +16,15 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   const initializeFormData = () => {
     const data = {};
     config.fields.forEach(field => {
-      data[field.name] = field.defaultValue || "";
+      if (field.defaultValue !== undefined) {
+        data[field.name] = field.defaultValue;
+      } else if (field.type === "number") {
+        data[field.name] = "";
+      } else if (field.type === "select" && field.options) {
+        data[field.name] = field.options[0];
+      } else {
+        data[field.name] = "";
+      }
     });
     return data;
   };

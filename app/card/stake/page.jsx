@@ -1,6 +1,6 @@
 import React from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
-import StakingCard from "@/Components/StakingCard/StakingCard";
+import StakingCard from "@/app/card/stake/comps/StakingCard";
 import StakingModule from "@/Components/StakingCard/StakingModule";
 import MyStaking from "./comps/MyStaking";
 

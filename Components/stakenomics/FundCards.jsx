@@ -10,6 +10,8 @@ export default function FundCards({ selectedToken, selectedTokenData, onDataFill
   const handleCardClick = (fundType) => {
     if (fundType.disabled) return;
     setSelectedFund(fundType);
+    setCurrentFormData(null);
+    onDataFilled?.(null);
   };
 
   const handleCreateClick = (e, fundType) => {

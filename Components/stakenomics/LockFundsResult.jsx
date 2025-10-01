@@ -1,0 +1,149 @@
+import React from "react";
+import { Khand } from "next/font/google";
+import { FaTelegramPlane } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { TbWorld } from "react-icons/tb";
+import { StarIcon } from "@/Components/icons";
+import { CiPill } from "react-icons/ci";
+
+const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
+const khandNormal = Khand({ subsets: ["latin"], weight: "500" });
+const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
+
+function LockFundsResult({ token, formData }) {
+  const LockIcon = () => (
+    <svg
+      className="w-[47px] h-[47px] lg:w-[80px] lg:h-[57px]"
+      viewBox="0 0 57 57"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M29.3456 47.3799C18.8444 47.7464 10.0393 39.6725 9.6789 29.3463C9.3185 19.02 17.5393 10.3519 28.0405 9.98539C38.5418 9.61889 47.3468 17.6928 47.7072 28.019C48.0676 38.3453 39.8469 47.0134 29.3456 47.3799Z"
+        fill="white"
+      />
+      <path
+        d="M24.5337 38.1907L24.5337 38.1204C26.2227 36.2671 27.0438 34.6249 26.9969 33.1939C26.9969 32.7951 26.9383 32.3963 26.821 31.9975C26.7037 31.5986 26.516 31.1177 26.2579 30.5547C25.9999 29.9917 25.6363 29.2644 25.1671 28.373C24.7917 27.6223 24.5219 26.9537 24.3577 26.3672C24.1935 25.7807 24.0879 25.159 24.041 24.5022C24.0176 23.5403 24.2052 22.555 24.604 21.5463C25.0263 20.5141 25.6245 19.564 26.3987 18.696L27.7359 18.696L27.7359 15.1067L29.8472 15.1067L29.8472 18.696L32.979 18.696L32.979 18.7664C32.111 19.7282 31.4894 20.5962 31.114 21.3703C30.7387 22.121 30.551 22.8952 30.551 23.6928C30.551 24.2793 30.6566 24.8541 30.8677 25.4171C31.0788 25.9801 31.419 26.7074 31.8882 27.5988C32.5216 28.7483 32.9556 29.6867 33.1902 30.4139C33.4248 31.1177 33.5538 31.845 33.5773 32.5957C33.6007 33.6044 33.4365 34.5545 33.0846 35.446C32.7562 36.314 32.2166 37.2289 31.4659 38.1907L29.8472 38.1907L29.8472 41.6393L27.7359 41.6393L27.7359 38.1907L24.5337 38.1907Z"
+        fill="#790E19"
+      />
+      <path
+        d="M29.3696 55.3682C14.2685 55.8952 1.60642 44.2846 1.08817 29.4351C0.569907 14.5856 12.3917 2.1205 27.4929 1.59346C42.594 1.06641 55.2561 12.677 55.7743 27.5265C56.2926 42.376 44.4708 54.8411 29.3696 55.3682Z"
+        fill="white"
+      />
+      <path
+        d="M29.0839 47.1787C18.5827 47.5452 9.77757 39.4713 9.41718 29.1451C9.05679 18.8189 17.2776 10.1507 27.7788 9.78422C38.28 9.41771 47.0851 17.4917 47.4455 27.8179C47.8059 38.1441 39.5851 46.8122 29.0839 47.1787Z"
+        fill="#0E1C79"
+      />
+      <path
+        d="M27.9561 16.4888C29.0771 16.4888 30.4262 16.6325 31.6201 17.2339C32.8204 17.8385 33.8549 18.9019 34.3457 20.7173C34.3984 20.9124 34.5299 21.6786 34.583 22.5298C34.6097 22.9569 34.6168 23.4101 34.584 23.8276C34.5575 24.1648 34.5034 24.4868 34.4082 24.7554C34.8922 24.8486 35.1838 24.9163 35.2256 24.9263C35.6183 25.02 35.9392 25.3061 36.0762 25.687C36.1209 25.8106 37.0586 28.4504 37.0586 32.0171C37.0586 35.5468 36.1266 38.208 36.0781 38.3423C35.9423 38.7257 35.6208 39.0142 35.2256 39.1079C35.0789 39.1429 31.8142 39.9106 27.9561 39.9106C24.0955 39.9106 20.8284 39.142 20.6855 39.1079C20.3419 39.0259 20.0531 38.7971 19.8945 38.4858L19.835 38.3481C19.7919 38.2293 18.8535 35.5883 18.8535 32.0171C18.8535 28.4781 19.7901 25.8122 19.834 25.6909C19.9698 25.3082 20.2911 25.0202 20.6855 24.9263C20.723 24.9172 20.97 24.8616 21.3799 24.7808C21.3032 24.2708 21.2637 23.7216 21.2637 23.1235C21.2637 20.92 21.8046 19.2535 22.9287 18.1392C24.0527 17.0251 25.7336 16.4888 27.9561 16.4888ZM27.9551 26.5259C25.3622 26.5259 23.0141 26.91 21.9072 27.1245C21.6593 28.0368 21.2559 29.8542 21.2559 32.0171C21.2559 34.2091 21.6576 36.0074 21.9053 36.9087C23.0116 37.1224 25.3625 37.5083 27.9551 37.5083C30.5471 37.5083 32.8946 37.1233 34.002 36.9087C34.2499 35.9964 34.6543 34.1792 34.6543 32.0161C34.6543 29.825 34.2525 28.0258 34.0049 27.1245C32.8984 26.9108 30.5475 26.5259 27.9551 26.5259ZM27.9551 18.8911C26.5528 18.8911 25.4909 19.0719 24.7764 19.6724C24.0683 20.2675 23.6651 21.3079 23.665 23.1235C23.665 23.5888 23.6944 24.0162 23.75 24.4009C24.9462 24.2499 26.4039 24.1235 27.9551 24.1235C29.4915 24.1235 30.9341 24.2453 32.123 24.394C32.1268 24.322 32.1345 24.2397 32.1455 24.1567C32.1817 23.8828 32.2371 23.5196 32.2109 23.1343C32.1725 22.569 32.1477 22.1579 32.1211 21.8462C32.1011 21.6118 32.0809 21.4395 32.0547 21.3052L32.0264 21.1821C31.8373 20.4817 31.538 19.9196 30.9443 19.5269C30.3446 19.1301 29.4223 18.8911 27.9551 18.8911Z"
+        fill="white"
+        stroke="white"
+        strokeWidth="0.3"
+      />
+      <path
+        d="M30.4346 29.0286L31.667 30.2395L31.7734 30.345L31.6689 30.4524L27.5889 34.6047L27.4834 34.7112L27.376 34.6067L26.833 34.0725L26.8262 34.0813L26.7148 33.9817L24.6299 32.1008L24.5186 32.0012L24.6191 31.8899L25.7764 30.6067L25.877 30.4954L25.9883 30.595L27.418 31.884L30.2227 29.0305L30.3271 28.9241L30.4346 29.0286Z"
+        fill="white"
+        stroke="white"
+        strokeWidth="0.3"
+      />
+    </svg>
+  );
+
+  return (
+    <div
+      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
+      style={{
+        background: "linear-gradient(90deg, #5d9beb 10%, #041d33 80%)",
+      }}
+    >
+      <div
+        className="rounded-3xl p-8 pb-0 relative"
+        style={{
+          background: "linear-gradient(45deg, #5d9beb 0%, #041d33 100%)",
+        }}
+      >
+        <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
+          <div className="bg-[#0088cc] rounded-full p-1">
+            <FaTelegramPlane />
+          </div>
+          <div className="bg-black p-1 rounded-full">
+            <FaXTwitter />
+          </div>
+          <div className="p-1">
+            <TbWorld />
+          </div>
+        </div>
+
+        <div className="flex">
+          <img
+            src="/vest.png"
+            className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
+          />
+          <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
+            <h1 className={`${khandSemibold.className} lg:text-4xl text-2xl`}>
+              {token?.name || "TOKEN NAME"}
+            </h1>
+
+            <div className="pl-1 text-lg lg:text-xl mt-1">
+              <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
+              <p>Creator: {formData?.creator || "Anonymous"}</p>
+              <p>Token ID: {token?.id || "0x0000...0000"}</p>
+              <p>Market cap: {formData?.marketCap || "$0"}</p>
+            </div>
+          </div>
+        </div>
+        <div className="absolute top-10 right-0">
+          <div className="ml-4 lg:mr-12">
+            <CiPill size={28} />
+          </div>
+
+          <div
+            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
+          >
+            {formData?.releaseDate || "DD.MM.YY HH:MM"}
+          </div>
+          <div className="flex justify-end mr-4 mt-12 transform -translate-y-1/2">
+            <StarIcon />
+          </div>
+        </div>
+
+        <div className="absolute left-0  w-11/13 z-5 flex">
+          <div
+            className={`items-center flex mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
+          >
+            LOCK
+          </div>
+          <LockIcon />
+          <div
+            className={`flex flex-col lg:text-sm text-xs my-auto w-full ${khandMedium.className}`}
+          >
+            <div
+              className={`pl-6 pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between ${khandNormal.className}`}
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%)",
+              }}
+            >
+              <div>LOCKED: {formData?.lockDate || "DD.MM.YYYY"} {formData?.lockTime || "HH:MM"}</div>
+              <div>ENDS: {formData?.releaseDate || "DD.MM.YYYY HH:MM"}</div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 mt-12 lg:mt-16`}
+        >
+          {formData?.tokenAmount || "0"}
+        </div>
+      </div>
+
+      <div
+        className={`mr-12 text-end text-xl lg:text-2xl ${khandNormal.className}`}
+      >
+        locked
+      </div>
+    </div>
+  );
+}
+
+export default LockFundsResult;
