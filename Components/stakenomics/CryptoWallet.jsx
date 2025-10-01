@@ -7,7 +7,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
   const selectedTokenData = tokens.find((token) => token.id === selectedToken);
 
   return (
-    <div className="max-w-4xl mx-auto bg-[#C7C1F5]  rounded-3xl overflow-hidden font-sans shadow-2xl">
+    <div className="max-w-4xl mx-4 lg:mx-auto bg-[#C7C1F5]  rounded-3xl overflow-hidden font-sans shadow-2xl">
       {/* Header */}
       <div className="bg-[#C7C1F5] px-6 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-800 tracking-wide">YOUR WALLET</h1>
@@ -32,7 +32,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
                 >
                   <span className="text-2xl mr-2">{token.icon}</span>
                   <div className="flex-1">
-                    <span className="text-lg font-bold text-gray-800">
+                    <span className="lg:text-lg font-bold text-gray-800">
                       {index + 1}. {token.name}
                     </span>
                   </div>
@@ -46,7 +46,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
             {/* Balance Display */}
             <div className="rounded-2xl p-3 border border-white border-opacity-40 flex items-center justify-end">
               <div className="text-right">
-                <div className="text-xl font-bold text-gray-800">
+                <div className="lg:text-xl font-bold text-gray-800">
                   {selectedTokenData?.balance} {selectedTokenData?.ticker}
                 </div>
               </div>
@@ -56,26 +56,26 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
             <div className="rounded-2xl p-4 border border-white border-opacity-40 flex-1">
               <div className="space-y-4">
                 <div>
-                  <span className="text-gray-700 font-semibold text-lg">token ID: </span>
-                  <span className="text-gray-800 font-bold text-lg">
+                  <span className="text-gray-700 font-semibold text-base lg:text-lg">token ID: </span>
+                  <span className="text-gray-800 font-bold text-base lg:text-lg">
                     {selectedTokenData?.tokenId}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-700 font-semibold text-lg">name: </span>
-                  <span className="text-gray-800 font-bold text-lg">
+                  <span className="text-gray-700 font-semibold text-base lg:text-lg">name: </span>
+                  <span className="text-gray-800 font-bold text-base lg:text-lg">
                     YOU'RE {selectedTokenData?.name}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-700 font-semibold text-lg">ticker: </span>
-                  <span className="text-gray-800 font-bold text-lg">
+                  <span className="text-gray-700 font-semibold text-base lg:text-lg">ticker: </span>
+                  <span className="text-gray-800 font-bold text-base lg:text-lg">
                     {selectedTokenData?.ticker}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-700 font-semibold text-lg">platform: </span>
-                  <span className="text-gray-800 font-bold text-lg">
+                  <span className="text-gray-700 font-semibold text-base lg:text-lg">platform: </span>
+                  <span className="text-gray-800 font-bold text-base lg:text-lg">
                     {selectedTokenData?.platform}
                   </span>
                 </div>
