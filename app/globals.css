@@ -14,3 +14,11 @@
 .custom-header2-gradient {
   background: linear-gradient(270deg, #940470 0%, #231570 51.92%, #ba0a9a 100%);
 }
+
+/* Hide all menu buttons when any menu is open */
+body:has(.menu-overlay-active) #left-menu-button,
+body:has(.menu-overlay-active) #right-menu-button,
+body:has(.menu-overlay-active) #tokengrid-menu-button {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

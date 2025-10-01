@@ -58,9 +58,10 @@ export default function Home() {
           scrollbar-color: #8b5cf6 transparent;
         }
 
-        /* Hide both menu buttons when any menu is open */
+        /* Hide all menu buttons when any menu is open */
         body:has(.menu-overlay-active) #left-menu-button,
-        body:has(.menu-overlay-active) #right-menu-button {
+        body:has(.menu-overlay-active) #right-menu-button,
+        body:has(.menu-overlay-active) #tokengrid-menu-button {
           opacity: 0 !important;
           pointer-events: none !important;
         }
