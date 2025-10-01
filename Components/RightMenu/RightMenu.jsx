@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Khand } from "next/font/google";
 import GlobalDataRow from "./comps/GlobalDataRow";
 import TokanoBalance from "./ui/TokanoBalance";
@@ -11,35 +11,72 @@ const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 function RightMenu() {
   const [show, setShow] = useState(false);
 
+  // Prevent body scroll when menu is open on mobile
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [show]);
+
   return (
     <div className={`${khandMedium.className}`}>
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #8b5cf6;
+          border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #7c3aed;
+        }
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #8b5cf6 transparent;
+        }
+      `}</style>
+
       {/* Toggle button - mobile only */}
       <button
-        onClick={() => setShow(!show)}
-        className="xl:hidden fixed bottom-18 right-0 z-70 bg-white text-purple-600 px-4 py-2 rounded shadow-lg"
+        onClick={() => setShow(true)}
+        className={`xl:hidden fixed bottom-10 right-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-white px-4 py-2 rounded-l-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+          show ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+        id="right-menu-button"
+        style={{ boxShadow: '0 8px 25px rgba(0, 0, 0, 0.5)' }}
       >
-        {show ? "Close" : "Menu"}
+        ☰ Menu
       </button>
 
       {/* Overlay - mobile only */}
       {show && (
         <div
-          className="xl:hidden fixed inset-0 bg-black/50 z-40"
+          className="menu-overlay-active xl:hidden fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
           onClick={() => setShow(false)}
         />
       )}
 
       {/* Right-side menu */}
       <div
-      // overflow-y-auto
         className={`
-          bg-[#12002a] border-2 border-secondary
-          fixed top-2 right-0 z-50 w-[85vw] 
+          bg-[#12002a] border-l-2 border-secondary
+          fixed top-0 right-0 z-50 w-[90vw] h-screen
+          overflow-y-auto custom-scrollbar
           transition-transform duration-300 ease-in-out
           shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ]
           rounded-tl-[2.5rem] rounded-bl-[2.5rem]
+          pb-6
           ${show ? "translate-x-0" : "translate-x-full"}
-          xl:static xl:z-0 xl:w-auto xl:shadow-none xl:translate-x-0
+          xl:static xl:z-0 xl:w-auto xl:shadow-none xl:translate-x-0 xl:h-auto xl:pb-0 xl:border-2 xl:top-2 xl:h-[calc(100vh-1rem)]
         `}
         style={{
           borderTopLeftRadius: "2.5rem",
@@ -47,9 +84,15 @@ function RightMenu() {
         }}
       >
         <div
-          className={`flex justify-start py-3 px-6 text-4xl rounded-tr-4xl border-b-2 border-secondary`}
+          className={`flex justify-between items-center py-3 px-6 text-4xl rounded-tr-4xl border-b-2 border-secondary`}
         >
           <h1>TOKANO</h1>
+          <button
+            onClick={() => setShow(false)}
+            className="xl:hidden text-white hover:text-purple-400 transition-colors text-3xl"
+          >
+            ✕
+          </button>
         </div>
         <GlobalData />
         <div className="w-full pl-4 text-3xl border-y-2 border-secondary py-2">

@@ -8,6 +8,7 @@ import {
 } from "@/data/data";
 import { Khand } from "next/font/google";
 import ScrollingSoonCards from "../Live/ui/ScrollingSoonCards";
+import SoonCard from "@/Components/Tokens/SoonCard";
 import { cardData } from "@/data/data";
 
 
@@ -32,12 +33,13 @@ function LaunchingSoon({ isMobile = false }) {
   if (isMobile) {
     return (
       <div className="border-secondary">
-        <div
-          className={`flex justify-center py-4 text-xl ${khandMedium.className} custom-header-gradient`}
-        >
-          <h1>| Launching Soon |</h1>
+        <div className="space-y-2 px-2">
+          {cardData.map((item) => (
+            <div key={item.id}>
+              <SoonCard />
+            </div>
+          ))}
         </div>
-        <ScrollingSoonCards cards={cardData} />
       </div>
     );
   }

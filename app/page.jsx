@@ -33,44 +33,84 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full mt-6">
-        <TokenGrid hideOnMobile={false} gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7" />
+        <TokenGrid
+          hideOnMobile={false}
+          gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7"
+        />
       </div>
+
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #8b5cf6;
+          border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #7c3aed;
+        }
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #8b5cf6 transparent;
+        }
+
+        /* Hide both menu buttons when any menu is open */
+        body:has(.menu-overlay-active) #left-menu-button,
+        body:has(.menu-overlay-active) #right-menu-button {
+          opacity: 0 !important;
+          pointer-events: none !important;
+        }
+      `}</style>
 
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="md:hidden fixed bottom-18 left-4 bg-secondary text-light px-3 py-2 rounded-lg text-sm font-medium z-40 hover:opacity-90 transition-opacity"
+        className={`md:hidden fixed bottom-10 left-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-white px-4 py-2 rounded-r-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+        id="left-menu-button"
+        style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)" }}
       >
-        Menu
+        ☰ Menu
       </button>
 
       {/* Mobile Menu Overlay */}
-      <div
-        className={`md:hidden fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${
-          isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={() => setIsMobileMenuOpen(false)}
-      >
+      {isMobileMenuOpen && (
         <div
-          className={`fixed top-0 left-0 h-full w-full max-w-sm bg-dark transform transition-transform duration-300 ease-in-out ${
-            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
-          onClick={(e) => e.stopPropagation()}
+          className="menu-overlay-active md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+          onClick={() => setIsMobileMenuOpen(false)}
         >
-          <div className="flex justify-between items-center p-4 border-b border-secondary">
-            <h2 className={`text-xl ${khandSemibold.className}`}>Menu</h2>
-            <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-2xl hover:opacity-70 transition-opacity"
-            >
-              ×
-            </button>
-          </div>
-          <div className="h-full overflow-y-auto">
-            <LaunchingSoon isMobile={true} />
+          <div
+            className={`fixed top-0 left-0 h-screen w-[90vw] max-w-sm bg-dark transform transition-transform duration-300 ease-in-out rounded-tr-[2.5rem] rounded-br-[2.5rem] border-r-2 border-secondary flex flex-col overflow-hidden ${
+              isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              borderTopRightRadius: "2.5rem",
+              borderBottomRightRadius: "2.5rem",
+            }}
+          >
+            <div className="flex justify-between items-center p-4 border-b border-secondary bg-dark flex-shrink-0">
+              <h2 className={`text-xl ${khandSemibold.className}`}>
+                LAUNCHING SOON
+              </h2>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-white hover:text-purple-400 transition-colors text-3xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto custom-scrollbar pb-6">
+              <LaunchingSoon isMobile={true} />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </main>
   );
 }
