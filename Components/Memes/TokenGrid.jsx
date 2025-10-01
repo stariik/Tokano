@@ -8,7 +8,7 @@ import Vest from "./TokenCards/Vest";
 import Soon from "./TokenCards/Soon";
 import Stake from "./TokenCards/Stake";
 
-function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
+function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true, filterVariant = "default" }) {
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
 
   return (
@@ -36,11 +36,11 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true }) {
         }
       `}</style>
       <div
-        className={`bg-[#13153A] p-4 rounded-2xl border border-[#292B8C] ${visibilityClass}`}
+        className={`bg-[#13153A] rounded-2xl border border-[#292B8C] ${visibilityClass}`}
       >
-        <GridFilter />
+        <GridFilter variant={filterVariant} />
         <div
-          className="overflow-y-auto text-white custom-scrollbar"
+          className="overflow-y-auto text-white custom-scrollbar m-4"
           style={{ maxHeight: "100vh", minHeight: "400px" }}
         >
           <div className={`grid gap-3 ${gridCols}`}>
