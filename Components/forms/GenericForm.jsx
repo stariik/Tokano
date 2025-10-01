@@ -60,7 +60,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
           <select
             value={value}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold w-40"
+            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-40"
           >
             {options.map(option => (
               <option key={option} value={option}>{option}</option>
@@ -74,7 +74,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             type={type}
             value={value}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold flex-1 max-w-[280px]"
+            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px]"
             required={required}
           />
         );
@@ -86,7 +86,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold flex-1 max-w-[280px]"
+            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px] placeholder-gray-400"
             required={required}
           />
         );
@@ -97,7 +97,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             type={type}
             value={value}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold flex-1 max-w-[280px]"
+            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px]"
             required={required}
           />
         );
@@ -108,7 +108,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             type={type}
             value={value}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold w-[100px]"
+            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-[100px]"
             required={required}
           />
         );
@@ -120,7 +120,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold w-40 text-center"
+            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-40 text-center placeholder-gray-400"
             required={required}
           />
         );
@@ -132,7 +132,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold w-24"
+            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-24 placeholder-gray-400"
             required={required}
           />
         );
@@ -152,7 +152,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       return (
         <div className="flex gap-2 items-center mb-1.5">
           {renderField(field)}
-          {suffix && <span className="text-[#1a0a33] font-bold text-[13px]">{suffix}</span>}
+          {suffix && <span className="text-white font-bold text-[13px]">{suffix}</span>}
         </div>
       );
     }
@@ -279,21 +279,21 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   };
 
   return (
-    <div className="w-full mx-auto rounded-3xl p-4 shadow-2xl border-[3px] border-[#7d6eb8]" style={gradientStyles.bgGradientContainer}>
+    <div className="w-full mx-auto rounded-3xl p-4 shadow-2xl border-[3px] border-[#453DC8] bg-[#1B105C]">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 px-1">
         <div className="flex items-center gap-3">
           <div className="bg-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-[#6b4d9f] text-base flex-shrink-0">
             {getIcon()}
           </div>
-          <div className="text-[#1a0a33] text-sm font-semibold">
+          <div className="text-white text-sm font-semibold">
             Fill the form to Create {fundType}
           </div>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-[#6b4d9f] hover:text-[#1a0a33] transition-colors font-bold text-lg"
+            className="text-white hover:text-gray-300 transition-colors font-bold text-lg"
           >
             ✖
           </button>
@@ -301,15 +301,15 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       </div>
 
       {/* Form Container */}
-      <div className="bg-[#f5f3fb] rounded-2xl p-6 border-2 border-[#d4c9e8] mb-6">
+      <div className="rounded-2xl p-6 mb-6">
         {config.fields.map((field, index) => (
           <div key={field.name} className="mb-5">
-            <label className="block text-[#1a0a33] font-bold text-[13px] mb-2">
-              <span className="text-[#6b4d9f] font-bold mr-1">{index + 1}.</span>
+            <label className="block text-white font-bold text-[13px] mb-2">
+              <span className="text-white font-bold mr-1">{index + 1}.</span>
               {getFieldLabel(field, fundType)}:
             </label>
             {renderFieldWithLayout(field)}
-            <div className="text-[#4a3d6b] text-[10px] leading-tight mt-1.5 font-medium">
+            <div className="text-white text-[10px] leading-tight mt-1.5 font-medium opacity-80">
               {getFieldDescription(field, fundType)}
             </div>
           </div>
@@ -318,8 +318,8 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
         {/* Card Pic Section - only for LOCK FUNDS */}
         {fundType === "LOCK FUNDS" && (
           <div className="mb-4">
-            <label className="block text-[#1a0a33] font-bold text-[13px] mb-2">
-              <span className="text-[#6b4d9f] font-bold mr-1">{config.fields.length + 1}.</span>
+            <label className="block text-white font-bold text-[13px] mb-2">
+              <span className="text-white font-bold mr-1">{config.fields.length + 1}.</span>
               Card pic:
             </label>
             <div className="mt-2 h-32 bg-[#d8d0f0] rounded-lg border-2 border-dashed border-[#6b4d9f] flex items-center justify-center">
@@ -327,7 +327,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
                 Upload or drag image here
               </span>
             </div>
-            <div className="text-[#4a3d6b] text-[10px] leading-tight mt-1.5 font-medium">
+            <div className="text-white text-[10px] leading-tight mt-1.5 font-medium opacity-80">
               Upload an image to represent this lock fund. This will be displayed on the card.
             </div>
           </div>
