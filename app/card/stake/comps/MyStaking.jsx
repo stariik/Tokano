@@ -115,7 +115,7 @@ function MyStaking() {
         />
 
         {/* History Button */}
-        <div className="bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-50 mb-2">
+        <div className="bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-10 mb-2">
           <button className="text-white font-semibold">▼ History</button>
         </div>
       </div>
