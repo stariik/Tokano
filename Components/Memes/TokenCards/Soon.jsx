@@ -9,7 +9,7 @@ const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 function Soon({ token }) {
   const StakeIcon = () => (
     <svg
-      className="w-[37px] lg:w-[47px] h-full"
+      className="w-[35px] md:w-[37px] lg:w-[47px] h-full "
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@ function Soon({ token }) {
 
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-[180px] lg:w-[220px] overflow-hidden relative shadow-lg"
+      className="rounded border-2 border-[#292B8C] flex flex-col w-full overflow-hidden relative shadow-lg pb-1"
       style={{
         background: "linear-gradient(45deg, #170D56 10%, #622CCD 65%)",
       }}
@@ -50,7 +50,7 @@ function Soon({ token }) {
           src="/image.png"
           alt={token.name}
           fill
-          className="object-cover"
+          className="object-cover static!"
           sizes="220px"
         />
       </div>
@@ -59,7 +59,7 @@ function Soon({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-2">
           <span
-            className={`text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
+            className={`text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -79,11 +79,10 @@ function Soon({ token }) {
         <div
           className={`flex items-center justify-end gap-4 ${khandSemibold.className}`}
         >
-          
-            <div className="bg-white rounded-full">
-              <StakeIcon />
-            </div>
-            <div className="text-xl lg:text-4xl flex">Soon</div>
+          <div className="bg-white rounded-full">
+            <StakeIcon />
+          </div>
+          <div className="text-2xl xl:text-3xl 2xl:text-4xl flex">Soon</div>
         </div>
       </div>
       {/* Bottom Bar */}

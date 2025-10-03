@@ -9,7 +9,7 @@ const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 function Stake({ token }) {
   const StakeIcon = () => (
     <div className="relative z-10 flex-shrink-0">
-      <div className="w-12 rounded-full bg-white flex -mr-18 items-center justify-center">
+      <div className="w-8 md:w-12 rounded-full bg-white flex -mr-18 items-center justify-center">
         <svg
           className="w-16"
           viewBox="0 0 57 57"
@@ -43,7 +43,7 @@ function Stake({ token }) {
 
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-[180px] lg:w-[220px] overflow-hidden relative shadow-lg"
+      className="rounded border-2 border-[#292B8C] flex flex-col w-full overflow-hidden relative shadow-lg"
       style={{
         background: "linear-gradient(45deg,#170D56 10%, #432CCD  65%)",
       }}
@@ -54,7 +54,7 @@ function Stake({ token }) {
           src="/image.png"
           alt={token.name}
           fill
-          className="object-cover"
+          className="object-cover static!"
           sizes="220px"
         />
       </div>
@@ -63,7 +63,7 @@ function Stake({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-2">
           <span
-            className={`text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
+            className={`text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -83,13 +83,13 @@ function Stake({ token }) {
           {/* Text Content */}
           <div className="flex flex-col">
             {/* Time Display Bar */}
-            <div className="bg-gradient-to-r from-cyan-400 via-cyan-300 to-teal-300 rounded-full pl-6 lg:pl-8 py-1 flex lg:-ml-4 items-center w-26">
+            <div className="bg-gradient-to-r from-cyan-400 via-cyan-300 to-teal-300 rounded-full pl-4 lg:pl-8 py-1 flex lg:-ml-4 items-center w-20 2xl:w-26">
               <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
               <span className="text-white text-xs font-bold">2d-12h-45m</span>
             </div>
 
             {/* Percentage Display Bar */}
-            <div className="bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-300 rounded-full pl-8 py-1 lg:-ml-4 flex items-center w-16">
+            <div className="bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-300 rounded-full pl-4 py-1 lg:-ml-4 flex items-center w-14">
               <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
               <span className="text-[#1E1E1E] text-xs font-bold">30%</span>
             </div>
@@ -100,7 +100,7 @@ function Stake({ token }) {
               {" "}
               12K
             </div>
-            <div>stakers</div>
+            <div className="-ml-2 md:ml-0">stakers</div>
           </div>
         </div>
       </div>

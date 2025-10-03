@@ -9,7 +9,7 @@ const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 function Lock({ token }) {
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-[180px] lg:w-[220px] overflow-hidden relative shadow-lg"
+      className="rounded border-2 border-[#292B8C] flex flex-col w-full overflow-hidden relative shadow-lg"
       style={{
         background: "linear-gradient(45deg, #88048B 10%, #110C58 65%)",
       }}
@@ -20,7 +20,7 @@ function Lock({ token }) {
           src="/image.png"
           alt={token.name}
           fill
-          className="object-cover"
+          className="object-cover static!"
           sizes="220px"
         />
       </div>
@@ -29,7 +29,7 @@ function Lock({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-1">
           <span
-            className={`text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
+            className={`text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -43,7 +43,7 @@ function Lock({ token }) {
           <div className="text-xl lg:text-2xl flex">Vest</div>
           <div className="bg-white rounded-3xl">
             <div className="bg-[#190E79] p-2 m-2 rounded-2xl">
-              <FaStairs size={14} />
+              <FaStairs className="w-[10px] h-[10px] lg:w-[14px] lg:h-[14px]" />
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -59,7 +59,7 @@ function Lock({ token }) {
       {/* Bottom Bar */}
       <div className="flex justify-between flex-row gap-1">
         <div
-          className={`"h-6 w rounded-r-xl basis-40 text-center text-sm lg:text-base ${khandMedium.className}`}
+          className={`"h-6 rounded-r-xl basis-40 text-center text-xs md:text-sm lg:text-base ${khandMedium.className}`}
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
@@ -67,7 +67,7 @@ function Lock({ token }) {
           TYPE: LIN/MONTHLY
         </div>
         <div
-          className={`"h-6 w-30 rounded-l-xl text-center text-sm lg:text-base ${khandMedium.className}`}
+          className={`"h-6 w-30 rounded-l-xl text-center text-xs md:text-sm lg:text-base ${khandMedium.className}`}
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
