@@ -65,7 +65,7 @@ function SoonCard({ id }) {
               YOU'RE FIRED (FIRED)
             </p>
             <h1
-              className={`text-xl md:text-2xl lg:text-4xl 2xl:text-5xl font-bold ${khandSemibold.className} lg:mt-4`}
+              className={`text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold ${khandSemibold.className} lg:mt-4`}
             >
               LAUNCHING SOON
             </h1>
