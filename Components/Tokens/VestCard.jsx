@@ -50,7 +50,7 @@ function VestCard({ id, title, created, marketCap, wallet }) {
         <div className="flex flex-col w-full">
           <div className="flex w-full justify-between pr-4 items-center">
             <CiPill color="#5ecb89" size={30} />
-            <h1 className="text-xl 2xl:text-4xl ml-4 xl:ml-6 2xl:ml-8">
+            <h1 className="xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl ">
               {title}
             </h1>
           </div>
@@ -63,10 +63,10 @@ function VestCard({ id, title, created, marketCap, wallet }) {
             </p>
           </div>
         </div>
-        <div className="flex justify-end mr-12">
+        <div className="flex flex-col justify-start">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-38 lg:rounded-3xl rounded-2xl ml-2 lg:ml-4 xl:ml-8 mb-4"
+            className="w-20 lg:w-28 lg:rounded-3xl rounded-2xl mr-26 mb-4"
           />
 
           {/*  */}
@@ -78,14 +78,14 @@ function VestCard({ id, title, created, marketCap, wallet }) {
             <VestIcon />
             <div className="flex flex-col lg:text-sm text-xs my-auto w-full">
               <div
-                className="pl-4 pr-2 -ml-2 -z-1 rounded-full text-white flex justify-between"
+                className="pl-1 pr-1 -ml-2 -z-1 rounded-full text-white flex justify-end"
                 style={{
                   background:
                     "linear-gradient(270deg, #2A8DFF 14.74%, #3542C5 88.65%)",
                 }}
               >
                 <div className={`${khandMedium.className}`}>
-                  TYPE: LIN/MONTHLY <span className="mx-1" /> CLIFF: |5d
+                  TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" /> CLIFF: |5d
                 </div>
               </div>
             </div>

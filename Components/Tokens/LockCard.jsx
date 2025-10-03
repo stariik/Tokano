@@ -67,9 +67,9 @@ function LockCard({ id, title, created, marketCap, wallet }) {
           <StarIcon />
         </div>
         <div className="flex flex-col w-full">
-          <div className="flex w-full justify-between pr-4 items-center">
+          <div className="flex w-full justify-between pr-2 md:pr-4 items-center">
             <CiPill color="#5ecb89" size={30} />
-            <h1 className="text-xl lg:text-4xl ml-4 xl:ml-6 2xl:ml-8">
+            <h1 className="md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl">
               {title}
             </h1>
           </div>
@@ -82,10 +82,10 @@ function LockCard({ id, title, created, marketCap, wallet }) {
             </p>
           </div>
         </div>
-        <div className="flex justify-end  mr-12">
+        <div className="flex flex-col justify-start">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-38 lg:rounded-3xl rounded-2xl ml-2 lg:ml-4 xl:ml-8 mb-4"
+            className="w-20 lg:w-28 lg:rounded-3xl rounded-2xl mr-28 md:mr-30 mb-4"
           />
 
           {/*  */}
@@ -97,7 +97,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
             <StakeIcon />
             <div className="flex flex-col lg:text-sm text-xs my-auto w-full">
               <div
-                className="pl-4 pr-4 -ml-2 -z-1 rounded-full text-white flex justify-between"
+                className="pl-4 pr-4 -ml-2 -z-1 rounded-full text-white flex justify-between w-full"
                 style={{
                   background:
                     "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",

@@ -103,9 +103,9 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full pr-16 md:pr-20 mb-6">
+        <div className="flex flex-col w-full pr-8 mb-6">
           <div className="flex w-full justify-start pl-2 md:pl-4 items-center">
-            <h1 className="text-lg md:text-xl lg:text-4xl">{title}</h1>
+            <h1 className="text-lg lg:text-2xl 2xl:text-3xl [@media(min-width:1610px)]:text-4xl">{title}</h1>
           </div>
           <div
             className={`pl-2 md:pl-4 text-left mt-1 md:mt-2 text-xs lg:text-base ${khandMedium.className}`}
