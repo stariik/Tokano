@@ -44,13 +44,13 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
 
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
+      className="rounded-4xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
       style={{
         background: "linear-gradient(90deg, #2f1f7b 10%, #622ea9 80%)",
       }}
     >
       <div
-        className="rounded-3xl p-8 pb-0 relative"
+        className="rounded-4xl p-8 pb-0 relative"
         style={{
           background: "linear-gradient(45deg, #2f1f7b 0%, #622ea9 100%)",
         }}
@@ -73,11 +73,11 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
             className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
           <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} lg:text-4xl text-2xl`}>
+            <h1 className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}>
               YOU'RE FIRED (FIRED)
             </h1>
 
-            <div className="pl-1 text-lg lg:text-xl mt-1">
+            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
               <p>Pool ID: 0x4v49...hssdas</p>
               <p>Creator: Anonymouse</p>
               <p>Token ID: 0x4v49...hssdas</p>
@@ -91,7 +91,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
           </div>
 
           <div
-            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm ${khandMedium.className}`}
           >
             21.04.25/12:24
           </div>
@@ -112,7 +112,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
             <StakeIcon />
 
             <div
-              className={`pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-white  ${khandNormal.className}`}
+              className={`pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-white ${khandNormal.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
@@ -121,7 +121,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
               <div>LOCKED: 21.04.2025</div>
             </div>
             <div
-              className={`pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black ${khandNormal.className}`}
+              className={`pl-4 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black ${khandNormal.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
@@ -133,7 +133,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
         </div>
 
         <div
-          className={`text-[#FFB01C] text-end text-2xl lg:text-4xl ${khandSemibold.className} mr-4 mt-6 lg:mt-8`}
+          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 lg:mt-4`}
         >
           120M
         </div>

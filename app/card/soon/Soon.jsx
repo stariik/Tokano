@@ -72,11 +72,11 @@ function Soon() {
             className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
           <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} lg:text-4xl text-2xl`}>
+            <h1 className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}>
               YOU'RE FIRED (FIRED)
             </h1>
 
-            <div className="pl-1 text-lg lg:text-xl mt-1">
+            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
               <p>Pool ID: 0x4v49...hssdas</p>
               <p>Creator: Anonymouse</p>
               <p>Token ID: 0x4v49...hssdas</p>
@@ -90,7 +90,7 @@ function Soon() {
           </div>
 
           <div
-            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm ${khandMedium.className}`}
           >
             21.04.25/12:24
           </div>
@@ -109,7 +109,7 @@ function Soon() {
             <StakeIcon />
           </div>
           <div
-            className={`flex flex-col lg:text-sm text-xs my-auto w-1/2 mx-auto ${khandMedium.className}`}
+            className={`flex flex-col lg:text-sm text-xs my-auto w-full mx-auto ${khandMedium.className}`}
           >
             <div
               className="h-2 bg-white w-6/7 lg:w-9/10 -z-1 flex absolute -right-16 lg:-right-27 bottom-6 lg:bottom-8"
@@ -119,7 +119,7 @@ function Soon() {
               }}
             ></div>
             <div
-              className={`pl-2 lg:pl-6 lg:pr-5 pr-2 ml-0 lg:-ml-4 py-1 -z-1 rounded-full text-[#6D11B3] lg:text-base text-xs flex justify-between ${khandNormal.className}`}
+              className={`pl-1 lg:pl-6 lg:pr-5 pr-1 ml-0 lg:-ml-4 py-1 -z-1 rounded-full text-[#6D11B3] lg:text-base text-xs flex justify-between ${khandNormal.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)",

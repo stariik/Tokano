@@ -64,11 +64,13 @@ function Vest() {
             className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
           <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} lg:text-4xl text-2xl`}>
+            <h1
+              className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}
+            >
               YOU'RE FIRED (FIRED)
             </h1>
 
-            <div className="pl-1 text-base lg:text-xl mt-1">
+            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
               <p>Pool ID: 0x4v49...hssdas</p>
               <p>Creator: Anonymouse</p>
               <p>Token ID: 0x4v49...hssdas</p>
@@ -82,7 +84,7 @@ function Vest() {
           </div>
 
           <div
-            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm ${khandMedium.className}`}
           >
             21.04.25/12:24
           </div>
@@ -103,7 +105,7 @@ function Vest() {
             className={`flex flex-col lg:text-sm text-xs my-auto w-5/5 ${khandMedium.className}`}
           >
             <div
-              className={`pl-4 2xl:pl-6 pr-2 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ${khandMedium.className}`}
+              className={`pl-4 2xl:pl-6 pr-1 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ${khandMedium.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",

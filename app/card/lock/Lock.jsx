@@ -81,11 +81,11 @@ function Lock({ id, title, created, marketCap, wallet }) {
             className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
           <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} lg:text-4xl text-2xl`}>
+            <h1 className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}>
               YOU'RE FIRED (FIRED)
             </h1>
 
-            <div className="pl-1 text-lg lg:text-xl mt-1">
+            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
               <p>Pool ID: 0x4v49...hssdas</p>
               <p>Creator: Anonymouse</p>
               <p>Token ID: 0x4v49...hssdas</p>
@@ -99,7 +99,7 @@ function Lock({ id, title, created, marketCap, wallet }) {
           </div>
 
           <div
-            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm ${khandMedium.className}`}
           >
             21.04.25/12:24
           </div>
