@@ -1,14 +1,19 @@
 "use client";
+
 import React from "react";
+import { Khand } from "next/font/google";
+
+const khandMedium = Khand({ subsets: ["latin"], weight: "500" });
+const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 
 function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
   return (
     <div>
       {/* Headers Row */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className={`grid grid-cols-2 gap-4 ${khandMedium.className}`}>
         {/* First Table Header */}
         <div className="border-r border-secondary">
-          <div className="grid grid-cols-2 bg-[#2A1C78] text-white text-sm font-semibold">
+          <div className="grid grid-cols-2 bg-[#2A1C78] text-white text-xs 2xl:text-sm font-semibold">
             <div className="justify-center items-center flex border-y border-secondary">
               Positions
             </div>
@@ -72,7 +77,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
           `}</style>
 
           {data.map((position, index) => (
-            <div key={position.id} className="grid grid-cols-2 gap-4">
+            <div key={position.id} className={`grid grid-cols-2 gap-4 ${khandMedium.className}`}>
               {/* Left Table Row - Positions & Unstake */}
               <div className="border-r border-secondary">
                 <div
@@ -92,7 +97,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                     }
                   >
                     <div className="flex items-center justify-center border-r border-secondary mx-auto min-w-[30px]">
-                      <span className="text-sm font-semibold text-white">
+                      <span className={`text-sm font-semibold text-white ${khandMedium.className}`}>
                         {index + 1}
                       </span>
                     </div>

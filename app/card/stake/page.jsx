@@ -1,8 +1,11 @@
+'use client';
+
 import React from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import StakingCard from "@/app/card/stake/comps/StakingCard";
 import StakingModule from "@/Components/StakingCard/StakingModule";
 import MyStaking from "./comps/MyStaking";
+import Details from "@/Components/RightMenu/ui/Details";
 
 function page() {
   return (
@@ -18,7 +21,13 @@ function page() {
           <div className="mt-8">
             <StakingModule />
           </div>
-          <MyStaking />
+          {/* Show MyStaking on desktop, Details on mobile */}
+          <div className="hidden md:block text-white">
+            <MyStaking />
+          </div>
+          <div className="md:hidden text-white py-6">
+            <Details />
+          </div>
         </div>
       </div>
     </div>
