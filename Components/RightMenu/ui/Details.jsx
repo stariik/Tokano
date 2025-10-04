@@ -91,11 +91,11 @@ function Details() {
         </div>
 
         {/* Header Row */}
-        <div className="grid grid-cols-3 bg-[#2A1C78] text-white text-sm font-semibold">
-          <div className="justify-center items-center flex border-y border-secondary">
+        <div className="grid grid-cols-2 md:grid-cols-3 bg-[#2A1C78] text-white text-sm font-semibold">
+          <div className="justify-center items-center flex border-y border-secondary py-2">
             <span className="text-red-500">/-Un/</span>Staked (Period)
           </div>
-          <div className="justify-center items-center text-center flex border-1 border-secondary">
+          <div className="hidden justify-center items-center text-center md:flex border-1 border-secondary">
             select position to unstake
             <br />
             or claim reward
@@ -122,7 +122,7 @@ function Details() {
           {/* Fixed continuous middle column background */}
           <div className="absolute inset-0 grid grid-cols-3 z-0">
             <div></div>
-            <div className="bg-gradient-to-b from-[#4000FF] to-[#0C0D1C] border-x border-secondary"></div>
+            <div className="hidden md:block bg-gradient-to-b from-[#4000FF] to-[#0C0D1C] border-x border-secondary"></div>
             <div></div>
           </div>
 
@@ -231,11 +231,11 @@ function Details() {
               <div
                 key={position.id}
                 ref={(el) => (itemRefs.current[index] = el)}
-                className={`grid grid-cols-3 text-sm border-purple-300 relative ${
+                className={`grid grid-cols-2 md:grid-cols-3 text-sm border-purple-300 relative ${
                   position.highlight ? "" : ""
                 }`}
               >
-                <div className="flex cursor-pointer ">
+                <div className="flex cursor-pointer">
                   <div className="flex items-center justify-center border-r border-secondary mx-auto min-w-[30px]">
                     <span className="text-sm font-semibold text-white">
                       {index + 1}
@@ -257,61 +257,62 @@ function Details() {
                     </div>
                   </div>
                 </div>
-                <div className="text-center relative">
-                  {/* Empty middle column with popup positioning */}
-                  {popup.show && popup.positionId === position.id && (
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-70">
-                      {/* Connecting line - left side for unstake (first column) */}
-                      {popup.type === "unstake" && (
-                        <div className="absolute top-1/2 right-full w-8 h-px bg-purple-400 transform -translate-y-1/2"></div>
-                      )}
-                      {/* Connecting line - right side for claim (third column) */}
-                      {popup.type === "claim" && (
-                        <div className="absolute top-1/2 left-full w-8 h-px bg-purple-400 transform -translate-y-1/2"></div>
-                      )}
-                      <div className="bg-[#0C0D1C] border-2 border-secondary rounded-lg p-4 min-w-[160px] text-center shadow-xl">
-                        <div className="mb-3">
-                          <div className="text-white text-sm font-semibold">
-                            {popup.type === "unstake" ? "UNSTAKE?" : "CLAIM?"}
-                          </div>
-                        </div>
-                        <div className="flex flex-col space-y-2">
-                          <button
-                            className={`px-6 py-2 rounded-full text-white font-bold text-sm ${
-                              popup.type === "unstake"
-                                ? "bg-red-500 hover:bg-red-600"
-                                : "bg-green-500 hover:bg-green-600"
-                            }`}
-                            onClick={() => {
-                              console.log(
-                                `${popup.type} YES for position ${popup.positionId}`
-                              );
-                              setPopup({
-                                show: false,
-                                type: "",
-                                positionId: null,
-                              });
-                            }}
-                          >
-                            YES
-                          </button>
-                          <button
-                            className="px-6 py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-white font-bold text-sm"
-                            onClick={() =>
-                              setPopup({
-                                show: false,
-                                type: "",
-                                positionId: null,
-                              })
-                            }
-                          >
-                            NO
-                          </button>
+                <div className="hidden md:block text-center relative">
+                  {/* Empty middle column for desktop */}
+                </div>
+                {/* Popup positioned absolutely - works on both mobile and desktop */}
+                {popup.show && popup.positionId === position.id && (
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-70">
+                    {/* Connecting line - left side for unstake (first column) */}
+                    {popup.type === "unstake" && (
+                      <div className="absolute top-1/2 right-full w-8 h-px bg-purple-400 transform -translate-y-1/2"></div>
+                    )}
+                    {/* Connecting line - right side for claim (third column) */}
+                    {popup.type === "claim" && (
+                      <div className="absolute top-1/2 left-full w-8 h-px bg-purple-400 transform -translate-y-1/2"></div>
+                    )}
+                    <div className="bg-[#0C0D1C] border-2 border-secondary rounded-lg p-4 min-w-[160px] text-center shadow-xl">
+                      <div className="mb-3">
+                        <div className="text-white text-sm font-semibold">
+                          {popup.type === "unstake" ? "UNSTAKE?" : "CLAIM?"}
                         </div>
                       </div>
+                      <div className="flex flex-col space-y-2">
+                        <button
+                          className={`px-6 py-2 rounded-full text-white font-bold text-sm ${
+                            popup.type === "unstake"
+                              ? "bg-red-500 hover:bg-red-600"
+                              : "bg-green-500 hover:bg-green-600"
+                          }`}
+                          onClick={() => {
+                            console.log(
+                              `${popup.type} YES for position ${popup.positionId}`
+                            );
+                            setPopup({
+                              show: false,
+                              type: "",
+                              positionId: null,
+                            });
+                          }}
+                        >
+                          YES
+                        </button>
+                        <button
+                          className="px-6 py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-white font-bold text-sm"
+                          onClick={() =>
+                            setPopup({
+                              show: false,
+                              type: "",
+                              positionId: null,
+                            })
+                          }
+                        >
+                          NO
+                        </button>
+                      </div>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
                 <div
                   className="text-center cursor-pointer hover:bg-[#2A1C78] border-r border-secondary md:text-lg mr-3"
                   onClick={() =>

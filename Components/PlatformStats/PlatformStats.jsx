@@ -41,8 +41,10 @@ function PlatformStats() {
           columns={table.columns}
           rowNum={table.tableData.length} // you can also pass a fixed number
           tableData={table.tableData}
+          className={idx >= 3 ? "lg:col-auto" : ""}
         />
       ))}
+      <div className="lg:hidden col-span-1"></div>
     </div>
   );
 }
