@@ -1,11 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import usePhantom from "@/hooks/usePhantom"; // import the hook
+import WalletSelectionPopup from "./WalletSelectionPopup";
 
 function Navbar() {
+  const [showWalletPopup, setShowWalletPopup] = useState(false);
+
   const NavigationButtonStyle = "hover:text-primary transition cursor-pointer";
   const navigationItems = [
     { name: "HOME", href: "/" },
@@ -19,6 +22,20 @@ function Navbar() {
     ? publicKey.slice(0, 4) + "..." + publicKey.slice(-4)
     : null;
 
+  const handleWalletButtonClick = () => {
+    if (publicKey) {
+      disconnectWallet();
+    } else {
+      setShowWalletPopup(true);
+    }
+  };
+
+  const handleSelectWallet = (walletId) => {
+    // For now, all wallets will use the same connect function
+    // You can customize this later for different wallet types
+    connectWallet(walletId);
+  };
+
   return (
     <>
       {/* Top Section - Mobile Header */}
@@ -30,7 +47,7 @@ function Navbar() {
           </Link>
 
           <button
-            onClick={publicKey ? disconnectWallet : connectWallet}
+            onClick={handleWalletButtonClick}
             className="text-light hover:brightness-110 transition cursor-pointer md:hidden"
           >
             {publicKey ? shortKey : "CONNECT WALLET"}
@@ -63,7 +80,7 @@ function Navbar() {
 
         <div className="flex justify-center">
           <button
-            onClick={publicKey ? disconnectWallet : connectWallet}
+            onClick={handleWalletButtonClick}
             className="text-light hover:brightness-110 transition cursor-pointer"
           >
             {publicKey ? shortKey : "CONNECT WALLET"}
@@ -91,6 +108,13 @@ function Navbar() {
           ))}
         </div>
       </div>
+
+      {/* Wallet Selection Popup */}
+      <WalletSelectionPopup
+        isOpen={showWalletPopup}
+        onClose={() => setShowWalletPopup(false)}
+        onSelectWallet={handleSelectWallet}
+      />
     </>
   );
 }
