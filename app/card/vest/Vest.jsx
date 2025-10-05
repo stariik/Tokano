@@ -97,7 +97,7 @@ function Vest() {
           <div
             className={`items-center flex mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
           >
-            LOCK
+            Vest
           </div>
           <VestIcon />
 

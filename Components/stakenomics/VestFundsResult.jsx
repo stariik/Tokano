@@ -63,11 +63,11 @@ function VestFundsResult({ token, formData }) {
             className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
           <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} lg:text-4xl text-2xl`}>
+            <h1 className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}>
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-base lg:text-xl mt-1">
+            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
               <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
               <p>Creator: {formData?.creator || "Anonymous"}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
@@ -81,11 +81,11 @@ function VestFundsResult({ token, formData }) {
           </div>
 
           <div
-            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className={`mt-10 md:mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
           >
             {formData?.activationDate || "DD.MM.YY"} {formData?.activationTime || "HH:MM"}
           </div>
-          <div className="flex justify-end mr-4 mt-12 transform -translate-y-1/2">
+          <div className="flex justify-end mr-4 mt-4 md:mt-12 transform -translate-y-1/2">
             <StarIcon />
           </div>
         </div>
@@ -102,13 +102,13 @@ function VestFundsResult({ token, formData }) {
             className={`flex flex-col lg:text-sm text-xs my-auto w-5/5 ${khandMedium.className}`}
           >
             <div
-              className={`pl-4 2xl:pl-6 pr-2 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ${khandMedium.className}`}
+              className={`pl-4 2xl:pl-6 pr- 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ${khandMedium.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>START: {formData?.activationDate || "DD.MM.YYYY"}</div>
+              <div>START: {formData?.activationDate || "D.M.Y"}</div>
               <div>CLIFF: {formData?.cliffPeriod || "0"} days</div>
             </div>
 
