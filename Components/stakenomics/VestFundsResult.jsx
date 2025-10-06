@@ -34,7 +34,7 @@ function VestFundsResult({ token, formData }) {
 
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
+      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white mx-0"
       style={{
         background: "linear-gradient(90deg, #9D05A1 10%, #1A1E5F 100%)",
       }}
@@ -67,7 +67,7 @@ function VestFundsResult({ token, formData }) {
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
+            <div className="md:pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
               <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
               <p>Creator: {formData?.creator || "Anonymous"}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
@@ -102,18 +102,18 @@ function VestFundsResult({ token, formData }) {
             className={`flex flex-col lg:text-sm text-xs my-auto w-5/5 ${khandMedium.className}`}
           >
             <div
-              className={`pl-4 2xl:pl-6 pr- 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ${khandMedium.className}`}
+              className={`pl-4 2xl:pl-6 pr-2 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between w-7/7 md:w-2/3 lg:w-1/1 ${khandMedium.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>START: {formData?.activationDate || "D.M.Y"}</div>
+              <div>START: {formData?.activationDate ? formData.activationDate.replace(/-/g, '.') : "D.M.Y"}</div>
               <div>CLIFF: {formData?.cliffPeriod || "0"} days</div>
             </div>
 
             <div
-              className={`pl-2 2xl:pl-6 pr-2 2xl:pr-5 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ml-14 lg:ml-26 xl:ml-32 2xl:ml-46 ${khandMedium.className}`}
+              className={`pl-2 2xl:pl-6 pr-2 2xl:pr-5 py-1 -z-1 rounded-full text-white flex justify-between w-12/13 md:w-5/6 ml-14 lg:ml-26 xl:ml-20 2xl:ml-26 ${khandMedium.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",

@@ -84,7 +84,7 @@ function LockFundsResult({ token, formData }) {
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
+            <div className="pl-1 text-sm md:text-base lg:text-base 2xl:text-xl mt-1">
               <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
               <p>Creator: {formData?.creator || "Anonymous"}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
@@ -107,7 +107,7 @@ function LockFundsResult({ token, formData }) {
           </div>
         </div>
 
-        <div className="absolute left-0  w-11/13 z-5 flex">
+        <div className="absolute left-0  w-12/13 md:w-11/13 z-5 flex">
           <div
             className={`items-center flex mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
           >
@@ -124,14 +124,14 @@ function LockFundsResult({ token, formData }) {
                   "linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>LOCKED: {formData?.lockDate || "DD.MM.YYYY"} </div>
+              <div>LOCKED: {formData?.lockDate ? formData.lockDate.replace(/-/g, '.') : "DD.MM.YYYY"} </div>
               <div>ENDS: {formData?.releaseDate || "DD:HH"}</div>
             </div>
           </div>
         </div>
 
         <div
-          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 mt-12 lg:mt-16`}
+          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 mt-10 lg:mt-12`}
         >
           {formData?.tokenAmount || "0"}
         </div>
