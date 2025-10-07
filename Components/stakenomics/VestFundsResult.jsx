@@ -83,7 +83,13 @@ function VestFundsResult({ token, formData }) {
           <div
             className={`mt-10 md:mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
           >
-            {formData?.activationDate || "DD.MM.YY"} {formData?.activationTime || "HH:MM"}
+            {formData?.activationDateTime ? new Date(formData.activationDateTime).toLocaleString('en-GB', {
+              day: '2-digit',
+              month: '2-digit',
+              year: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
+            }).replace(',', '') : "DD.MM.YY HH:MM"}
           </div>
           <div className="flex justify-end mr-4 mt-4 md:mt-12 transform -translate-y-1/2">
             <StarIcon />
@@ -94,7 +100,7 @@ function VestFundsResult({ token, formData }) {
           <div
             className={`items-center flex mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
           >
-            VEST
+            VEST: {token?.name || "TOKEN"}
           </div>
           <VestIcon />
 
@@ -108,7 +114,7 @@ function VestFundsResult({ token, formData }) {
                   "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>START: {formData?.activationDate ? formData.activationDate.replace(/-/g, '.') : "D.M.Y"}</div>
+              <div>START: {formData?.activationDateTime ? new Date(formData.activationDateTime).toLocaleDateString('en-GB') : "DD.MM.YYYY"}</div>
               <div>CLIFF: {formData?.cliffPeriod || "0"} days</div>
             </div>
 

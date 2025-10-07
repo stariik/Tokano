@@ -3,18 +3,29 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import usePhantom from "@/hooks/usePhantom"; // import the hook
 import WalletSelectionPopup from "./WalletSelectionPopup";
 
 function Navbar() {
   const [showWalletPopup, setShowWalletPopup] = useState(false);
+  const pathname = usePathname();
 
-  const NavigationButtonStyle = "hover:text-primary transition cursor-pointer";
   const navigationItems = [
     { name: "HOME", href: "/" },
     { name: "STAKENOMICS", href: "/stakenomics" },
     { name: "PORTFOLIO", href: "/portfolio" },
   ];
+
+  const isActive = (href) => {
+    return pathname === href;
+  };
+
+  const getNavigationStyle = (href) => {
+    return `transition cursor-pointer ${
+      isActive(href) ? "text-[#ffb224]" : "hover:text-[#ffb224]"
+    }`;
+  };
 
   const { publicKey, connectWallet, disconnectWallet } = usePhantom();
 
@@ -71,7 +82,7 @@ function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={NavigationButtonStyle}
+                className={getNavigationStyle(item.href)}
               >
                 {item.name}
               </Link>
@@ -101,7 +112,7 @@ function Navbar() {
             <Link
               key={item.name}
               href={item.href}
-              className={NavigationButtonStyle}
+              className={getNavigationStyle(item.href)}
             >
               {item.name}
             </Link>

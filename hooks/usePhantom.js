@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import EthereumProvider from "@walletconnect/ethereum-provider";
 
 const WALLET_URLS = {
   phantom: "https://phantom.app/",
@@ -8,10 +9,14 @@ const WALLET_URLS = {
   walletconnect: "https://walletconnect.com/",
 };
 
+// WalletConnect Project ID - You should replace this with your own from cloud.walletconnect.com
+const WALLETCONNECT_PROJECT_ID = "67e8a588-df44-41e6-a67c-4a59ee737c08";
+
 export default function usePhantom() {
   const [provider, setProvider] = useState(null);
   const [publicKey, setPublicKey] = useState(null);
   const [selectedWallet, setSelectedWallet] = useState(null);
+  const [walletConnectProvider, setWalletConnectProvider] = useState(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -95,8 +100,54 @@ export default function usePhantom() {
 
     // Handle WalletConnect
     if (walletId === "walletconnect") {
-      window.open(WALLET_URLS.walletconnect, "_blank");
-      console.log("WalletConnect integration coming soon");
+      try {
+        // Initialize WalletConnect provider
+        const wcProvider = await EthereumProvider.init({
+          projectId: WALLETCONNECT_PROJECT_ID,
+          chains: [1], // Ethereum mainnet
+          optionalChains: [137, 56], // Polygon, BSC
+          showQrModal: true,
+          qrModalOptions: {
+            themeMode: "dark",
+            themeVariables: {
+              "--wcm-z-index": "9999"
+            }
+          }
+        });
+
+        // Enable session (triggers QR Code modal)
+        await wcProvider.enable();
+
+        const accounts = await wcProvider.request({
+          method: "eth_accounts"
+        });
+
+        if (accounts.length > 0) {
+          setPublicKey(accounts[0]);
+          setProvider(wcProvider);
+          setWalletConnectProvider(wcProvider);
+
+          // Listen for events
+          wcProvider.on("accountsChanged", (accounts) => {
+            if (accounts.length > 0) {
+              setPublicKey(accounts[0]);
+            } else {
+              setPublicKey(null);
+            }
+          });
+
+          wcProvider.on("disconnect", () => {
+            setPublicKey(null);
+            setWalletConnectProvider(null);
+          });
+        }
+      } catch (err) {
+        console.error("WalletConnect failed", err);
+        // If user doesn't have any compatible wallet, direct them to WalletConnect
+        if (err.message?.includes("No matching key")) {
+          window.open(WALLET_URLS.walletconnect, "_blank");
+        }
+      }
       return;
     }
   };
@@ -105,6 +156,9 @@ export default function usePhantom() {
     try {
       if (selectedWallet === "phantom" && provider?.disconnect) {
         await provider.disconnect();
+      } else if (selectedWallet === "walletconnect" && walletConnectProvider) {
+        await walletConnectProvider.disconnect();
+        setWalletConnectProvider(null);
       } else if (provider) {
         // For Ethereum wallets, we just clear the state
         setPublicKey(null);

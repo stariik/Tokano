@@ -16,7 +16,11 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   const initializeFormData = () => {
     const data = {};
     config.fields.forEach(field => {
-      if (field.defaultValue !== undefined) {
+      if (field.type === "dual-number" && field.fields) {
+        field.fields.forEach(subField => {
+          data[subField.name] = "";
+        });
+      } else if (field.defaultValue !== undefined) {
         data[field.name] = field.defaultValue;
       } else if (field.type === "number") {
         data[field.name] = "";
@@ -55,6 +59,24 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
     const value = formData[name];
 
     switch (type) {
+      case "dual-number":
+        return (
+          <div className="flex gap-2 items-center">
+            {field.fields.map((subField, index) => (
+              <div key={subField.name} className="flex gap-2 items-center">
+                <input
+                  type="number"
+                  value={formData[subField.name] || ""}
+                  onChange={(e) => handleInputChange(subField.name, e.target.value)}
+                  placeholder={subField.placeholder}
+                  className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-20 text-center placeholder-gray-400"
+                />
+                <span className="text-white font-bold text-[13px]">{subField.suffix}</span>
+              </div>
+            ))}
+          </div>
+        );
+
       case "select":
         return (
           <select
@@ -142,7 +164,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   const renderFieldWithLayout = (field) => {
     const { type, suffix } = field;
 
-    if (type === "datetime-local" || type === "text") {
+    if (type === "datetime-local" || type === "text" || type === "dual-number") {
       return (
         <div className="flex gap-2 items-center mb-1.5">
           {renderField(field)}
@@ -161,22 +183,19 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   const getFieldLabel = (field, fundType) => {
     const labelMap = {
       "STAKING POOL": {
-        activationDate: "Pool activation date (UTC)",
-        activationTime: "Pool activation time",
+        activationDateTime: "Pool activation date and time (UTC)",
         rewardAmount: "Total reward token amount",
         distributionLength: "Duration of total reward distribution",
         unstakingPeriod: "Unstaking becomes available in"
       },
       "LOCK FUNDS": {
-        lockDate: "Lock date (UTC)",
-        lockTime: "Lock time",
+        lockDateTime: "Lock date and time (UTC)",
         tokenAmount: "Token amount to lock",
-        releaseDate: "Release date and time",
+        releaseDate: "Release date and time (UTC)",
         recipientWallet: "Recipient wallet address"
       },
       "VEST FUNDS": {
-        activationDate: "Vesting activation date (UTC)",
-        activationTime: "Vesting activation time",
+        activationDateTime: "Vesting activation date and time (UTC)",
         tokenAmount: "Total token amount to vest",
         cliffPeriod: "Cliff period",
         releaseModel: "Release model",
@@ -190,22 +209,19 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   const getFieldDescription = (field, fundType) => {
     const descriptionMap = {
       "STAKING POOL": {
-        activationDate: "Before this date, the pool will show \"Launching Soon\", or choose to make staking available immediately.",
-        activationTime: "Set the specific time when the staking pool becomes active.",
+        activationDateTime: "Set the exact date and time when the staking pool becomes active. Before this time, the pool will show \"Launching Soon\".",
         rewardAmount: "Enter the total number of tokens you wish to allocate as rewards. These will be distributed to stakers while the pool is active.",
         distributionLength: "Define the time period over which rewards will be fully distributed to stakers.",
         unstakingPeriod: "Once users stake their tokens in this pool, they will only be able to unstake them after this lock period has elapsed."
       },
       "LOCK FUNDS": {
-        lockDate: "The date when tokens will be locked and become inaccessible until the release date.",
-        lockTime: "Set the specific time when the lock becomes active.",
+        lockDateTime: "Set the exact date and time when tokens will be locked and become inaccessible until the release date.",
         tokenAmount: "Enter the number of tokens you want to lock. These tokens will be inaccessible until the release date.",
         releaseDate: "Set the exact date and time when the locked tokens can be claimed by the recipient.",
         recipientWallet: "In case left empty, tokens go back to wallet of origin when claimed after unlock date."
       },
       "VEST FUNDS": {
-        activationDate: "The date when the vesting schedule begins.",
-        activationTime: "Set the specific time when vesting becomes active.",
+        activationDateTime: "Set the exact date and time when the vesting schedule begins.",
         tokenAmount: "Enter the total number of tokens to be vested over the specified period.",
         cliffPeriod: "Days until first unlock happens. Choose zero in case you do not want this to happen.",
         releaseModel: "Choose how frequently tokens are released: monthly, weekly, or daily.",
@@ -287,7 +303,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             {getIcon()}
           </div>
           <div className="text-white text-sm font-semibold">
-            Fill the form to Create {fundType}
+            Fill the form to {fundType === "STAKING POOL" ? "create staking pool for" : fundType === "LOCK FUNDS" ? "lock funds for" : "create linear vesting for"}: {token.name}
           </div>
         </div>
         {onClose && (
@@ -315,35 +331,18 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
           </div>
         ))}
 
-        {/* Card Pic Section - only for LOCK FUNDS */}
-        {fundType === "LOCK FUNDS" && (
-          <div className="mb-4">
-            <label className="block text-white font-bold text-[13px] mb-2">
-              <span className="text-white font-bold mr-1">{config.fields.length + 1}.</span>
-              Card pic:
-            </label>
-            <div className="mt-2 h-32 bg-[#d8d0f0] rounded-lg border-2 border-dashed border-[#6b4d9f] flex items-center justify-center">
-              <span className="text-[#6b4d9f] text-sm font-bold">
-                Upload or drag image here
-              </span>
-            </div>
-            <div className="text-white text-[10px] leading-tight mt-1.5 font-medium opacity-80">
-              Upload an image to represent this lock fund. This will be displayed on the card.
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Warning Box */}
-      <div className="bg-[#fff9f9] border-2 border-[#ff9999] rounded-xl p-4 mt-2">
-        <div className="flex items-center justify-center gap-2 text-[#cc0000] font-bold text-xs mb-3">
+      <div className="bg-[#453DC8] border-2 border-[#6b4d9f] rounded-xl p-4 mt-2">
+        <div className="flex items-center justify-center gap-2 text-white font-bold text-xs mb-3">
           <span className="text-sm">⚠️</span>
           <span>ATTENTION</span>
           <span className="text-sm">⚠️</span>
         </div>
         <ul className="list-none">
           {getAttentionItems(fundType).map((item, index) => (
-            <li key={index} className="text-[#b30000] text-[10px] leading-relaxed mb-2.5 pl-3 relative font-medium">
+            <li key={index} className="text-white text-[10px] leading-relaxed mb-2.5 pl-3 relative font-medium">
               <span className="absolute left-0 font-bold">{index + 1}.</span>
               <span className="font-bold">{item.title}:</span> {item.description}
             </li>

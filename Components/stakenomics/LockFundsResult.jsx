@@ -100,7 +100,13 @@ function LockFundsResult({ token, formData }) {
           <div
             className={`mt-10 md:mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
           >
-            {formData?.releaseDate || "DD.MM.YY HH:MM"}
+            {formData?.releaseDate ? new Date(formData.releaseDate).toLocaleString('en-GB', {
+              day: '2-digit',
+              month: '2-digit',
+              year: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
+            }).replace(',', '') : "DD.MM.YY HH:MM"}
           </div>
           <div className="flex justify-end mr-4 mt-4 md:mt-12 transform -translate-y-1/2">
             <StarIcon />
@@ -111,7 +117,7 @@ function LockFundsResult({ token, formData }) {
           <div
             className={`items-center flex mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
           >
-            LOCK
+            LOCK: {token?.name || "TOKEN"}
           </div>
           <LockIcon />
           <div
@@ -124,8 +130,8 @@ function LockFundsResult({ token, formData }) {
                   "linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>LOCKED: {formData?.lockDate ? formData.lockDate.replace(/-/g, '.') : "DD.MM.YYYY"} </div>
-              <div>ENDS: {formData?.releaseDate || "DD:HH"}</div>
+              <div>LOCKED: {formData?.lockDateTime ? new Date(formData.lockDateTime).toLocaleDateString('en-GB') : "DD.MM.YYYY"} </div>
+              <div>ENDS: {formData?.releaseDate ? new Date(formData.releaseDate).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', '') : "DD.MM HH:MM"}</div>
             </div>
           </div>
         </div>

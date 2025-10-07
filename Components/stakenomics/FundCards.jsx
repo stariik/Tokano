@@ -1,17 +1,32 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { FUND_TYPES } from "../../lib/constants";
 import GenericForm from "@/Components/forms/GenericForm";
 
 export default function FundCards({ selectedToken, selectedTokenData, onDataFilled }) {
-  const [selectedFund, setSelectedFund] = useState(null);
+  const [selectedFund, setSelectedFund] = useState(FUND_TYPES[0]); // Default to Staking Pool
   const [currentFormData, setCurrentFormData] = useState(null);
+
+  // Update the result display when token changes
+  useEffect(() => {
+    if (currentFormData && selectedFund && selectedTokenData) {
+      onDataFilled?.({
+        fundType: selectedFund.title,
+        token: selectedTokenData,
+        formData: currentFormData,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  }, [selectedToken, selectedTokenData, currentFormData, selectedFund, onDataFilled]);
 
   const handleCardClick = (fundType) => {
     if (fundType.disabled) return;
+    // Only clear data if switching to a different fund type
+    if (selectedFund?.id !== fundType.id) {
+      setCurrentFormData(null);
+      onDataFilled?.(null);
+    }
     setSelectedFund(fundType);
-    setCurrentFormData(null);
-    onDataFilled?.(null);
   };
 
   const handleCreateClick = (e, fundType) => {

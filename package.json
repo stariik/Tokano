@@ -17,6 +17,8 @@
     "@solana/wallet-adapter-wallets": "^0.19.37",
     "@solana/web3.js": "^1.98.4",
     "@vercel/analytics": "^1.5.0",
+    "@walletconnect/ethereum-provider": "^2.21.10",
+    "@web3modal/ethereum": "^2.7.1",
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

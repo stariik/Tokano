@@ -92,7 +92,13 @@ function StakingPoolResult({ token, formData }) {
           <div
             className={`mt-10 md:mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
           >
-            {formData?.activationDate || "DD.MM.YY"} {formData?.activationTime || "HH:MM"}
+            {formData?.activationDateTime ? new Date(formData.activationDateTime).toLocaleString('en-GB', {
+              day: '2-digit',
+              month: '2-digit',
+              year: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
+            }).replace(',', '') : "DD.MM.YY HH:MM"}
           </div>
           <div className="flex justify-end mr-4 mt-6 md:mt-12 transform -translate-y-1/2">
             <StarIcon />
@@ -103,7 +109,7 @@ function StakingPoolResult({ token, formData }) {
           <div
             className={`items-center flex mx-4 text-xl lg:text-3xl max-w-20 ${khandSemibold.className}`}
           >
-            STAKING POOL
+            STAKING POOL: {token?.name || "TOKEN"}
           </div>
           <div
             className={`flex flex-col lg:text-sm text-xs my-auto w-full relative ${khandMedium.className}`}
@@ -117,7 +123,7 @@ function StakingPoolResult({ token, formData }) {
                   "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
               }}
             >
-              <div>ACTIVE: {formData?.activationDate || "DD.MM.YYYY"}</div>
+              <div>ACTIVE: {formData?.activationDateTime ? new Date(formData.activationDateTime).toLocaleDateString('en-GB') : "DD.MM.YYYY"}</div>
             </div>
             <div
               className={`pl-4 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black ${khandNormal.className}`}
@@ -126,7 +132,7 @@ function StakingPoolResult({ token, formData }) {
                   "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
               }}
             >
-              <div>UNSTAKE: {formData?.unstakingPeriod || "0"} days</div>
+              <div>UNSTAKE: {(formData?.unstakingPeriodDays || "0")} days {(formData?.unstakingPeriodHours || "0")} hours</div>
             </div>
           </div>
         </div>
