@@ -39,7 +39,7 @@ function WalletSelectionPopup({ isOpen, onClose, onSelectWallet }) {
 
   return (
     <div
-      className="fixed inset-0 bg-[#000310a6] bg-opacity-80 flex items-center justify-center z-50 animate-fadeIn px-4"
+      className="fixed inset-0 bg-[#000310] bg-opacity-90 flex items-center justify-center z-50 animate-fadeIn px-4"
       onClick={onClose}
     >
       <div

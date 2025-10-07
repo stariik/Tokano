@@ -71,7 +71,7 @@ function VestCard({ id, title, created, marketCap, wallet }) {
 
           {/*  */}
 
-          <div className="absolute left-4 -bottom-6 w-7/10 z-5 flex">
+          <div className="absolute left-4 -bottom-6 w-7/10 z-2 flex">
             <div className="items-center flex mx-4 text-xl lg:text-3xl">
               VEST
             </div>

@@ -22,3 +22,7 @@ body:has(.menu-overlay-active) #tokengrid-menu-button {
   opacity: 0 !important;
   pointer-events: none !important;
 }
+
+w3m-modal {
+  z-index: 50;
+}

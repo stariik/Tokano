@@ -10,7 +10,10 @@ const WALLET_URLS = {
 };
 
 // WalletConnect Project ID - You should replace this with your own from cloud.walletconnect.com
-const WALLETCONNECT_PROJECT_ID = "67e8a588-df44-41e6-a67c-4a59ee737c08";
+const WALLETCONNECT_PROJECT_ID = "a09f88f02055849bd4b4206dd86d2f36";
+
+// Cache the WalletConnect provider to prevent multiple initializations
+let cachedWCProvider = null;
 
 export default function usePhantom() {
   const [provider, setProvider] = useState(null);
@@ -101,52 +104,96 @@ export default function usePhantom() {
     // Handle WalletConnect
     if (walletId === "walletconnect") {
       try {
-        // Initialize WalletConnect provider
-        const wcProvider = await EthereumProvider.init({
-          projectId: WALLETCONNECT_PROJECT_ID,
-          chains: [1], // Ethereum mainnet
-          optionalChains: [137, 56], // Polygon, BSC
-          showQrModal: true,
-          qrModalOptions: {
-            themeMode: "dark",
-            themeVariables: {
-              "--wcm-z-index": "9999"
+        let wcProvider = cachedWCProvider;
+
+        // Only initialize if not already cached
+        if (!wcProvider) {
+          wcProvider = await EthereumProvider.init({
+            projectId: WALLETCONNECT_PROJECT_ID,
+            chains: [1], // Ethereum mainnet
+            optionalChains: [137, 56], // Polygon, BSC
+            showQrModal: true,
+            qrModalOptions: {
+              themeMode: "dark",
+              themeVariables: {
+                "--wcm-z-index": "50",
+                "--wcm-accent-color": "#949DFF",
+                "--wcm-background-color": "#1a1154"
+              }
+            },
+            metadata: {
+              name: "Tokano",
+              description: "Tokano Web3 Platform",
+              url: typeof window !== "undefined" ? window.location.origin : "",
+              icons: ["https://tokano.com/logo.png"]
             }
+          });
+          cachedWCProvider = wcProvider;
+        }
+
+        // Check if already connected
+        if (wcProvider.session) {
+          const accounts = wcProvider.accounts;
+          if (accounts.length > 0) {
+            setPublicKey(accounts[0]);
+            setProvider(wcProvider);
+            setWalletConnectProvider(wcProvider);
+            return;
           }
-        });
+        }
 
         // Enable session (triggers QR Code modal)
-        await wcProvider.enable();
+        const accounts = await wcProvider.enable();
 
-        const accounts = await wcProvider.request({
-          method: "eth_accounts"
-        });
-
-        if (accounts.length > 0) {
+        if (accounts && accounts.length > 0) {
           setPublicKey(accounts[0]);
           setProvider(wcProvider);
           setWalletConnectProvider(wcProvider);
 
-          // Listen for events
-          wcProvider.on("accountsChanged", (accounts) => {
-            if (accounts.length > 0) {
-              setPublicKey(accounts[0]);
-            } else {
-              setPublicKey(null);
-            }
-          });
+          // Listen for events (only add listeners once)
+          if (!wcProvider._eventsSet) {
+            wcProvider.on("accountsChanged", (accounts) => {
+              if (accounts.length > 0) {
+                setPublicKey(accounts[0]);
+              } else {
+                setPublicKey(null);
+              }
+            });
 
-          wcProvider.on("disconnect", () => {
-            setPublicKey(null);
-            setWalletConnectProvider(null);
-          });
+            wcProvider.on("disconnect", () => {
+              setPublicKey(null);
+              setWalletConnectProvider(null);
+              cachedWCProvider = null; // Clear cache on disconnect
+            });
+
+            wcProvider._eventsSet = true;
+          }
         }
       } catch (err) {
         console.error("WalletConnect failed", err);
-        // If user doesn't have any compatible wallet, direct them to WalletConnect
-        if (err.message?.includes("No matching key")) {
-          window.open(WALLET_URLS.walletconnect, "_blank");
+
+        // Clear cache on error
+        cachedWCProvider = null;
+
+        // Check for specific error types
+        if (err.message?.includes("User rejected") ||
+            err.message?.includes("Connection request reset")) {
+          // User closed the modal, silently return
+          return;
         }
+
+        // Check for authentication/API errors
+        if (err.message?.includes("Unauthorized") ||
+            err.message?.includes("403") ||
+            err.message?.includes("invalid key")) {
+          console.error("WalletConnect Project ID Error: The project ID is invalid or not properly configured.");
+          console.error("Please visit https://cloud.walletconnect.com/ to create a valid project and update the WALLETCONNECT_PROJECT_ID in hooks/usePhantom.js");
+          alert("WalletConnect configuration error. Please contact the site administrator.");
+          return;
+        }
+
+        // For other errors, show a user-friendly message
+        alert("Failed to connect with WalletConnect. Please ensure you have a compatible wallet app installed.");
       }
       return;
     }
@@ -159,12 +206,21 @@ export default function usePhantom() {
       } else if (selectedWallet === "walletconnect" && walletConnectProvider) {
         await walletConnectProvider.disconnect();
         setWalletConnectProvider(null);
+        cachedWCProvider = null; // Clear the cached provider
       } else if (provider) {
         // For Ethereum wallets, we just clear the state
         setPublicKey(null);
       }
+      setSelectedWallet(null);
     } catch (err) {
       console.error("Disconnect failed", err);
+      // Even if disconnect fails, clear the state
+      setPublicKey(null);
+      setWalletConnectProvider(null);
+      setSelectedWallet(null);
+      if (selectedWallet === "walletconnect") {
+        cachedWCProvider = null;
+      }
     }
   };
 
