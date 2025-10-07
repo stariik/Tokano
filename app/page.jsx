@@ -70,7 +70,7 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className={`md:hidden fixed bottom-10 left-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-white px-4 py-2 rounded-r-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+        className={`md:hidden fixed bottom-18 left-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-white px-4 py-2 rounded-r-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
           isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
         id="left-menu-button"
