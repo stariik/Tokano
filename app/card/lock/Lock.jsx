@@ -70,8 +70,8 @@ function Lock({ id, title, created, marketCap, wallet }) {
           <div className="bg-black p-1 rounded-full">
             <FaXTwitter />
           </div>
-          <div className="p-1">
-            <TbWorld />
+          <div className="">
+            <TbWorld size={25}/>
           </div>
         </div>
 
