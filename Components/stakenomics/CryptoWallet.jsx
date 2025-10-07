@@ -18,13 +18,13 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
       <div className="p-4">
         <div className="grid grid-cols-2 gap-4">
           {/* Token List - Left Side */}
-          <div className="rounded-2xl p-2 border border-white border-opacity-40">
+          <div className="p-2 border border-white border-opacity-40">
             <div className="space-y-1 max-h-[360px] overflow-y-auto">
               {tokens.map((token, index) => (
                 <div
                   key={token.id}
                   onClick={() => setSelectedToken(token.id)}
-                  className={`flex items-center p-1 rounded-xl cursor-pointer transition-all duration-200 border ${
+                  className={`flex items-center p-1 cursor-pointer transition-all duration-200 border ${
                     selectedToken === token.id
                       ? "bg-[#d5d2ec] bg-opacity-50 border-white border-opacity-60"
                       : "hover:bg-white hover:bg-opacity-30 border-transparent"
@@ -44,7 +44,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
           {/* Token Details - Right Side */}
           <div className="space-y-4">
             {/* Balance Display */}
-            <div className="rounded-2xl p-3 border border-white border-opacity-40 flex items-center justify-end">
+            <div className="p-3 border border-white border-opacity-40 flex items-center justify-end">
               <div className="text-right">
                 <div className="lg:text-xl font-bold text-gray-800">
                   {selectedTokenData?.balance} {selectedTokenData?.ticker}
@@ -53,7 +53,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
             </div>
 
             {/* Token Information */}
-            <div className="rounded-2xl p-4 border border-white border-opacity-40 flex-1">
+            <div className="p-4 border border-white border-opacity-40 flex-1">
               <div className="space-y-4">
                 <div>
                   <span className="text-gray-700 font-semibold text-base lg:text-lg">token ID: </span>
@@ -85,7 +85,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
         </div>
 
         {/* Solana Balance - Bottom */}
-        <div className="mt-2 rounded-2xl px-6 py-2 border border-white border-opacity-40">
+        <div className="mt-2  px-6 py-2 border border-white border-opacity-40">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center mr-4">
               <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
