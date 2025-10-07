@@ -4,6 +4,7 @@ import Navbar from "@/Components/Navbar";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 import Banner from "@/Components/Banner";
 import { Analytics } from "@vercel/analytics/next";
+import ThemeWrapper from "@/Components/ThemeWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,21 +23,49 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-dark`}
-      >
-        {/* vercel analitics */}
-        <Analytics />
-        <Navbar />
-        <Banner src={"banner1.png"} />
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const theme = localStorage.getItem('theme') || 'system';
+                  let resolvedTheme = theme;
 
-        <div className="relative">
-          <div className="">{children}</div>
-          <div className="pr-4 py-18 md:py-6 text-light absolute right-0 top-0 w-1/3 2xl:w-6/19">
-            <RightMenu />
+                  if (theme === 'system') {
+                    resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+
+                  if (resolvedTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-dark text-black dark:text-light`}
+      >
+        <ThemeWrapper>
+          {/* vercel analitics */}
+          <Analytics />
+          <Navbar />
+          <Banner src={"banner1.png"} />
+
+          <div className="relative">
+            <div className="">{children}</div>
+            <div className="pr-4 py-18 md:py-6 text-black dark:text-light absolute right-0 top-0 w-1/3 2xl:w-6/19">
+              <RightMenu />
+            </div>
           </div>
-        </div>
+        </ThemeWrapper>
       </body>
     </html>
   );
