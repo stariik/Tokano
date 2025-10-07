@@ -72,7 +72,7 @@ function Navbar() {
 
   const getNavigationStyle = (href) => {
     return `transition cursor-pointer ${
-      isActive(href) ? "text-[#ffb224]" : "hover:text-[#ffb224]"
+      isActive(href) ? "text-[#6D6FDF]" : "text-white hover:text-[#6D6FDF]"
     }`;
   };
 
