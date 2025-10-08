@@ -83,7 +83,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       case "select":
         return (
           <select
-            value={value}
+            value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-40"
           >
@@ -98,7 +98,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
           <div className="flex gap-2 items-center">
             <input
               type={type}
-              value={value}
+              value={value || ""}
               onChange={(e) => handleInputChange(name, e.target.value)}
               className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px]"
               required={required}
@@ -106,9 +106,15 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             {name === "activationDateTime" && (
               <button
                 type="button"
-                onClick={() => handleInputChange(name, "IMMEDIATELY")}
+                onClick={() => {
+                  const now = new Date();
+                  const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+                    .toISOString()
+                    .slice(0, 16);
+                  handleInputChange(name, localDateTime);
+                }}
                 className="bg-[#2B923E] hover:bg-[#238033] text-white font-bold text-xs md:text-base p-1 md:p-2 rounded-lg transition-colors"
-                title="Set to IMMEDIATELY"
+                title="Set to current time"
               >
                 now
               </button>
@@ -120,7 +126,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
         return (
           <input
             type={type}
-            value={value}
+            value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
             className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px] placeholder-gray-400"
@@ -132,7 +138,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
         return (
           <input
             type={type}
-            value={value}
+            value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px]"
             required={required}
@@ -143,7 +149,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
         return (
           <input
             type={type}
-            value={value}
+            value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-[100px]"
             required={required}
@@ -154,7 +160,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
         return (
           <input
             type={type}
-            value={value}
+            value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
             className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-40 text-center placeholder-gray-400"
@@ -166,7 +172,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
         return (
           <input
             type={type}
-            value={value}
+            value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
             className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-24 placeholder-gray-400"
