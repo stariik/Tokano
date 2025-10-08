@@ -15,7 +15,7 @@ export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <main className="md:px-6 px-2 py-18 md:py-6 bg-dark text-light relative">
+    <main className="md:px-6 px-2 py-8 md:py-6 bg-dark text-light relative">
       <div className="">
         <div className="xl:grid-cols-3 md:grid-cols-2 grid ">
           <div className="col-span-2 border-2 border-secondary rounded-tr-4xl grid gap-4 md:grid-cols-2">

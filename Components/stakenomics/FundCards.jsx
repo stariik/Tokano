@@ -1,30 +1,17 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { FUND_TYPES } from "../../lib/constants";
 import GenericForm from "@/Components/forms/GenericForm";
 
-export default function FundCards({ selectedToken, selectedTokenData, onDataFilled }) {
+export default function FundCards({ selectedToken, selectedTokenData }) {
   const [selectedFund, setSelectedFund] = useState(FUND_TYPES[0]); // Default to Staking Pool
   const [currentFormData, setCurrentFormData] = useState(null);
-
-  // Update the result display when token changes
-  useEffect(() => {
-    if (currentFormData && selectedFund && selectedTokenData) {
-      onDataFilled?.({
-        fundType: selectedFund.title,
-        token: selectedTokenData,
-        formData: currentFormData,
-        timestamp: new Date().toISOString(),
-      });
-    }
-  }, [selectedToken, selectedTokenData, currentFormData, selectedFund, onDataFilled]);
 
   const handleCardClick = (fundType) => {
     if (fundType.disabled) return;
     // Only clear data if switching to a different fund type
     if (selectedFund?.id !== fundType.id) {
       setCurrentFormData(null);
-      onDataFilled?.(null);
     }
     setSelectedFund(fundType);
   };
@@ -43,15 +30,7 @@ export default function FundCards({ selectedToken, selectedTokenData, onDataFill
 
   const handleFormDataChange = useCallback((data) => {
     setCurrentFormData(data);
-    if (selectedFund && selectedTokenData) {
-      onDataFilled?.({
-        fundType: selectedFund.title,
-        token: selectedTokenData,
-        formData: data,
-        timestamp: new Date().toISOString(),
-      });
-    }
-  }, [selectedFund, selectedTokenData, onDataFilled]);
+  }, []);
 
   const renderFundComponent = () => {
     if (!selectedFund) return null;
@@ -107,7 +86,7 @@ export default function FundCards({ selectedToken, selectedTokenData, onDataFill
 
       {/* Selected Fund Component */}
       {selectedFund && (
-        <div className="px-6 pb-6">
+        <div className="px-2 md:px-6 pb-6">
           {renderFundComponent()}
         </div>
       )}

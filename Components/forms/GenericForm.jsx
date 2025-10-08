@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { getFormConfig } from "../../lib/constants";
+import StakingPoolResult from "@/Components/stakenomics/StakingPoolResult";
+import LockFundsResult from "@/Components/stakenomics/LockFundsResult";
+import VestFundsResult from "@/Components/stakenomics/VestFundsResult";
 
 export default function GenericForm({ fundType, token, onDataChange, onClose }) {
   const config = getFormConfig(fundType);
@@ -92,13 +95,25 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
 
       case "datetime-local":
         return (
-          <input
-            type={type}
-            value={value}
-            onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px]"
-            required={required}
-          />
+          <div className="flex gap-2 items-center">
+            <input
+              type={type}
+              value={value}
+              onChange={(e) => handleInputChange(name, e.target.value)}
+              className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px]"
+              required={required}
+            />
+            {name === "activationDateTime" && (
+              <button
+                type="button"
+                onClick={() => handleInputChange(name, "IMMEDIATELY")}
+                className="bg-[#2B923E] hover:bg-[#238033] text-white font-bold text-xs md:text-base p-1 md:p-2 rounded-lg transition-colors"
+                title="Set to IMMEDIATELY"
+              >
+                now
+              </button>
+            )}
+          </div>
         );
 
       case "text":
@@ -294,6 +309,19 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
     }
   };
 
+  const renderResultPreview = () => {
+    if (fundType === "STAKING POOL") {
+      return <StakingPoolResult token={token} formData={formData} />;
+    }
+    if (fundType === "LOCK FUNDS") {
+      return <LockFundsResult token={token} formData={formData} />;
+    }
+    if (fundType === "VEST FUNDS") {
+      return <VestFundsResult token={token} formData={formData} />;
+    }
+    return null;
+  };
+
   return (
     <div className="w-full mx-auto rounded-3xl p-4 shadow-2xl border-[3px] border-[#453DC8] bg-[#1B105C]">
       {/* Header */}
@@ -348,6 +376,12 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Preview Section */}
+      <div className="mt-6">
+        <h3 className="text-2xl font-bold text-white mb-4">PREVIEW YOUR POOL:</h3>
+        {renderResultPreview()}
       </div>
     </div>
   );

@@ -11,6 +11,16 @@ const khandNormal = Khand({ subsets: ["latin"], weight: "500" });
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
 function StakingPoolResult({ token, formData }) {
+  // Helper function to format numbers
+  const formatNumber = (num) => {
+    if (!num) return "0";
+    const number = parseFloat(num);
+    if (number >= 1000000) {
+      return (number / 1000000).toFixed(1) + "M";
+    }
+    return number.toLocaleString();
+  };
+
   const StakeIcon = () => (
     <svg
       className="w-[47px] lg:w-[80px] h-full -mr-1 absolute"
@@ -45,109 +55,112 @@ function StakingPoolResult({ token, formData }) {
     <div
       className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white"
       style={{
-        background: "linear-gradient(90deg, #2f1f7b 10%, #622ea9 80%)",
+        background: "linear-gradient(90deg, #170D56 10%, #432CCD 80%)",
       }}
     >
       <div
-        className="rounded-3xl p-8 pb-0 relative"
+        className="rounded-3xl p-4 md:p-8 pb-0 relative"
         style={{
-          background: "linear-gradient(45deg, #2f1f7b 0%, #622ea9 100%)",
+          background: "linear-gradient(45deg, #170D56 0%, #432CCD 100%)",
         }}
       >
-        <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
-          <div className="bg-[#0088cc] rounded-full p-1">
-            <FaTelegramPlane />
-          </div>
-          <div className="bg-black p-1 rounded-full">
-            <FaXTwitter />
-          </div>
-          <div className="p-1">
-            <TbWorld />
-          </div>
-        </div>
-
         <div className="flex">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
+            className="w-20 md:w-24 lg:w-34 h-full lg:rounded-3xl rounded-2xl md:ml-4 mb-4"
           />
           <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}>
+            <h1
+              className={`${khandSemibold.className} 2xl:text-4xl xl:text-2xl lg:text-xl md:text-lg text-base`}
+            >
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
+            <div className="pl-1 text-xs md:text-sm lg:text-base 2xl:text-lg mt-1">
               <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
               <p>Creator: {formData?.creator || "Anonymous"}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
-              <p>Market cap: {formData?.marketCap || "$0"}</p>
             </div>
           </div>
         </div>
         <div className="absolute top-10 right-0">
-          <div className="ml-4 lg:mr-12">
+          <div className="lg:mr-12 mr-2 justify-end flex">
             <CiPill size={28} />
           </div>
 
           <div
-            className={`mt-10 md:mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className={`mt-2 md:mt-6 bg-[#2B923E] rounded-l-2xl pl-2 pr-2 text-xs md:text-sm ${khandMedium.className}`}
           >
-            {formData?.activationDateTime ? new Date(formData.activationDateTime).toLocaleString('en-GB', {
-              day: '2-digit',
-              month: '2-digit',
-              year: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit'
-            }).replace(',', '') : "DD.MM.YY HH:MM"}
-          </div>
-          <div className="flex justify-end mr-4 mt-6 md:mt-12 transform -translate-y-1/2">
-            <StarIcon />
-          </div>
-        </div>
-
-        <div className="left-0 w-full z-5 flex mt-2 bottom-0 relative">
-          <div
-            className={`items-center flex mx-4 text-xl lg:text-3xl max-w-20 ${khandSemibold.className}`}
-          >
-            STAKING POOL: {token?.name || "TOKEN"}
-          </div>
-          <div
-            className={`flex flex-col lg:text-sm text-xs my-auto w-full relative ${khandMedium.className}`}
-          >
-            <StakeIcon />
-
-            <div
-              className={`pl-4 md:pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-white  ${khandNormal.className}`}
-              style={{
-                background:
-                  "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
-              }}
-            >
-              <div>ACTIVE: {formData?.activationDateTime ? new Date(formData.activationDateTime).toLocaleDateString('en-GB') : "DD.MM.YYYY"}</div>
-            </div>
-            <div
-              className={`pl-4 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black ${khandNormal.className}`}
-              style={{
-                background:
-                  "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
-              }}
-            >
-              <div>UNSTAKE: {(formData?.unstakingPeriodDays || "0")} days {(formData?.unstakingPeriodHours || "0")} hours</div>
-            </div>
+            {formData?.activationDateTime === "IMMEDIATELY"
+              ? "IMMEDIATELY"
+              : formData?.activationDateTime
+              ? new Date(formData.activationDateTime)
+                  .toLocaleString("en-GB", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                  .replace(",", "")
+              : "DD.MM.YY HH:MM"}
           </div>
         </div>
 
         <div
-          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 `}
+          className={`text-[#311880] text-center text-sm md:text-base lg:text-lg 2xl:text-2xl ${khandSemibold.className} mb-12 -mt-2 rounded-2xl px-1 mx-14`}
+          style={{
+            background:
+              "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
+          }}
         >
-          {formData?.rewardAmount || "0"}
+          LAUNCHING IN: {formData?.distributionLength || "0"} days
         </div>
-      </div>
 
-      <div
-        className={`mr-12 text-end text-xl lg:text-2xl ${khandNormal.className}`}
-      >
-        locked
+        <div
+          className={`text-end text-xl lg:text-2xl ${khandNormal.className} -mt-8 `}
+        >
+          <div className="left-0 w-full z-5 flex mt-2 bottom-0 relative">
+            <div
+              className={`items-center flex mx-4 text-xl lg:text-3xl max-w-20 ${khandSemibold.className}`}
+            >
+              STAKING POOL
+            </div>
+            <div
+              className={`flex flex-col lg:text-sm text-xs my-auto w-full relative ${khandMedium.className}`}
+            >
+              <StakeIcon />
+
+              <div
+                className={`pl-4 md:pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-white pr-2 ${khandNormal.className}`}
+                style={{
+                  background:
+                    "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
+                }}
+              >
+                <div className="flex justify-between">
+                  <span>ENDS: </span>
+                  <span>
+                    {formData?.unstakingPeriodDays || "0"} days{" "}
+                    {formData?.unstakingPeriodHours || "0"} hours
+                  </span>
+                </div>
+              </div>
+              <div
+                className={`pl-4 pr-2 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black ${khandNormal.className}`}
+                style={{
+                  background:
+                    "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
+                }}
+              >
+                <div className="flex justify-between">
+                  <span>REWARDS: </span>
+                  {formatNumber(formData?.rewardAmount)}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

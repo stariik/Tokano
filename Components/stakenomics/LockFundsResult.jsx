@@ -1,8 +1,5 @@
 import React from "react";
 import { Khand } from "next/font/google";
-import { FaTelegramPlane } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { TbWorld } from "react-icons/tb";
 import { StarIcon } from "@/Components/icons";
 import { CiPill } from "react-icons/ci";
 
@@ -11,6 +8,22 @@ const khandNormal = Khand({ subsets: ["latin"], weight: "500" });
 const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
 function LockFundsResult({ token, formData }) {
+  // Helper function to format numbers
+  const formatNumber = (num) => {
+    if (!num) return "0";
+    const number = parseFloat(num);
+    if (number >= 1000000) {
+      return (number / 1000000).toFixed(1) + "M";
+    }
+    return number.toLocaleString();
+  };
+
+  // Helper function to format wallet address
+  const formatWallet = (wallet) => {
+    if (!wallet || wallet.length <= 16) return wallet || "0x0000...0000";
+    return `${wallet.slice(0, 8)}...${wallet.slice(-3)}`;
+  };
+
   const LockIcon = () => (
     <svg
       className="w-[47px] h-[47px] lg:w-[80px] lg:h-[57px]"
@@ -51,95 +64,85 @@ function LockFundsResult({ token, formData }) {
 
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
+      className="rounded-3xl pb-2 lg:pb-4 border-1 border-secondary text-white lg:mx-0 mx-4"
       style={{
         background: "linear-gradient(90deg, #5d9beb 10%, #041d33 80%)",
       }}
     >
       <div
-        className="rounded-3xl p-8 pb-0 relative"
+        className="rounded-3xl px-4 md:px-8 pt-4 relative"
         style={{
           background: "linear-gradient(45deg, #5d9beb 0%, #041d33 100%)",
         }}
       >
-        <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
-          <div className="bg-[#0088cc] rounded-full p-1">
-            <FaTelegramPlane />
-          </div>
-          <div className="bg-black p-1 rounded-full">
-            <FaXTwitter />
-          </div>
-          <div className="p-1">
-            <TbWorld />
-          </div>
-        </div>
-
-        <div className="flex">
+        <div className="flex flex-row-reverse">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
+            className="w-20 md:w-24 lg:w-28 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8"
           />
           <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}>
+            <h1
+              className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg lg:mr-36 xl:mr-18 mr-18`}
+            >
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-sm md:text-base lg:text-base 2xl:text-xl mt-1">
-              <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
-              <p>Creator: {formData?.creator || "Anonymous"}</p>
+            <div className="pl-1 text-sm md:text-base lg:text-base 2xl:text-xl mt-1 ml-12">
+              <p>Lock ID: {formatWallet(formData?.recipientWallet)}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
-              <p>Market cap: {formData?.marketCap || "$0"}</p>
             </div>
           </div>
         </div>
-        <div className="absolute top-10 right-0">
-          <div className="ml-4 lg:mr-12">
+        <div className="absolute top-10 left-0">
+          <div className="ml-4 lg:mr-12 mt-6">
             <CiPill size={28} />
-          </div>
-
-          <div
-            className={`mt-10 md:mt-6 bg-[#2B923E] rounded-l-2xl pl-2  text-xs md:text-sm ${khandMedium.className}`}
-          >
-            {formData?.releaseDate ? new Date(formData.releaseDate).toLocaleString('en-GB', {
-              day: '2-digit',
-              month: '2-digit',
-              year: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit'
-            }).replace(',', '') : "DD.MM.YY HH:MM"}
-          </div>
-          <div className="flex justify-end mr-4 mt-4 md:mt-12 transform -translate-y-1/2">
-            <StarIcon />
           </div>
         </div>
 
         <div className="absolute left-0  w-12/13 md:w-11/13 z-5 flex">
           <div
-            className={`items-center flex mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
+            className={`items-center flex mx-2 md:mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
           >
-            LOCK: {token?.name || "TOKEN"}
+            LOCK
           </div>
           <LockIcon />
           <div
             className={`flex flex-col lg:text-sm text-xs my-auto w-full ${khandMedium.className}`}
           >
             <div
-              className={`pl-4 md:pl-6 pr-1 md:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between ${khandNormal.className}`}
+              className={`pl-4 2xl:pl-6 pr-1 md:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between ${khandNormal.className}`}
               style={{
                 background:
                   "linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>LOCKED: {formData?.lockDateTime ? new Date(formData.lockDateTime).toLocaleDateString('en-GB') : "DD.MM.YYYY"} </div>
-              <div>ENDS: {formData?.releaseDate ? new Date(formData.releaseDate).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', '') : "DD.MM HH:MM"}</div>
+              <div>
+                LOCKED:{" "}
+                {formData?.lockDateTime
+                  ? new Date(formData.lockDateTime).toLocaleDateString("en-GB")
+                  : "11.22.2025"}{" "}
+              </div>
+              <div>
+                ENDS:{" "}
+                {formData?.releaseDate
+                  ? new Date(formData.releaseDate)
+                      .toLocaleString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                      .replace(",", "")
+                  : "11.22 12:00"}
+              </div>
             </div>
           </div>
         </div>
 
         <div
-          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 mt-10 lg:mt-12`}
+          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-1 mt-8 `}
         >
-          {formData?.tokenAmount || "0"}
+          {formatNumber(formData?.tokenAmount)}
         </div>
       </div>
 
