@@ -9,7 +9,7 @@ const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 function Stake({ token }) {
   const StakeIcon = () => (
     <div className="relative z-10 flex-shrink-0">
-      <div className="w-8 md:w-12 rounded-full bg-white flex -mr-18 items-center justify-center">
+      <div className="w-12 rounded-full bg-white flex -mr-18 items-center justify-center">
         <svg
           className="w-16"
           viewBox="0 0 57 57"
@@ -59,7 +59,7 @@ function Stake({ token }) {
         />
       </div>
       {/* Card Content */}
-      <div className="flex flex-col flex-1 px-3 pt-2">
+      <div className="flex flex-col flex-1 px-1 2xl:px-3 pt-2">
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-2">
           <span
@@ -73,7 +73,7 @@ function Stake({ token }) {
 
         {/* Stats Row */}
         <div
-          className={`flex items-center justify-between gap-4 ${khandSemibold.className}`}
+          className={`flex items-center justify-between gap-4 relative ${khandSemibold.className}`}
         >
           <StakeIcon />
 
@@ -81,23 +81,22 @@ function Stake({ token }) {
           {/* <div className="w-px h-24 bg-white mx-4"></div> */}
 
           {/* Text Content */}
-          <div className="flex flex-col">
+          <div className="flex flex-col absolute left-6 lg:left-10 xl:w-1/2 2xl:w-2/3">
             {/* Time Display Bar */}
-            <div className="bg-gradient-to-r from-cyan-400 via-cyan-300 to-teal-300 rounded-full pl-4 lg:pl-8 py-1 flex lg:-ml-4 items-center w-20 2xl:w-26">
+            <div className="bg-gradient-to-r from-cyan-400 via-cyan-300 to-teal-300 rounded-full pl-6 py-1 flex lg:-ml-4 items-center">
               <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
-              <span className="text-white text-xs font-bold">2d-12h-45m</span>
+              <span className="text-white text-xs font-bold md:pr-2 lg:pr-0">2d-12h-45m</span>
             </div>
 
             {/* Percentage Display Bar */}
-            <div className="bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-300 rounded-full pl-4 py-1 lg:-ml-4 flex items-center w-14">
+            <div className="bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-300 rounded-full pl-6 py-1 lg:-ml-4 flex items-center w-3/4 md:w-full">
               <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
               <span className="text-[#1E1E1E] text-xs font-bold">30%</span>
             </div>
           </div>
 
           <div className="flex flex-col">
-            <div className="text-xl lg:text-3xl text-[#FFB01C] gap-0 flex">
-              {" "}
+            <div className="text-xl lg:text-3xl text-[#FFB01C] gap-0 flex justify-end">
               12K
             </div>
             <div className="-ml-2 md:ml-0">stakers</div>

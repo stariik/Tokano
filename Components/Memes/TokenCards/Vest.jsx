@@ -59,7 +59,7 @@ function Lock({ token }) {
       {/* Bottom Bar */}
       <div className="flex justify-between flex-row gap-1">
         <div
-          className={`"h-6 rounded-r-xl basis-40 text-center text-xs md:text-sm lg:text-base ${khandMedium.className}`}
+          className={`"h-6 rounded-r-xl basis-40 text-center text-xs md:text-sm ${khandMedium.className}`}
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
@@ -67,7 +67,7 @@ function Lock({ token }) {
           TYPE: LIN/MONTHLY
         </div>
         <div
-          className={`"h-6 w-30 rounded-l-xl text-center text-xs md:text-sm lg:text-base ${khandMedium.className}`}
+          className={`"h-6 w-30 rounded-l-xl text-center text-xs md:text-sm ${khandMedium.className}`}
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
