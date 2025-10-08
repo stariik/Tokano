@@ -20,8 +20,8 @@ function LockFundsResult({ token, formData }) {
 
   // Helper function to format wallet address
   const formatWallet = (wallet) => {
-    if (!wallet || wallet.length <= 16) return wallet || "0x0000...0000";
-    return `${wallet.slice(0, 8)}...${wallet.slice(-3)}`;
+    if (!wallet || wallet.length <= 12) return wallet || "0x0000...0000";
+    return `${wallet.slice(0, 6)}...${wallet.slice(-3)}`;
   };
 
   const LockIcon = () => (
@@ -82,12 +82,12 @@ function LockFundsResult({ token, formData }) {
           />
           <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
             <h1
-              className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg lg:mr-36 xl:mr-18 mr-18`}
+              className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl sm:text-2xl text-lg lg:mr-36 xl:mr-18 sm:mr-64 mr-18`}
             >
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-sm md:text-base lg:text-base 2xl:text-xl mt-1 ml-12">
+            <div className="pl-1 text-sm md:text-base sm:text-lg lg:text-base 2xl:text-xl mt-1 ml-6 md:ml-12">
               <p>Lock ID: {formatWallet(formData?.recipientWallet)}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
             </div>
