@@ -1,6 +1,9 @@
 import React from "react";
+import { useTheme } from "@/hooks/useTheme";
 
 function StakeButton() {
+  const { resolvedTheme } = useTheme();
+
   return (
     <div className="flex items-center">
       <button
@@ -16,7 +19,9 @@ function StakeButton() {
           min-w-[80px] sm:min-w-[120px] md:min-w-[160px]
         "
         style={{
-          background: "linear-gradient(90deg, #003c2f 0%, #00c6c6 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(90deg, #003c2f 0%, #00c6c6 100%)"
+            : "linear-gradient(90deg, #c8e8e0 0%, #c8f5f0 100%)",
           boxShadow: "0 2px 8px 0 #0002",
         }}
       >
@@ -53,7 +58,7 @@ function StakeButton() {
         </span>
         <span
           className="
-            text-white font-bold
+            text-[#190E79] dark:text-white font-bold
             text-xs sm:text-base md:text-2xl
           "
           style={{ fontFamily: "inherit" }}

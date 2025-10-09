@@ -2,12 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
-import { Khand } from "next/font/google";
 import { CiPill } from "react-icons/ci";
 import { StarIcon } from "../icons";
+import { useTheme } from "@/hooks/useTheme";
 
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
+import { MdStar } from "react-icons/md";
+
 
 const StakeIcon = () => (
   <svg
@@ -40,12 +40,26 @@ const StakeIcon = () => (
 );
 
 function SoonCard({ id }) {
+  const { resolvedTheme } = useTheme();
+
   return (
     <Link
       href={`/card/soon`}
-      className="block bg-[linear-gradient(90deg,rgba(23,13,86,1)_50%,rgba(98,44,205,1)_100%)] rounded-4xl pb-4 lg:pb-8 hover:opacity-90 transition"
+      className="block rounded-4xl pb-4 lg:pb-8 hover:opacity-90 transition dark:text-white text-primary"
+      style={{
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg,rgba(23,13,86,1) 50%,rgba(98,44,205,1) 100%)"
+          : "linear-gradient(90deg, rgb(215 204 255) 50%, rgb(149 139 227) 100%)"
+      }}
     >
-      <div className="grid grid-cols-3 items-center justify-between relative bg-[linear-gradient(45deg,rgba(23,13,86,1)_35%,rgba(98,44,205,1)_100%)] rounded-4xl">
+      <div
+        className="grid grid-cols-3 items-center justify-between relative rounded-4xl"
+        style={{
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(45deg,rgba(23,13,86,1) 35%,rgba(98,44,205,1) 100%)"
+            : "linear-gradient(45deg, rgb(208 199 245) 35%, rgb(202 199 221) 100%)"
+        }}
+      >
         <div>
           <img
             src="/image.png"
@@ -60,44 +74,50 @@ function SoonCard({ id }) {
           </div>
           <div className="flex-col justify-center items-center text-center">
             <p
-              className={`text-md md:text-lg lg:text-xl 2xl:text-2xl font-semibold mt-2 ${khandSemibold.className}`}
+              className="text-md md:text-lg lg:text-xl 2xl:text-2xl mt-2 font-khand font-semibold"
             >
               YOU'RE FIRED (FIRED)
             </p>
             <h1
-              className={`text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold ${khandSemibold.className} lg:mt-4`}
+              className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold font-khand lg:mt-4"
             >
               LAUNCHING SOON
             </h1>
             <p
-              className={`bg-[linear-gradient(90deg,rgba(255,212,42,1)_0%,rgba(249,44,157,1)_55%,rgba(237,221,83,1)_100%)] text-[#311880] ${khandSemibold.className} mt-2 rounded-2xl w-38 lg:w-48 mx-auto text-xs lg:text-sm`}
+              className="text-[#311880] font-khand font-semibold mt-2 rounded-2xl w-38 lg:w-48 mx-auto text-xs lg:text-sm"
+              style={{
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg,rgba(255,212,42,1) 0%,rgba(249,44,157,1) 55%,rgba(237,221,83,1) 100%)"
+                  : "linear-gradient(90deg,rgba(255,235,150,1) 0%,rgba(255,180,225,1) 55%,rgba(255,245,180,1) 100%)"
+              }}
             >
               LAUNCHING IN : 23d 45h 12m
             </p>
             <div className="absolute right-0.5 xl:right-4 top-1/2">
-              <StarIcon />
+              {/* <StarIcon />  */}
+              <MdStar color={resolvedTheme === "dark" ? "white" : "#F92C9D"} size={30} />
             </div>
           </div>
         </div>
         <div className="mx-auto relative my-6">
           <div className="absolute flex gap-2 -left-[30px] lg:-left-[50px] -top-[20px]">
             <div
-              className={`text-xl lg:text-3xl mt-4 ${khandSemibold.className}`}
+              className="text-xl lg:text-3xl mt-4 font-khand font-semibold"
             >
               STAKE
             </div>
-            <div className="bg-[#2A1C7B] rounded-full pr-0 p-1 pl-2 z-10">
+            <div className="bg-[#f5f3fb] dark:bg-[#2A1C7B] rounded-full pr-0 p-1 pl-2 z-10">
               <StakeIcon />
             </div>
           </div>
-          <div className="absolute left-[80px] top-[20px] xl:w-[100px] 2xl:w-[280px] [@media(min-width:1720px)]:w-[330px]  h-[3px] rounded-full bg-gradient-to-r from-[#190E79] from-25% to-[#8B0000]"></div>
+          <div className="absolute left-[80px] top-[20px] xl:w-[100px] 2xl:w-[280px] [@media(min-width:1720px)]:w-[330px]  h-[3px] rounded-full bg-gradient-to-r from-[#002382] dark:from-[#190E79] from-25% to-[#8B0000]"></div>
         </div>
         <div
-          className={`${khandMedium.className} pl-4 mt-4 text-xs lg:text-base`}
+          className="font-khand pl-4 mt-4 text-xs lg:text-base"
         >
           Pool ID: 0xdlc3…ezx41
         </div>
-        <div className={`${khandMedium.className} mt-4 text-xs lg:text-base`}>
+        <div className="font-khand mt-4 text-xs lg:text-base">
           Token ID: 0xfca9…ed1d
         </div>
       </div>

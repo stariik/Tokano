@@ -65,19 +65,19 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
 
   return (
     <div className="p-6 relative">
-      <h3 className="text-2xl font-bold text-white mb-4">PREVIEW YOUR POOL:</h3>
+      <h3 className="text-2xl font-bold text-[#190E79] dark:text-white mb-4">PREVIEW YOUR POOL:</h3>
       <div className="">
         <ResultCard data={filledData} />
       </div>
       {/* button */}
-      <div className="flex justify-between rounded-full border-2 border-[#949DFF] bg-[#453DC8] mt-6">
-        <div className="md:ml-6 ml-4 text-xs md:text-base items-center flex text-white">
+      <div className="flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8] mt-6">
+        <div className="md:ml-6 ml-4 text-xs md:text-base items-center flex text-[#190E79] dark:text-white">
           creation fee: <span className="ml-2"> 12345678 Limas</span>
         </div>
-        <div className="flex items-center text-white text-xs md:text-base">
+        <div className="flex items-center text-[#190E79] dark:text-white text-xs md:text-base">
           <button
             onClick={handleCreatePool}
-            className="rounded-full py-1 md:py-2 px-2 md:px-4 bg-[#0E1379] relative flex"
+            className="rounded-full py-1 md:py-2 px-2 md:px-4 bg-[#fafafa] dark:bg-[#0E1379] relative flex"
           >
             <div className="px-3 py-1 mr-2 rounded-full border-2 border-white">
               <svg
@@ -105,7 +105,7 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
       {/* Popup overlay */}
       {showPopup && (
         <div
-          className={`fixed inset-0 bg-[#000310a6] bg-opacity-80 flex items-center justify-center z-50 ${
+          className={`fixed inset-0 bg-[#eeeded] dark:bg-[#000310a6] bg-opacity-80 flex items-center justify-center z-50 ${
             isClosing ? 'animate-fadeOut' : 'animate-fadeIn'
           }`}
           onClick={closePopup}

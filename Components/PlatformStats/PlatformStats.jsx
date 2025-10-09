@@ -8,11 +8,8 @@ import {
   table3Data,
   tableOneData,
 } from "@/data/data";
-import { Khand } from "next/font/google";
 import ScrollingCards from "../Live/ui/ScrollingCards";
 import { cardData } from "@/data/data";
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
 const firstTables = [
   { header: "name 1", columns: ColumnNames1, tableData: tableOneData },

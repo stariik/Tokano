@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function TokenCard({ token }) {
   return (
-    <div className="bg-[#23264A] rounded border-2 border-[#292B8C] flex flex-col w-[220px] overflow-hidden relative shadow-lg">
+    <div className="bg-[#f5f5f7] dark:bg-[#23264A] rounded border-2 border-[#292B8C] flex flex-col w-[220px] overflow-hidden relative shadow-lg">
       {/* Token Image */}
       <div className="w-full aspect-[1.6/1] bg-black relative">
         <Image

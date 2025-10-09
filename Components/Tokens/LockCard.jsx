@@ -5,12 +5,10 @@ import Link from "next/link";
 import "@/Components/Live/styles/scrollcard.css";
 import { StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
-import { Khand } from "next/font/google";
-
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
+import { useTheme } from "@/hooks/useTheme";
 
 function LockCard({ id, title, created, marketCap, wallet }) {
+  const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
       className="w-[47px] h-[47px] lg:w-[80px] lg:h-[57px]"
@@ -52,15 +50,19 @@ function LockCard({ id, title, created, marketCap, wallet }) {
   return (
     <Link
       href={`/card/lock`}
-      className={`${khandSemibold.className} rounded-4xl block`}
+      className="font-khand font-semibold rounded-4xl block"
       style={{
-        background: "linear-gradient(90deg, #5d9beb 0%, #041d33 100%)",
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg, #5d9beb 0%, #041d33 100%)"
+          : "linear-gradient(90deg, #b8d9f7 0%, #d0e7f5 100%)",
       }}
     >
       <div
         className="p-4 relative rounded-4xl flex cursor-pointer hover:opacity-90 transition"
         style={{
-          background: "linear-gradient(30deg, #5d9beb 0%, #041d33 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(30deg, #5d9beb 0%, #041d33 100%)"
+            : "linear-gradient(30deg, #b8d9f7 0%, #d0e7f5 100%)",
         }}
       >
         <div className="absolute right-6 top-6">
@@ -73,7 +75,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
               {title}
             </h1>
           </div>
-          <div className={`pr-4 text-right mt-2 ${khandMedium.className}`}>
+          <div className="pr-4 text-right mt-2 font-khand font-normal">
             <p>
               <span className="font-semibold">Pool ID: </span> {wallet}
             </p>
@@ -97,12 +99,19 @@ function LockCard({ id, title, created, marketCap, wallet }) {
             <StakeIcon />
             <div className="flex flex-col lg:text-sm text-xs my-auto w-full">
               <div
-                className="pl-4 pr-4 -ml-2 -z-1 rounded-full text-white flex justify-between w-full"
+                className="pl-4 pr-4 -ml-2 -z-1 rounded-full text-[#190E79] dark:text-white flex justify-between w-full bg-[#e3f2fd] dark:bg-transparent"
                 style={{
-                  background:
-                    "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
+                  background: "var(--gradient-lock)",
                 }}
               >
+                <style jsx>{`
+                  div {
+                    --gradient-lock: linear-gradient(90deg, rgba(227, 242, 253, 1) 0%, rgba(200, 230, 250, 1) 36%, rgba(180, 220, 245, 1) 100%);
+                  }
+                  :global(.dark) div {
+                    --gradient-lock: linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%);
+                  }
+                `}</style>
                 <div>LOCKED: 21.04.2025</div>
                 <div>ENDS: |2d.12h</div>
               </div>

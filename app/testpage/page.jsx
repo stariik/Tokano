@@ -221,7 +221,7 @@ function TestPageContent() {
           <button
             onClick={handleInitializePool}
             disabled={stakingClient.loading || !publicKey}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+            className="mt-4 bg-blue-500 text-[#190E79] dark:text-white px-4 py-2 rounded disabled:opacity-50"
           >
             Initialize Pool
           </button>
@@ -248,21 +248,21 @@ function TestPageContent() {
               <button
                 onClick={handleInitStake}
                 disabled={stakingClient.loading || !publicKey}
-                className="w-full bg-green-500 text-white px-4 py-2 rounded disabled:opacity-50"
+                className="w-full bg-green-500 text-[#190E79] dark:text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 1. Initialize Stake
               </button>
               <button
                 onClick={handleStake}
                 disabled={stakingClient.loading || !publicKey}
-                className="w-full bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+                className="w-full bg-blue-500 text-[#190E79] dark:text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 2. Stake Tokens
               </button>
               <button
                 onClick={handleStakeWithInit}
                 disabled={stakingClient.loading || !publicKey}
-                className="w-full bg-purple-500 text-white px-4 py-2 rounded disabled:opacity-50"
+                className="w-full bg-purple-500 text-[#190E79] dark:text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 🚀 Init + Stake (Combined)
               </button>
@@ -288,14 +288,14 @@ function TestPageContent() {
               <button
                 onClick={handleWithdraw}
                 disabled={stakingClient.loading || !publicKey}
-                className="w-full bg-red-500 text-white px-4 py-2 rounded disabled:opacity-50"
+                className="w-full bg-red-500 text-[#190E79] dark:text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 Withdraw Tokens
               </button>
               <button
                 onClick={handleGetReward}
                 disabled={stakingClient.loading || !publicKey}
-                className="w-full bg-purple-500 text-white px-4 py-2 rounded disabled:opacity-50"
+                className="w-full bg-purple-500 text-[#190E79] dark:text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 Claim Rewards
               </button>
@@ -310,7 +310,7 @@ function TestPageContent() {
             <button
               onClick={fetchUserAccounts}
               disabled={loadingUserAccounts}
-              className="text-sm bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 disabled:opacity-50"
+              className="text-sm bg-gray-500 text-[#190E79] dark:text-white px-3 py-1 rounded hover:bg-gray-600 disabled:opacity-50"
             >
               {loadingUserAccounts ? 'Loading...' : '↻ Refresh'}
             </button>

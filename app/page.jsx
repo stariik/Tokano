@@ -3,13 +3,9 @@
 import React, { useState } from "react";
 import Live from "@/Components/Live/Live";
 import LaunchingSoon from "@/Components/LaunchingSoon/LaunchingSoon";
-import { Khand } from "next/font/google";
 import TokenTable from "@/Components/PlatformStats/ui/TokenTable";
 import PlatformStats from "@/Components/PlatformStats/PlatformStats";
 import TokenGrid from "@/Components/Memes/TokenGrid";
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "500" });
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,8 +20,8 @@ export default function Home() {
           </div>
           <div className="col-span-2">
             <div className="border-x-2 border-b-2 border-secondary w-full">
-              <div className="bg-[#14121f] border-b border-secondary bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)] w-full py-2 flex justify-center text-2xl">
-                <p className={`${khandMedium.className}`}>PLATFORM STATS</p>
+              <div className="bg-[#eeeded] dark:bg-[#14121f] border-b border-secondary bg-[radial-gradient(circle,_rgba(238,237,237,1)_29%,_rgba(200,200,220,1)_100%)] dark:bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)] w-full py-2 flex justify-center text-2xl">
+                <p className="font-khand font-medium">PLATFORM STATS</p>
               </div>
               <PlatformStats />
             </div>
@@ -70,7 +66,7 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className={`md:hidden fixed bottom-18 left-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-white px-4 py-2 rounded-r-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+        className={`md:hidden fixed bottom-18 left-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-[#190E79] dark:text-white px-4 py-2 rounded-r-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
           isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
         id="left-menu-button"
@@ -96,12 +92,12 @@ export default function Home() {
             }}
           >
             <div className="flex justify-between items-center p-4 border-b border-secondary bg-dark flex-shrink-0">
-              <h2 className={`text-xl ${khandSemibold.className}`}>
+              <h2 className="text-xl font-khand font-semibold">
                 LAUNCHING SOON
               </h2>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-white hover:text-purple-400 transition-colors text-3xl"
+                className="text-[#190E79] dark:text-white hover:text-purple-400 transition-colors text-3xl"
               >
                 ×
               </button>

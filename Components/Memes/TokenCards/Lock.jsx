@@ -1,19 +1,25 @@
 import React from "react";
 import Image from "next/image";
-import { Khand } from "next/font/google";
 import { SiVerizon } from "react-icons/si";
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "500" });
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
+import { useTheme } from "@/hooks/useTheme";
 
 function Lock({ token }) {
+  const { resolvedTheme } = useTheme();
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-full  overflow-hidden relative shadow-lg"
+      className="rounded border-2 border-[#292B8C] flex flex-col w-full  overflow-hidden relative shadow-lg bg-[#e3f2fd] dark:bg-transparent"
       style={{
-        background: "linear-gradient(45deg, #5d9beb 10%, #041d33 65%)",
+        background: "var(--tw-gradient)",
       }}
     >
+      <style jsx>{`
+        div {
+          --tw-gradient: linear-gradient(45deg, #e3f2fd 10%, #d0e7f5 65%);
+        }
+        :global(.dark) div {
+          --tw-gradient: linear-gradient(45deg, #5d9beb 10%, #041d33 65%);
+        }
+      `}</style>
       {/* Token Image */}
       <div className="w-full aspect-[1.6/1] bg-black relative">
         <Image
@@ -29,7 +35,7 @@ function Lock({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-1">
           <span
-            className={`text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
+            className="text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -38,11 +44,11 @@ function Lock({ token }) {
         </div>
         {/* Stats Row */}
         <div
-          className={`flex items-center justify-between mb-1 ${khandSemibold.className}`}
+          className="flex items-center justify-between mb-1 font-khand font-semibold"
         >
           <div className="text-xl lg:text-2xl flex">LOCK</div>
           <div className="bg-white rounded-3xl">
-            <div className="bg-[#190E79] p-2 m-2 rounded-2xl">
+            <div className="bg-[#fafafa] dark:bg-[#190E79] p-2 m-2 rounded-2xl">
               <SiVerizon className="w-[10px] h-[10px] lg:w-[14px] lg:h-[14px]" />
             </div>
           </div>
@@ -58,9 +64,11 @@ function Lock({ token }) {
       </div>
       {/* Bottom Bar */}
       <div
-        className={`"h-6 w-30 mx-auto md:text-base text-sm rounded-xl text-center ${khandMedium.className}`}
+        className="h-6 w-30 mx-auto md:text-base text-sm rounded-xl text-center font-khand font-medium"
         style={{
-          background: "linear-gradient(90deg, #B4008D 0%, #2A8DFF 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(90deg, #B4008D 0%, #2A8DFF 100%)"
+            : "linear-gradient(90deg, #f0b3e0 0%, #b8d9f7 100%)",
         }}
       >
         ENDS: | 2d-12h

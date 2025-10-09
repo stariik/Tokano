@@ -1,17 +1,14 @@
 import React from "react";
-import { Khand } from "next/font/google";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
 import { StarIcon } from "@/Components/icons";
+import { useTheme } from "@/hooks/useTheme";
 
 import { CiPill } from "react-icons/ci";
 
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
-const khandNormal = Khand({ subsets: ["latin"], weight: "500" });
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
-
 function Vest() {
+  const { resolvedTheme } = useTheme();
   const VestIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -35,19 +32,23 @@ function Vest() {
 
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
+      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-4"
       style={{
-        background: "linear-gradient(90deg, #9D05A1 10%, #1A1E5F 100%)",
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg, #9D05A1 10%, #1A1E5F 100%)"
+          : "linear-gradient(90deg, #f5c4ed 10%, #e8e4f8 100%)",
       }}
     >
       <div
         className="rounded-3xl p-8 pb-0 relative"
         style={{
-          background: "linear-gradient(45deg, #9D05A1 0%, #1A1E5F 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(45deg, #9D05A1 0%, #1A1E5F 100%)"
+            : "linear-gradient(45deg, #f5c4ed 0%, #e8e4f8 100%)",
         }}
       >
         <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
-          <div className="bg-[#0088cc] rounded-full p-1">
+          <div className="bg-[#e3f2fd] dark:bg-[#0088cc] rounded-full p-1">
             <FaTelegramPlane />
           </div>
           <div className="bg-black p-1 rounded-full">
@@ -63,9 +64,9 @@ function Vest() {
             src="/vest.png"
             className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
-          <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
+          <div className="font-khand font-normal ml-4 lg:ml-8">
             <h1
-              className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}
+              className="font-khand font-semibold xl:text-4xl lg:text-2xl md:text-xl text-lg"
             >
               YOU'RE FIRED (FIRED)
             </h1>
@@ -84,7 +85,7 @@ function Vest() {
           </div>
 
           <div
-            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className="mt-6 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm font-khand font-normal"
           >
             21.04.25/12:24
           </div>
@@ -95,20 +96,21 @@ function Vest() {
 
         <div className="absolute left-0  w-11/13 z-5 flex">
           <div
-            className={`items-center flex mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
+            className="items-center flex mx-4 text-xl lg:text-3xl font-khand font-semibold"
           >
             Vest
           </div>
           <VestIcon />
 
           <div
-            className={`flex flex-col lg:text-sm text-xs my-auto w-5/5 ${khandMedium.className}`}
+            className="flex flex-col lg:text-sm text-xs my-auto w-5/5 font-khand font-normal"
           >
             <div
-              className={`pl-4 2xl:pl-6 pr-1 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ${khandMedium.className}`}
+              className="pl-4 2xl:pl-6 pr-1 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-[#190E79] dark:text-white flex justify-between w-6/7 md:w-2/3 font-khand font-normal"
               style={{
-                background:
-                  "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)"
+                  : "linear-gradient(90deg, rgba(227, 242, 253, 1) 10%, rgba(200, 230, 250, 1) 90%)",
               }}
             >
               <div>LOCKED: 21.04.2025</div>
@@ -116,10 +118,11 @@ function Vest() {
             </div>
 
             <div
-              className={`pl-2 2xl:pl-6 pr-2 2xl:pr-5 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ml-14 lg:ml-26 xl:ml-32 2xl:ml-46 ${khandMedium.className}`}
+              className="pl-2 2xl:pl-6 pr-2 2xl:pr-5 py-1 -z-1 rounded-full text-[#190E79] dark:text-white flex justify-between w-6/7 md:w-2/3 ml-14 lg:ml-26 xl:ml-32 2xl:ml-46 font-khand font-normal"
               style={{
-                background:
-                  "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)"
+                  : "linear-gradient(90deg, rgba(227, 242, 253, 1) 10%, rgba(200, 230, 250, 1) 90%)",
               }}
             >
               <div>LOCKED: 21.04.2025</div>
@@ -129,14 +132,14 @@ function Vest() {
         </div>
 
         <div
-          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 mt-14 lg:mt-18`}
+          className="text-[#FFB01C] text-end text-2xl lg:text-3xl font-khand font-semibold mr-4 mt-14 lg:mt-18"
         >
           120M
         </div>
       </div>
 
       <div
-        className={`mr-12 text-end text-xl lg:text-2xl ${khandNormal.className}`}
+        className="mr-12 text-end text-xl lg:text-2xl font-khand font-medium"
       >
         locked
       </div>

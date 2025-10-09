@@ -1,12 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { Khand } from "next/font/google";
 import { SiVerizon } from "react-icons/si";
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "500" });
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
+import { useTheme } from "@/hooks/useTheme";
 
 function Soon({ token }) {
+  const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
       className="w-[35px] md:w-[37px] lg:w-[47px] h-full "
@@ -39,11 +37,19 @@ function Soon({ token }) {
 
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-full overflow-hidden relative shadow-lg pb-1"
+      className="rounded border-2 border-[#292B8C] flex flex-col w-full overflow-hidden relative shadow-lg pb-1 bg-[#f5f3fb] dark:bg-transparent"
       style={{
-        background: "linear-gradient(45deg, #170D56 10%, #622CCD 65%)",
+        background: "var(--tw-gradient)",
       }}
     >
+      <style jsx>{`
+        div {
+          --tw-gradient: linear-gradient(45deg, #f5f3fb 10%, #ede8f5 65%);
+        }
+        :global(.dark) div {
+          --tw-gradient: linear-gradient(45deg, #170D56 10%, #622CCD 65%);
+        }
+      `}</style>
       {/* Token Image */}
       <div className="w-full aspect-[1.6/1] bg-black relative">
         <Image
@@ -59,7 +65,7 @@ function Soon({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-2">
           <span
-            className={`text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
+            className="text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -67,17 +73,18 @@ function Soon({ token }) {
           <span className="text-[#FF00A8] text-xl ml-2">★</span>
         </div>
         <div
-          className={`${khandMedium.className} rounded-r-xl pl-4 -ml-4 max-w-24 text-sm text-[#311880]`}
+          className="font-khand font-normal rounded-r-xl pl-4 -ml-4 max-w-24 text-sm text-[#311880]"
           style={{
-            background:
-              "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)",
+            background: resolvedTheme === "dark"
+              ? "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)"
+              : "linear-gradient(90deg, rgba(255, 220, 160, 1) 20%, rgba(255, 180, 225, 1) 50%,  rgba(255, 220, 160, 1) 90%)",
           }}
         >
           23d-45h-12m
         </div>
         {/* Stats Row */}
         <div
-          className={`flex items-center justify-end gap-4 ${khandSemibold.className}`}
+          className="flex items-center justify-end gap-4 font-khand font-semibold"
         >
           <div className="bg-white rounded-full">
             <StakeIcon />

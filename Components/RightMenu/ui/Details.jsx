@@ -91,7 +91,7 @@ function Details() {
         </div>
 
         {/* Header Row */}
-        <div className="grid grid-cols-2 md:grid-cols-3 bg-[#2A1C78] text-white text-sm font-semibold">
+        <div className="grid grid-cols-2 md:grid-cols-3 bg-[#f5f3fb] dark:bg-[#2A1C78] text-[#190E79] dark:text-white text-sm font-semibold">
           <div className="justify-center items-center flex border-y border-secondary py-2">
             <span className="text-red-500">/-Un/</span>Staked (Period)
           </div>
@@ -237,12 +237,12 @@ function Details() {
               >
                 <div className="flex cursor-pointer">
                   <div className="flex items-center justify-center border-r border-secondary mx-auto min-w-[30px]">
-                    <span className="text-sm font-semibold text-white">
+                    <span className="text-sm font-semibold text-[#190E79] dark:text-white">
                       {index + 1}
                     </span>
                   </div>
                   <div
-                    className="flex-1 text-center md:text-lg p-2 hover:bg-[#2A1C78]"
+                    className="flex-1 text-center md:text-lg p-2 hover:bg-[#f5f3fb] dark:hover:bg-[#2A1C78]"
                     onClick={() =>
                       setPopup({
                         show: true,
@@ -271,15 +271,15 @@ function Details() {
                     {popup.type === "claim" && (
                       <div className="absolute top-1/2 left-full w-8 h-px bg-purple-400 transform -translate-y-1/2"></div>
                     )}
-                    <div className="bg-[#0C0D1C] border-2 border-secondary rounded-lg p-4 min-w-[160px] text-center shadow-xl">
+                    <div className="bg-[#eeeded] dark:bg-[#0C0D1C] border-2 border-secondary rounded-lg p-4 min-w-[160px] text-center shadow-xl">
                       <div className="mb-3">
-                        <div className="text-white text-sm font-semibold">
+                        <div className="text-[#190E79] dark:text-white text-sm font-semibold">
                           {popup.type === "unstake" ? "UNSTAKE?" : "CLAIM?"}
                         </div>
                       </div>
                       <div className="flex flex-col space-y-2">
                         <button
-                          className={`px-6 py-2 rounded-full text-white font-bold text-sm ${
+                          className={`px-6 py-2 rounded-full text-[#190E79] dark:text-white font-bold text-sm ${
                             popup.type === "unstake"
                               ? "bg-red-500 hover:bg-red-600"
                               : "bg-green-500 hover:bg-green-600"
@@ -298,7 +298,7 @@ function Details() {
                           YES
                         </button>
                         <button
-                          className="px-6 py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-white font-bold text-sm"
+                          className="px-6 py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-[#190E79] dark:text-white font-bold text-sm"
                           onClick={() =>
                             setPopup({
                               show: false,
@@ -314,7 +314,7 @@ function Details() {
                   </div>
                 )}
                 <div
-                  className="text-center cursor-pointer hover:bg-[#2A1C78] border-r border-secondary md:text-lg mr-3"
+                  className="text-center cursor-pointer hover:bg-[#f5f3fb] dark:hover:bg-[#2A1C78] border-r border-secondary md:text-lg mr-3"
                   onClick={() =>
                     setPopup({
                       show: true,
@@ -334,8 +334,8 @@ function Details() {
         </div>
 
         {/* History Button */}
-        <div className="bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-50 mb-2">
-          <button className="text-white font-semibold">▼ History</button>
+        <div className="bg-[#f5f3fb] dark:bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-50 mb-2">
+          <button className="text-[#190E79] dark:text-white font-semibold">▼ History</button>
         </div>
       </div>
     </div>

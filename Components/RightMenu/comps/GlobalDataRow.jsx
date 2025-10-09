@@ -1,13 +1,16 @@
 import React from "react";
+import { useTheme } from "@/hooks/useTheme";
 
 function GlobalDataRow() {
+  const { resolvedTheme } = useTheme();
+
   return (
     <div
-      className="grid grid-cols-10 border-2 border-[#7B3FE4] text-white text-base"
+      className="grid grid-cols-10 border-2 border-[#7B3FE4] text-[#190E79] dark:text-white text-base font-khand font-normal"
       style={{
-        background:
-          "linear-gradient(90deg, rgba(49, 6, 128, 1) 0%, rgba(10, 0, 0, 1) 58%)",
-        fontFamily: "Khand, sans-serif",
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg, rgba(49, 6, 128, 1) 0%, rgba(10, 0, 0, 1) 58%)"
+          : "linear-gradient(90deg, rgba(229, 227, 245, 1) 0%, rgba(255, 255, 255, 1) 58%)",
       }}
     >
       {/* Left label */}

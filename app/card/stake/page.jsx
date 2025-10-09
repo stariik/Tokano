@@ -22,10 +22,10 @@ function page() {
             <StakingModule />
           </div>
           {/* Show MyStaking on desktop, Details on mobile */}
-          <div className="hidden md:block text-white">
+          <div className="hidden md:block text-[#190E79] dark:text-white">
             <MyStaking />
           </div>
-          <div className="md:hidden text-white py-6">
+          <div className="md:hidden text-[#190E79] dark:text-white py-6">
             <Details />
           </div>
         </div>

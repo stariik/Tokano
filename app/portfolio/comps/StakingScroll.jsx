@@ -28,11 +28,11 @@ function StakingScroll({ stakingData = [] }) {
           scrollbar-color: #8b5cf6 transparent;
         }
       `}</style>
-      <div className='border-1 border-secondary rounded-3xl text-white'>
+      <div className='border-1 border-secondary rounded-3xl text-[#190E79] dark:text-white'>
         <div className="py-2 pl-6 border-b-1 border-secondary">
             YOU ARE STAKING
         </div>
-        <div className="py-2 pl-16 flex justify-between pr-8 bg-[#231570]">
+        <div className="py-2 pl-16 flex justify-between pr-8 bg-[#fafafa] dark:bg-[#231570]">
             <div>
                 LIMASIRA
             </div>

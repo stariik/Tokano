@@ -1,17 +1,14 @@
 import React from "react";
-import { Khand } from "next/font/google";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
 import { StarIcon } from "@/Components/icons";
+import { useTheme } from "@/hooks/useTheme";
 
 import { CiPill } from "react-icons/ci";
 
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
-const khandNormal = Khand({ subsets: ["latin"], weight: "500" });
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
-
 function Soon() {
+  const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
       className="w-[47px] lg:w-[70px] h-full"
@@ -43,19 +40,23 @@ function Soon() {
   );
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
+      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-4"
       style={{
-        background: "linear-gradient(90deg, #170D56 10%, #622CCD 80%)",
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg, #170D56 10%, #622CCD 80%)"
+          : "linear-gradient(90deg, #e8e4f8 10%, #d5d2ec 80%)",
       }}
     >
       <div
         className="rounded-3xl p-8 pb-0 relative"
         style={{
-          background: "linear-gradient(45deg, #170D56 0%, #622CCD 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(45deg, #170D56 0%, #622CCD 100%)"
+            : "linear-gradient(45deg, #e8e4f8 0%, #d5d2ec 100%)",
         }}
       >
         <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
-          <div className="bg-[#0088cc] rounded-full p-1">
+          <div className="bg-[#e3f2fd] dark:bg-[#0088cc] rounded-full p-1">
             <FaTelegramPlane />
           </div>
           <div className="bg-black p-1 rounded-full">
@@ -71,8 +72,8 @@ function Soon() {
             src="/vest.png"
             className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
-          <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}>
+          <div className="font-khand font-normal ml-4 lg:ml-8">
+            <h1 className="font-khand font-semibold xl:text-4xl lg:text-2xl md:text-xl text-lg">
               YOU'RE FIRED (FIRED)
             </h1>
 
@@ -90,7 +91,7 @@ function Soon() {
           </div>
 
           <div
-            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className="mt-6 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm font-khand font-normal"
           >
             21.04.25/12:24
           </div>
@@ -101,7 +102,7 @@ function Soon() {
 
         <div className="absolute left-0  w-11/13 z-5 flex mt-4">
           <div
-            className={`items-center flex ml-3 md:mx-4 text-xl lg:text-2xl max-w-20 ${khandSemibold.className}`}
+            className="items-center flex ml-3 md:mx-4 text-xl lg:text-2xl max-w-20 font-khand font-semibold"
           >
             STAKING POOL
           </div>
@@ -109,20 +110,22 @@ function Soon() {
             <StakeIcon />
           </div>
           <div
-            className={`flex flex-col lg:text-sm text-xs my-auto w-full mx-auto ${khandMedium.className}`}
+            className="flex flex-col lg:text-sm text-xs my-auto w-full mx-auto font-khand font-normal"
           >
             <div
               className="h-2 bg-white w-6/7 lg:w-9/10 -z-1 flex absolute -right-16 lg:-right-27 bottom-6 lg:bottom-8"
               style={{
-                background:
-                  "linear-gradient(90deg, rgba(234, 217, 255, 1) 0%, rgba(243, 243, 243, 0) 100%",
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg, rgba(234, 217, 255, 1) 0%, rgba(243, 243, 243, 0) 100%"
+                  : "linear-gradient(90deg, rgba(255, 245, 255, 1) 0%, rgba(255, 255, 255, 0) 100%",
               }}
             ></div>
             <div
-              className={`pl-1 lg:pl-6 lg:pr-5 pr-1 ml-0 lg:-ml-4 py-1 -z-1 rounded-full text-[#6D11B3] lg:text-base text-xs flex justify-between ${khandNormal.className}`}
+              className="pl-1 lg:pl-6 lg:pr-5 pr-1 ml-0 lg:-ml-4 py-1 -z-1 rounded-full text-[#6D11B3] lg:text-base text-xs flex justify-between font-khand font-medium"
               style={{
-                background:
-                  "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)",
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)"
+                  : "linear-gradient(90deg, rgba(255, 220, 160, 1) 20%, rgba(255, 180, 225, 1) 50%,  rgba(255, 220, 160, 1) 90%)",
               }}
             >
               <div>LOCKED: 21.04.2025</div>
@@ -132,14 +135,14 @@ function Soon() {
         </div>
 
         <div
-          className={`text-2xl lg:text-3xl ${khandSemibold.className} mt-12 pt-12 lg:mt-16`}
+          className="text-2xl lg:text-3xl font-khand font-semibold mt-12 pt-12 lg:mt-16"
         >
           {/* 120M */}
         </div>
       </div>
 
       <div
-        className={`mt-8 text-end text-xl lg:text-2xl ${khandNormal.className}`}
+        className="mt-8 text-end text-xl lg:text-2xl font-khand font-medium"
       >
         {/* locked */}
       </div>

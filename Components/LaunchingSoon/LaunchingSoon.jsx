@@ -1,4 +1,3 @@
-import Banner from "@/Components/Banner";
 import {
   ColumnNames1,
   ColumnNames2,
@@ -6,13 +5,10 @@ import {
   table3Data,
   tableOneData,
 } from "@/data/data";
-import { Khand } from "next/font/google";
 import ScrollingSoonCards from "../Live/ui/ScrollingSoonCards";
 import SoonCard from "@/Components/Tokens/SoonCard";
 import { cardData } from "@/data/data";
-
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
+import { useTheme } from "@/hooks/useTheme";
 
 const firstTables = [
   { header: "name 1", columns: ColumnNames1, tableData: tableOneData },
@@ -30,6 +26,8 @@ const secondTables = [
 ];
 
 function LaunchingSoon({ isMobile = false }) {
+  const { resolvedTheme } = useTheme();
+
   if (isMobile) {
     return (
       <div className="border-secondary">
@@ -47,7 +45,11 @@ function LaunchingSoon({ isMobile = false }) {
   return (
     <div className="hidden md:block border-r-2 border-secondary">
       <div
-        className={`lg:border-b-2 border-secondary flex justify-center py-4 text-2xl ${khandMedium.className} custom-header-gradient `}
+        className={`lg:border-b-2 border-secondary flex justify-center py-4 text-2xl font-khand font-semibold ${
+          resolvedTheme === "dark"
+            ? "dark-custom-header-gradient"
+            : "custom-header-gradient text-primary"
+        }`}
       >
         <h1>| Launching Soon |</h1>
       </div>

@@ -1,12 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { Khand } from "next/font/google";
 import { SiVerizon } from "react-icons/si";
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "500" });
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
+import { useTheme } from "@/hooks/useTheme";
 
 function Stake({ token }) {
+  const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <div className="relative z-10 flex-shrink-0">
       <div className="w-12 rounded-full bg-white flex -mr-18 items-center justify-center">
@@ -43,11 +41,19 @@ function Stake({ token }) {
 
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-full overflow-hidden relative shadow-lg"
+      className="rounded border-2 border-[#292B8C] flex flex-col w-full overflow-hidden relative shadow-lg bg-[#f5f3fb] dark:bg-transparent"
       style={{
-        background: "linear-gradient(45deg,#170D56 10%, #432CCD  65%)",
+        background: "var(--tw-gradient)",
       }}
     >
+      <style jsx>{`
+        div {
+          --tw-gradient: linear-gradient(45deg, #f5f3fb 10%, #ede8f5 65%);
+        }
+        :global(.dark) div {
+          --tw-gradient: linear-gradient(45deg, #170D56 10%, #432CCD 65%);
+        }
+      `}</style>
       {/* Token Image */}
       <div className="w-full aspect-[1.6/1] bg-black relative">
         <Image
@@ -63,7 +69,7 @@ function Stake({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-2">
           <span
-            className={`text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
+            className="text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -73,7 +79,7 @@ function Stake({ token }) {
 
         {/* Stats Row */}
         <div
-          className={`flex items-center justify-between gap-4 relative ${khandSemibold.className}`}
+          className="flex items-center justify-between gap-4 relative font-khand font-semibold"
         >
           <StakeIcon />
 
@@ -83,13 +89,27 @@ function Stake({ token }) {
           {/* Text Content */}
           <div className="flex flex-col absolute left-6 lg:left-10 xl:w-1/2 2xl:w-2/3">
             {/* Time Display Bar */}
-            <div className="bg-gradient-to-r from-cyan-400 via-cyan-300 to-teal-300 rounded-full pl-6 py-1 flex lg:-ml-4 items-center">
+            <div
+              className="rounded-full pl-6 py-1 flex lg:-ml-4 items-center"
+              style={{
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)"
+                  : "linear-gradient(90deg, #c8f5f0 0%, #d0f5f8 50%, #c8f0ea 100%)"
+              }}
+            >
               <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
-              <span className="text-white text-xs font-bold md:pr-2 lg:pr-0">2d-12h-45m</span>
+              <span className="text-[#190E79] dark:text-white text-xs font-bold md:pr-2 lg:pr-0">2d-12h-45m</span>
             </div>
 
             {/* Percentage Display Bar */}
-            <div className="bg-gradient-to-r from-fuchsia-600 via-pink-500 to-orange-300 rounded-full pl-6 py-1 lg:-ml-4 flex items-center w-3/4 md:w-full">
+            <div
+              className="rounded-full pl-6 py-1 lg:-ml-4 flex items-center w-3/4 md:w-full"
+              style={{
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)"
+                  : "linear-gradient(90deg, #f0b3e0 0%, #ffc4ed 50%, #ffd4a8 100%)"
+              }}
+            >
               <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
               <span className="text-[#1E1E1E] text-xs font-bold">30%</span>
             </div>

@@ -1,16 +1,13 @@
 import React from "react";
-import { Khand } from "next/font/google";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
 import { StarIcon } from "@/Components/icons";
 import { CiPill } from "react-icons/ci";
-
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
-const khandNormal = Khand({ subsets: ["latin"], weight: "500" });
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
+import { useTheme } from "@/hooks/useTheme";
 
 function StakingPoolResult({ token, formData }) {
+  const { resolvedTheme } = useTheme();
   // Helper function to format numbers
   const formatNumber = (num) => {
     if (!num) return "0";
@@ -53,15 +50,19 @@ function StakingPoolResult({ token, formData }) {
 
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-white"
+      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white"
       style={{
-        background: "linear-gradient(90deg, #170D56 10%, #432CCD 80%)",
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg, #170D56 10%, #432CCD 80%)"
+          : "linear-gradient(90deg, #e8e4f8 10%, #d5d2ec 80%)",
       }}
     >
       <div
         className="rounded-3xl p-4 md:p-8 pb-0 relative"
         style={{
-          background: "linear-gradient(45deg, #170D56 0%, #432CCD 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(45deg, #170D56 0%, #432CCD 100%)"
+            : "linear-gradient(45deg, #e8e4f8 0%, #d5d2ec 100%)",
         }}
       >
         <div className="flex">
@@ -69,9 +70,9 @@ function StakingPoolResult({ token, formData }) {
             src="/vest.png"
             className="w-20 md:w-24 lg:w-34 h-full lg:rounded-3xl rounded-2xl md:ml-4 mb-4"
           />
-          <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
+          <div className="font-khand font-normal ml-4 lg:ml-8">
             <h1
-              className={`${khandSemibold.className} 2xl:text-4xl xl:text-2xl lg:text-xl md:text-lg text-base`}
+              className="font-khand font-semibold 2xl:text-4xl xl:text-2xl lg:text-xl md:text-lg text-base"
             >
               {token?.name || "TOKEN NAME"}
             </h1>
@@ -89,7 +90,7 @@ function StakingPoolResult({ token, formData }) {
           </div>
 
           <div
-            className={`mt-2 md:mt-6 bg-[#2B923E] rounded-l-2xl pl-2 pr-2 text-xs md:text-sm ${khandMedium.className}`}
+            className="mt-2 md:mt-6 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-2 pr-2 text-xs md:text-sm font-khand font-normal"
           >
             {formData?.activationDateTime === "IMMEDIATELY"
               ? "IMMEDIATELY"
@@ -108,34 +109,36 @@ function StakingPoolResult({ token, formData }) {
         </div>
 
         <div
-          className={`text-[#311880] text-center text-sm md:text-base lg:text-lg 2xl:text-2xl ${khandSemibold.className} mb-12 -mt-2 rounded-2xl px-1 mx-14`}
+          className="text-[#311880] text-center text-sm md:text-base lg:text-lg 2xl:text-2xl font-khand font-semibold mb-12 -mt-2 rounded-2xl px-1 mx-14"
           style={{
-            background:
-              "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
+            background: resolvedTheme === "dark"
+              ? "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)"
+              : "linear-gradient(90deg, #e6c8f0 10%, #ffc4ed 20%, #ffe896 70%)",
           }}
         >
           LAUNCHING IN: {formData?.distributionLength || "0"} days
         </div>
 
         <div
-          className={`text-end text-xl lg:text-2xl ${khandNormal.className} -mt-8 `}
+          className="text-end text-xl lg:text-2xl font-khand font-medium -mt-8"
         >
           <div className="left-0 w-full z-5 flex mt-2 bottom-0 relative">
             <div
-              className={`items-center flex mx-4 text-xl lg:text-3xl max-w-20 ${khandSemibold.className}`}
+              className="items-center flex mx-4 text-xl lg:text-3xl max-w-20 font-khand font-semibold"
             >
               STAKING POOL
             </div>
             <div
-              className={`flex flex-col lg:text-sm text-xs my-auto w-full relative ${khandMedium.className}`}
+              className="flex flex-col lg:text-sm text-xs my-auto w-full relative font-khand font-normal"
             >
               <StakeIcon />
 
               <div
-                className={`pl-4 md:pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-white pr-2 ${khandNormal.className}`}
+                className="pl-4 md:pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-[#190E79] dark:text-white pr-2 font-khand font-medium"
                 style={{
-                  background:
-                    "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
+                  background: resolvedTheme === "dark"
+                    ? "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)"
+                    : "linear-gradient(90deg, #c8e4f8 10%, #c8e8f0 20%, #c8f5f0 70%)",
                 }}
               >
                 <div className="flex justify-between">
@@ -147,10 +150,11 @@ function StakingPoolResult({ token, formData }) {
                 </div>
               </div>
               <div
-                className={`pl-4 pr-2 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black ${khandNormal.className}`}
+                className="pl-4 pr-2 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black font-khand font-medium"
                 style={{
-                  background:
-                    "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
+                  background: resolvedTheme === "dark"
+                    ? "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)"
+                    : "linear-gradient(90deg, #e6c8f0 10%, #ffc4ed 20%, #ffe896 70%)",
                 }}
               >
                 <div className="flex justify-between">

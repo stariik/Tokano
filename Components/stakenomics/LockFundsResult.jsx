@@ -1,13 +1,10 @@
 import React from "react";
-import { Khand } from "next/font/google";
 import { StarIcon } from "@/Components/icons";
 import { CiPill } from "react-icons/ci";
-
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
-const khandNormal = Khand({ subsets: ["latin"], weight: "500" });
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
+import { useTheme } from "@/hooks/useTheme";
 
 function LockFundsResult({ token, formData }) {
+  const { resolvedTheme } = useTheme();
   // Helper function to format numbers
   const formatNumber = (num) => {
     if (!num) return "0";
@@ -64,15 +61,19 @@ function LockFundsResult({ token, formData }) {
 
   return (
     <div
-      className="rounded-3xl pb-2 lg:pb-4 border-1 border-secondary text-white lg:mx-0 mx-4"
+      className="rounded-3xl pb-2 lg:pb-4 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-4"
       style={{
-        background: "linear-gradient(90deg, #5d9beb 10%, #041d33 80%)",
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg, #5d9beb 10%, #041d33 80%)"
+          : "linear-gradient(90deg, #b8d9f7 10%, #d0e7f5 80%)",
       }}
     >
       <div
         className="rounded-3xl px-4 md:px-8 pt-4 relative"
         style={{
-          background: "linear-gradient(45deg, #5d9beb 0%, #041d33 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(45deg, #5d9beb 0%, #041d33 100%)"
+            : "linear-gradient(45deg, #b8d9f7 0%, #d0e7f5 100%)",
         }}
       >
         <div className="flex flex-row-reverse">
@@ -80,9 +81,9 @@ function LockFundsResult({ token, formData }) {
             src="/vest.png"
             className="w-20 md:w-24 lg:w-28 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8"
           />
-          <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
+          <div className="font-khand font-normal ml-4 lg:ml-8">
             <h1
-              className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl sm:text-2xl text-lg lg:mr-36 xl:mr-18 sm:mr-64 mr-18`}
+              className="font-khand font-semibold xl:text-4xl lg:text-2xl md:text-xl sm:text-2xl text-lg lg:mr-36 xl:mr-18 sm:mr-64 mr-18"
             >
               {token?.name || "TOKEN NAME"}
             </h1>
@@ -101,21 +102,28 @@ function LockFundsResult({ token, formData }) {
 
         <div className="absolute left-0  w-12/13 md:w-11/13 z-5 flex">
           <div
-            className={`items-center flex mx-2 md:mx-4 text-xl lg:text-3xl ${khandSemibold.className}`}
+            className="items-center flex mx-2 md:mx-4 text-xl lg:text-3xl font-khand font-semibold"
           >
             LOCK
           </div>
           <LockIcon />
           <div
-            className={`flex flex-col lg:text-sm text-xs my-auto w-full ${khandMedium.className}`}
+            className="flex flex-col lg:text-sm text-xs my-auto w-full font-khand font-normal"
           >
             <div
-              className={`pl-4 2xl:pl-6 pr-1 md:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between ${khandNormal.className}`}
+              className="pl-4 2xl:pl-6 pr-1 md:pr-5 -ml-4 py-1 -z-1 rounded-full text-[#190E79] dark:text-white flex justify-between font-khand font-medium bg-[#f0ebfa] dark:bg-transparent"
               style={{
-                background:
-                  "linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%)",
+                background: "var(--gradient-lock-result)",
               }}
             >
+              <style jsx>{`
+                div {
+                  --gradient-lock-result: linear-gradient(90deg, rgba(240, 235, 250, 1) 10%, rgba(227, 242, 253, 1) 90%);
+                }
+                :global(.dark) div {
+                  --gradient-lock-result: linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%);
+                }
+              `}</style>
               <div>
                 LOCKED:{" "}
                 {formData?.lockDateTime
@@ -140,14 +148,14 @@ function LockFundsResult({ token, formData }) {
         </div>
 
         <div
-          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-1 mt-8 `}
+          className="text-[#FFB01C] text-end text-2xl lg:text-3xl font-khand font-semibold mr-1 mt-8"
         >
           {formatNumber(formData?.tokenAmount)}
         </div>
       </div>
 
       <div
-        className={`mr-12 text-end text-xl lg:text-2xl ${khandNormal.className}`}
+        className="mr-12 text-end text-xl lg:text-2xl font-khand font-medium"
       >
         locked
       </div>

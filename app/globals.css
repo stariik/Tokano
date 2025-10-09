@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600&display=swap');
+@import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
 
@@ -9,28 +9,40 @@
   --color-secondary: #6d6fdf;
   --color-primary: #424173;
   --color-dark-200: #18182a;
-}
 
-/* Khand Font Classes */
-.khand-regular {
-  font-family: 'Khand', sans-serif;
-  font-weight: 400;
-}
+  /* Text colors - theme aware */
+  --color-text-primary: #190E79;  /* Light mode text */
+  --color-text-primary-dark: #ffffff;  /* Dark mode text */
 
-.khand-medium {
-  font-family: 'Khand', sans-serif;
-  font-weight: 500;
-}
+  /* Background colors - Light mode mappings */
+  --color-card-bg-light: #f5f3fb;        /* Light purple for cards (replaces #2A1C78) */
+  --color-card-header-light: #e8e4f8;    /* Lighter purple for headers (replaces #453DC8) */
+  --color-card-deep-light: #eeeded;      /* Off-white for deep backgrounds (replaces #120e21, #0C0D1C) */
+  --color-accent-light: #d5d2ec;         /* Light lavender for accents (replaces #292B8C) */
+  --color-section-light: #fafafa;        /* Very light for sections (replaces #13153A, #231570) */
+  --color-info-light: #e3f2fd;           /* Light blue for info (replaces #0088cc) */
 
-.khand-semibold {
-  font-family: 'Khand', sans-serif;
-  font-weight: 600;
+  /* Keep green for success states in both modes */
+  --color-success: #2B923E;
+  --color-success-light: #2B923E;
+
+  /* Khand Font Family */
+  --font-khand: "Khand", sans-serif;
 }
 
 .custom-header-gradient {
+  background: linear-gradient(90deg, #d5d2ec 20%, rgb(189, 172, 241) 80%);
+}
+
+.dark-custom-header-gradient {
   background: linear-gradient(90deg, #240091 0%, rgba(39, 34, 65, 0) 100%);
 }
+
 .custom-header2-gradient {
+  background: linear-gradient(270deg, #f0b3e0 0%, #d5d2ec 51.92%, #f5c4ed 100%);
+}
+
+.dark-custom-header2-gradient {
   background: linear-gradient(270deg, #940470 0%, #231570 51.92%, #ba0a9a 100%);
 }
 

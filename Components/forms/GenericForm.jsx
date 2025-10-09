@@ -77,9 +77,9 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
                   value={formData[subField.name] || ""}
                   onChange={(e) => handleInputChange(subField.name, e.target.value)}
                   placeholder={subField.placeholder}
-                  className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-20 text-center placeholder-gray-400"
+                  className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-20 text-center placeholder-gray-400"
                 />
-                <span className="text-white font-bold text-[13px]">{subField.suffix}</span>
+                <span className="text-[#190E79] dark:text-white font-bold text-[13px]">{subField.suffix}</span>
               </div>
             ))}
           </div>
@@ -90,7 +90,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
           <select
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-40"
+            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-40"
           >
             {options.map(option => (
               <option key={option} value={option}>{option}</option>
@@ -105,7 +105,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
               type={type}
               value={value || ""}
               onChange={(e) => handleInputChange(name, e.target.value)}
-              className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px]"
+              className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold flex-1 max-w-[280px]"
               required={required}
             />
             {name === "activationDateTime" && (
@@ -118,7 +118,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
                     .slice(0, 16);
                   handleInputChange(name, localDateTime);
                 }}
-                className="bg-[#2B923E] hover:bg-[#238033] text-white font-bold text-xs md:text-base p-1 md:p-2 rounded-lg transition-colors"
+                className="bg-[#2B923E] dark:bg-[#2B923E] hover:bg-[#238033] dark:hover:bg-[#238033] text-[#190E79] dark:text-white font-bold text-xs md:text-base p-1 md:p-2 rounded-lg transition-colors"
                 title="Set to current time"
               >
                 now
@@ -134,7 +134,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px] placeholder-gray-400"
+            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold flex-1 max-w-[280px] placeholder-gray-400"
             required={required}
           />
         );
@@ -145,7 +145,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             type={type}
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold flex-1 max-w-[280px]"
+            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold flex-1 max-w-[280px]"
             required={required}
           />
         );
@@ -156,7 +156,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             type={type}
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-[100px]"
+            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-[100px]"
             required={required}
           />
         );
@@ -168,7 +168,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-40 text-center placeholder-gray-400"
+            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-40 text-center placeholder-gray-400"
             required={required}
           />
         );
@@ -180,7 +180,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-white font-bold w-24 placeholder-gray-400"
+            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-24 placeholder-gray-400"
             required={required}
           />
         );
@@ -200,7 +200,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       return (
         <div className="flex gap-2 items-center mb-1.5">
           {renderField(field)}
-          {suffix && <span className="text-white font-bold text-[13px]">{suffix}</span>}
+          {suffix && <span className="text-[#190E79] dark:text-white font-bold text-[13px]">{suffix}</span>}
         </div>
       );
     }
@@ -347,21 +347,21 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   };
 
   return (
-    <div className="w-full mx-auto rounded-3xl p-4 shadow-2xl border-[3px] border-[#453DC8] bg-[#1B105C]">
+    <div className="w-full mx-auto rounded-3xl p-4 shadow-2xl border-[3px] border-[#453DC8] bg-[#fafafa] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 px-1">
         <div className="flex items-center gap-3">
           <div className="bg-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-[#6b4d9f] text-base flex-shrink-0">
             {getIcon()}
           </div>
-          <div className="text-white text-sm font-semibold">
+          <div className="text-[#190E79] dark:text-white text-sm font-semibold">
             Fill the form to {fundType === "STAKING POOL" ? "create staking pool for" : fundType === "LOCK FUNDS" ? "lock funds for" : "create linear vesting for"}: {token.name}
           </div>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-white hover:text-gray-300 transition-colors font-bold text-lg"
+            className="text-[#190E79] dark:text-white hover:text-gray-300 transition-colors font-bold text-lg"
           >
             ✖
           </button>
@@ -372,12 +372,12 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       <div className="rounded-2xl p-6 mb-6">
         {config.fields.map((field, index) => (
           <div key={field.name} className="mb-5">
-            <label className="block text-white font-bold text-[13px] mb-2">
-              <span className="text-white font-bold mr-1">{index + 1}.</span>
+            <label className="block text-[#190E79] dark:text-white font-bold text-[13px] mb-2">
+              <span className="text-[#190E79] dark:text-white font-bold mr-1">{index + 1}.</span>
               {getFieldLabel(field, fundType)}:
             </label>
             {renderFieldWithLayout(field)}
-            <div className="text-white text-[10px] leading-tight mt-1.5 font-medium opacity-80">
+            <div className="text-[#190E79] dark:text-white text-[10px] leading-tight mt-1.5 font-medium opacity-80">
               {getFieldDescription(field, fundType)}
             </div>
           </div>
@@ -386,15 +386,15 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       </div>
 
       {/* Warning Box */}
-      <div className="bg-[#453DC8] border-2 border-[#6b4d9f] rounded-xl p-4 mt-2">
-        <div className="flex items-center justify-center gap-2 text-white font-bold text-xs mb-3">
+      <div className="bg-[#e8e4f8] dark:bg-[#453DC8] border-2 border-[#6b4d9f] rounded-xl p-4 mt-2">
+        <div className="flex items-center justify-center gap-2 text-[#190E79] dark:text-white font-bold text-xs mb-3">
           <span className="text-sm">⚠️</span>
           <span>ATTENTION</span>
           <span className="text-sm">⚠️</span>
         </div>
         <ul className="list-none">
           {getAttentionItems(fundType).map((item, index) => (
-            <li key={index} className="text-white text-[10px] leading-relaxed mb-2.5 pl-3 relative font-medium">
+            <li key={index} className="text-[#190E79] dark:text-white text-[10px] leading-relaxed mb-2.5 pl-3 relative font-medium">
               <span className="absolute left-0 font-bold">{index + 1}.</span>
               <span className="font-bold">{item.title}:</span> {item.description}
             </li>
@@ -404,18 +404,18 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
 
       {/* Preview Section */}
       <div className="mt-6">
-        <h3 className="text-2xl font-bold text-white mb-4">PREVIEW YOUR POOL:</h3>
+        <h3 className="text-2xl font-bold text-[#190E79] dark:text-white mb-4">PREVIEW YOUR POOL:</h3>
         {renderResultPreview()}
 
         {/* CREATE POOL Button */}
-        <div className="flex justify-between rounded-full border-2 border-[#949DFF] bg-[#453DC8] mt-6">
-          <div className="md:ml-6 ml-4 text-xs md:text-base items-center flex text-white">
+        <div className="flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8] mt-6">
+          <div className="md:ml-6 ml-4 text-xs md:text-base items-center flex text-[#190E79] dark:text-white">
             creation fee: <span className="ml-2"> 12345678 Limas</span>
           </div>
-          <div className="flex items-center text-white text-xs md:text-base">
+          <div className="flex items-center text-[#190E79] dark:text-white text-xs md:text-base">
             <button
               onClick={handleCreatePool}
-              className="rounded-full py-1 md:py-2 px-2 md:px-4 bg-[#0E1379] relative flex cursor-pointer hover:bg-[#1a1f9e] transition-colors"
+              className="rounded-full py-1 md:py-2 px-2 md:px-4 bg-[#fafafa] dark:bg-[#0E1379] relative flex cursor-pointer hover:bg-[#f0f0ff] dark:hover:bg-[#1a1f9e] transition-colors"
             >
               <div className="px-3 py-1 mr-2 rounded-full border-2 border-white">
                 <svg
@@ -444,7 +444,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       {/* Popup overlay */}
       {showPopup && (
         <div
-          className={`fixed inset-0 bg-[#000310a6] bg-opacity-80 flex items-center justify-center z-50 ${
+          className={`fixed inset-0 bg-[#eeeded] dark:bg-[#000310a6] bg-opacity-80 flex items-center justify-center z-50 ${
             isClosing ? 'animate-fadeOut' : 'animate-fadeIn'
           }`}
           onClick={closePopup}

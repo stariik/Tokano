@@ -1,12 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Khand } from "next/font/google";
 import GlobalDataRow from "./comps/GlobalDataRow";
 import TokanoBalance from "./ui/TokanoBalance";
 import Details from "./ui/Details";
 import GlobalData from "./ui/GlobalData";
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
 
 function RightMenu() {
   const [show, setShow] = useState(false);
@@ -24,7 +21,7 @@ function RightMenu() {
   }, [show]);
 
   return (
-    <div className={`${khandMedium.className}`}>
+    <div className="font-khand font-normal">
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;
@@ -48,7 +45,7 @@ function RightMenu() {
       {/* Toggle button - mobile only */}
       <button
         onClick={() => setShow(true)}
-        className={`xl:hidden fixed bottom-18 right-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-white px-4 py-2 rounded-l-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+        className={`xl:hidden fixed bottom-18 right-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-[#190E79] dark:text-white px-4 py-2 rounded-l-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
           show ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
         id="right-menu-button"
@@ -68,7 +65,7 @@ function RightMenu() {
       {/* Right-side menu */}
       <div
         className={`
-          bg-[#12002a] border-l-2 border-secondary
+          bg-[#f5f3fb] dark:bg-[#12002a] border-l-2 border-secondary
           fixed top-0 right-0 z-50 w-[90vw] h-screen
           overflow-y-auto custom-scrollbar
           transition-transform duration-300 ease-in-out
@@ -89,7 +86,7 @@ function RightMenu() {
           <h1>TOKANO</h1>
           <button
             onClick={() => setShow(false)}
-            className="xl:hidden text-white hover:text-purple-400 transition-colors text-3xl"
+            className="xl:hidden text-[#190E79] dark:text-white hover:text-purple-400 transition-colors text-3xl"
           >
             ✕
           </button>

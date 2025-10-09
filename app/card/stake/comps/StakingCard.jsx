@@ -1,17 +1,14 @@
 import React from "react";
-import { Khand } from "next/font/google";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
 import { StarIcon } from "@/Components/icons";
+import { useTheme } from "@/hooks/useTheme";
 
 import { CiPill } from "react-icons/ci";
 
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
-const khandNormal = Khand({ subsets: ["latin"], weight: "500" });
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
-
 function StakingCard({ id, title, created, marketCap, wallet }) {
+  const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
       className="w-[47px] lg:w-[80px] h-full -mr-1 absolute"
@@ -44,19 +41,23 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
 
   return (
     <div
-      className="rounded-4xl pb-4 lg:pb-8 border-1 border-secondary text-white lg:mx-0 mx-4"
+      className="rounded-4xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-4"
       style={{
-        background: "linear-gradient(90deg, #2f1f7b 10%, #622ea9 80%)",
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg, #2f1f7b 10%, #622ea9 80%)"
+          : "linear-gradient(90deg, #d5c7f5 10%, #e0d2f0 80%)",
       }}
     >
       <div
         className="rounded-4xl p-8 pb-0 relative"
         style={{
-          background: "linear-gradient(45deg, #2f1f7b 0%, #622ea9 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(45deg, #2f1f7b 0%, #622ea9 100%)"
+            : "linear-gradient(45deg, #d5c7f5 0%, #e0d2f0 100%)",
         }}
       >
         <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
-          <div className="bg-[#0088cc] rounded-full p-1">
+          <div className="bg-[#e3f2fd] dark:bg-[#0088cc] rounded-full p-1">
             <FaTelegramPlane />
           </div>
           <div className="bg-black p-1 rounded-full">
@@ -72,8 +73,8 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
             src="/vest.png"
             className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
           />
-          <div className={`${khandMedium.className} ml-4 lg:ml-8`}>
-            <h1 className={`${khandSemibold.className} xl:text-4xl lg:text-2xl md:text-xl text-lg`}>
+          <div className="font-khand font-normal ml-4 lg:ml-8">
+            <h1 className="font-khand font-semibold xl:text-4xl lg:text-2xl md:text-xl text-lg">
               YOU'RE FIRED (FIRED)
             </h1>
 
@@ -91,7 +92,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
           </div>
 
           <div
-            className={`mt-6 bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm ${khandMedium.className}`}
+            className="mt-6 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm font-khand font-normal"
           >
             21.04.25/12:24
           </div>
@@ -102,29 +103,31 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
 
         <div className="left-0 w-full z-5 flex mt-6 bottom-0 relative">
           <div
-            className={`items-center flex mx-4 text-xl lg:text-3xl max-w-20 ${khandSemibold.className}`}
+            className="items-center flex mx-4 text-xl lg:text-3xl max-w-20 font-khand font-semibold"
           >
             STAKING POOL
           </div>
           <div
-            className={`flex flex-col lg:text-sm text-xs my-auto w-full relative ${khandMedium.className}`}
+            className="flex flex-col lg:text-sm text-xs my-auto w-full relative font-khand font-normal"
           >
             <StakeIcon />
 
             <div
-              className={`pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-white ${khandNormal.className}`}
+              className="pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-[#190E79] dark:text-white font-khand font-medium"
               style={{
-                background:
-                  "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)"
+                  : "linear-gradient(90deg, #c8e4f8 10%, #c8e8f0 20%, #c8f5f0 70%)",
               }}
             >
               <div>LOCKED: 21.04.2025</div>
             </div>
             <div
-              className={`pl-4 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black ${khandNormal.className}`}
+              className="pl-4 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black font-khand font-medium"
               style={{
-                background:
-                  "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
+                background: resolvedTheme === "dark"
+                  ? "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)"
+                  : "linear-gradient(90deg, #e6c8f0 10%, #ffc4ed 20%, #ffe896 70%)",
               }}
             >
               <div>LOCKED: 21.04.2025</div>
@@ -133,14 +136,14 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
         </div>
 
         <div
-          className={`text-[#FFB01C] text-end text-2xl lg:text-3xl ${khandSemibold.className} mr-4 lg:mt-4`}
+          className="text-[#FFB01C] text-end text-2xl lg:text-3xl font-khand font-semibold mr-4 lg:mt-4"
         >
           120M
         </div>
       </div>
 
       <div
-        className={`mr-12 text-end text-xl lg:text-2xl ${khandNormal.className}`}
+        className="mr-12 text-end text-xl lg:text-2xl font-khand font-medium"
       >
         locked
       </div>

@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function FormItem1({ token, onDataChange }) {
+  const { resolvedTheme } = useTheme();
   const [formData, setFormData] = useState({
     activationDate: "",
     activationTime: ""
@@ -24,11 +26,15 @@ export default function FormItem1({ token, onDataChange }) {
   };
 
   const bgGradientContainer = {
-    background: 'linear-gradient(180deg, #9b8fd4 0%, #b5a8e3 100%)'
+    background: resolvedTheme === "dark"
+      ? 'linear-gradient(180deg, #9b8fd4 0%, #b5a8e3 100%)'
+      : 'linear-gradient(180deg, #e8e4f8 0%, #f0ebfa 100%)'
   };
 
   const bgGradientAvatar = {
-    background: 'linear-gradient(135deg, #f4c96b 0%, #3d7fa6 100%)'
+    background: resolvedTheme === "dark"
+      ? 'linear-gradient(135deg, #f4c96b 0%, #3d7fa6 100%)'
+      : 'linear-gradient(135deg, #ffeab3 0%, #b8d9f7 100%)'
   };
 
   return (
@@ -47,7 +53,11 @@ export default function FormItem1({ token, onDataChange }) {
           <div className="w-[30px] h-[30px] rounded-full flex items-center justify-center overflow-hidden" style={bgGradientAvatar}>
             <div
               className="w-5 h-5 rounded-full"
-              style={{ background: 'radial-gradient(circle, #f4d16b 40%, #5a8fb8 100%)' }}
+              style={{
+                background: resolvedTheme === "dark"
+                  ? 'radial-gradient(circle, #f4d16b 40%, #5a8fb8 100%)'
+                  : 'radial-gradient(circle, #ffeab3 40%, #b8d9f7 100%)'
+              }}
             ></div>
           </div>
           <div className="text-[#1a0a33] font-bold text-sm">
@@ -57,7 +67,7 @@ export default function FormItem1({ token, onDataChange }) {
       </div>
 
       {/* Form Box */}
-      <div className="bg-[#f5f3fb] rounded-2xl p-6 border-2 border-[#d4c9e8]">
+      <div className="bg-[#f5f3fb] dark:bg-[#2A1C78] rounded-2xl p-6 border-2 border-[#d4c9e8]">
         {/* Form Item 1 */}
         <div className="mb-5">
           <label className="block text-[#1a0a33] font-bold text-[13px] mb-2">
@@ -66,7 +76,7 @@ export default function FormItem1({ token, onDataChange }) {
           <div className="flex gap-2 items-center mb-1.5">
             <input
               type="text"
-              className="bg-[#d8d0f0] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold flex-1 max-w-[280px]"
+              className="bg-[#d8d0f0] dark:bg-[#292B8C] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold flex-1 max-w-[280px]"
               placeholder="mm/dd/yyyy   hh:mm"
               value={`${formData.activationDate} ${formData.activationTime}`}
               onChange={(e) => {

@@ -44,13 +44,13 @@ function WalletSelectionPopup({ isOpen, onClose, onSelectWallet }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-gradient-to-b from-[#2A1C78] to-[#1a1154] border-2 border-[#949DFF] rounded-2xl p-4 sm:p-6 md:p-8 max-w-sm sm:max-w-md md:max-w-lg w-full animate-scaleIn"
+        className="bg-gradient-to-b from-[#f5f3fb] to-[#ede8f5] dark:from-[#2A1C78] dark:to-[#1a1154] border-2 border-[#949DFF] rounded-2xl p-4 sm:p-6 md:p-8 max-w-sm sm:max-w-md md:max-w-lg w-full animate-scaleIn"
       >
         <div className="flex justify-between items-center mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">Connect Wallet</h2>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#190E79] dark:text-white">Connect Wallet</h2>
           <button
             onClick={onClose}
-            className="text-white hover:text-gray-300 text-2xl sm:text-3xl leading-none"
+            className="text-[#190E79] dark:text-white hover:text-gray-300 text-2xl sm:text-3xl leading-none"
           >
             ×
           </button>
@@ -64,7 +64,7 @@ function WalletSelectionPopup({ isOpen, onClose, onSelectWallet }) {
                 onSelectWallet(wallet.id);
                 onClose();
               }}
-              className="w-full flex items-center gap-3 sm:gap-4 bg-[#0E1379] hover:bg-[#1a1f9e] active:bg-[#252ba0] transition-colors rounded-lg p-3 sm:p-4 border border-[#949DFF]"
+              className="w-full flex items-center gap-3 sm:gap-4 bg-[#fafafa] dark:bg-[#0E1379] hover:bg-[#f0f0ff] dark:hover:bg-[#1a1f9e] active:bg-[#f0f0ff] dark:active:bg-[#252ba0] transition-colors rounded-lg p-3 sm:p-4 border border-[#949DFF]"
             >
               <div
                 className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full text-xl sm:text-2xl md:text-3xl flex-shrink-0"
@@ -72,7 +72,7 @@ function WalletSelectionPopup({ isOpen, onClose, onSelectWallet }) {
               >
                 {wallet.icon}
               </div>
-              <span className="text-white font-medium text-base sm:text-lg md:text-xl">
+              <span className="text-[#190E79] dark:text-white font-medium text-base sm:text-lg md:text-xl">
                 {wallet.name}
               </span>
             </button>

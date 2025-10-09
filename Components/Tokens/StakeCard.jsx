@@ -5,12 +5,10 @@ import Link from "next/link";
 import "@/Components/Live/styles/scrollcard.css";
 import { FIcon, SIcon, StakeIcon, StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
-import { Khand } from "next/font/google";
-
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
-const khandMedium = Khand({ subsets: ["latin"], weight: "400" });
+import { useTheme } from "@/hooks/useTheme";
 
 function StakeCard({ id, title, created, marketCap, wallet }) {
+  const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
       className="w-[47px] h-[47px] lg:w-[57px] lg:h-[57px]"
@@ -44,13 +42,19 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
   return (
     <Link
       href={`/card/stake`}
-      className={`${khandSemibold.className} block rounded-4xl hover:opacity-90 transition`}
-      style={{ background: "linear-gradient(90deg, #5951ce 0%, #1A1E5F 100%)" }}
+      className="font-khand font-semibold block rounded-4xl hover:opacity-90 transition"
+      style={{
+        background: resolvedTheme === "dark"
+          ? "linear-gradient(90deg, #5951ce 0%, #1A1E5F 100%)"
+          : "linear-gradient(90deg, #d0c7f5 0%, #e8e4f8 100%)"
+      }}
     >
       <div
         className="p-4 relative rounded-4xl flex"
         style={{
-          background: "linear-gradient(30deg, #5951ce 0%, #1A1E5F 100%)",
+          background: resolvedTheme === "dark"
+            ? "linear-gradient(30deg, #5951ce 0%, #1A1E5F 100%)"
+            : "linear-gradient(30deg, #d0c7f5 0%, #e8e4f8 100%)",
         }}
       >
         {/* Right side elements */}
@@ -62,7 +66,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
           />
         </div>
         <div
-          className={`absolute top-12 md:top-16 bg-[#2B923E] rounded-l-2xl pl-2 right-0 text-xs md:text-sm ${khandMedium.className}`}
+          className="absolute top-12 md:top-16 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-2 right-0 text-xs md:text-sm font-khand font-normal"
         >
           21.04.25/12:24
         </div>
@@ -83,20 +87,22 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
               <StakeIcon />
               <div className="flex flex-col lg:text-sm text-xs mt-2">
                 <div
-                  className="pr-12 xl:pr-14 2xl:pr-24 pl-8 -ml-6 -z-1 rounded-full text-white"
+                  className="pr-12 xl:pr-14 2xl:pr-24 pl-8 -ml-6 -z-1 rounded-full text-[#190E79] dark:text-white"
                   style={{
-                    background:
-                      "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
+                    background: resolvedTheme === "dark"
+                      ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
+                      : "linear-gradient(90deg, rgba(227, 242, 253, 1) 0%, rgba(200, 230, 250, 1) 36%, rgba(180, 245, 240, 1) 100%)",
                   }}
                 >
                   ENDS: |2d.12h
                 </div>
 
                 <div
-                  className="pr-0 pl-8 -ml-6 -z-1 mr-2 rounded-full text-white"
+                  className="pr-0 pl-8 -ml-6 -z-1 mr-2 rounded-full text-[#190E79] dark:text-white"
                   style={{
-                    background:
-                      "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
+                    background: resolvedTheme === "dark"
+                      ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
+                      : "linear-gradient(90deg, rgba(230, 200, 240, 1) 0%, rgba(255, 200, 225, 1) 45%, rgba(255, 235, 150, 1) 100%)",
                   }}
                 >
                   LEFT: |56%
@@ -112,7 +118,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
             </h1>
           </div>
           <div
-            className={`pl-2 md:pl-4 text-left mt-1 md:mt-2 text-xs lg:text-base ${khandMedium.className}`}
+            className="pl-2 md:pl-4 text-left mt-1 md:mt-2 text-xs lg:text-base font-khand font-normal"
           >
             <p>
               <span className="font-semibold">Pool ID: </span> {wallet}
@@ -127,7 +133,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
           </div>
         </div>
         <p
-          className={`absolute right-2 md:right-5 text-[#FFB01C] bottom-0 text-lg md:text-2xl md:pr-2 pr-6 ${khandSemibold.className}`}
+          className="absolute right-2 md:right-5 text-[#FFB01C] bottom-0 text-lg md:text-2xl md:pr-2 pr-6 font-khand font-semibold"
         >
           1.2K
         </p>

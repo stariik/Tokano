@@ -1,19 +1,15 @@
 "use client";
 
 import React from "react";
-import { Khand } from "next/font/google";
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "500" });
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 
 function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
   return (
     <div>
       {/* Headers Row */}
-      <div className={`grid grid-cols-2 gap-4 ${khandMedium.className}`}>
+      <div className="grid grid-cols-2 gap-4 font-khand font-medium">
         {/* First Table Header */}
         <div className="border-r border-secondary">
-          <div className="grid grid-cols-2 bg-[#2A1C78] text-white text-xs 2xl:text-sm font-semibold">
+          <div className="grid grid-cols-2 bg-[#f5f3fb] dark:bg-[#2A1C78] text-[#190E79] dark:text-white text-xs 2xl:text-sm font-semibold">
             <div className="justify-center items-center flex border-y border-secondary">
               Positions
             </div>
@@ -27,7 +23,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
 
         {/* Second Table Header */}
         <div>
-          <div className="grid grid-cols-2 bg-[#2A1C78] text-white text-sm font-semibold">
+          <div className="grid grid-cols-2 bg-[#f5f3fb] dark:bg-[#2A1C78] text-[#190E79] dark:text-white text-sm font-semibold">
             <div className="justify-center items-center flex border-y border-l border-secondary">
               Rewards (Last)
             </div>
@@ -77,7 +73,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
           `}</style>
 
           {data.map((position, index) => (
-            <div key={position.id} className={`grid grid-cols-2 gap-4 ${khandMedium.className}`}>
+            <div key={position.id} className="grid grid-cols-2 gap-4 font-khand font-medium">
               {/* Left Table Row - Positions & Unstake */}
               <div className="border-r border-secondary">
                 <div
@@ -97,11 +93,11 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                     }
                   >
                     <div className="flex items-center justify-center border-r border-secondary mx-auto min-w-[30px]">
-                      <span className={`text-sm font-semibold text-white ${khandMedium.className}`}>
+                      <span className="text-sm font-semibold text-[#190E79] dark:text-white font-khand font-medium">
                         {index + 1}
                       </span>
                     </div>
-                    <div className="flex-1 text-center md:text-lg p-2 hover:bg-[#2A1C78] border-r-1 border-secondary min-w-full">
+                    <div className="flex-1 text-center md:text-lg p-2 hover:bg-[#f5f3fb] dark:hover:bg-[#2A1C78] border-r-1 border-secondary min-w-full">
                       <div className="font-semibold ">{position.staked}</div>
                       <div className="text-purple-300 text-xs md:text-sm">
                         ({position.period})
@@ -116,15 +112,15 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                       popup.type === "unstake" && (
                         <div className="absolute top-1/2 left-3/5 transform -translate-x-1/2 -translate-y-1/2 flex z-70">
                           <div className="absolute top-1/2 right-full w-8 h-px bg-purple-400 transform -translate-y-1/2"></div>
-                          <div className="bg-[#0C0D1C] border-2 border-secondary rounded-lg p-2 lg:p-4  min-w-[100px] text-center shadow-xl">
+                          <div className="bg-[#eeeded] dark:bg-[#0C0D1C] border-2 border-secondary rounded-lg p-2 lg:p-4  min-w-[100px] text-center shadow-xl">
                             <div className="mb-3">
-                              <div className="text-white text-xs lg:text-sm font-semibold">
+                              <div className="text-[#190E79] dark:text-white text-xs lg:text-sm font-semibold">
                                 UNSTAKE?
                               </div>
                             </div>
                             <div className="flex flex-col space-y-2">
                               <button
-                                className="px-6 py-1 lg:py-2 rounded-full bg-red-500 hover:bg-red-600 text-white font-bold text-sm"
+                                className="px-6 py-1 lg:py-2 rounded-full bg-red-500 hover:bg-red-600 text-[#190E79] dark:text-white font-bold text-sm"
                                 onClick={() => {
                                   console.log(
                                     `unstake YES for position ${popup.positionId}`
@@ -139,7 +135,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                                 YES
                               </button>
                               <button
-                                className="px-6 py-1 lg:py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-white font-bold text-sm"
+                                className="px-6 py-1 lg:py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-[#190E79] dark:text-white font-bold text-sm"
                                 onClick={() =>
                                   setPopup({
                                     show: false,
@@ -166,7 +162,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                   }`}
                 >
                   <div
-                    className="text-center p-2 md:text-lg cursor-pointer hover:bg-[#2A1C78] border-x-1 border-secondary min-w-full"
+                    className="text-center p-2 md:text-lg cursor-pointer hover:bg-[#f5f3fb] dark:hover:bg-[#2A1C78] border-x-1 border-secondary min-w-full"
                     onClick={() =>
                       setPopup({
                         show: true,
@@ -189,15 +185,15 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-70">
                           <div className="absolute top-1/2 right-full w-8 h-px bg-purple-400 transform -translate-y-1/2"></div>
 
-                          <div className="bg-[#0C0D1C] border-2 border-secondary rounded-lg p-2 lg:p-4 min-w-[100px] text-center shadow-xl">
+                          <div className="bg-[#eeeded] dark:bg-[#0C0D1C] border-2 border-secondary rounded-lg p-2 lg:p-4 min-w-[100px] text-center shadow-xl">
                             <div className="mb-3">
-                              <div className="text-white text-xs lg:text-sm font-semibold">
+                              <div className="text-[#190E79] dark:text-white text-xs lg:text-sm font-semibold">
                                 CLAIM?
                               </div>
                             </div>
                             <div className="flex flex-col space-y-2">
                               <button
-                                className="px-6 py-1 lg:py-2 rounded-full bg-green-500 hover:bg-green-600 text-white font-bold text-sm"
+                                className="px-6 py-1 lg:py-2 rounded-full bg-green-500 hover:bg-green-600 text-[#190E79] dark:text-white font-bold text-sm"
                                 onClick={() => {
                                   console.log(
                                     `claim YES for position ${popup.positionId}`
@@ -212,7 +208,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                                 YES
                               </button>
                               <button
-                                className="px-6 py-1 lg:py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-white font-bold text-sm"
+                                className="px-6 py-1 lg:py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-[#190E79] dark:text-white font-bold text-sm"
                                 onClick={() =>
                                   setPopup({
                                     show: false,

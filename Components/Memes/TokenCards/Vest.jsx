@@ -1,10 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Khand } from "next/font/google";
 import { FaStairs } from "react-icons/fa6";
-
-const khandMedium = Khand({ subsets: ["latin"], weight: "500" });
-const khandSemibold = Khand({ subsets: ["latin"], weight: "600" });
 
 function Lock({ token }) {
   return (
@@ -29,7 +25,7 @@ function Lock({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-1">
           <span
-            className={`text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight ${khandSemibold.className}`}
+            className="text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -38,11 +34,11 @@ function Lock({ token }) {
         </div>
         {/* Stats Row */}
         <div
-          className={`flex items-center justify-between mb-1 ${khandSemibold.className}`}
+          className="flex items-center justify-between mb-1 font-khand font-semibold"
         >
           <div className="text-xl lg:text-2xl flex">Vest</div>
           <div className="bg-white rounded-3xl">
-            <div className="bg-[#190E79] p-2 m-2 rounded-2xl">
+            <div className="bg-[#fafafa] dark:bg-[#190E79] p-2 m-2 rounded-2xl">
               <FaStairs className="w-[10px] h-[10px] lg:w-[14px] lg:h-[14px]" />
             </div>
           </div>
@@ -59,7 +55,7 @@ function Lock({ token }) {
       {/* Bottom Bar */}
       <div className="flex justify-between flex-row gap-1">
         <div
-          className={`"h-6 rounded-r-xl basis-40 text-center text-xs md:text-sm ${khandMedium.className}`}
+          className="h-6 rounded-r-xl basis-40 text-center text-xs md:text-sm font-khand font-medium"
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
@@ -67,7 +63,7 @@ function Lock({ token }) {
           TYPE: LIN/MONTHLY
         </div>
         <div
-          className={`"h-6 w-30 rounded-l-xl text-center text-xs md:text-sm ${khandMedium.className}`}
+          className="h-6 w-30 rounded-l-xl text-center text-xs md:text-sm font-khand font-medium"
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}

@@ -87,7 +87,7 @@ function MyStaking() {
   }, []);
 
   return (
-    <div className="mt-6 border-2 border-secondary rounded-2xl text-white">
+    <div className="mt-6 border-2 border-secondary rounded-2xl text-[#190E79] dark:text-white">
       <div className="bg-gradient-to-r from-[#2f01ba] to-[#0C0D1C] px-4 py-3 rounded-t-2xl">
         <h2 className="text-xl font-medium">Details</h2>
       </div>
@@ -115,8 +115,8 @@ function MyStaking() {
         />
 
         {/* History Button */}
-        <div className="bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-10 mb-2">
-          <button className="text-white font-semibold">▼ History</button>
+        <div className="bg-[#f5f3fb] dark:bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-10 mb-2">
+          <button className="text-[#190E79] dark:text-white font-semibold">▼ History</button>
         </div>
       </div>
     </div>
