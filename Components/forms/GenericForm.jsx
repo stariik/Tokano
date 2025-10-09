@@ -321,7 +321,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   };
 
   const handleCreatePool = () => {
-    setShowPopup('success');
+    setShowPopup('attention');
     setIsClosing(false);
   };
 
