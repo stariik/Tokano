@@ -8,7 +8,7 @@ function Success() {
 
   return (
     <div className="relative flex items-center justify-center bg-white rounded-full px-8 py shadow-lg border-4 border-gray-200 max-w-md">
-      <h2 className="text-3xl khand-semibold text-black mr-4">SUCCESS!</h2>
+      <h2 className="text-xl md:text-3xl khand-semibold text-black mr-4">SUCCESS!</h2>
       <div className="flex items-center justify-center bg-white rounded-full w-16 h-16">
         <MdOutlineDone size={60} color="green" />
       </div>

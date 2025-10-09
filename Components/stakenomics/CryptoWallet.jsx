@@ -23,18 +23,18 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
         <div className="grid grid-cols-2 gap-1 md:gap-4">
           {/* Token List - Left Side */}
           <div className="px-0 md:px-2 pb-1 border-x border-white border-opacity-40 dark:border-secondary">
-            <div className="space-y-1 max-h-[270px] overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-white dark:[&::-webkit-scrollbar-thumb]:bg-opacity-30">
+            <div className="space-y-1.5 max-h-[270px] overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-white dark:[&::-webkit-scrollbar-thumb]:bg-opacity-30">
               {tokens.map((token, index) => (
                 <div
                   key={token.id}
                   onClick={() => setSelectedToken(token.id)}
-                  className={`flex items-center px-1 cursor-pointer transition-all duration-200 border ${
+                  className={`flex items-center px-1.5 py-1.5 cursor-pointer transition-all duration-200 border ${
                     selectedToken === token.id
                       ? "bg-[#d5d2ec] bg-opacity-50 border-white border-opacity-60 dark:bg-secondary dark:bg-opacity-10 dark:border-secondary rounded-md md:mr-2 mr-1"
                       : "hover:bg-white hover:bg-opacity-30 border-transparent dark:hover:bg-secondary dark:hover:bg-opacity-10 rounded-md mr-1 md:mr-2"
                   }`}
                 >
-                  <span className="text-lg lgtext-2xl mr-1 md:mr-2">
+                  <span className="text-lg lg:text-xl mr-1.5 md:mr-2">
                     {token.icon}
                   </span>
                   <div className="flex-1">
