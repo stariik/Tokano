@@ -42,19 +42,21 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
   return (
     <Link
       href={`/card/stake`}
-      className="font-khand font-semibold block rounded-4xl hover:opacity-90 transition"
+      className="font-khand font-semibold block rounded-4xl hover:opacity-90 transition dark:text-white text-primary"
       style={{
-        background: resolvedTheme === "dark"
-          ? "linear-gradient(90deg, #5951ce 0%, #1A1E5F 100%)"
-          : "linear-gradient(90deg, #d0c7f5 0%, #e8e4f8 100%)"
+        background:
+          resolvedTheme === "dark"
+            ? "linear-gradient(90deg, #5951ce 0%, #1A1E5F 100%)"
+            : "linear-gradient(90deg, #d0c7f5 0%, #e8e4f8 100%)",
       }}
     >
       <div
         className="p-4 relative rounded-4xl flex"
         style={{
-          background: resolvedTheme === "dark"
-            ? "linear-gradient(30deg, #5951ce 0%, #1A1E5F 100%)"
-            : "linear-gradient(30deg, #d0c7f5 0%, #e8e4f8 100%)",
+          background:
+            resolvedTheme === "dark"
+              ? "linear-gradient(30deg, #5951ce 0%, #1A1E5F 100%)"
+              : "linear-gradient(30deg, #d0c7f5 0%, #e8e4f8 100%)",
         }}
       >
         {/* Right side elements */}
@@ -65,9 +67,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
             className="md:w-[30px] md:h-[30px]"
           />
         </div>
-        <div
-          className="absolute top-12 md:top-16 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-2 right-0 text-xs md:text-sm font-khand font-normal"
-        >
+        <div className="absolute top-12 md:top-16 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-2 right-0 text-xs md:text-sm font-khand font-normal text-white">
           21.04.25/12:24
         </div>
         <div className="absolute right-4 md:right-6 top-2/3 transform -translate-y-1/2">
@@ -85,24 +85,26 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
                 STAKE
               </div>
               <StakeIcon />
-              <div className="flex flex-col lg:text-sm text-xs mt-2">
+              <div className="flex flex-col lg:text-sm text-xs mt-2 text-white">
                 <div
-                  className="pr-12 xl:pr-14 2xl:pr-24 pl-8 -ml-6 -z-1 rounded-full text-[#190E79] dark:text-white"
+                  className="pr-12 xl:pr-14 2xl:pr-24 pl-8 -ml-6 -z-1 rounded-full "
                   style={{
-                    background: resolvedTheme === "dark"
-                      ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
-                      : "linear-gradient(90deg, rgba(227, 242, 253, 1) 0%, rgba(200, 230, 250, 1) 36%, rgba(180, 245, 240, 1) 100%)",
+                    background:
+                      resolvedTheme === "dark"
+                        ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
+                        : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
                   }}
                 >
                   ENDS: |2d.12h
                 </div>
 
                 <div
-                  className="pr-0 pl-8 -ml-6 -z-1 mr-2 rounded-full text-[#190E79] dark:text-white"
+                  className="pr-0 pl-8 -ml-6 -z-1 mr-2 rounded-full "
                   style={{
-                    background: resolvedTheme === "dark"
-                      ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
-                      : "linear-gradient(90deg, rgba(230, 200, 240, 1) 0%, rgba(255, 200, 225, 1) 45%, rgba(255, 235, 150, 1) 100%)",
+                    background:
+                      resolvedTheme === "dark"
+                        ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
+                        : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
                   }}
                 >
                   LEFT: |56%
@@ -117,9 +119,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
               {title}
             </h1>
           </div>
-          <div
-            className="pl-2 md:pl-4 text-left mt-1 md:mt-2 text-xs lg:text-base font-khand font-normal"
-          >
+          <div className="pl-2 md:pl-4 text-left mt-1 md:mt-2 text-xs lg:text-base font-khand font-normal">
             <p>
               <span className="font-semibold">Pool ID: </span> {wallet}
             </p>
@@ -132,9 +132,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
             </p>
           </div>
         </div>
-        <p
-          className="absolute right-2 md:right-5 text-[#FFB01C] bottom-0 text-lg md:text-2xl md:pr-2 pr-6 font-khand font-semibold"
-        >
+        <p className="absolute right-2 md:right-5 text-[#FFB01C] bottom-0 text-lg md:text-2xl md:pr-2 pr-6 font-khand font-semibold">
           1.2K
         </p>
       </div>

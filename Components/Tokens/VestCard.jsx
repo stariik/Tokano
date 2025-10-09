@@ -33,19 +33,21 @@ function VestCard({ id, title, created, marketCap, wallet }) {
   return (
     <Link
       href={`/card/vest`}
-      className="font-khand font-semibold block rounded-4xl hover:opacity-90 transition"
+      className="font-khand font-semibold block rounded-4xl hover:opacity-90 transition dark:text-white text-primary"
       style={{
-        background: resolvedTheme === "dark"
-          ? "linear-gradient(90deg, #88048A 0%, #1A1E5F 100%)"
-          : "linear-gradient(90deg, #f0b3e0 0%, #e8e4f8 100%)"
+        background:
+          resolvedTheme === "dark"
+            ? "linear-gradient(90deg, #88048A 0%, #1A1E5F 100%)"
+            : "linear-gradient(90deg, #EFEFEF 0%, #9F4EA3 100%)",
       }}
     >
       <div
         className="p-4 relative rounded-4xl flex"
         style={{
-          background: resolvedTheme === "dark"
-            ? "linear-gradient(30deg, #88048A 0%, #1A1E5F 100%)"
-            : "linear-gradient(30deg, #f0b3e0 0%, #e8e4f8 100%)",
+          background:
+            resolvedTheme === "dark"
+              ? "linear-gradient(30deg, #88048A 0%, #1A1E5F 100%)"
+              : "linear-gradient(45deg, #EFEFEF 30%, #9F4EA3 100%)",
         }}
       >
         <div className="absolute right-6 top-6">
@@ -82,21 +84,23 @@ function VestCard({ id, title, created, marketCap, wallet }) {
             <VestIcon />
             <div className="flex flex-col lg:text-sm text-xs my-auto w-full">
               <div
-                className="pl-1 pr-1 -ml-2 -z-1 rounded-full text-[#190E79] dark:text-white flex justify-end bg-[#e3f2fd] dark:bg-transparent"
+                className="pl-1 pr-1 -ml-2 -z-1 rounded-full text-white flex justify-end bg-[#e3f2fd] dark:bg-transparent"
                 style={{
                   background: "var(--gradient-vest-top)",
                 }}
               >
                 <style jsx>{`
                   div {
-                    --gradient-vest-top: linear-gradient(270deg, #e3f2fd 14.74%, #d5e5f7 88.65%);
-                  }
-                  :global(.dark) div {
-                    --gradient-vest-top: linear-gradient(270deg, #2A8DFF 14.74%, #3542C5 88.65%);
+                    --gradient-vest-top: linear-gradient(
+                      270deg,
+                      #2a8dff 14.74%,
+                      #3542c5 88.65%
+                    );
                   }
                 `}</style>
                 <div className="font-khand font-normal">
-                  TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" /> CLIFF: |5d
+                  TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" /> CLIFF:
+                  |5d
                 </div>
               </div>
             </div>
@@ -108,22 +112,23 @@ function VestCard({ id, title, created, marketCap, wallet }) {
       </div>
       <div className="pb-2 pr-4 flex justify-end items-center gap-6">
         <div
-          className="rounded-xl px-2 py-0 mt-1 flex text-[#190E79] dark:text-white text-xs md:text-sm font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
+          className="rounded-xl px-2 py-0 mt-1 flex text-white text-xs md:text-sm font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}
         >
           <style jsx>{`
             div {
-              --gradient-vest-bottom: linear-gradient(270deg, #e3f2fd 14.74%, #d5e5f7 88.65%);
-            }
-            :global(.dark) div {
-              --gradient-vest-bottom: linear-gradient(270deg, #2A8DFF 14.74%, #3542C5 88.65%);
+              --gradient-vest-bottom: linear-gradient(
+                270deg,
+                #2a8dff 14.74%,
+                #3542c5 88.65%
+              );
             }
           `}</style>
           PARTS: 123K LEFT: 56% ENDS: |2d.12h
         </div>
-        <p className="text-lg">locked</p>
+        <p className="text-lg text-white">locked</p>
       </div>
     </Link>
   );
