@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600&display=swap');
 
 @variant dark (&:where(.dark, .dark *));
 
@@ -8,6 +9,22 @@
   --color-secondary: #6d6fdf;
   --color-primary: #424173;
   --color-dark-200: #18182a;
+}
+
+/* Khand Font Classes */
+.khand-regular {
+  font-family: 'Khand', sans-serif;
+  font-weight: 400;
+}
+
+.khand-medium {
+  font-family: 'Khand', sans-serif;
+  font-weight: 500;
+}
+
+.khand-semibold {
+  font-family: 'Khand', sans-serif;
+  font-weight: 600;
 }
 
 .custom-header-gradient {
