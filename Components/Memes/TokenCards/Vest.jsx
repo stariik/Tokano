@@ -25,7 +25,7 @@ function Lock({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-1">
           <span
-            className="text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
+            className="text-[12px] md:text-[14px] text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -36,24 +36,24 @@ function Lock({ token }) {
         <div
           className="flex items-center justify-between mb-1 font-khand font-semibold"
         >
-          <div className="text-xl lg:text-2xl flex">Vest</div>
+          <div className="text-xl lg:text-2xl flex text-white">Vest</div>
           <div className="bg-white rounded-3xl">
-            <div className="bg-[#fafafa] dark:bg-[#190E79] p-2 m-2 rounded-2xl">
-              <FaStairs className="w-[10px] h-[10px] lg:w-[14px] lg:h-[14px]" />
+            <div className="bg-[#190E79] p-2 m-2 rounded-2xl">
+              <FaStairs className="w-[10px] h-[10px] lg:w-[14px] lg:h-[14px] text-white" />
             </div>
           </div>
           <div className="flex flex-col items-center">
             <span className="text-[#FFD600] text-xl font-bold leading-none">
               {token.stakers}
             </span>
-            <span className="text-[#B0B3D6] text-xs font-semibold -mt-1">
-              stakers
+            <span className="text-[#B0B3D6] text-sm font-semibold -mt-1">
+              locked
             </span>
           </div>
         </div>
       </div>
       {/* Bottom Bar */}
-      <div className="flex justify-between flex-row gap-1">
+      <div className="flex justify-between flex-row gap-1 text-white">
         <div
           className="h-6 rounded-r-xl basis-40 text-center text-xs md:text-sm font-khand font-medium"
           style={{

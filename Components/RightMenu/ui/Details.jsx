@@ -86,13 +86,13 @@ function Details() {
   return (
     <div>
       <div className="mx-6 border-2 border-t-0 border-secondary">
-        <div className="bg-gradient-to-r from-[#2f01ba] to-[#0C0D1C] px-4 py-3">
-          <h2 className="text-xl font-medium">Details</h2>
+        <div className="bg-gradient-to-r dark:from-[#2f01ba] dark:to-[#0C0D1C] from-[#9876ff] to-white px-4 py-3">
+          <h2 className="text-xl">Details</h2>
         </div>
 
         {/* Header Row */}
-        <div className="grid grid-cols-2 md:grid-cols-3 bg-[#f5f3fb] dark:bg-[#2A1C78] text-[#190E79] dark:text-white text-sm font-semibold">
-          <div className="justify-center items-center flex border-y border-secondary py-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 bg-white dark:bg-[#2A1C78] text-[#190E79] dark:text-white text-sm font-semibold">
+          <div className="justify-center items-center flex border-y border-secondary py-2 bg-[#4244C4] dark:bg-[#2A1C78] text-white">
             <span className="text-red-500">/-Un/</span>Staked (Period)
           </div>
           <div className="hidden justify-center items-center text-center md:flex border-1 border-secondary">
@@ -100,7 +100,7 @@ function Details() {
             <br />
             or claim reward
           </div>
-          <div className="justify-center items-center flex border-y border-secondary">
+          <div className="justify-center items-center flex border-y border-secondary bg-[#4244C4] dark:bg-[#2A1C78] text-white">
             Rewards (Last)
           </div>
         </div>
@@ -122,7 +122,7 @@ function Details() {
           {/* Fixed continuous middle column background */}
           <div className="absolute inset-0 grid grid-cols-3 z-0">
             <div></div>
-            <div className="hidden md:block bg-gradient-to-b from-[#4000FF] to-[#0C0D1C] border-x border-secondary"></div>
+            <div className="hidden md:block bg-gradient-to-b dark:from-[#4000FF] dark:to-[#0C0D1C] from-white to-[#e7e7e7]  border-x border-secondary"></div>
             <div></div>
           </div>
 
@@ -251,7 +251,7 @@ function Details() {
                       })
                     }
                   >
-                    <div className="font-semibold">{position.staked}</div>
+                    <div className="">{position.staked}</div>
                     <div className="text-purple-300 text-xs md:text-sm">
                       ({position.period})
                     </div>
@@ -279,7 +279,7 @@ function Details() {
                       </div>
                       <div className="flex flex-col space-y-2">
                         <button
-                          className={`px-6 py-2 rounded-full text-[#190E79] dark:text-white font-bold text-sm ${
+                          className={`px-6 py-2 rounded-full text-white font-bold text-sm ${
                             popup.type === "unstake"
                               ? "bg-red-500 hover:bg-red-600"
                               : "bg-green-500 hover:bg-green-600"
@@ -298,7 +298,7 @@ function Details() {
                           YES
                         </button>
                         <button
-                          className="px-6 py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-[#190E79] dark:text-white font-bold text-sm"
+                          className="px-6 py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-white font-bold text-sm"
                           onClick={() =>
                             setPopup({
                               show: false,
@@ -323,7 +323,7 @@ function Details() {
                     })
                   }
                 >
-                  <div className="font-semibold">{position.rewards}</div>
+                  <div className="">{position.rewards}</div>
                   <div className="text-purple-300 md:text-sm text-xs">
                     ({position.rewardsSub})
                   </div>
@@ -334,8 +334,10 @@ function Details() {
         </div>
 
         {/* History Button */}
-        <div className="bg-[#f5f3fb] dark:bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-50 mb-2">
-          <button className="text-[#190E79] dark:text-white font-semibold">▼ History</button>
+        <div className="bg-[#4244C4] dark:bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-50 mb-2">
+          <button className="text-white font-semibold">
+            ▼ History
+          </button>
         </div>
       </div>
     </div>

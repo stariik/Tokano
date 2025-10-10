@@ -98,7 +98,7 @@ function GridFilter({ variant = "default" }) {
       {/* Desktop: Horizontal layout */}
       <div className="hidden lg:flex w-full items-center justify-between mb-2 text-[#B0B3D6] text-sm font-medium border-b border-[#292B8C]">
         {/* 1. Text: TOKENS BY PLATFORM */}
-        <div className="text-[#190E79] dark:text-white font-bold whitespace-nowrap px-4 py-3 border-r border-[#292B8C] flex items-center justify-center">
+        <div className="text-[#190E79] dark:text-white whitespace-nowrap px-4 py-3 border-r border-[#292B8C] flex items-center justify-center">
           TOKENS BY PLATFORM
         </div>
 

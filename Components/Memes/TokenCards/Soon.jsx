@@ -44,10 +44,7 @@ function Soon({ token }) {
     >
       <style jsx>{`
         div {
-          --tw-gradient: linear-gradient(45deg, #f5f3fb 10%, #ede8f5 65%);
-        }
-        :global(.dark) div {
-          --tw-gradient: linear-gradient(45deg, #170D56 10%, #622CCD 65%);
+          --tw-gradient: linear-gradient(45deg, #170d56 10%, #622ccd 65%);
         }
       `}</style>
       {/* Token Image */}
@@ -65,7 +62,7 @@ function Soon({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-2">
           <span
-            className="text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
+            className="text-[12px] md:text-[14px] text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -73,23 +70,22 @@ function Soon({ token }) {
           <span className="text-[#FF00A8] text-xl ml-2">★</span>
         </div>
         <div
-          className="font-khand font-normal rounded-r-xl pl-4 -ml-4 max-w-24 text-sm text-[#311880]"
+          className="font-khand font-semibold rounded-r-xl pl-4 -ml-4 max-w-24 text-sm text-[#311880]"
           style={{
-            background: resolvedTheme === "dark"
-              ? "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)"
-              : "linear-gradient(90deg, rgba(255, 220, 160, 1) 20%, rgba(255, 180, 225, 1) 50%,  rgba(255, 220, 160, 1) 90%)",
+            background:
+              resolvedTheme === "dark"
+                ? "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)"
+                : "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)",
           }}
         >
           23d-45h-12m
         </div>
         {/* Stats Row */}
-        <div
-          className="flex items-center justify-end gap-4 font-khand font-semibold"
-        >
+        <div className="flex items-center justify-end gap-4 font-khand font-semibold">
           <div className="bg-white rounded-full">
             <StakeIcon />
           </div>
-          <div className="text-2xl xl:text-3xl 2xl:text-4xl flex">Soon</div>
+          <div className="text-2xl xl:text-3xl 2xl:text-4xl text-white flex">Soon</div>
         </div>
       </div>
       {/* Bottom Bar */}

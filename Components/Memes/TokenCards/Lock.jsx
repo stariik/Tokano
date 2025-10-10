@@ -14,9 +14,6 @@ function Lock({ token }) {
     >
       <style jsx>{`
         div {
-          --tw-gradient: linear-gradient(45deg, #e3f2fd 10%, #d0e7f5 65%);
-        }
-        :global(.dark) div {
           --tw-gradient: linear-gradient(45deg, #5d9beb 10%, #041d33 65%);
         }
       `}</style>
@@ -35,7 +32,7 @@ function Lock({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-1">
           <span
-            className="text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
+            className="text-[12px] md:text-[14px] text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -43,13 +40,11 @@ function Lock({ token }) {
           <span className="text-[#FF00A8] text-xl ml-2">★</span>
         </div>
         {/* Stats Row */}
-        <div
-          className="flex items-center justify-between mb-1 font-khand font-semibold"
-        >
-          <div className="text-xl lg:text-2xl flex">LOCK</div>
+        <div className="flex items-center justify-between mb-1 font-khand font-semibold">
+          <div className="text-xl lg:text-2xl flex text-white">LOCK</div>
           <div className="bg-white rounded-3xl">
-            <div className="bg-[#fafafa] dark:bg-[#190E79] p-2 m-2 rounded-2xl">
-              <SiVerizon className="w-[10px] h-[10px] lg:w-[14px] lg:h-[14px]" />
+            <div className="bg-[#190E79] p-2 m-2 rounded-2xl">
+              <SiVerizon className="w-[10px] h-[10px] lg:w-[14px] lg:h-[14px] text-white" />
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -66,9 +61,10 @@ function Lock({ token }) {
       <div
         className="h-6 w-30 mx-auto md:text-base text-sm rounded-xl text-center font-khand font-medium"
         style={{
-          background: resolvedTheme === "dark"
-            ? "linear-gradient(90deg, #B4008D 0%, #2A8DFF 100%)"
-            : "linear-gradient(90deg, #f0b3e0 0%, #b8d9f7 100%)",
+          background:
+            resolvedTheme === "dark"
+              ? "linear-gradient(90deg, #B4008D 0%, #2A8DFF 100%)"
+              : "linear-gradient(90deg, #B4008D 0%, #2A8DFF 100%)",
         }}
       >
         ENDS: | 2d-12h

@@ -11,7 +11,7 @@ export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <main className="md:px-6 px-2 py-8 md:py-6 bg-dark text-light relative">
+    <main className="md:px-6 px-2 py-8 md:py-6 dark:bg-dark bg-white text-light relative">
       <div className="">
         <div className="xl:grid-cols-3 md:grid-cols-2 grid ">
           <div className="col-span-2 border-2 border-secondary rounded-tr-4xl grid gap-4 md:grid-cols-2">
@@ -20,8 +20,10 @@ export default function Home() {
           </div>
           <div className="col-span-2">
             <div className="border-x-2 border-b-2 border-secondary w-full">
-              <div className="bg-[#eeeded] dark:bg-[#14121f] border-b border-secondary bg-[radial-gradient(circle,_rgba(238,237,237,1)_29%,_rgba(200,200,220,1)_100%)] dark:bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)] w-full py-2 flex justify-center text-2xl">
-                <p className="font-khand font-medium">PLATFORM STATS</p>
+              <div className="bg-[#eeeded] dark:bg-[#14121f] border-b border-secondary bg-[radial-gradient(circle,_rgba(238,237,237,1)_29%,_rgb(233_198_255)_100%)] dark:bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)] w-full py-2 flex justify-center text-2xl">
+                <p className="font-khand font-medium dark:text-white text-[#464B7E]">
+                  PLATFORM STATS
+                </p>
               </div>
               <PlatformStats />
             </div>

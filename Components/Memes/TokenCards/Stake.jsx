@@ -48,9 +48,6 @@ function Stake({ token }) {
     >
       <style jsx>{`
         div {
-          --tw-gradient: linear-gradient(45deg, #f5f3fb 10%, #ede8f5 65%);
-        }
-        :global(.dark) div {
           --tw-gradient: linear-gradient(45deg, #170D56 10%, #432CCD 65%);
         }
       `}</style>
@@ -69,7 +66,7 @@ function Stake({ token }) {
         {/* Title & Star */}
         <div className="flex items-center justify-between mb-2">
           <span
-            className="text-[12px] md:text-[14px] font-bold text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
+            className="text-[12px] md:text-[14px] text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -87,18 +84,18 @@ function Stake({ token }) {
           {/* <div className="w-px h-24 bg-white mx-4"></div> */}
 
           {/* Text Content */}
-          <div className="flex flex-col absolute left-6 lg:left-10 xl:w-1/2 2xl:w-2/3">
+          <div className="flex flex-col absolute left-6 lg:left-10 xl:w-1/2 2xl:w-3/5">
             {/* Time Display Bar */}
             <div
               className="rounded-full pl-6 py-1 flex lg:-ml-4 items-center"
               style={{
                 background: resolvedTheme === "dark"
                   ? "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)"
-                  : "linear-gradient(90deg, #c8f5f0 0%, #d0f5f8 50%, #c8f0ea 100%)"
+                  : "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)"
               }}
             >
               <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
-              <span className="text-[#190E79] dark:text-white text-xs font-bold md:pr-2 lg:pr-0">2d-12h-45m</span>
+              <span className="text-white text-xs font-bold md:pr-2 lg:pr-0">2d-12h-45m</span>
             </div>
 
             {/* Percentage Display Bar */}
@@ -107,7 +104,7 @@ function Stake({ token }) {
               style={{
                 background: resolvedTheme === "dark"
                   ? "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)"
-                  : "linear-gradient(90deg, #f0b3e0 0%, #ffc4ed 50%, #ffd4a8 100%)"
+                  : "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)"
               }}
             >
               <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
@@ -119,7 +116,7 @@ function Stake({ token }) {
             <div className="text-xl lg:text-3xl text-[#FFB01C] gap-0 flex justify-end">
               12K
             </div>
-            <div className="-ml-2 md:ml-0">stakers</div>
+            <div className="-ml-2 md:ml-0 text-white">stakers</div>
           </div>
         </div>
       </div>

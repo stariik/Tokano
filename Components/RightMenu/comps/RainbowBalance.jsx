@@ -18,9 +18,10 @@ export default function RainbowBalance() {
       <div
         className="flex items-center h-full gap-1 md:gap-2 px-2"
         style={{
-          background: resolvedTheme === "dark"
-            ? "linear-gradient(90deg, #a100ff 0%, #ff0080 40%, #ffb300 100%)"
-            : "linear-gradient(90deg, #d580ff 0%, #ff80bf 40%, #ffd480 100%)",
+          background:
+            resolvedTheme === "dark"
+              ? "linear-gradient(90deg, #a100ff 0%, #ff0080 40%, #ffb300 100%)"
+              : "linear-gradient(90deg, #a100ff 0%, #ff0080 40%, #ffb300 100%)",
           borderRadius: "0 0 0 0",
           position: "relative",
           height: "100%",

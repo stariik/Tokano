@@ -1,35 +1,129 @@
 import React from "react";
+import { useTheme } from "@/hooks/useTheme";
+
 
 function TokanoBalanceData() {
+  const { resolvedTheme } = useTheme();
+
   return (
     <div className="flex items-stretch">
       <div className="flex flex-col items-center justify-center bg-[#f0edf8] dark:bg-[#2d0a5c] px-4 py-4 min-w-[80px] border-r-2 border-[#7B3FE4]">
-        <img src="/logo.svg" alt="TOKANO" className="w-8 h-8 mb-2" />
+        {resolvedTheme === "dark" ? (
+          // 🌙 DARK MODE SVG
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 34 34"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="14.5316"
+              cy="14.5316"
+              r="14.5316"
+              transform="matrix(-1 0 0 1 31.9336 2.92773)"
+              stroke="white"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <path
+              d="M25.0954 18.0187C25.0623 17.9898 25.0196 17.9739 24.9755 17.9739H10.0242C9.98003 17.9739 9.9374 17.9898 9.90425 18.0187L6.53431 20.9569C6.40865 21.0665 6.48685 21.2718 6.65424 21.2718H28.3454C28.5128 21.2718 28.591 21.0665 28.4654 20.9569L25.0954 18.0187Z"
+              fill="white"
+            />
+            <path
+              d="M25.1228 12.7787C25.0896 12.7498 25.047 12.7339 25.0028 12.7339H10.0515C10.0074 12.7339 9.96474 12.7498 9.93159 12.7787L6.56166 15.7169C6.43599 15.8265 6.5142 16.0318 6.68159 16.0318H28.3728C28.5402 16.0318 28.6184 15.8265 28.4927 15.7169L25.1228 12.7787Z"
+              fill="white"
+            />
+            <path
+              d="M22.3477 10.0159C22.3477 9.91489 22.2686 9.83301 22.171 9.83301H18.8141C18.7166 9.83301 18.6375 9.91489 18.6375 10.0159V12.5358C18.6375 12.6368 18.7166 12.7187 18.8141 12.7187H22.171C22.2686 12.7187 22.3477 12.6368 22.3477 12.5358V10.0159Z"
+              fill="white"
+            />
+            <path
+              d="M16.4688 10.1338C16.4688 10.0328 16.3875 9.95093 16.2872 9.95093H12.8371C12.7368 9.95093 12.6555 10.0328 12.6555 10.1338V12.6537C12.6555 12.7547 12.7368 12.8366 12.8371 12.8366H16.2872C16.3875 12.8366 16.4688 12.7547 16.4688 12.6537V10.1338Z"
+              fill="white"
+            />
+            <path
+              d="M22.3477 20.0959C22.3477 19.9488 22.2312 19.8296 22.0874 19.8296H12.9201C12.7764 19.8296 12.6599 19.9488 12.6599 20.0959V22.9643C12.6599 23.1114 12.7764 23.2306 12.9201 23.2306H22.0874C22.2312 23.2306 22.3477 23.1114 22.3477 22.9643V20.0959Z"
+              fill="white"
+            />
+          </svg>
+        ) : (
+          // ☀️ LIGHT MODE SVG
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 34 34"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="14.5316"
+              cy="14.5316"
+              r="14.5316"
+              transform="matrix(-1 0 0 1 31.9805 2.29785)"
+              stroke="#0E1379"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <path
+              d="M25.1423 17.3886C25.1092 17.3597 25.0665 17.3438 25.0224 17.3438H10.0711C10.0269 17.3438 9.98427 17.3597 9.95112 17.3886L6.58119 20.3268C6.45552 20.4363 6.53373 20.6417 6.70112 20.6417H28.3923C28.5597 20.6417 28.6379 20.4363 28.5122 20.3268L25.1423 17.3886Z"
+              fill="#0E1379"
+            />
+            <path
+              d="M25.1696 12.1488C25.1365 12.1199 25.0939 12.104 25.0497 12.104H10.0984C10.0543 12.104 10.0116 12.1199 9.97847 12.1488L6.60853 15.087C6.48286 15.1966 6.56107 15.402 6.72846 15.402H28.4196C28.587 15.402 28.6652 15.1966 28.5396 15.087L25.1696 12.1488Z"
+              fill="#0E1379"
+            />
+            <path
+              d="M22.3945 9.38602C22.3945 9.28501 22.3154 9.20312 22.2179 9.20312H18.861C18.7634 9.20312 18.6843 9.28501 18.6843 9.38602V11.9059C18.6843 12.0069 18.7634 12.0888 18.861 12.0888H22.2179C22.3154 12.0888 22.3945 12.0069 22.3945 11.9059V9.38602Z"
+              fill="#0E1379"
+            />
+            <path
+              d="M16.5195 9.50419C16.5195 9.40317 16.4382 9.32129 16.3379 9.32129H12.8879C12.7876 9.32129 12.7063 9.40317 12.7063 9.50419V12.0241C12.7063 12.1251 12.7876 12.207 12.8879 12.207H16.3379C16.4382 12.207 16.5195 12.1251 16.5195 12.0241V9.50419Z"
+              fill="#0E1379"
+            />
+            <path
+              d="M22.3945 19.4661C22.3945 19.319 22.278 19.1997 22.1343 19.1997H12.967C12.8233 19.1997 12.7068 19.319 12.7068 19.4661V22.3344C12.7068 22.4815 12.8233 22.6007 12.967 22.6007H22.1343C22.278 22.6007 22.3945 22.4815 22.3945 22.3344V19.4661Z"
+              fill="#0E1379"
+            />
+          </svg>
+        )}
         <span className="uppercase text-[#190E79] dark:text-white text-lg tracking-widest">
           Tokano
         </span>
       </div>
-      <div className="flex-1 flex flex-col justify-center px-4 py-2 bg-gradient-to-r from-[#391667] to-[#061a2e]">
+      <div className="flex-1 flex flex-col justify-center px-4 py-2 bg-gradient-to-r dark:from-[#391667] from-white dark:to-[#061a2e]">
         <div className="flex justify-between items-center border-b border-[#7B3FE4] py-1">
-          <span className="text-[#190E79] dark:text-white/80 text-base">Available:</span>
+          <span className="text-[#190E79] dark:text-white/80 text-base">
+            Available:
+          </span>
           <span className="text-[#190E79] dark:text-white text-xl font-bold text-right">
             13,000,239.<span className="text-sm align-super">127</span>
           </span>
-          <span className="text-[#12e6c8] text-sm ml-2">90%</span>
+          <span className="dark:text-[#12e6c8] text-[#048e7c] text-sm ml-2">
+            90%
+          </span>
         </div>
         <div className="flex justify-between items-center border-b border-[#7B3FE4] py-1">
-          <span className="text-[#190E79] dark:text-white/80 text-base">Staked:</span>
+          <span className="text-[#190E79] dark:text-white/80 text-base">
+            Staked:
+          </span>
           <span className="text-[#190E79] dark:text-white text-xl font-bold">
             120,000.<span className="text-sm align-super">200</span>
           </span>
-          <span className="text-[#12e6c8] text-sm ml-2">10%</span>
+          <span className="dark:text-[#12e6c8] text-[#048e7c] text-sm ml-2">
+            10%
+          </span>
         </div>
         <div className="flex justify-between items-center py-1">
-          <span className="text-[#190E79] dark:text-white/80 text-base">Locked:</span>
+          <span className="text-[#190E79] dark:text-white/80 text-base">
+            Locked:
+          </span>
           <span className="text-[#190E79] dark:text-white text-xl font-bold">
             120,000.<span className="text-sm align-super">200</span>
           </span>
-          <span className="text-[#12e6c8] text-sm ml-2">10%</span>
+          <span className="dark:text-[#12e6c8] text-[#048e7c] text-sm ml-2">
+            10%
+          </span>
         </div>
       </div>
     </div>

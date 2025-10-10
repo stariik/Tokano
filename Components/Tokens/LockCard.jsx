@@ -55,7 +55,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
         background:
           resolvedTheme === "dark"
             ? "linear-gradient(90deg, #5d9beb 0%, #041d33 100%)"
-            : "linear-gradient(90deg, #b8d9f7 0%, #d0e7f5 100%)",
+            : "linear-gradient(90deg, #EFEFEF 0%, #2B6EC5 100%)",
       }}
     >
       <div
@@ -64,7 +64,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
           background:
             resolvedTheme === "dark"
               ? "linear-gradient(30deg, #5d9beb 0%, #041d33 100%)"
-              : "linear-gradient(30deg, #b8d9f7 0%, #d0e7f5 100%)",
+              : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
         }}
       >
         <div className="absolute right-6 top-6">
@@ -126,7 +126,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
         <p className="absolute right-5 text-[#FFB01C] bottom-0 text-xl">120M</p>
       </div>
       <div className="pb-2 pr-4 flex justify-end items-center gap-6">
-        <p className="text-lg">locked</p>
+        <p className="text-lg text-white">locked</p>
       </div>
     </Link>
   );

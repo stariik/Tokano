@@ -37,7 +37,7 @@ function VestCard({ id, title, created, marketCap, wallet }) {
       style={{
         background:
           resolvedTheme === "dark"
-            ? "linear-gradient(90deg, #88048A 0%, #1A1E5F 100%)"
+            ? "linear-gradient(90deg, #88048A 0%, #1A1E5F 100%)" 
             : "linear-gradient(90deg, #EFEFEF 0%, #9F4EA3 100%)",
       }}
     >
