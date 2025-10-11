@@ -10,10 +10,10 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
     <div className="max-w-4xl mx-4 lg:mx-auto bg-[#C7C1F5] dark:bg-[#231570] rounded-3xl overflow-hidden font-sans shadow-2xl">
       {/* Header */}
       <div className="bg-[#C7C1F5] dark:bg-[#231570] px-6 py-3 flex justify-between items-center border-b dark:border-secondary border-white">
-        <h1 className="text-base lg:text-2xl font-bold text-[#190E79] dark:text-white tracking-wide">
+        <h1 className="text-base lg:text-2xl font-bold text-[#190E79] dark:text-white tracking-wide font-khand">
           YOUR WALLET
         </h1>
-        <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-lg">
+        <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-lg font-khand">
           {walletAddress}
         </span>
       </div>
@@ -38,7 +38,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
                     {token.icon}
                   </span>
                   <div className="flex-1">
-                    <span className="text-xs md:text-sm lg:text-base font-bold text-[#190E79] dark:text-white">
+                    <span className="text-xs md:text-sm lg:text-base font-bold text-[#190E79] dark:text-white font-khand">
                       {index + 1}. {token.name}
                     </span>
                   </div>
@@ -52,7 +52,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
             {/* Balance Display */}
             <div className="p-3 border-x border-white border-opacity-40 dark:border-secondary flex items-center justify-end">
               <div className="text-right">
-                <div className="text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl font-bold text-[#190E79] dark:text-white">
+                <div className="text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl font-bold text-[#190E79] dark:text-white font-khand">
                   {selectedTokenData?.balance} {selectedTokenData?.ticker}
                 </div>
               </div>
@@ -62,34 +62,34 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
             <div className="p-2 md:p-4 h-full border-x border-t border-white border-opacity-40 dark:border-secondary flex-1">
               <div className="space-y-2">
                 <div>
-                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl">
+                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl font-khand">
                     token ID:{" "}
                   </span>
-                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg">
+                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg font-khand">
                     {selectedTokenData?.tokenId}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl">
+                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl font-khand">
                     name:{" "}
                   </span>
-                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg">
+                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg font-khand">
                     {selectedTokenData?.name}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl">
+                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl font-khand">
                     ticker:{" "}
                   </span>
-                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg">
+                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg font-khand">
                     {selectedTokenData?.ticker}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl">
+                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl font-khand">
                     platform:{" "}
                   </span>
-                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg">
+                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg font-khand">
                     {selectedTokenData?.platform}
                   </span>
                 </div>
@@ -108,11 +108,11 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
             </div>
           </div>
           <div className="flex-1">
-            <span className="text-xl font-bold text-[#190E79] dark:text-white">
+            <span className="text-xl font-bold text-[#190E79] dark:text-white font-khand">
               Solana balance:
             </span>
           </div>
-          <div className="text-xl font-bold text-[#190E79] dark:text-white">
+          <div className="text-xl font-bold text-[#190E79] dark:text-white font-khand">
             {solanaBalance}
           </div>
         </div>

@@ -191,7 +191,7 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true, filterVarian
       {hideOnMobile && (
         <button
           onClick={() => setShow(true)}
-          className={`lg:hidden fixed bottom-10 left-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-[#190E79] dark:text-white px-4 py-2 rounded-r-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+          className={`lg:hidden fixed bottom-18 left-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-white px-4 py-2 rounded-r-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
             show ? 'opacity-0 pointer-events-none' : 'opacity-100'
           }`}
           id="tokengrid-menu-button"

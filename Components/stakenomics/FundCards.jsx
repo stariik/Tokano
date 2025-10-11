@@ -88,7 +88,7 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
             <button
               onClick={(e) => handleCreateClick(e, fund)}
               disabled={fund.disabled}
-              className={`absolute top-2 left-2 md:top-3 md:left-3 px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold transition-colors duration-200 ${fund.buttonColor}`}
+              className={`absolute top-2 left-2 md:top-3 md:left-3 px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold transition-colors duration-200 font-khand ${fund.buttonColor}`}
             >
               CREATE
             </button>
@@ -96,7 +96,7 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
             {/* Title */}
             <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4">
               <h3
-                className={`text-xl md:text-base lg:text-lg font-bold ${fund.textColor} leading-tight`}
+                className={`text-xl md:text-base lg:text-lg font-bold ${fund.textColor} leading-tight font-khand`}
               >
                 {fund.title.split(' ').map((word, index) => (
                   <span key={index} className="block">{word}</span>

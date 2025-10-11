@@ -42,10 +42,10 @@ export default function FormItem1({ token, onDataChange }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4 px-1">
         <div className="flex items-center gap-3">
-          <div className="bg-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-[#6b4d9f] text-base flex-shrink-0">
+          <div className="bg-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-[#6b4d9f] text-base flex-shrink-0 font-khand">
             i
           </div>
-          <div className="text-[#1a0a33] text-sm font-semibold">
+          <div className="text-[#1a0a33] text-sm font-semibold font-khand">
             Fill the form to Create Staking Pool for:
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function FormItem1({ token, onDataChange }) {
               }}
             ></div>
           </div>
-          <div className="text-[#1a0a33] font-bold text-sm">
+          <div className="text-[#1a0a33] font-bold text-sm font-khand">
             {token.name}
           </div>
         </div>
@@ -70,13 +70,13 @@ export default function FormItem1({ token, onDataChange }) {
       <div className="bg-[#f5f3fb] dark:bg-[#2A1C78] rounded-2xl p-6 border-2 border-[#d4c9e8]">
         {/* Form Item 1 */}
         <div className="mb-5">
-          <label className="block text-[#1a0a33] font-bold text-[13px] mb-2">
+          <label className="block text-[#1a0a33] font-bold text-[13px] mb-2 font-khand">
             <span className="text-[#6b4d9f] font-bold mr-1">1.</span>Pool activation date (UTC):
           </label>
           <div className="flex gap-2 items-center mb-1.5">
             <input
               type="text"
-              className="bg-[#d8d0f0] dark:bg-[#292B8C] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold flex-1 max-w-[280px]"
+              className="bg-[#d8d0f0] dark:bg-[#292B8C] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#6b4d9f] font-bold flex-1 max-w-[280px] font-khand"
               placeholder="mm/dd/yyyy   hh:mm"
               value={`${formData.activationDate} ${formData.activationTime}`}
               onChange={(e) => {
@@ -86,7 +86,7 @@ export default function FormItem1({ token, onDataChange }) {
               }}
             />
           </div>
-          <div className="text-[#4a3d6b] text-[10px] leading-tight mt-1.5 font-medium">
+          <div className="text-[#4a3d6b] text-[10px] leading-tight mt-1.5 font-medium font-khand">
             Before this date, the pool will show "Launching Soon", or choose to make staking available immediately.
           </div>
         </div>
