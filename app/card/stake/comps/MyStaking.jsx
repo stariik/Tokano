@@ -88,7 +88,7 @@ function MyStaking() {
 
   return (
     <div className="mt-6 border-2 border-secondary rounded-2xl text-[#190E79] dark:text-white">
-      <div className="bg-gradient-to-r from-[#2f01ba] to-[#0C0D1C] px-4 py-3 rounded-t-2xl">
+      <div className="bg-gradient-to-r dark:from-[#2f01ba] dark:to-[#0C0D1C] px-4 py-3 rounded-t-2xl">
         <h2 className="text-xl font-medium">Details</h2>
       </div>
 

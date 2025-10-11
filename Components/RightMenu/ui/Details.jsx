@@ -323,7 +323,7 @@ function Details() {
                     })
                   }
                 >
-                  <div className="">{position.rewards}</div>
+                  <div className="v">{position.rewards}</div>
                   <div className="text-purple-300 md:text-sm text-xs">
                     ({position.rewardsSub})
                   </div>
