@@ -1,11 +1,30 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { FUND_TYPES } from "../../lib/constants";
 import GenericForm from "@/Components/forms/GenericForm";
 
 export default function FundCards({ selectedToken, selectedTokenData }) {
   const [selectedFund, setSelectedFund] = useState(FUND_TYPES[0]); // Default to Staking Pool
   const [currentFormData, setCurrentFormData] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Check if dark mode is enabled
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+
+    checkDarkMode();
+
+    // Watch for theme changes
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleCardClick = (fundType) => {
     if (fundType.disabled) return;
@@ -60,7 +79,11 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
                 ? "ring-4 ring-purple-500 ring-opacity-50"
                 : ""
             } ${fund.disabled ? "cursor-not-allowed opacity-75" : ""}`}
-            style={fund.gradientStyle}
+            style={{
+              background: typeof fund.gradientStyle === 'object' && 'light' in fund.gradientStyle
+                ? (isDarkMode ? fund.gradientStyle.dark : fund.gradientStyle.light)
+                : fund.gradientStyle.background || fund.gradientStyle
+            }}
           >
             <button
               onClick={(e) => handleCreateClick(e, fund)}

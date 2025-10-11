@@ -347,7 +347,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   };
 
   return (
-    <div className="w-full mx-auto rounded-3xl p-4 shadow-2xl border-[3px] border-[#453DC8] bg-[#fafafa] dark:bg-[#1B105C]">
+    <div className="w-full mx-auto rounded-3xl p-4 shadow-2xl border-[3px] border-[#CDCDE9] dark:border-[#453DC8] bg-[#EEEDFF] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 px-1">
         <div className="flex items-center gap-3">
@@ -386,7 +386,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       </div>
 
       {/* Warning Box */}
-      <div className="bg-[#e8e4f8] dark:bg-[#453DC8] border-2 border-[#6b4d9f] rounded-xl p-4 mt-2">
+      <div className="bg-[#e8e4f8] dark:bg-[#453DC8] border-2 border-red-400 dark:border-[#6b4d9f] rounded-xl p-4 mt-2">
         <div className="flex items-center justify-center gap-2 text-[#190E79] dark:text-white font-bold text-xs mb-3">
           <span className="text-sm">⚠️</span>
           <span>ATTENTION</span>
@@ -412,10 +412,10 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
           <div className="md:ml-6 ml-4 text-xs md:text-base items-center flex text-[#190E79] dark:text-white">
             creation fee: <span className="ml-2"> 12345678 Limas</span>
           </div>
-          <div className="flex items-center text-[#190E79] dark:text-white text-xs md:text-base">
+          <div className="flex items-center text-[#190E79] text-xs md:text-base">
             <button
               onClick={handleCreatePool}
-              className="rounded-full py-1 md:py-2 px-2 md:px-4 bg-[#fafafa] dark:bg-[#0E1379] relative flex cursor-pointer hover:bg-[#f0f0ff] dark:hover:bg-[#1a1f9e] transition-colors"
+              className="rounded-full py-1 md:py-2 px-2 md:px-4 bg-[#0E1379] relative flex cursor-pointer hover:bg-[#1a1f9e] transition-colors"
             >
               <div className="px-3 py-1 mr-2 rounded-full border-2 border-white">
                 <svg
@@ -432,7 +432,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
                 </svg>
               </div>
 
-              <span className="relative inline-block text-sm md:text-base">
+              <span className="text-white relative inline-block text-sm md:text-base">
                 CREATE POOL
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
               </span>
