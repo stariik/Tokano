@@ -12,7 +12,7 @@ function Soon() {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
-      className="w-[47px] lg:w-[70px] h-full"
+      className="h-full w-[47px] lg:w-[70px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -41,26 +41,28 @@ function Soon() {
   );
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-4"
+      className="border-secondary mx-4 rounded-3xl border-1 pb-4 text-[#190E79] lg:mx-0 lg:pb-8 dark:text-white"
       style={{
-        background: resolvedTheme === "dark"
-          ? "linear-gradient(90deg, #170D56 10%, #622CCD 80%)"
-          : "linear-gradient(90deg, #e8e4f8 10%, #d5d2ec 80%)",
+        background:
+          resolvedTheme === "dark"
+            ? "linear-gradient(90deg, #170D56 10%, #622CCD 80%)"
+            : "linear-gradient(90deg, #e8e4f8 10%, #d5d2ec 80%)",
       }}
     >
       <div
-        className="rounded-3xl p-8 pb-0 relative"
+        className="relative rounded-3xl p-8 pb-0"
         style={{
-          background: resolvedTheme === "dark"
-            ? "linear-gradient(45deg, #170D56 0%, #622CCD 100%)"
-            : "linear-gradient(45deg, #e8e4f8 0%, #d5d2ec 100%)",
+          background:
+            resolvedTheme === "dark"
+              ? "linear-gradient(45deg, #170D56 0%, #622CCD 100%)"
+              : "linear-gradient(45deg, #e8e4f8 0%, #d5d2ec 100%)",
         }}
       >
-        <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
-          <div className="bg-[#e3f2fd] dark:bg-[#0088cc] rounded-full p-1">
+        <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-16 lg:gap-4">
+          <div className="rounded-full bg-[#e3f2fd] p-1 dark:bg-[#0088cc]">
             <FaTelegramPlane />
           </div>
-          <div className="bg-black p-1 rounded-full">
+          <div className="rounded-full bg-black p-1">
             <FaXTwitter />
           </div>
           <div className="">
@@ -71,14 +73,14 @@ function Soon() {
         <div className="flex">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
+            className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:w-38 lg:rounded-3xl xl:ml-8"
           />
-          <div className="font-khand font-normal ml-4 lg:ml-8">
-            <h1 className="font-khand font-semibold xl:text-4xl lg:text-2xl md:text-xl text-lg">
+          <div className="font-khand ml-4 font-normal lg:ml-8">
+            <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-2xl xl:text-4xl">
               YOU'RE FIRED (FIRED)
             </h1>
 
-            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
+            <div className="mt-1 pl-1 text-sm md:text-base lg:text-lg xl:text-xl">
               <p>Pool ID: 0x4v49...hssdas</p>
               <p>Creator: Anonymouse</p>
               <p>Token ID: 0x4v49...hssdas</p>
@@ -91,42 +93,38 @@ function Soon() {
             <CiPill size={28} />
           </div>
 
-          <div
-            className="mt-6 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm font-khand font-normal"
-          >
+          <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
             21.04.25/12:24
           </div>
-          <div className="flex justify-end mr-4 mt-12 transform -translate-y-1/2">
+          <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
           </div>
         </div>
 
-        <div className="absolute left-0  w-11/13 z-5 flex mt-4">
-          <div
-            className="items-center flex ml-3 md:mx-4 text-xl lg:text-2xl max-w-20 font-khand font-semibold"
-          >
+        <div className="absolute left-0 z-5 mt-4 flex w-11/13">
+          <div className="font-khand ml-3 flex max-w-20 items-center text-xl font-semibold md:mx-4 lg:text-2xl">
             STAKING POOL
           </div>
           <div className="mr-4">
             <StakeIcon />
           </div>
-          <div
-            className="flex flex-col lg:text-sm text-xs my-auto w-full mx-auto font-khand font-normal"
-          >
+          <div className="font-khand mx-auto my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
             <div
-              className="h-2 bg-white w-6/7 lg:w-9/10 -z-1 flex absolute -right-16 lg:-right-27 bottom-6 lg:bottom-8"
+              className="absolute -right-16 bottom-6 -z-1 flex h-2 w-6/7 bg-white lg:-right-27 lg:bottom-8 lg:w-9/10"
               style={{
-                background: resolvedTheme === "dark"
-                  ? "linear-gradient(90deg, rgba(234, 217, 255, 1) 0%, rgba(243, 243, 243, 0) 100%"
-                  : "linear-gradient(90deg, rgba(255, 245, 255, 1) 0%, rgba(255, 255, 255, 0) 100%",
+                background:
+                  resolvedTheme === "dark"
+                    ? "linear-gradient(90deg, rgba(234, 217, 255, 1) 0%, rgba(243, 243, 243, 0) 100%"
+                    : "linear-gradient(90deg, rgba(255, 245, 255, 1) 0%, rgba(255, 255, 255, 0) 100%",
               }}
             ></div>
             <div
-              className="pl-1 lg:pl-6 lg:pr-5 pr-1 ml-0 lg:-ml-4 py-1 -z-1 rounded-full text-[#6D11B3] lg:text-base text-xs flex justify-between font-khand font-medium"
+              className="font-khand -z-1 ml-0 flex justify-between rounded-full py-1 pr-1 pl-1 text-xs font-medium text-[#6D11B3] lg:-ml-4 lg:pr-5 lg:pl-6 lg:text-base"
               style={{
-                background: resolvedTheme === "dark"
-                  ? "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)"
-                  : "linear-gradient(90deg, rgba(255, 220, 160, 1) 20%, rgba(255, 180, 225, 1) 50%,  rgba(255, 220, 160, 1) 90%)",
+                background:
+                  resolvedTheme === "dark"
+                    ? "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)"
+                    : "linear-gradient(90deg, rgba(255, 220, 160, 1) 20%, rgba(255, 180, 225, 1) 50%,  rgba(255, 220, 160, 1) 90%)",
               }}
             >
               <div>LOCKED: 21.04.2025</div>
@@ -135,16 +133,12 @@ function Soon() {
           </div>
         </div>
 
-        <div
-          className="text-2xl lg:text-3xl font-khand font-semibold mt-12 pt-12 lg:mt-16"
-        >
+        <div className="font-khand mt-12 pt-12 text-2xl font-semibold lg:mt-16 lg:text-3xl">
           {/* 120M */}
         </div>
       </div>
 
-      <div
-        className="mt-8 text-end text-xl lg:text-2xl font-khand font-medium"
-      >
+      <div className="font-khand mt-8 text-end text-xl font-medium lg:text-2xl">
         {/* locked */}
       </div>
     </div>

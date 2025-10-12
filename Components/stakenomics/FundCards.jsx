@@ -11,7 +11,7 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
   useEffect(() => {
     // Check if dark mode is enabled
     const checkDarkMode = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
+      setIsDarkMode(document.documentElement.classList.contains("dark"));
     };
 
     checkDarkMode();
@@ -20,7 +20,7 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['class']
+      attributeFilter: ["class"],
     });
 
     return () => observer.disconnect();
@@ -65,41 +65,50 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto max-w-4xl">
       {/* Fund Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6">
+      <div className="grid grid-cols-2 gap-4 p-6 md:grid-cols-4">
         {FUND_TYPES.map((fund) => (
           <div
             key={fund.id}
             onClick={() => handleCardClick(fund)}
-            className={`relative w-full h-32 ${
+            className={`relative h-32 w-full ${
               fund.bgColor
-            } rounded-2xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer ${
+            } cursor-pointer rounded-2xl p-4 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl ${
               selectedFund?.id === fund.id
-                ? "ring-4 ring-purple-500 ring-opacity-50"
+                ? "ring-opacity-50 ring-4 ring-purple-500"
                 : ""
             } ${fund.disabled ? "cursor-not-allowed opacity-75" : ""}`}
             style={{
-              background: typeof fund.gradientStyle === 'object' && 'light' in fund.gradientStyle
-                ? (isDarkMode ? fund.gradientStyle.dark : fund.gradientStyle.light)
-                : fund.gradientStyle.background || fund.gradientStyle
+              background:
+                typeof fund.gradientStyle === "object" &&
+                "light" in fund.gradientStyle
+                  ? isDarkMode
+                    ? fund.gradientStyle.dark
+                    : fund.gradientStyle.light
+                  : fund.gradientStyle.background || fund.gradientStyle,
             }}
           >
             <button
               onClick={(e) => handleCreateClick(e, fund)}
               disabled={fund.disabled}
-              className={`absolute top-2 left-2 md:top-3 md:left-3 px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold transition-colors duration-200 font-khand ${fund.buttonColor}`}
+              className={`font-khand absolute top-2 left-2 rounded-full px-2 py-0.5 text-[10px] font-bold transition-colors duration-200 md:top-3 md:left-3 md:px-3 md:py-1 md:text-xs ${fund.buttonColor}`}
             >
               CREATE
             </button>
 
             {/* Title */}
-            <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4">
+            <div className="absolute right-3 bottom-3 left-3 md:right-4 md:bottom-4 md:left-4">
               <h3
-                className={`text-xl md:text-base lg:text-lg font-bold ${fund.textColor} leading-tight font-khand`}
+                className={`text-xl font-bold md:text-base lg:text-lg ${fund.textColor} font-khand leading-tight`}
               >
-                {fund.title.split(' ').map((word, index) => (
-                  <span key={index} className="block">{word}</span>
+                {fund.title.split(" ").map((word, index) => (
+                  <span
+                    key={index}
+                    className="block"
+                  >
+                    {word}
+                  </span>
                 ))}
               </h3>
             </div>
@@ -109,9 +118,7 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
 
       {/* Selected Fund Component */}
       {selectedFund && (
-        <div className="px-2 md:px-6 pb-6">
-          {renderFundComponent()}
-        </div>
+        <div className="px-2 pb-6 md:px-6">{renderFundComponent()}</div>
       )}
     </div>
   );

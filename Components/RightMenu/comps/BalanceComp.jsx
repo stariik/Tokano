@@ -6,7 +6,7 @@ function BalanceComp() {
 
   return (
     <div>
-      <div className="flex items-center bg-[#f5f3fb] dark:bg-[#1a0033] p-2 rounded-full z-10 -ml-4 relative">
+      <div className="relative z-10 -ml-4 flex items-center rounded-full bg-[#f5f3fb] p-2 dark:bg-[#1a0033]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG
           <svg
@@ -86,7 +86,7 @@ function BalanceComp() {
             />
           </svg>
         )}
-        <span className="text-[#190E79] dark:text-white font-bold text-xs sm:text-sm md:text-lg ml-1 sm:ml-2">
+        <span className="ml-1 text-xs font-bold text-[#190E79] sm:ml-2 sm:text-sm md:text-lg dark:text-white">
           13,000
         </span>
       </div>

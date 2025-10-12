@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
@@ -9,10 +9,13 @@ import Details from "@/Components/RightMenu/ui/Details";
 
 function page() {
   return (
-    <div className="xl:grid-cols-3 md:grid-cols-2 grid py-18 md:py-6 md:px-6 2xl:px-2">
-      <div className="col-span-2  rounded-tr-4xl grid gap-2 2xl:gap-8 lg:grid-cols-7">
+    <div className="grid py-18 md:grid-cols-2 md:px-6 md:py-6 xl:grid-cols-3 2xl:px-2">
+      <div className="col-span-2 grid gap-2 rounded-tr-4xl lg:grid-cols-7 2xl:gap-8">
         <div className="col-span-3">
-          <TokenGrid gridCols="grid-cols-2" filterVariant="portfolio" />
+          <TokenGrid
+            gridCols="grid-cols-2"
+            filterVariant="portfolio"
+          />
         </div>
         <div className="col-span-4">
           <div className="">
@@ -22,10 +25,10 @@ function page() {
             <StakingModule />
           </div>
           {/* Show MyStaking on desktop, Details on mobile */}
-          <div className="hidden md:block text-[#190E79] dark:text-white">
+          <div className="hidden text-[#190E79] md:block dark:text-white">
             <MyStaking />
           </div>
-          <div className="md:hidden text-[#190E79] dark:text-white py-6">
+          <div className="py-6 text-[#190E79] md:hidden dark:text-white">
             <Details />
           </div>
         </div>

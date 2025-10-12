@@ -13,10 +13,10 @@ export default function RainbowBalance() {
   const { resolvedTheme } = useTheme();
 
   return (
-    <div className="overflow-hidden h-7 ">
+    <div className="h-7 overflow-hidden">
       {/* Gradient bar with curved right edge */}
       <div
-        className="flex items-center h-full gap-1 md:gap-2 px-2"
+        className="flex h-full items-center gap-1 px-2 md:gap-2"
         style={{
           background:
             resolvedTheme === "dark"
@@ -30,7 +30,7 @@ export default function RainbowBalance() {
         {percents.map((item) => (
           <span
             key={item.value}
-            className={`${item.color} font-bold text-xs`}
+            className={`${item.color} text-xs font-bold`}
             style={{ fontFamily: "inherit" }}
           >
             {item.value}

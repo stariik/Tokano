@@ -15,9 +15,19 @@
 }
 
 .line1-gradient {
-  background: linear-gradient(270deg, #0CE0CF 21.29%, #04587C 47.67%, #074BA3 70.19%);
+  background: linear-gradient(
+    270deg,
+    #0ce0cf 21.29%,
+    #04587c 47.67%,
+    #074ba3 70.19%
+  );
 }
 
 .line2-gradient {
-  background: linear-gradient(270deg, #FFD42A 20.21%, #F92C9D 58.17%, #6D11B3 88.65%);
+  background: linear-gradient(
+    270deg,
+    #ffd42a 20.21%,
+    #f92c9d 58.17%,
+    #6d11b3 88.65%
+  );
 }

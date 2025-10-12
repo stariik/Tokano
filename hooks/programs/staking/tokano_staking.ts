@@ -40,7 +40,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "pool_state.extra_seed";
                 account: "poolState";
-              }
+              },
             ];
           };
         },
@@ -52,7 +52,7 @@ export type TokanoStaking = {
         {
           name: "systemProgram";
           address: "11111111111111111111111111111111";
-        }
+        },
       ];
       args: [];
     },
@@ -78,7 +78,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "user_state.random_seed";
                 account: "userState";
-              }
+              },
             ];
           };
         },
@@ -90,7 +90,7 @@ export type TokanoStaking = {
         {
           name: "systemProgram";
           address: "11111111111111111111111111111111";
-        }
+        },
       ];
       args: [];
     },
@@ -121,7 +121,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "pool_state.extra_seed";
                 account: "poolState";
-              }
+              },
             ];
           };
         },
@@ -142,7 +142,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "user_state.random_seed";
                 account: "userState";
-              }
+              },
             ];
           };
         },
@@ -177,14 +177,14 @@ export type TokanoStaking = {
                   111,
                   117,
                   110,
-                  116
+                  116,
                 ];
               },
               {
                 kind: "account";
                 path: "pool_state.extra_seed";
                 account: "poolState";
-              }
+              },
             ];
           };
         },
@@ -208,7 +208,7 @@ export type TokanoStaking = {
         {
           name: "clock";
           address: "SysvarC1ock11111111111111111111111111111111";
-        }
+        },
       ];
       args: [];
     },
@@ -238,7 +238,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "pool_state.extra_seed";
                 account: "poolState";
-              }
+              },
             ];
           };
         },
@@ -258,7 +258,7 @@ export type TokanoStaking = {
               {
                 kind: "arg";
                 path: "randomSeed";
-              }
+              },
             ];
           };
         },
@@ -274,7 +274,7 @@ export type TokanoStaking = {
         {
           name: "clock";
           address: "SysvarC1ock11111111111111111111111111111111";
-        }
+        },
       ];
       args: [
         {
@@ -282,7 +282,7 @@ export type TokanoStaking = {
           type: {
             array: ["u8", 16];
           };
-        }
+        },
       ];
     },
     {
@@ -309,7 +309,7 @@ export type TokanoStaking = {
               {
                 kind: "arg";
                 path: "extraSeed";
-              }
+              },
             ];
           };
         },
@@ -333,7 +333,7 @@ export type TokanoStaking = {
               {
                 kind: "arg";
                 path: "extraSeed";
-              }
+              },
             ];
           };
         },
@@ -366,13 +366,13 @@ export type TokanoStaking = {
                   111,
                   117,
                   110,
-                  116
+                  116,
                 ];
               },
               {
                 kind: "arg";
                 path: "extraSeed";
-              }
+              },
             ];
           };
         },
@@ -410,7 +410,7 @@ export type TokanoStaking = {
         {
           name: "rent";
           address: "SysvarRent111111111111111111111111111111111";
-        }
+        },
       ];
       args: [
         {
@@ -434,7 +434,7 @@ export type TokanoStaking = {
           type: {
             array: ["u8", 8];
           };
-        }
+        },
       ];
     },
     {
@@ -464,7 +464,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "pool_state.extra_seed";
                 account: "poolState";
-              }
+              },
             ];
           };
         },
@@ -485,7 +485,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "user_state.random_seed";
                 account: "userState";
-              }
+              },
             ];
           };
         },
@@ -512,7 +512,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "pool_state.extra_seed";
                 account: "poolState";
-              }
+              },
             ];
           };
         },
@@ -536,13 +536,13 @@ export type TokanoStaking = {
         {
           name: "clock";
           address: "SysvarC1ock11111111111111111111111111111111";
-        }
+        },
       ];
       args: [
         {
           name: "amount";
           type: "u64";
-        }
+        },
       ];
     },
     {
@@ -572,7 +572,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "pool_state.extra_seed";
                 account: "poolState";
-              }
+              },
             ];
           };
         },
@@ -593,7 +593,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "user_state.random_seed";
                 account: "userState";
-              }
+              },
             ];
           };
         },
@@ -620,7 +620,7 @@ export type TokanoStaking = {
                 kind: "account";
                 path: "pool_state.extra_seed";
                 account: "poolState";
-              }
+              },
             ];
           };
         },
@@ -644,15 +644,15 @@ export type TokanoStaking = {
         {
           name: "clock";
           address: "SysvarC1ock11111111111111111111111111111111";
-        }
+        },
       ];
       args: [
         {
           name: "amount";
           type: "u64";
-        }
+        },
       ];
-    }
+    },
   ];
   accounts: [
     {
@@ -662,7 +662,7 @@ export type TokanoStaking = {
     {
       name: "userState";
       discriminator: [72, 177, 85, 249, 76, 167, 186, 126];
-    }
+    },
   ];
   errors: [
     {
@@ -724,7 +724,7 @@ export type TokanoStaking = {
       code: 6011;
       name: "usersStillHaveTokens";
       msg: "Users still have tokens";
-    }
+    },
   ];
   types: [
     {
@@ -793,7 +793,7 @@ export type TokanoStaking = {
           {
             name: "rewardsAccountBump";
             type: "u8";
-          }
+          },
         ];
       };
     },
@@ -839,9 +839,9 @@ export type TokanoStaking = {
           {
             name: "userStateBump";
             type: "u8";
-          }
+          },
         ];
       };
-    }
+    },
   ];
 };

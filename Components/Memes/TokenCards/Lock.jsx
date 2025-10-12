@@ -7,7 +7,7 @@ function Lock({ token }) {
   const { resolvedTheme } = useTheme();
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-full  overflow-hidden relative shadow-lg bg-[#e3f2fd] dark:bg-transparent"
+      className="relative flex w-full flex-col overflow-hidden rounded border-2 border-[#292B8C] bg-[#e3f2fd] shadow-lg dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}
@@ -18,40 +18,40 @@ function Lock({ token }) {
         }
       `}</style>
       {/* Token Image */}
-      <div className="w-full aspect-[1.6/1] bg-black relative">
+      <div className="relative aspect-[1.6/1] w-full bg-black">
         <Image
           src="/image.png"
           alt={token.name}
           fill
-          className="object-cover static!"
+          className="static! object-cover"
           sizes="220px"
         />
       </div>
       {/* Card Content */}
-      <div className="flex flex-col flex-1 px-3 py-2">
+      <div className="flex flex-1 flex-col px-3 py-2">
         {/* Title & Star */}
-        <div className="flex items-center justify-between mb-1">
+        <div className="mb-1 flex items-center justify-between">
           <span
-            className="text-[12px] md:text-[14px] text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
+            className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px]"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
           </span>
-          <span className="text-[#FF00A8] text-xl ml-2">★</span>
+          <span className="ml-2 text-xl text-[#FF00A8]">★</span>
         </div>
         {/* Stats Row */}
-        <div className="flex items-center justify-between mb-1 font-khand font-semibold">
-          <div className="text-xl lg:text-2xl flex text-white">LOCK</div>
-          <div className="bg-white rounded-3xl">
-            <div className="bg-[#190E79] p-2 m-2 rounded-2xl">
-              <SiVerizon className="w-[10px] h-[10px] lg:w-[14px] lg:h-[14px] text-white" />
+        <div className="font-khand mb-1 flex items-center justify-between font-semibold">
+          <div className="flex text-xl text-white lg:text-2xl">LOCK</div>
+          <div className="rounded-3xl bg-white">
+            <div className="m-2 rounded-2xl bg-[#190E79] p-2">
+              <SiVerizon className="h-[10px] w-[10px] text-white lg:h-[14px] lg:w-[14px]" />
             </div>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-[#FFD600] text-xl font-bold leading-none">
+            <span className="text-xl leading-none font-bold text-[#FFD600]">
               {token.stakers}
             </span>
-            <span className="text-[#B0B3D6] text-xs font-semibold -mt-1">
+            <span className="-mt-1 text-xs font-semibold text-[#B0B3D6]">
               stakers
             </span>
           </div>
@@ -59,7 +59,7 @@ function Lock({ token }) {
       </div>
       {/* Bottom Bar */}
       <div
-        className="h-6 w-30 mx-auto md:text-base text-sm rounded-xl text-center font-khand font-medium"
+        className="font-khand mx-auto h-6 w-30 rounded-xl text-center text-sm font-medium md:text-base"
         style={{
           background:
             resolvedTheme === "dark"

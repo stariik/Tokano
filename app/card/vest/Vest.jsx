@@ -14,12 +14,22 @@ function Vest() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 80 80"
-      className="w-[57px] h-[57px] lg:w-[80px] lg:h-[80px]"
+      className="h-[57px] w-[57px] lg:h-[80px] lg:w-[80px]"
       fill="none"
     >
-      <circle cx="40" cy="40" r="40" fill="white" />
+      <circle
+        cx="40"
+        cy="40"
+        r="40"
+        fill="white"
+      />
 
-      <circle cx="40" cy="40" r="27" fill="#2D178D" />
+      <circle
+        cx="40"
+        cy="40"
+        r="27"
+        fill="#2D178D"
+      />
 
       <path
         d="M28 34h8v8h8v8h8"
@@ -33,7 +43,7 @@ function Vest() {
 
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-4"
+      className="border-secondary mx-4 rounded-3xl border-1 pb-4 text-[#190E79] lg:mx-0 lg:pb-8 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -42,7 +52,7 @@ function Vest() {
       }}
     >
       <div
-        className="rounded-3xl p-8 pb-0 relative"
+        className="relative rounded-3xl p-8 pb-0"
         style={{
           background:
             resolvedTheme === "dark"
@@ -50,11 +60,11 @@ function Vest() {
               : "linear-gradient(45deg, #EFEFEF 30%, #9C3B8A 100%)",
         }}
       >
-        <div className="absolute top-8 lg:top-16 left-4 flex flex-col lg:gap-4 gap-2">
-          <div className="bg-[#0088cc] rounded-full p-1 text-white">
+        <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-16 lg:gap-4">
+          <div className="rounded-full bg-[#0088cc] p-1 text-white">
             <FaTelegramPlane />
           </div>
-          <div className="bg-black p-1 rounded-full text-white">
+          <div className="rounded-full bg-black p-1 text-white">
             <FaXTwitter />
           </div>
           <div className="">
@@ -65,14 +75,14 @@ function Vest() {
         <div className="flex">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-38 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8 mb-4"
+            className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:w-38 lg:rounded-3xl xl:ml-8"
           />
-          <div className="font-khand font-normal ml-4 lg:ml-8">
-            <h1 className="font-khand font-semibold xl:text-4xl lg:text-2xl md:text-xl text-lg">
+          <div className="font-khand ml-4 font-normal lg:ml-8">
+            <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-2xl xl:text-4xl">
               YOU'RE FIRED (FIRED)
             </h1>
 
-            <div className="pl-1 text-sm md:text-base lg:text-lg xl:text-xl mt-1">
+            <div className="mt-1 pl-1 text-sm md:text-base lg:text-lg xl:text-xl">
               <p>Pool ID: 0x4v49...hssdas</p>
               <p>Creator: Anonymouse</p>
               <p>Token ID: 0x4v49...hssdas</p>
@@ -85,23 +95,23 @@ function Vest() {
             <CiPill size={28} />
           </div>
 
-          <div className="mt-6 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-1 md:pl-2  text-xs md:text-sm font-khand font-normal">
+          <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
             21.04.25/12:24
           </div>
-          <div className="flex justify-end mr-4 mt-12 transform -translate-y-1/2">
+          <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
           </div>
         </div>
 
-        <div className="absolute left-0  w-11/13 z-5 flex">
-          <div className="items-center flex mx-4 text-xl lg:text-3xl font-khand font-semibold">
+        <div className="absolute left-0 z-5 flex w-11/13">
+          <div className="font-khand mx-4 flex items-center text-xl font-semibold lg:text-3xl">
             Vest
           </div>
           <VestIcon />
 
-          <div className="flex flex-col lg:text-sm text-xs my-auto w-5/5 font-khand font-normal">
+          <div className="font-khand my-auto flex w-5/5 flex-col text-xs font-normal lg:text-sm">
             <div
-              className="pl-4 2xl:pl-6 pr-1 2xl:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 font-khand font-normal"
+              className="font-khand -z-1 -ml-4 flex w-6/7 justify-between rounded-full py-1 pr-1 pl-4 font-normal text-white md:w-2/3 2xl:pr-5 2xl:pl-6"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -114,7 +124,7 @@ function Vest() {
             </div>
 
             <div
-              className="pl-2 2xl:pl-6 pr-2 2xl:pr-5 py-1 -z-1 rounded-full text-white flex justify-between w-6/7 md:w-2/3 ml-14 lg:ml-26 xl:ml-32 2xl:ml-46 font-khand font-normal"
+              className="font-khand -z-1 ml-14 flex w-6/7 justify-between rounded-full py-1 pr-2 pl-2 font-normal text-white md:w-2/3 lg:ml-26 xl:ml-32 2xl:ml-46 2xl:pr-5 2xl:pl-6"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -128,12 +138,12 @@ function Vest() {
           </div>
         </div>
 
-        <div className="text-[#FFB01C] text-end text-2xl lg:text-3xl font-khand font-semibold mr-4 mt-14 lg:mt-18">
+        <div className="font-khand mt-14 mr-4 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-18 lg:text-3xl">
           120M
         </div>
       </div>
 
-      <div className="mr-12 text-end text-xl lg:text-2xl font-khand font-medium">
+      <div className="font-khand mr-12 text-end text-xl font-medium lg:text-2xl">
         locked
       </div>
     </div>

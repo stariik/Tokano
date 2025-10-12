@@ -118,15 +118,15 @@ export default function usePhantom() {
               themeVariables: {
                 "--wcm-z-index": "50",
                 "--wcm-accent-color": "#949DFF",
-                "--wcm-background-color": "#1a1154"
-              }
+                "--wcm-background-color": "#1a1154",
+              },
             },
             metadata: {
               name: "Tokano",
               description: "Tokano Web3 Platform",
               url: typeof window !== "undefined" ? window.location.origin : "",
-              icons: ["https://tokano.com/logo.png"]
-            }
+              icons: ["https://tokano.com/logo.png"],
+            },
           });
           cachedWCProvider = wcProvider;
         }
@@ -176,24 +176,36 @@ export default function usePhantom() {
         cachedWCProvider = null;
 
         // Check for specific error types
-        if (err.message?.includes("User rejected") ||
-            err.message?.includes("Connection request reset")) {
+        if (
+          err.message?.includes("User rejected") ||
+          err.message?.includes("Connection request reset")
+        ) {
           // User closed the modal, silently return
           return;
         }
 
         // Check for authentication/API errors
-        if (err.message?.includes("Unauthorized") ||
-            err.message?.includes("403") ||
-            err.message?.includes("invalid key")) {
-          console.error("WalletConnect Project ID Error: The project ID is invalid or not properly configured.");
-          console.error("Please visit https://cloud.walletconnect.com/ to create a valid project and update the WALLETCONNECT_PROJECT_ID in hooks/usePhantom.js");
-          alert("WalletConnect configuration error. Please contact the site administrator.");
+        if (
+          err.message?.includes("Unauthorized") ||
+          err.message?.includes("403") ||
+          err.message?.includes("invalid key")
+        ) {
+          console.error(
+            "WalletConnect Project ID Error: The project ID is invalid or not properly configured.",
+          );
+          console.error(
+            "Please visit https://cloud.walletconnect.com/ to create a valid project and update the WALLETCONNECT_PROJECT_ID in hooks/usePhantom.js",
+          );
+          alert(
+            "WalletConnect configuration error. Please contact the site administrator.",
+          );
           return;
         }
 
         // For other errors, show a user-friendly message
-        alert("Failed to connect with WalletConnect. Please ensure you have a compatible wallet app installed.");
+        alert(
+          "Failed to connect with WalletConnect. Please ensure you have a compatible wallet app installed.",
+        );
       }
       return;
     }
@@ -224,5 +236,11 @@ export default function usePhantom() {
     }
   };
 
-  return { provider, publicKey, connectWallet, disconnectWallet, selectedWallet };
+  return {
+    provider,
+    publicKey,
+    connectWallet,
+    disconnectWallet,
+    selectedWallet,
+  };
 }
