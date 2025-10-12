@@ -48,7 +48,7 @@ function VestFundsResult({ token, formData }) {
       style={{
         background: resolvedTheme === "dark"
           ? "linear-gradient(90deg, #9D05A1 10%, #1A1E5F 100%)"
-          : "linear-gradient(90deg, #f5c4ed 10%, #e8e4f8 100%)",
+          : "linear-gradient(90deg, #EFEFEF 0%, #9C3B8A 100%)",
       }}
     >
       <div
@@ -56,7 +56,7 @@ function VestFundsResult({ token, formData }) {
         style={{
           background: resolvedTheme === "dark"
             ? "linear-gradient(45deg, #9D05A1 0%, #1A1E5F 100%)"
-            : "linear-gradient(45deg, #f5c4ed 0%, #e8e4f8 100%)",
+            : "linear-gradient(45deg, #EFEFEF 30%, #9C3B8A 100%)",
         }}
       >
         <div className="flex flex-row-reverse">
@@ -94,17 +94,18 @@ function VestFundsResult({ token, formData }) {
             className="flex flex-col lg:text-sm text-xs my-auto w-3/5 md:w-5/5 font-khand font-normal"
           >
             <div
-              className="pl-4 2xl:pl-6 pr-2 2xl:pr-5 -ml-2 md:-ml-4 py-1 -z-1 mt-2 rounded-full text-[#190E79] dark:text-white flex justify-between w-9/10 md:w-2/3 lg:w-3/4 xl:w-6/7 2xl:w-4/5 font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
+              className="pl-4 2xl:pl-6 pr-2 2xl:pr-5 -ml-2 md:-ml-4 py-1 -z-1 mt-2 rounded-full text-white flex justify-between w-9/10 md:w-2/3 lg:w-3/4 xl:w-6/7 2xl:w-4/5 font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
               style={{
                 background: "var(--gradient-vest-1)",
               }}
             >
               <style jsx>{`
                 div {
-                  --gradient-vest-1: linear-gradient(90deg, rgba(227, 242, 253, 1) 10%, rgba(200, 230, 250, 1) 90%);
-                }
-                :global(.dark) div {
-                  --gradient-vest-1: linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%);
+                  --gradient-vest-1: linear-gradient(
+                    270deg,
+                    #2a8dff 14.74%,
+                    #3542c5 88.65%
+                  );
                 }
               `}</style>
               <div>
@@ -119,17 +120,18 @@ function VestFundsResult({ token, formData }) {
             </div>
 
             <div
-              className="pl-2 2xl:pl-6 pr-2 2xl:pr-5 py-1 -z-1 rounded-full text-[#190E79] dark:text-white flex justify-between w-12/13 md:w-5/6 ml-3 sm:ml-8 mt-1 lg:ml-10 xl:ml-8 2xl:ml-14 font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
+              className="pl-2 2xl:pl-6 pr-2 2xl:pr-5 py-1 -z-1 rounded-full text-white flex justify-between w-12/13 md:w-5/6 ml-3 sm:ml-8 mt-1 lg:ml-10 xl:ml-8 2xl:ml-14 font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
               style={{
                 background: "var(--gradient-vest-2)",
               }}
             >
               <style jsx>{`
                 div {
-                  --gradient-vest-2: linear-gradient(90deg, rgba(227, 242, 253, 1) 10%, rgba(200, 230, 250, 1) 90%);
-                }
-                :global(.dark) div {
-                  --gradient-vest-2: linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%);
+                  --gradient-vest-2: linear-gradient(
+                    270deg,
+                    #2a8dff 14.74%,
+                    #3542c5 88.65%
+                  );
                 }
               `}</style>
               <div>MODEL: {formData?.releaseModel || "monthly"}</div>

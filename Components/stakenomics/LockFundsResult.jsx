@@ -65,7 +65,7 @@ function LockFundsResult({ token, formData }) {
       style={{
         background: resolvedTheme === "dark"
           ? "linear-gradient(90deg, #5d9beb 10%, #041d33 80%)"
-          : "linear-gradient(90deg, #b8d9f7 10%, #d0e7f5 80%)",
+          : "linear-gradient(90deg, #EFEFEF 0%, #2B6EC5 100%)",
       }}
     >
       <div
@@ -73,7 +73,7 @@ function LockFundsResult({ token, formData }) {
         style={{
           background: resolvedTheme === "dark"
             ? "linear-gradient(45deg, #5d9beb 0%, #041d33 100%)"
-            : "linear-gradient(45deg, #b8d9f7 0%, #d0e7f5 100%)",
+            : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
         }}
       >
         <div className="flex flex-row-reverse">
@@ -111,17 +111,19 @@ function LockFundsResult({ token, formData }) {
             className="flex flex-col lg:text-sm text-xs my-auto w-full font-khand font-normal"
           >
             <div
-              className="pl-4 2xl:pl-6 pr-1 md:pr-5 -ml-4 py-1 -z-1 rounded-full text-[#190E79] dark:text-white flex justify-between font-khand font-medium bg-[#f0ebfa] dark:bg-transparent"
+              className="pl-4 2xl:pl-6 pr-1 md:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between font-khand font-medium bg-[#f0ebfa] dark:bg-transparent"
               style={{
                 background: "var(--gradient-lock-result)",
               }}
             >
               <style jsx>{`
                 div {
-                  --gradient-lock-result: linear-gradient(90deg, rgba(240, 235, 250, 1) 10%, rgba(227, 242, 253, 1) 90%);
-                }
-                :global(.dark) div {
-                  --gradient-lock-result: linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%);
+                  --gradient-lock-result: linear-gradient(
+                    90deg,
+                    rgba(7, 75, 163, 1) 0%,
+                    rgba(4, 88, 124, 1) 36%,
+                    rgba(12, 224, 207, 1) 100%
+                  );
                 }
               `}</style>
               <div>

@@ -53,16 +53,16 @@ function StakingPoolResult({ token, formData }) {
       className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white"
       style={{
         background: resolvedTheme === "dark"
-          ? "linear-gradient(90deg, #170D56 10%, #432CCD 80%)"
-          : "linear-gradient(90deg, #e8e4f8 10%, #d5d2ec 80%)",
+          ? "linear-gradient(90deg, #2f1f7b 10%, #622ea9 80%)"
+          : "linear-gradient(90deg, rgb(255 255 255) 0%, rgb(206 193 255) 100%)",
       }}
     >
       <div
         className="rounded-3xl p-4 md:p-8 pb-0 relative"
         style={{
           background: resolvedTheme === "dark"
-            ? "linear-gradient(45deg, #170D56 0%, #432CCD 100%)"
-            : "linear-gradient(45deg, #e8e4f8 0%, #d5d2ec 100%)",
+            ? "linear-gradient(45deg, #2f1f7b 0%, #622ea9 100%)"
+            : "linear-gradient(45deg, rgb(255 255 255) 0%, rgb(232, 228, 248) 100%)",
         }}
       >
         <div className="flex">
@@ -90,7 +90,7 @@ function StakingPoolResult({ token, formData }) {
           </div>
 
           <div
-            className="mt-2 md:mt-6 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-2 pr-2 text-xs md:text-sm font-khand font-normal"
+            className="mt-2 md:mt-6 bg-[#2B923E] dark:bg-[#2B923E] text-white rounded-l-2xl pl-2 pr-2 text-xs md:text-sm font-khand font-normal"
           >
             {formData?.activationDateTime === "IMMEDIATELY"
               ? "IMMEDIATELY"
@@ -112,8 +112,8 @@ function StakingPoolResult({ token, formData }) {
           className="text-[#311880] text-center text-sm md:text-base lg:text-lg 2xl:text-2xl font-khand font-semibold mb-12 -mt-2 rounded-2xl px-1 mx-14"
           style={{
             background: resolvedTheme === "dark"
-              ? "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)"
-              : "linear-gradient(90deg, #e6c8f0 10%, #ffc4ed 20%, #ffe896 70%)",
+              ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
+              : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
           }}
         >
           LAUNCHING IN: {formData?.distributionLength || "0"} days
@@ -134,11 +134,11 @@ function StakingPoolResult({ token, formData }) {
               <StakeIcon />
 
               <div
-                className="pl-4 md:pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-[#190E79] dark:text-white pr-2 font-khand font-medium"
+                className="pl-4 md:pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-white pr-2 font-khand font-medium"
                 style={{
                   background: resolvedTheme === "dark"
-                    ? "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)"
-                    : "linear-gradient(90deg, #c8e4f8 10%, #c8e8f0 20%, #c8f5f0 70%)",
+                    ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
+                    : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
                 }}
               >
                 <div className="flex justify-between">
@@ -153,8 +153,8 @@ function StakingPoolResult({ token, formData }) {
                 className="pl-4 pr-2 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black font-khand font-medium"
                 style={{
                   background: resolvedTheme === "dark"
-                    ? "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)"
-                    : "linear-gradient(90deg, #e6c8f0 10%, #ffc4ed 20%, #ffe896 70%)",
+                    ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
+                    : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
                 }}
               >
                 <div className="flex justify-between">
