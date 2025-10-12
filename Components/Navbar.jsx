@@ -2,16 +2,16 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import usePhantom from "@/hooks/usePhantom"; // import the hook
 import { useTheme } from "@/hooks/useTheme";
-import WalletSelectionPopup from "./WalletSelectionPopup";
+import WalletSelectionPopup from "./shared/wallet-selection-popup";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 function Navbar() {
-  const [showWalletPopup, setShowWalletPopup] = useState(false);
   const pathname = usePathname();
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const { publicKey, disconnect } = useWallet();
+  const [showWalletPopup, setShowWalletPopup] = useState(false);
 
   const navigationItems = [
     {
@@ -188,8 +188,6 @@ function Navbar() {
     }`;
   };
 
-  const { publicKey, connectWallet, disconnectWallet } = usePhantom();
-
   const cycleTheme = () => {
     const themes = ["system", "light", "dark"];
     const currentIndex = themes.indexOf(theme);
@@ -212,29 +210,26 @@ function Navbar() {
   };
 
   const shortKey = publicKey
-    ? publicKey.slice(0, 4) + "..." + publicKey.slice(-4)
+    ? publicKey.toString().slice(0, 4) + "..." + publicKey.toString().slice(-4)
     : null;
 
-  const handleWalletButtonClick = () => {
+  const handleWalletButtonClick = async () => {
     if (publicKey) {
-      disconnectWallet();
+      await disconnect();
     } else {
       setShowWalletPopup(true);
     }
   };
 
-  const handleSelectWallet = (walletId) => {
-    // For now, all wallets will use the same connect function
-    // You can customize this later for different wallet types
-    connectWallet(walletId);
-  };
-
   return (
     <>
       {/* Top Section - Mobile Header */}
-      <div className="w-full z-50 fixed top-0 bg-white dark:bg-dark text-black dark:text-light py-4 md:hidden border-b border-gray-200 dark:border-transparent">
+      <div className="dark:bg-dark dark:text-light fixed top-0 z-50 w-full border-b border-gray-200 bg-white py-4 text-black md:hidden dark:border-transparent">
         <div className="flex items-center justify-between px-4 md:justify-center md:gap-40">
-          <Link href="/" className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+          >
             {resolvedTheme === "dark" ? (
               // 🌙 DARK MODE SVG
               <svg
@@ -320,7 +315,7 @@ function Navbar() {
           <div className="flex items-center gap-3">
             <button
               onClick={cycleTheme}
-              className="flex items-center gap-1 hover:opacity-70 transition cursor-pointer text-xs border border-gray-400 dark:border-gray-500 rounded-lg px-2 py-1"
+              className="flex cursor-pointer items-center gap-1 rounded-lg border border-gray-400 px-2 py-1 text-xs transition hover:opacity-70 dark:border-gray-500"
               title={`Current: ${theme} mode. Click to change`}
             >
               <span className="text-base">{getThemeIcon()}</span>
@@ -328,7 +323,7 @@ function Navbar() {
             </button>
             <button
               onClick={handleWalletButtonClick}
-              className="hover:opacity-70 transition cursor-pointer text-sm"
+              className="cursor-pointer text-sm transition hover:opacity-70"
             >
               {publicKey ? shortKey : "CONNECT"}
             </button>
@@ -337,9 +332,12 @@ function Navbar() {
       </div>
 
       {/* Navigation Section - Desktop */}
-      <div className="hidden md:grid grid-cols-3 items-center bg-white dark:bg-dark text-black dark:text-light py-6 border-b border-gray-200 dark:border-transparent">
-        <div className="flex items-center gap-2 justify-center">
-          <Link href="/" className="flex items-center gap-2">
+      <div className="dark:bg-dark dark:text-light hidden grid-cols-3 items-center border-b border-gray-200 bg-white py-6 text-black md:grid dark:border-transparent">
+        <div className="flex items-center justify-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+          >
             {resolvedTheme === "dark" ? (
               // 🌙 DARK MODE SVG
               <svg
@@ -424,7 +422,7 @@ function Navbar() {
           </Link>
         </div>
 
-        <div className="flex md:gap-8 gap-4 justify-center md:text-2xl text-md font-medium font-khand">
+        <div className="text-md font-khand flex justify-center gap-4 font-medium md:gap-8 md:text-2xl">
           {navigationItems
             .filter((item) => item.name !== "HOME")
             .map((item) => (
@@ -438,16 +436,16 @@ function Navbar() {
             ))}
         </div>
 
-        <div className="flex justify-center items-center gap-4">
+        <div className="flex items-center justify-center gap-4">
           <button
             onClick={handleWalletButtonClick}
-            className="hover:opacity-70 transition cursor-pointer"
+            className="cursor-pointer transition hover:opacity-70"
           >
             {publicKey ? shortKey : "CONNECT WALLET"}
           </button>
           <button
             onClick={cycleTheme}
-            className="flex items-center gap-2 hover:opacity-70 transition cursor-pointer text-sm border border-secondary rounded-lg ml-12 px-3 py-2"
+            className="border-secondary ml-12 flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition hover:opacity-70"
             title={`Current: ${theme} mode. Click to change`}
           >
             <span className="text-xl">{getThemeIcon()}</span>
@@ -458,7 +456,7 @@ function Navbar() {
 
       {/* Bottom Navigation for Mobile */}
       <div
-        className="md:hidden fixed bottom-0 w-full text-light py-3 z-50"
+        className="text-light fixed bottom-0 z-50 w-full py-3 md:hidden"
         style={{
           background:
             resolvedTheme === "dark"
@@ -466,7 +464,7 @@ function Navbar() {
               : "linear-gradient(90deg, #d5d2ec 0%, #e0dff5 99.99%, rgba(213, 210, 236, 0) 100%)",
         }}
       >
-        <div className="flex justify-around items-center text-sm">
+        <div className="flex items-center justify-around text-sm">
           {navigationItems.map((item) => (
             <Link
               key={item.name}
@@ -484,7 +482,6 @@ function Navbar() {
       <WalletSelectionPopup
         isOpen={showWalletPopup}
         onClose={() => setShowWalletPopup(false)}
-        onSelectWallet={handleSelectWallet}
       />
     </>
   );

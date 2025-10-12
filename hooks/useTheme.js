@@ -32,7 +32,8 @@ export function ThemeProvider({ children }) {
 
     if (theme === "system") {
       // Check system preference
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
         ? "dark"
         : "light";
       applyTheme(systemTheme);
@@ -58,7 +59,9 @@ export function ThemeProvider({ children }) {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: setThemeMode, resolvedTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, setTheme: setThemeMode, resolvedTheme }}
+    >
       {children}
     </ThemeContext.Provider>
   );
