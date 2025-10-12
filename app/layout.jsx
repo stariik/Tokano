@@ -4,7 +4,7 @@ import Navbar from "@/Components/Navbar";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 import Banner from "@/Components/Banner";
 import { Analytics } from "@vercel/analytics/next";
-import ThemeWrapper from "@/Components/ThemeWrapper";
+import LayoutProviders from "@/Components/shared/layout-providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +23,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -51,21 +54,20 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-dark text-black dark:text-light`}
+        className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark dark:text-light bg-white text-black antialiased`}
       >
-        <ThemeWrapper>
-          {/* vercel analitics */}
+        <LayoutProviders>
           <Analytics />
           <Navbar />
           <Banner src={"banner1.png"} />
 
           <div className="relative">
             <div className="">{children}</div>
-            <div className="pr-4 py-18 md:py-6 text-black dark:text-light absolute right-0 top-0 w-1/3 2xl:w-6/19">
+            <div className="dark:text-light absolute top-0 right-0 w-1/3 py-18 pr-4 text-black md:py-6 2xl:w-6/19">
               <RightMenu />
             </div>
           </div>
-        </ThemeWrapper>
+        </LayoutProviders>
       </body>
     </html>
   );
