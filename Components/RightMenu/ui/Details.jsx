@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { stakingPositions } from "@/data/stakingPositions";
 
 function Details() {
   const [popup, setPopup] = useState({
@@ -141,93 +142,7 @@ function Details() {
                 display: none;
               }
             `}</style>
-            {[
-              {
-                id: 1,
-                staked: "700,484,120.00",
-                period: "32d 04h",
-                rewards: "4,120.00",
-                rewardsSub: "521",
-              },
-              {
-                id: 2,
-                staked: "700,484,120.00",
-                period: "32d 04h",
-                rewards: "4,120.00",
-                rewardsSub: "3200",
-                highlight: true,
-              },
-              {
-                id: 3,
-                staked: "70,484,120.00",
-                period: "02d 04h",
-                rewards: "84,120.00",
-                rewardsSub: "430",
-              },
-              {
-                id: 4,
-                staked: "22,484,120.00",
-                period: "32d 04h",
-                rewards: "22,4,120.00",
-                rewardsSub: "2342",
-              },
-              {
-                id: 5,
-                staked: "0.00",
-                period: "0",
-                rewards: "10,120.00",
-                rewardsSub: "120",
-              },
-              {
-                id: 6,
-                staked: "700,484,120.00",
-                period: "2d 04h",
-                rewards: "700,484,120.00",
-                rewardsSub: "450",
-              },
-              {
-                id: 7,
-                staked: "700,484,120.00",
-                period: "2d 04h",
-                rewards: "700,120.00",
-                rewardsSub: "120,000",
-              },
-              {
-                id: 8,
-                staked: "500,484,120.00",
-                period: "15d 08h",
-                rewards: "15,320.00",
-                rewardsSub: "890",
-              },
-              {
-                id: 9,
-                staked: "300,484,120.00",
-                period: "7d 12h",
-                rewards: "8,450.00",
-                rewardsSub: "245",
-              },
-              {
-                id: 10,
-                staked: "150,200,000.00",
-                period: "45d 02h",
-                rewards: "25,800.00",
-                rewardsSub: "1,200",
-              },
-              {
-                id: 11,
-                staked: "850,350,500.00",
-                period: "12d 18h",
-                rewards: "12,750.00",
-                rewardsSub: "680",
-              },
-              {
-                id: 12,
-                staked: "92,120,800.00",
-                period: "8d 06h",
-                rewards: "3,900.00",
-                rewardsSub: "185",
-              },
-            ].map((position, index) => (
+            {stakingPositions.map((position, index) => (
               <div
                 key={position.id}
                 ref={(el) => (itemRefs.current[index] = el)}

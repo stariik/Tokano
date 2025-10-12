@@ -81,9 +81,9 @@ function StakingModule() {
         </div>
       </div>
 
-      <div className="flex justify-end items-center px-6 py-4 border-t-2 border-secondary bg-gradient-to-r dark:from-[#330E79] dark:to-[#7837F4] from-[#341E6D] to-[#9B7ADE] text-white gap-16 pr-8 font-khand font-semibold ">
+      <div className="text-xs md:text-base flex justify-end items-center px-6 py-4 border-t-2 border-secondary bg-gradient-to-r dark:from-[#330E79] dark:to-[#7837F4] from-[#341E6D] to-[#9B7ADE] text-white gap-8 md:gap-16 pr-8 font-khand font-semibold ">
         You are Staking: 123,456,789
-        <button className="rounded-xl border-1 border-white bg-[#32138b] py-1 px-2 lg:text-2xl text-xl flex gap-4 items-center cursor-pointer">
+        <button className="rounded-xl border-1 border-white bg-[#32138b] py-1 px-2 md:text-2xl text-lg flex gap-4 items-center cursor-pointer">
           STAKE
           <div className="bg-white p-1 rounded-full px-3">
             <svg

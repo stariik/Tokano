@@ -87,9 +87,36 @@ function MyStaking() {
   }, []);
 
   return (
-    <div className="mt-6 border-2 border-secondary rounded-2xl text-[#190E79] dark:text-white">
-      <div className="bg-gradient-to-r dark:from-[#2f01ba] dark:to-[#0C0D1C] px-4 py-3 rounded-t-2xl">
-        <h2 className="text-xl font-medium">Details</h2>
+    <div className="mt-6 border-2 border-secondary rounded-2xl text-[#190E79] dark:text-white font-khand">
+      <div className="bg-gradient-to-r dark:from-[#2f01ba] dark:to-[#0C0D1C] px-4 py-3 rounded-t-2xl flex gap-8 justify-between items-center">
+        <div className="flex justify-between w-full">
+          <h2 className="text-xl font-medium">My Staking </h2>
+          <h2 className="text-xl font-bold">FIRED</h2>
+        </div>
+        <div className="flex w-full">
+          <h2 className="text-xl font-medium px-auto ml-6">show:</h2>
+          <h2 className="text-xl font-medium border-r-1">
+            <div
+              className="px-2 cursor-pointer hover:text-purple-600 dark:hover:text-purple-300 rounded transition"
+            >
+              all
+            </div>
+          </h2>
+          <h2 className="text-xl font-medium border-r-1">
+            <div
+              className="px-2 cursor-pointer hover:text-purple-600 dark:hover:text-purple-300 rounded transition"
+            >
+              staked
+            </div>
+          </h2>
+          <h2 className="text-xl font-medium">
+            <div
+              className="px-2 cursor-pointer hover:text-purple-600 dark:hover:text-purple-300 rounded transition"
+            >
+              unstaked
+            </div>
+          </h2>
+        </div>
       </div>
 
       {/* Two Side-by-Side Tables */}
@@ -116,7 +143,9 @@ function MyStaking() {
 
         {/* History Button */}
         <div className="bg-[#f5f3fb] dark:bg-[#2A1C78] border-y-1 border-secondary px-4 py-1 text-center relative z-10 mb-2">
-          <button className="text-[#190E79] dark:text-white font-semibold">▼ History</button>
+          <button className="text-[#190E79] dark:text-white font-semibold">
+            ▼ History
+          </button>
         </div>
       </div>
     </div>
