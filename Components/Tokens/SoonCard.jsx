@@ -10,7 +10,7 @@ import { MdStar } from "react-icons/md";
 
 const StakeIcon = () => (
   <svg
-    className="w-[47px] h-[47px] lg:w-[57px] lg:h-[57px]"
+    className="h-[47px] w-[47px] lg:h-[57px] lg:w-[57px]"
     viewBox="0 0 57 57"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@ function SoonCard({ id }) {
   return (
     <Link
       href={`/card/soon`}
-      className="block rounded-4xl pb-4 lg:pb-8 hover:opacity-90 transition dark:text-white text-primary"
+      className="text-primary block rounded-4xl pb-4 transition hover:opacity-90 lg:pb-8 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -53,7 +53,7 @@ function SoonCard({ id }) {
       }}
     >
       <div
-        className="grid grid-cols-3 items-center justify-between relative rounded-4xl"
+        className="relative grid grid-cols-3 items-center justify-between rounded-4xl"
         style={{
           background:
             resolvedTheme === "dark"
@@ -65,23 +65,27 @@ function SoonCard({ id }) {
           <img
             src="/image.png"
             alt=""
-            className="rounded-4xl ml-4 md:ml-8 mt-2 md:mt-4 lg:w-36 w-24"
+            className="mt-2 ml-4 w-24 rounded-4xl md:mt-4 md:ml-8 lg:w-36"
           />
         </div>
 
         <div className="col-span-2">
-          <div className="flex w-1/5 md:w-1/4 justify-center relative  md:pl-0">
-            <CiPill color="#5ecb89" size={25} className="absolute top-1" />
+          <div className="relative flex w-1/5 justify-center md:w-1/4 md:pl-0">
+            <CiPill
+              color="#5ecb89"
+              size={25}
+              className="absolute top-1"
+            />
           </div>
-          <div className="flex-col justify-center items-center text-center">
-            <p className="text-md md:text-lg lg:text-xl 2xl:text-2xl mt-2 font-khand font-semibold">
+          <div className="flex-col items-center justify-center text-center">
+            <p className="text-md font-khand mt-2 font-semibold md:text-lg lg:text-xl 2xl:text-2xl">
               YOU'RE FIRED (FIRED)
             </p>
-            <h1 className="text-xl md:text-2xl lg:text-3xl 2xl:text-4xl font-bold font-khand lg:mt-4">
+            <h1 className="font-khand text-xl font-bold md:text-2xl lg:mt-4 lg:text-3xl 2xl:text-4xl">
               LAUNCHING SOON
             </h1>
             <p
-              className="text-[#311880] font-khand font-semibold mt-2 rounded-2xl w-38 lg:w-48 mx-auto text-xs lg:text-sm"
+              className="font-khand mx-auto mt-2 w-38 rounded-2xl text-xs font-semibold text-[#311880] lg:w-48 lg:text-sm"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -91,7 +95,7 @@ function SoonCard({ id }) {
             >
               LAUNCHING IN : 23d 45h 12m
             </p>
-            <div className="absolute right-0.5 xl:right-4 top-1/2">
+            <div className="absolute top-1/2 right-0.5 xl:right-4">
               {/* <StarIcon />  */}
               <MdStar
                 color={resolvedTheme === "dark" ? "white" : "#F92C9D"}
@@ -100,18 +104,18 @@ function SoonCard({ id }) {
             </div>
           </div>
         </div>
-        <div className="mx-auto relative my-6">
-          <div className="absolute flex gap-2 -left-[30px] lg:-left-[50px] -top-[20px]">
-            <div className="text-xl lg:text-3xl mt-4 font-khand font-semibold">
+        <div className="relative mx-auto my-6">
+          <div className="absolute -top-[20px] -left-[30px] flex gap-2 lg:-left-[50px]">
+            <div className="font-khand mt-4 text-xl font-semibold lg:text-3xl">
               STAKE
             </div>
-            <div className="bg-[#f5f3fb] dark:bg-[#2A1C7B] rounded-full pr-0 p-1 pl-2 z-10">
+            <div className="z-10 rounded-full bg-[#f5f3fb] p-1 pr-0 pl-2 dark:bg-[#2A1C7B]">
               <StakeIcon />
             </div>
           </div>
-          <div className="absolute left-[80px] top-[20px] xl:w-[100px] 2xl:w-[280px] [@media(min-width:1720px)]:w-[330px]  h-[3px] rounded-full bg-gradient-to-r from-[#002382] dark:from-[#190E79] from-25% to-[#8B0000]"></div>
+          <div className="absolute top-[20px] left-[80px] h-[3px] rounded-full bg-gradient-to-r from-[#002382] from-25% to-[#8B0000] xl:w-[100px] 2xl:w-[280px] dark:from-[#190E79] [@media(min-width:1720px)]:w-[330px]"></div>
         </div>
-        <div className="font-khand pl-4 mt-4 text-xs lg:text-base">
+        <div className="font-khand mt-4 pl-4 text-xs lg:text-base">
           Pool ID: 0xdlc3…ezx41
         </div>
         <div className="font-khand mt-4 text-xs lg:text-base">

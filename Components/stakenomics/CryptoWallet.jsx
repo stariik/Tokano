@@ -7,13 +7,13 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
   const selectedTokenData = tokens.find((token) => token.id === selectedToken);
 
   return (
-    <div className="max-w-4xl mx-4 lg:mx-auto bg-[#C7C1F5] dark:bg-[#231570] rounded-3xl overflow-hidden font-sans shadow-2xl">
+    <div className="mx-4 max-w-4xl overflow-hidden rounded-3xl bg-[#C7C1F5] font-sans shadow-2xl lg:mx-auto dark:bg-[#231570]">
       {/* Header */}
-      <div className="bg-[#C7C1F5] dark:bg-[#231570] px-6 py-3 flex justify-between items-center border-b dark:border-secondary border-white">
-        <h1 className="text-base lg:text-2xl font-bold text-[#190E79] dark:text-white tracking-wide font-khand">
+      <div className="dark:border-secondary flex items-center justify-between border-b border-white bg-[#C7C1F5] px-6 py-3 dark:bg-[#231570]">
+        <h1 className="font-khand text-base font-bold tracking-wide text-[#190E79] lg:text-2xl dark:text-white">
           YOUR WALLET
         </h1>
-        <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-lg font-khand">
+        <span className="font-khand text-sm font-semibold text-[#190E79] lg:text-lg dark:text-white">
           {walletAddress}
         </span>
       </div>
@@ -22,23 +22,23 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
       <div className="px-1 md:px-2 lg:px-4">
         <div className="grid grid-cols-2 gap-1 md:gap-4">
           {/* Token List - Left Side */}
-          <div className="px-0 md:px-2 pb-1 border-x border-white border-opacity-40 dark:border-secondary">
-            <div className="space-y-1.5 max-h-[270px] overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-[#190E79] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-white dark:[&::-webkit-scrollbar-thumb]:bg-opacity-30">
+          <div className="border-opacity-40 dark:border-secondary border-x border-white px-0 pb-1 md:px-2">
+            <div className="dark:[&::-webkit-scrollbar-thumb]:bg-opacity-30 max-h-[270px] space-y-1.5 overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#190E79] dark:[&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-track]:bg-transparent">
               {tokens.map((token, index) => (
                 <div
                   key={token.id}
                   onClick={() => setSelectedToken(token.id)}
-                  className={`flex items-center px-1.5 py-1.5 cursor-pointer transition-all duration-200 border ${
+                  className={`flex cursor-pointer items-center border px-1.5 py-1.5 transition-all duration-200 ${
                     selectedToken === token.id
-                      ? "bg-[#ddd9f9] border-white border-opacity-60 dark:bg-secondary dark:bg-opacity-10 dark:border-secondary rounded-md md:mr-2 mr-1"
-                      : "hover:bg-[#ddd9f9] hover:bg-opacity-50 border-transparent dark:hover:bg-secondary dark:hover:bg-opacity-10 rounded-md mr-1 md:mr-2"
+                      ? "border-opacity-60 dark:bg-secondary dark:bg-opacity-10 dark:border-secondary mr-1 rounded-md border-white bg-[#ddd9f9] md:mr-2"
+                      : "hover:bg-opacity-50 dark:hover:bg-secondary dark:hover:bg-opacity-10 mr-1 rounded-md border-transparent hover:bg-[#ddd9f9] md:mr-2"
                   }`}
                 >
-                  <span className="text-lg lg:text-xl mr-1.5 md:mr-2">
+                  <span className="mr-1.5 text-lg md:mr-2 lg:text-xl">
                     {token.icon}
                   </span>
                   <div className="flex-1">
-                    <span className="text-xs md:text-sm lg:text-base font-bold text-[#190E79] dark:text-white font-khand">
+                    <span className="font-khand text-xs font-bold text-[#190E79] md:text-sm lg:text-base dark:text-white">
                       {index + 1}. {token.name}
                     </span>
                   </div>
@@ -50,46 +50,46 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
           {/* Token Details - Right Side */}
           <div className="">
             {/* Balance Display */}
-            <div className="p-3 border-x border-white border-opacity-40 dark:border-secondary flex items-center justify-end">
+            <div className="border-opacity-40 dark:border-secondary flex items-center justify-end border-x border-white p-3">
               <div className="text-right">
-                <div className="text-base md:text-sm lg:text-base xl:text-lg 2xl:text-xl font-bold text-[#190E79] dark:text-white font-khand">
+                <div className="font-khand text-base font-bold text-[#190E79] md:text-sm lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
                   {selectedTokenData?.balance} {selectedTokenData?.ticker}
                 </div>
               </div>
             </div>
 
             {/* Token Information */}
-            <div className="p-2 md:p-4 h-full border-x border-t border-white border-opacity-40 dark:border-secondary flex-1">
+            <div className="border-opacity-40 dark:border-secondary h-full flex-1 border-x border-t border-white p-2 md:p-4">
               <div className="space-y-2">
                 <div>
-                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl font-khand">
+                  <span className="font-khand text-sm font-semibold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
                     token ID:{" "}
                   </span>
-                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg font-khand">
+                  <span className="font-khand text-xs text-[#190E79] md:text-sm xl:text-base 2xl:text-lg dark:text-white">
                     {selectedTokenData?.tokenId}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl font-khand">
+                  <span className="font-khand text-sm font-semibold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
                     name:{" "}
                   </span>
-                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg font-khand">
+                  <span className="font-khand text-xs text-[#190E79] md:text-sm xl:text-base 2xl:text-lg dark:text-white">
                     {selectedTokenData?.name}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl font-khand">
+                  <span className="font-khand text-sm font-semibold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
                     ticker:{" "}
                   </span>
-                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg font-khand">
+                  <span className="font-khand text-xs text-[#190E79] md:text-sm xl:text-base 2xl:text-lg dark:text-white">
                     {selectedTokenData?.ticker}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#190E79] dark:text-white font-semibold text-sm lg:text-base xl:text-lg 2xl:text-xl font-khand">
+                  <span className="font-khand text-sm font-semibold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
                     platform:{" "}
                   </span>
-                  <span className="text-[#190E79] dark:text-white text-xs md:text-sm xl:text-base 2xl:text-lg font-khand">
+                  <span className="font-khand text-xs text-[#190E79] md:text-sm xl:text-base 2xl:text-lg dark:text-white">
                     {selectedTokenData?.platform}
                   </span>
                 </div>
@@ -100,19 +100,19 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
 
         {/* Solana Balance - Bottom */}
       </div>
-      <div className="px-6 py-2 border-t border-white border-opacity-40 dark:border-secondary bg-[#ddd9f9] dark:bg-[#231570] z-10 relative">
+      <div className="border-opacity-40 dark:border-secondary relative z-10 border-t border-white bg-[#ddd9f9] px-6 py-2 dark:bg-[#231570]">
         <div className="flex items-center">
-          <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center mr-4">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <div className="w-4 h-4 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full"></div>
+          <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-blue-600">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
+              <div className="h-4 w-4 rounded-full bg-gradient-to-br from-purple-600 to-blue-600"></div>
             </div>
           </div>
           <div className="flex-1">
-            <span className="text-xl font-bold text-[#190E79] dark:text-white font-khand">
+            <span className="font-khand text-xl font-bold text-[#190E79] dark:text-white">
               Solana balance:
             </span>
           </div>
-          <div className="text-xl font-bold text-[#190E79] dark:text-white font-khand">
+          <div className="font-khand text-xl font-bold text-[#190E79] dark:text-white">
             {solanaBalance}
           </div>
         </div>

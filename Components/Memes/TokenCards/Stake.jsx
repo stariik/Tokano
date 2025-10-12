@@ -7,7 +7,7 @@ function Stake({ token }) {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <div className="relative z-10 flex-shrink-0">
-      <div className="w-12 rounded-full bg-white flex -mr-18 items-center justify-center">
+      <div className="-mr-18 flex w-12 items-center justify-center rounded-full bg-white">
         <svg
           className="w-16"
           viewBox="0 0 57 57"
@@ -41,82 +41,84 @@ function Stake({ token }) {
 
   return (
     <div
-      className="rounded border-2 border-[#292B8C] flex flex-col w-full overflow-hidden relative shadow-lg bg-[#f5f3fb] dark:bg-transparent"
+      className="relative flex w-full flex-col overflow-hidden rounded border-2 border-[#292B8C] bg-[#f5f3fb] shadow-lg dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}
     >
       <style jsx>{`
         div {
-          --tw-gradient: linear-gradient(45deg, #170D56 10%, #432CCD 65%);
+          --tw-gradient: linear-gradient(45deg, #170d56 10%, #432ccd 65%);
         }
       `}</style>
       {/* Token Image */}
-      <div className="w-full aspect-[1.6/1] bg-black relative">
+      <div className="relative aspect-[1.6/1] w-full bg-black">
         <Image
           src="/image.png"
           alt={token.name}
           fill
-          className="object-cover static!"
+          className="static! object-cover"
           sizes="220px"
         />
       </div>
       {/* Card Content */}
-      <div className="flex flex-col flex-1 px-1 2xl:px-3 pt-2">
+      <div className="flex flex-1 flex-col px-1 pt-2 2xl:px-3">
         {/* Title & Star */}
-        <div className="flex items-center justify-between mb-2">
+        <div className="mb-2 flex items-center justify-between">
           <span
-            className="text-[12px] md:text-[14px] text-[#E6E6E6] leading-tight tracking-tight font-khand font-semibold"
+            className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px]"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
           </span>
-          <span className="text-[#FF00A8] text-xl ml-2">★</span>
+          <span className="ml-2 text-xl text-[#FF00A8]">★</span>
         </div>
 
         {/* Stats Row */}
-        <div
-          className="flex items-center justify-between gap-4 relative font-khand font-semibold"
-        >
+        <div className="font-khand relative flex items-center justify-between gap-4 font-semibold">
           <StakeIcon />
 
           {/* Divider Line */}
           {/* <div className="w-px h-24 bg-white mx-4"></div> */}
 
           {/* Text Content */}
-          <div className="flex flex-col absolute left-6 lg:left-10 xl:w-1/2 2xl:w-3/5">
+          <div className="absolute left-6 flex flex-col lg:left-10 xl:w-1/2 2xl:w-3/5">
             {/* Time Display Bar */}
             <div
-              className="rounded-full pl-6 py-1 flex lg:-ml-4 items-center"
+              className="flex items-center rounded-full py-1 pl-6 lg:-ml-4"
               style={{
-                background: resolvedTheme === "dark"
-                  ? "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)"
-                  : "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)"
+                background:
+                  resolvedTheme === "dark"
+                    ? "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)"
+                    : "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)",
               }}
             >
-              <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
-              <span className="text-white text-xs font-bold md:pr-2 lg:pr-0">2d-12h-45m</span>
+              <div className="mr-1.5 h-3 w-px bg-indigo-950 opacity-50"></div>
+              <span className="text-xs font-bold text-white md:pr-2 lg:pr-0">
+                2d-12h-45m
+              </span>
             </div>
 
             {/* Percentage Display Bar */}
             <div
-              className="rounded-full pl-6 py-1 lg:-ml-4 flex items-center w-3/4 md:w-full"
+              className="flex w-3/4 items-center rounded-full py-1 pl-6 md:w-full lg:-ml-4"
               style={{
-                background: resolvedTheme === "dark"
-                  ? "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)"
-                  : "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)"
+                background:
+                  resolvedTheme === "dark"
+                    ? "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)"
+                    : "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)",
               }}
             >
-              <div className="w-px h-3 bg-indigo-950 mr-1.5 opacity-50"></div>
-              <span className="text-[#1E1E1E] text-xs font-bold">30%</span>
+              <div className="mr-1.5 h-3 w-px bg-indigo-950 opacity-50"></div>
+              <span className="text-xs font-bold text-[#1E1E1E]">30%</span>
             </div>
           </div>
 
           <div className="flex flex-col">
-            <div className="text-xl lg:text-3xl text-[#FFB01C] gap-0 flex justify-end">
+            <div className="flex justify-end gap-0 text-xl text-[#FFB01C] lg:text-3xl">
               12K
             </div>
-            <div className="-ml-2 md:ml-0 text-white">stakers</div>
+            <div className="-ml-2 text-white md:ml-0">stakers</div>
           </div>
         </div>
       </div>

@@ -7,17 +7,7 @@ function StakeButton() {
   return (
     <div className="flex items-center">
       <button
-        className="
-          flex items-center gap-1 sm:gap-2
-          pr-2 pl-1 py-1
-          sm:pr-4 sm:pl-2 sm:py-2
-          rounded-full
-          border-2 sm:border-4 border-white
-          cursor-pointer justify-between
-          transition-all duration-200
-          text-xs sm:text-base md:text-xl
-          min-w-[80px] sm:min-w-[120px] md:min-w-[160px]
-        "
+        className="flex min-w-[80px] cursor-pointer items-center justify-between gap-1 rounded-full border-2 border-white py-1 pr-2 pl-1 text-xs transition-all duration-200 sm:min-w-[120px] sm:gap-2 sm:border-4 sm:py-2 sm:pr-4 sm:pl-2 sm:text-base md:min-w-[160px] md:text-xl"
         style={{
           background:
             resolvedTheme === "dark"
@@ -26,14 +16,7 @@ function StakeButton() {
           boxShadow: "0 2px 8px 0 #0002",
         }}
       >
-        <span
-          className="
-          flex items-center justify-center
-          w-6 h-6 sm:w-7 sm:h-7 md:w-9 md:h-9
-          bg-white rounded-full
-          transition-all duration-200
-        "
-        >
+        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white transition-all duration-200 sm:h-7 sm:w-7 md:h-9 md:w-9">
           <svg
             width="8"
             height="21"
@@ -48,10 +31,7 @@ function StakeButton() {
           </svg>
         </span>
         <span
-          className="
-            text-white font-bold
-            text-xs sm:text-base md:text-2xl
-          "
+          className="text-xs font-bold text-white sm:text-base md:text-2xl"
           style={{ fontFamily: "inherit" }}
         >
           STAKE

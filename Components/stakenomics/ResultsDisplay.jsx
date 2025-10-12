@@ -11,15 +11,30 @@ function ResultCard({ data }) {
   const { fundType, token, formData } = data;
 
   if (fundType === "STAKING POOL") {
-    return <StakingPoolResult token={token} formData={formData} />;
+    return (
+      <StakingPoolResult
+        token={token}
+        formData={formData}
+      />
+    );
   }
 
   if (fundType === "LOCK FUNDS") {
-    return <LockFundsResult token={token} formData={formData} />;
+    return (
+      <LockFundsResult
+        token={token}
+        formData={formData}
+      />
+    );
   }
 
   if (fundType === "VEST FUNDS") {
-    return <VestFundsResult token={token} formData={formData} />;
+    return (
+      <VestFundsResult
+        token={token}
+        formData={formData}
+      />
+    );
   }
 
   return null;
@@ -31,7 +46,7 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
 
   if (!filledData) {
     return (
-      <div className="bg-gray-50 rounded-2xl p-6 text-center text-gray-500">
+      <div className="rounded-2xl bg-gray-50 p-6 text-center text-gray-500">
         <p>Select a token and fill in fund details to see results here.</p>
       </div>
     );
@@ -40,7 +55,7 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
   const handleCreatePool = () => {
     // Example: Show success popup when button is clicked
     // You can change this to 'failed' or 'attention' based on your logic
-    setShowPopup('failed');
+    setShowPopup("failed");
     setIsClosing(false);
 
     // Start closing animation after 1.7 seconds
@@ -64,22 +79,24 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
   };
 
   return (
-    <div className="p-6 relative">
-      <h3 className="text-2xl font-bold text-[#190E79] dark:text-white mb-4">PREVIEW YOUR POOL:</h3>
+    <div className="relative p-6">
+      <h3 className="mb-4 text-2xl font-bold text-[#190E79] dark:text-white">
+        PREVIEW YOUR POOL:
+      </h3>
       <div className="">
         <ResultCard data={filledData} />
       </div>
       {/* button */}
-      <div className="flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8] mt-6">
-        <div className="md:ml-6 ml-4 text-xs md:text-base items-center flex text-[#190E79] dark:text-white">
+      <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
+        <div className="ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
           creation fee: <span className="ml-2"> 12345678 Limas</span>
         </div>
-        <div className="flex items-center text-[#190E79] dark:text-white text-xs md:text-base">
+        <div className="flex items-center text-xs text-[#190E79] md:text-base dark:text-white">
           <button
             onClick={handleCreatePool}
-            className="rounded-full py-1 md:py-2 px-2 md:px-4 bg-[#fafafa] dark:bg-[#0E1379] relative flex"
+            className="relative flex rounded-full bg-[#fafafa] px-2 py-1 md:px-4 md:py-2 dark:bg-[#0E1379]"
           >
-            <div className="px-3 py-1 mr-2 rounded-full border-2 border-white">
+            <div className="mr-2 rounded-full border-2 border-white px-3 py-1">
               <svg
                 width="8"
                 height="20"
@@ -96,7 +113,7 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
 
             <span className="relative inline-block text-sm md:text-base">
               CREATE POOL
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
+              <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
             </span>
           </button>
         </div>
@@ -105,18 +122,18 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
       {/* Popup overlay */}
       {showPopup && (
         <div
-          className={`fixed inset-0 bg-[#eeeded] dark:bg-[#000310a6] bg-opacity-80 flex items-center justify-center z-50 ${
-            isClosing ? 'animate-fadeOut' : 'animate-fadeIn'
+          className={`bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-[#eeeded] dark:bg-[#000310a6] ${
+            isClosing ? "animate-fadeOut" : "animate-fadeIn"
           }`}
           onClick={closePopup}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={isClosing ? 'animate-scaleOut' : 'animate-scaleIn'}
+            className={isClosing ? "animate-scaleOut" : "animate-scaleIn"}
           >
-            {showPopup === 'success' && <Success />}
-            {showPopup === 'failed' && <Failed />}
-            {showPopup === 'attention' && <Attention />}
+            {showPopup === "success" && <Success />}
+            {showPopup === "failed" && <Failed />}
+            {showPopup === "attention" && <Attention />}
           </div>
         </div>
       )}

@@ -11,7 +11,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
-      className="w-[47px] h-[47px] lg:w-[80px] lg:h-[57px]"
+      className="h-[47px] w-[47px] lg:h-[57px] lg:w-[80px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
   return (
     <Link
       href={`/card/lock`}
-      className="font-khand font-semibold rounded-4xl block dark:text-white text-primary"
+      className="font-khand text-primary block rounded-4xl font-semibold dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -59,7 +59,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
       }}
     >
       <div
-        className="p-4 relative rounded-4xl flex cursor-pointer hover:opacity-90 transition"
+        className="relative flex cursor-pointer rounded-4xl p-4 transition hover:opacity-90"
         style={{
           background:
             resolvedTheme === "dark"
@@ -67,17 +67,20 @@ function LockCard({ id, title, created, marketCap, wallet }) {
               : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
         }}
       >
-        <div className="absolute right-6 top-6">
+        <div className="absolute top-6 right-6">
           <StarIcon />
         </div>
-        <div className="flex flex-col w-full">
-          <div className="flex w-full justify-between pr-2 md:pr-4 items-center">
-            <CiPill color="#5ecb89" size={30} />
+        <div className="flex w-full flex-col">
+          <div className="flex w-full items-center justify-between pr-2 md:pr-4">
+            <CiPill
+              color="#5ecb89"
+              size={30}
+            />
             <h1 className="md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl">
               {title}
             </h1>
           </div>
-          <div className="pr-4 text-right mt-2 font-khand font-normal">
+          <div className="font-khand mt-2 pr-4 text-right font-normal">
             <p>
               <span className="font-semibold">Pool ID: </span> {wallet}
             </p>
@@ -89,19 +92,19 @@ function LockCard({ id, title, created, marketCap, wallet }) {
         <div className="flex flex-col justify-start">
           <img
             src="/vest.png"
-            className="w-20 lg:w-28 lg:rounded-3xl rounded-2xl mr-28 md:mr-30 mb-4"
+            className="mr-28 mb-4 w-20 rounded-2xl md:mr-30 lg:w-28 lg:rounded-3xl"
           />
 
           {/*  */}
 
-          <div className="absolute left-0 -bottom-6 w-11/13 z-5 flex">
-            <div className="items-center flex mx-4 text-xl lg:text-3xl">
+          <div className="absolute -bottom-6 left-0 z-5 flex w-11/13">
+            <div className="mx-4 flex items-center text-xl lg:text-3xl">
               LOCK
             </div>
             <StakeIcon />
-            <div className="flex flex-col lg:text-sm text-xs my-auto w-full">
+            <div className="my-auto flex w-full flex-col text-xs lg:text-sm">
               <div
-                className="pl-4 pr-4 -ml-2 -z-1 rounded-full text-white flex justify-between w-full bg-[#e3f2fd] dark:bg-transparent"
+                className="-z-1 -ml-2 flex w-full justify-between rounded-full bg-[#e3f2fd] pr-4 pl-4 text-white dark:bg-transparent"
                 style={{
                   background: "var(--gradient-lock)",
                 }}
@@ -123,9 +126,9 @@ function LockCard({ id, title, created, marketCap, wallet }) {
           </div>
           {/*  */}
         </div>
-        <p className="absolute right-5 text-[#FFB01C] bottom-0 text-xl">120M</p>
+        <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">120M</p>
       </div>
-      <div className="pb-2 pr-4 flex justify-end items-center gap-6">
+      <div className="flex items-center justify-end gap-6 pr-4 pb-2">
         <p className="text-lg text-white">locked</p>
       </div>
     </Link>

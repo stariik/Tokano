@@ -13,8 +13,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": ".",                        // ⬅️ add this
-    "paths": {                             // ⬅️ move from jsconfig
+    "baseUrl": ".", // ⬅️ add this
+    "paths": {
+      // ⬅️ move from jsconfig
       "@/*": ["./*"]
     },
     "plugins": [
@@ -28,7 +29,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.js",                             // ⬅️ include JS too
+    "**/*.js", // ⬅️ include JS too
     "**/*.jsx"
   ],
   "exclude": ["node_modules"]

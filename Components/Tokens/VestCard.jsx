@@ -13,12 +13,22 @@ function VestCard({ id, title, created, marketCap, wallet }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 80 80"
-      className="w-[57px] h-[57px] lg:w-[80px] lg:h-[80px]"
+      className="h-[57px] w-[57px] lg:h-[80px] lg:w-[80px]"
       fill="none"
     >
-      <circle cx="40" cy="40" r="40" fill="white" />
+      <circle
+        cx="40"
+        cy="40"
+        r="40"
+        fill="white"
+      />
 
-      <circle cx="40" cy="40" r="27" fill="#2D178D" />
+      <circle
+        cx="40"
+        cy="40"
+        r="27"
+        fill="#2D178D"
+      />
 
       <path
         d="M28 34h8v8h8v8h8"
@@ -33,16 +43,16 @@ function VestCard({ id, title, created, marketCap, wallet }) {
   return (
     <Link
       href={`/card/vest`}
-      className="font-khand font-semibold block rounded-4xl hover:opacity-90 transition dark:text-white text-primary"
+      className="font-khand text-primary block rounded-4xl font-semibold transition hover:opacity-90 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
-            ? "linear-gradient(90deg, #88048A 0%, #1A1E5F 100%)" 
+            ? "linear-gradient(90deg, #88048A 0%, #1A1E5F 100%)"
             : "linear-gradient(90deg, #EFEFEF 0%, #9F4EA3 100%)",
       }}
     >
       <div
-        className="p-4 relative rounded-4xl flex"
+        className="relative flex rounded-4xl p-4"
         style={{
           background:
             resolvedTheme === "dark"
@@ -50,17 +60,20 @@ function VestCard({ id, title, created, marketCap, wallet }) {
               : "linear-gradient(45deg, #EFEFEF 30%, #9F4EA3 100%)",
         }}
       >
-        <div className="absolute right-6 top-6">
+        <div className="absolute top-6 right-6">
           <StarIcon />
         </div>
-        <div className="flex flex-col w-full">
-          <div className="flex w-full justify-between pr-4 items-center">
-            <CiPill color="#5ecb89" size={30} />
-            <h1 className="xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl ">
+        <div className="flex w-full flex-col">
+          <div className="flex w-full items-center justify-between pr-4">
+            <CiPill
+              color="#5ecb89"
+              size={30}
+            />
+            <h1 className="xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl">
               {title}
             </h1>
           </div>
-          <div className="pr-4 text-right mt-2 font-khand font-normal">
+          <div className="font-khand mt-2 pr-4 text-right font-normal">
             <p>
               <span className="font-semibold">Pool ID: </span> {wallet}
             </p>
@@ -72,19 +85,19 @@ function VestCard({ id, title, created, marketCap, wallet }) {
         <div className="flex flex-col justify-start">
           <img
             src="/vest.png"
-            className="w-20 lg:w-28 lg:rounded-3xl rounded-2xl mr-26 mb-4"
+            className="mr-26 mb-4 w-20 rounded-2xl lg:w-28 lg:rounded-3xl"
           />
 
           {/*  */}
 
-          <div className="absolute left-4 -bottom-6 w-7/10 z-2 flex">
-            <div className="items-center flex mx-4 text-xl lg:text-3xl">
+          <div className="absolute -bottom-6 left-4 z-2 flex w-7/10">
+            <div className="mx-4 flex items-center text-xl lg:text-3xl">
               VEST
             </div>
             <VestIcon />
-            <div className="flex flex-col lg:text-sm text-xs my-auto w-full">
+            <div className="my-auto flex w-full flex-col text-xs lg:text-sm">
               <div
-                className="pl-1 pr-1 -ml-2 -z-1 rounded-full text-white flex justify-end bg-[#e3f2fd] dark:bg-transparent"
+                className="-z-1 -ml-2 flex justify-end rounded-full bg-[#e3f2fd] pr-1 pl-1 text-white dark:bg-transparent"
                 style={{
                   background: "var(--gradient-vest-top)",
                 }}
@@ -108,11 +121,11 @@ function VestCard({ id, title, created, marketCap, wallet }) {
 
           {/*  */}
         </div>
-        <p className="absolute right-5 text-[#FFB01C] bottom-0 text-xl">120M</p>
+        <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">120M</p>
       </div>
-      <div className="pb-2 pr-4 flex justify-end items-center gap-6">
+      <div className="flex items-center justify-end gap-6 pr-4 pb-2">
         <div
-          className="rounded-xl px-2 py-0 mt-1 flex text-white text-xs md:text-sm font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
+          className="font-khand mt-1 flex rounded-xl bg-[#e3f2fd] px-2 py-0 text-xs font-normal text-white md:text-sm dark:bg-transparent"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}

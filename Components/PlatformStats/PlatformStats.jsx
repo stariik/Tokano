@@ -30,7 +30,7 @@ const secondTables = [
 
 function PlatformStats() {
   return (
-    <div className="grid grid-cols-3 lg:grid-cols-5 gap-2">
+    <div className="grid grid-cols-3 gap-2 lg:grid-cols-5">
       {firstTables.map((table, idx) => (
         <TokenTable
           key={`first-${idx}`}
@@ -41,7 +41,7 @@ function PlatformStats() {
           className={idx >= 3 ? "lg:col-auto" : ""}
         />
       ))}
-      <div className="lg:hidden col-span-1"></div>
+      <div className="col-span-1 lg:hidden"></div>
     </div>
   );
 }

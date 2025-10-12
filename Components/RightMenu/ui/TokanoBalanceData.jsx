@@ -1,13 +1,12 @@
 import React from "react";
 import { useTheme } from "@/hooks/useTheme";
 
-
 function TokanoBalanceData() {
   const { resolvedTheme } = useTheme();
 
   return (
     <div className="flex items-stretch">
-      <div className="flex flex-col items-center justify-center bg-[#f0edf8] dark:bg-[#2d0a5c] px-4 py-4 min-w-[80px] border-r-2 border-[#7B3FE4]">
+      <div className="flex min-w-[80px] flex-col items-center justify-center border-r-2 border-[#7B3FE4] bg-[#f0edf8] px-4 py-4 dark:bg-[#2d0a5c]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG
           <svg
@@ -87,41 +86,41 @@ function TokanoBalanceData() {
             />
           </svg>
         )}
-        <span className="uppercase text-[#190E79] dark:text-white text-lg tracking-widest">
+        <span className="text-lg tracking-widest text-[#190E79] uppercase dark:text-white">
           Tokano
         </span>
       </div>
-      <div className="flex-1 flex flex-col justify-center px-4 py-2 bg-gradient-to-r dark:from-[#391667] from-white dark:to-[#061a2e]">
-        <div className="flex justify-between items-center border-b border-[#7B3FE4] py-1">
-          <span className="text-[#190E79] dark:text-white/80 text-base">
+      <div className="flex flex-1 flex-col justify-center bg-gradient-to-r from-white px-4 py-2 dark:from-[#391667] dark:to-[#061a2e]">
+        <div className="flex items-center justify-between border-b border-[#7B3FE4] py-1">
+          <span className="text-base text-[#190E79] dark:text-white/80">
             Available:
           </span>
-          <span className="text-[#190E79] dark:text-white text-xl font-bold text-right">
-            13,000,239.<span className="text-sm align-super">127</span>
+          <span className="text-right text-xl font-bold text-[#190E79] dark:text-white">
+            13,000,239.<span className="align-super text-sm">127</span>
           </span>
-          <span className="dark:text-[#12e6c8] text-[#048e7c] text-sm ml-2">
+          <span className="ml-2 text-sm text-[#048e7c] dark:text-[#12e6c8]">
             90%
           </span>
         </div>
-        <div className="flex justify-between items-center border-b border-[#7B3FE4] py-1">
-          <span className="text-[#190E79] dark:text-white/80 text-base">
+        <div className="flex items-center justify-between border-b border-[#7B3FE4] py-1">
+          <span className="text-base text-[#190E79] dark:text-white/80">
             Staked:
           </span>
-          <span className="text-[#190E79] dark:text-white text-xl font-bold">
-            120,000.<span className="text-sm align-super">200</span>
+          <span className="text-xl font-bold text-[#190E79] dark:text-white">
+            120,000.<span className="align-super text-sm">200</span>
           </span>
-          <span className="dark:text-[#12e6c8] text-[#048e7c] text-sm ml-2">
+          <span className="ml-2 text-sm text-[#048e7c] dark:text-[#12e6c8]">
             10%
           </span>
         </div>
-        <div className="flex justify-between items-center py-1">
-          <span className="text-[#190E79] dark:text-white/80 text-base">
+        <div className="flex items-center justify-between py-1">
+          <span className="text-base text-[#190E79] dark:text-white/80">
             Locked:
           </span>
-          <span className="text-[#190E79] dark:text-white text-xl font-bold">
-            120,000.<span className="text-sm align-super">200</span>
+          <span className="text-xl font-bold text-[#190E79] dark:text-white">
+            120,000.<span className="align-super text-sm">200</span>
           </span>
-          <span className="dark:text-[#12e6c8] text-[#048e7c] text-sm ml-2">
+          <span className="ml-2 text-sm text-[#048e7c] dark:text-[#12e6c8]">
             10%
           </span>
         </div>

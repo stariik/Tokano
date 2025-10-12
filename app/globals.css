@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
@@ -11,20 +11,20 @@
   --color-dark-200: #18182a;
 
   /* Text colors - theme aware */
-  --color-text-primary: #190E79;  /* Light mode text */
-  --color-text-primary-dark: #ffffff;  /* Dark mode text */
+  --color-text-primary: #190e79; /* Light mode text */
+  --color-text-primary-dark: #ffffff; /* Dark mode text */
 
   /* Background colors - Light mode mappings */
-  --color-card-bg-light: #f5f3fb;        /* Light purple for cards (replaces #2A1C78) */
-  --color-card-header-light: #e8e4f8;    /* Lighter purple for headers (replaces #453DC8) */
-  --color-card-deep-light: #eeeded;      /* Off-white for deep backgrounds (replaces #120e21, #0C0D1C) */
-  --color-accent-light: #d5d2ec;         /* Light lavender for accents (replaces #292B8C) */
-  --color-section-light: #fafafa;        /* Very light for sections (replaces #13153A, #231570) */
-  --color-info-light: #e3f2fd;           /* Light blue for info (replaces #0088cc) */
+  --color-card-bg-light: #f5f3fb; /* Light purple for cards (replaces #2A1C78) */
+  --color-card-header-light: #e8e4f8; /* Lighter purple for headers (replaces #453DC8) */
+  --color-card-deep-light: #eeeded; /* Off-white for deep backgrounds (replaces #120e21, #0C0D1C) */
+  --color-accent-light: #d5d2ec; /* Light lavender for accents (replaces #292B8C) */
+  --color-section-light: #fafafa; /* Very light for sections (replaces #13153A, #231570) */
+  --color-info-light: #e3f2fd; /* Light blue for info (replaces #0088cc) */
 
   /* Keep green for success states in both modes */
-  --color-success: #2B923E;
-  --color-success-light: #2B923E;
+  --color-success: #2b923e;
+  --color-success-light: #2b923e;
 
   /* Khand Font Family */
   --font-khand: "Khand", sans-serif;

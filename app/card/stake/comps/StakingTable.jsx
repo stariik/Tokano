@@ -10,17 +10,19 @@ function StakingTable({
   popup,
   setPopup,
   scrollRef,
-  itemRefs
+  itemRefs,
 }) {
   return (
     <div>
       {/* Header Row */}
-      <div className="grid grid-cols-2 bg-[#f5f3fb] dark:bg-[#2A1C78] text-[#190E79] dark:text-white text-sm font-semibold">
-        <div className="justify-center items-center flex border-y border-secondary">
+      <div className="grid grid-cols-2 bg-[#f5f3fb] text-sm font-semibold text-[#190E79] dark:bg-[#2A1C78] dark:text-white">
+        <div className="border-secondary flex items-center justify-center border-y">
           {title}
         </div>
-        <div className="justify-center items-center text-center flex border-y border-secondary">
-          {actionType === "unstake" && <span className="text-red-500">/-Un/</span>}
+        <div className="border-secondary flex items-center justify-center border-y text-center">
+          {actionType === "unstake" && (
+            <span className="text-red-500">/-Un/</span>
+          )}
           {actionTitle}
         </div>
       </div>
@@ -28,15 +30,15 @@ function StakingTable({
       {/* Container with styling */}
       <div className="relative max-h-[440px]">
         {/* Fixed continuous second column background */}
-        <div className="absolute inset-0 grid grid-cols-2 z-0">
+        <div className="absolute inset-0 z-0 grid grid-cols-2">
           <div></div>
-          <div className="bg-gradient-to-b from-[#4000FF] to-[#0C0D1C] border-l border-secondary"></div>
+          <div className="border-secondary border-l bg-gradient-to-b from-[#4000FF] to-[#0C0D1C]"></div>
         </div>
 
         {/* Data Rows Container */}
         <div
           ref={scrollRef}
-          className="relative z-10 max-h-[440px] overflow-y-auto overflow-x-hidden"
+          className="relative z-10 max-h-[440px] overflow-x-hidden overflow-y-auto"
           style={{
             scrollBehavior: "auto",
             scrollbarWidth: "none",
@@ -50,24 +52,36 @@ function StakingTable({
           `}</style>
           {data.map((position, index) => (
             <div
-              key={actionType === "claim" ? position.id + "_rewards" : position.id}
-              ref={actionType === "unstake" ? (el) => (itemRefs.current[index] = el) : null}
-              className={`grid grid-cols-2 text-sm border-purple-300 relative ${
+              key={
+                actionType === "claim" ? position.id + "_rewards" : position.id
+              }
+              ref={
+                actionType === "unstake"
+                  ? (el) => (itemRefs.current[index] = el)
+                  : null
+              }
+              className={`relative grid grid-cols-2 border-purple-300 text-sm ${
                 position.highlight ? "" : ""
               }`}
             >
               {/* First Column */}
-              <div className={actionType === "unstake" ? "flex cursor-pointer" : "text-center p-2 md:text-lg"}>
+              <div
+                className={
+                  actionType === "unstake"
+                    ? "flex cursor-pointer"
+                    : "p-2 text-center md:text-lg"
+                }
+              >
                 {actionType === "unstake" ? (
                   <>
-                    <div className="flex items-center justify-center border-r border-secondary mx-auto min-w-[30px]">
+                    <div className="border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r">
                       <span className="text-sm font-semibold text-[#190E79] dark:text-white">
                         {index + 1}
                       </span>
                     </div>
-                    <div className="flex-1 text-center md:text-lg p-2">
+                    <div className="flex-1 p-2 text-center md:text-lg">
                       <div className="font-semibold">{position.staked}</div>
-                      <div className="text-purple-300 text-xs md:text-sm">
+                      <div className="text-xs text-purple-300 md:text-sm">
                         ({position.period})
                       </div>
                     </div>
@@ -75,7 +89,7 @@ function StakingTable({
                 ) : (
                   <>
                     <div className="font-semibold">{position.rewards}</div>
-                    <div className="text-purple-300 md:text-sm text-xs">
+                    <div className="text-xs text-purple-300 md:text-sm">
                       ({position.rewardsSub})
                     </div>
                   </>
@@ -83,9 +97,9 @@ function StakingTable({
               </div>
 
               {/* Second Column - Action */}
-              <div className="text-center relative">
+              <div className="relative text-center">
                 <div
-                  className="cursor-pointer hover:bg-[#f5f3fb] dark:hover:bg-[#2A1C78] p-2 md:text-lg"
+                  className="cursor-pointer p-2 hover:bg-[#f5f3fb] md:text-lg dark:hover:bg-[#2A1C78]"
                   onClick={() =>
                     setPopup({
                       show: true,
@@ -103,23 +117,23 @@ function StakingTable({
                 {popup.show &&
                   popup.positionId === position.id &&
                   popup.type === actionType && (
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-70">
-                      <div className="bg-[#eeeded] dark:bg-[#0C0D1C] border-2 border-secondary rounded-lg p-4 min-w-[160px] text-center shadow-xl">
+                    <div className="absolute top-1/2 left-1/2 z-70 -translate-x-1/2 -translate-y-1/2 transform">
+                      <div className="border-secondary min-w-[160px] rounded-lg border-2 bg-[#eeeded] p-4 text-center shadow-xl dark:bg-[#0C0D1C]">
                         <div className="mb-3">
-                          <div className="text-[#190E79] dark:text-white text-sm font-semibold">
+                          <div className="text-sm font-semibold text-[#190E79] dark:text-white">
                             {actionTitle.toUpperCase()}?
                           </div>
                         </div>
                         <div className="flex flex-col space-y-2">
                           <button
-                            className={`px-6 py-2 rounded-full text-[#190E79] dark:text-white font-bold text-sm ${
+                            className={`rounded-full px-6 py-2 text-sm font-bold text-[#190E79] dark:text-white ${
                               actionType === "unstake"
                                 ? "bg-red-500 hover:bg-red-600"
                                 : "bg-green-500 hover:bg-green-600"
                             }`}
                             onClick={() => {
                               console.log(
-                                `${actionType} YES for position ${popup.positionId}`
+                                `${actionType} YES for position ${popup.positionId}`,
                               );
                               setPopup({
                                 show: false,
@@ -131,7 +145,7 @@ function StakingTable({
                             YES
                           </button>
                           <button
-                            className="px-6 py-2 rounded-full bg-gray-600 hover:bg-gray-700 text-[#190E79] dark:text-white font-bold text-sm"
+                            className="rounded-full bg-gray-600 px-6 py-2 text-sm font-bold text-[#190E79] hover:bg-gray-700 dark:text-white"
                             onClick={() =>
                               setPopup({
                                 show: false,

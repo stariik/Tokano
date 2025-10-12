@@ -19,7 +19,7 @@ export default function useAnchorProvider() {
 
     const connection = new Connection(
       phantomProvider.rpcEndpoint || "https://api.devnet.solana.com",
-      "confirmed"
+      "confirmed",
     );
 
     // Wallet-like object for AnchorProvider

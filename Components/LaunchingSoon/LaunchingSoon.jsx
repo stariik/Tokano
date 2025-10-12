@@ -43,9 +43,9 @@ function LaunchingSoon({ isMobile = false }) {
   }
 
   return (
-    <div className="hidden md:block border-r-2 border-secondary">
+    <div className="border-secondary hidden border-r-2 md:block">
       <div
-        className={`lg:border-b-2 border-secondary flex justify-center py-4 text-2xl font-khand font-semibold ${
+        className={`border-secondary font-khand flex justify-center py-4 text-2xl font-semibold lg:border-b-2 ${
           resolvedTheme === "dark"
             ? "dark-custom-header-gradient"
             : "custom-header-gradient text-primary"

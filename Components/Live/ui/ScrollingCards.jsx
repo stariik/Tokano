@@ -7,7 +7,7 @@ import SoonCard from "@/Components/Tokens/SoonCard";
 
 function ScrollingCards({ cards }) {
   return (
-    <div className="max-h-306 overflow-y-auto space-y-2 custom-scroll xl:px-4 px-2">
+    <div className="custom-scroll max-h-306 space-y-2 overflow-y-auto px-2 xl:px-4">
       {cards.map((item) => (
         <React.Fragment key={item.id}>
           <VestCard

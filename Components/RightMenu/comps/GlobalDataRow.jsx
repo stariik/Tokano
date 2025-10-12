@@ -6,19 +6,20 @@ function GlobalDataRow() {
 
   return (
     <div
-      className="grid grid-cols-10 border-2 border-[#7B3FE4] text-[#190E79] dark:text-white text-base font-khand font-normal"
+      className="font-khand grid grid-cols-10 border-2 border-[#7B3FE4] text-base font-normal text-[#190E79] dark:text-white"
       style={{
-        background: resolvedTheme === "dark"
-          ? "linear-gradient(90deg, rgba(49, 6, 128, 1) 0%, rgba(10, 0, 0, 1) 58%)"
-          : "linear-gradient(90deg, rgba(229, 227, 245, 1) 0%, rgba(255, 255, 255, 1) 58%)",
+        background:
+          resolvedTheme === "dark"
+            ? "linear-gradient(90deg, rgba(49, 6, 128, 1) 0%, rgba(10, 0, 0, 1) 58%)"
+            : "linear-gradient(90deg, rgba(229, 227, 245, 1) 0%, rgba(255, 255, 255, 1) 58%)",
       }}
     >
       {/* Left label */}
-      <div className="col-span-2 flex flex-col justify-center items-center border-r-2 border-[#7B3FE4] py-1 text-lg">
+      <div className="col-span-2 flex flex-col items-center justify-center border-r-2 border-[#7B3FE4] py-1 text-lg">
         VESTED
       </div>
       {/* Supply and holders */}
-      <div className="col-span-3 flex flex-col justify-center px-2 py-1 border-r-2 border-[#7B3FE4] text-xs md:text-lg">
+      <div className="col-span-3 flex flex-col justify-center border-r-2 border-[#7B3FE4] px-2 py-1 text-xs md:text-lg">
         <div>
           supply: <span className="ml-2">1.00073B</span>
         </div>
@@ -27,7 +28,7 @@ function GlobalDataRow() {
         </div>
       </div>
       {/* m-cap and price */}
-      <div className="col-span-5 flex flex-col justify-center px-2 py-1 md:text-lg text-xs">
+      <div className="col-span-5 flex flex-col justify-center px-2 py-1 text-xs md:text-lg">
         <div>
           m-cap: <span className="ml-2">$12m / 1244 SOL</span>
         </div>
