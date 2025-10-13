@@ -68,13 +68,13 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className={`md:hidden fixed bottom-18 left-0 z-70 bg-gradient-to-br from-purple-600 to-blue-600 text-[#190E79] dark:text-white px-4 py-2 rounded-r-full shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+        className={`[writing-mode:vertical-rl] md:hidden fixed bottom-22 left-0 z-70 bg-white border-r-1 border-x-1 border-secondary text-[#190E79] dark:text-white flex flex-col items-center justify-center px-2 py-1 rounded-r-lg shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
           isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
         id="left-menu-button"
-        style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)" }}
+        style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)"}}
       >
-        ☰ Menu
+        Soon
       </button>
 
       {/* Mobile Menu Overlay */}
