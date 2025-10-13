@@ -204,15 +204,14 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true, filterVarian
       {/* Mobile Menu Overlay */}
       {hideOnMobile && show && (
         <div
-          className="menu-overlay-active lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+          className="menu-overlay-active lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-999"
           onClick={() => setShow(false)}
         >
           <div
-            className="fixed top-0 left-0 h-screen w-[95vw] max-w-md bg-[#fafafa] dark:bg-[#13153A] transform transition-transform duration-300 ease-in-out rounded-tr-[2.5rem] rounded-br-[2.5rem] border-r-2 border-[#292B8C] flex flex-col overflow-hidden"
+            className="fixed top-0 left-0 h-screen w-[95vw] max-w-md bg-[#fafafa] dark:bg-[#13153A] transform transition-transform duration-300 ease-in-out border-r-2 border-[#292B8C] flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
             style={{
-              borderTopRightRadius: "2.5rem",
-              borderBottomRightRadius: "2.5rem",
+              borderTopRightRadius: "1.5rem",
             }}
           >
             <div className="flex justify-between items-center px-3 py-2 border-b border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] flex-shrink-0">
