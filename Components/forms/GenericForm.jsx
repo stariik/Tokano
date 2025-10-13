@@ -358,14 +358,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             Fill the form to {fundType === "STAKING POOL" ? "create staking pool for" : fundType === "LOCK FUNDS" ? "lock funds for" : "create linear vesting for"}: {token.name}
           </div>
         </div>
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="text-[#190E79] dark:text-white hover:text-gray-300 transition-colors font-bold text-lg font-khand"
-          >
-            ✖
-          </button>
-        )}
+      
       </div>
 
       {/* Form Container */}
