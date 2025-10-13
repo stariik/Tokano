@@ -7,7 +7,7 @@ import { FIcon, SIcon, StakeIcon, StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 
-function StakeCard({ id, title, created, marketCap, wallet }) {
+function StakeCard({ id, title, created, marketCap, wallet, variant = "default" }) {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
@@ -87,7 +87,7 @@ function StakeCard({ id, title, created, marketCap, wallet }) {
               <StakeIcon />
               <div className="flex flex-col lg:text-sm text-xs mt-2 text-white">
                 <div
-                  className="pr-12 xl:pr-14 2xl:pr-24 pl-8 -ml-6 -z-1 rounded-full "
+                  className={`${variant === "portfolio" ? "pr-6" : "pr-12 xl:pr-14 2xl:pr-24"} pl-8 -ml-6 -z-1 rounded-full`}
                   style={{
                     background:
                       resolvedTheme === "dark"

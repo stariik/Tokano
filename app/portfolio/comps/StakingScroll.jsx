@@ -28,7 +28,7 @@ function StakingScroll({ stakingData = [] }) {
           scrollbar-color: #8b5cf6 transparent;
         }
       `}</style>
-      <div className='border-1 border-secondary rounded-3xl text-[#190E79] dark:text-white'>
+      <div className='border-1 border-secondary rounded-3xl text-[#190E79] dark:text-white mx-4'>
         <div className="py-2 pl-6 border-b-1 border-secondary">
             YOU ARE STAKING
         </div>
@@ -40,7 +40,7 @@ function StakingScroll({ stakingData = [] }) {
                 all | time | size
             </div>
         </div>
-        <div className="max-h-200 overflow-y-auto border-x-1 border-secondary mx-6 p-6 custom-scrollbar">
+        <div className="max-h-200 overflow-y-auto mx-2 p-3 custom-scrollbar">
             {cardData.map((stake, index) => (
                 <div key={index} className="mb-4">
                     <StakeCard
@@ -49,6 +49,7 @@ function StakingScroll({ stakingData = [] }) {
                         created={stake.created}
                         marketCap={stake.marketCap}
                         wallet={stake.wallet}
+                        variant="portfolio"
                     />
                 </div>
             ))}
