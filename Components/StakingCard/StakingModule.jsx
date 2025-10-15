@@ -9,7 +9,7 @@ function StakingModule() {
   ];
 
   return (
-    <div className="w-full rounded-4xl border-2 border-secondary overflow-hidden">
+    <div className="mx-6 rounded-4xl border-2 border-secondary overflow-hidden">
       <div className="grid grid-cols-2 bg-gradient-to-r dark:from-[#574DDD] dark:to-[#330E79] from-[#8D85FB] to-[#4B317C] dark:text-[#190E79] text-white">
         {/* Left side */}
         <div className="flex justify-between items-center p-4 text-xl 2xl:text-4xl  dark:text-white font-khand font-semibold border-r-2 border-secondary">
