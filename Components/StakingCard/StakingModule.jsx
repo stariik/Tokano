@@ -9,7 +9,7 @@ function StakingModule() {
   ];
 
   return (
-    <div className="mx-6 rounded-4xl border-2 border-secondary overflow-hidden">
+    <div className="mx-2 md:mx-6 rounded-4xl border-2 border-secondary overflow-hidden">
       <div className="grid grid-cols-2 bg-gradient-to-r dark:from-[#574DDD] dark:to-[#330E79] from-[#8D85FB] to-[#4B317C] dark:text-[#190E79] text-white">
         {/* Left side */}
         <div className="flex justify-between items-center p-4 text-xl 2xl:text-4xl  dark:text-white font-khand font-semibold border-r-2 border-secondary">
@@ -48,24 +48,24 @@ function StakingModule() {
           </div>
           {/* <div className="flex justify-center">You Will Stake:</div> */}
 
-          <div className="bg-gradient-to-t dark:from-[#0A0C50] dark:to-[#24068E] from-[#DEDEDE] to-[#EAE4FF] px-1 md:px-4 py-2 md:pb-2 pb-6 text-[#190E79] dark:text-white flex flex-col items-center rounded-xl border-2 border-secondary relative">
+          <div className="bg-gradient-to-t dark:from-[#0A0C50] dark:to-[#24068E] from-[#DEDEDE] to-[#EAE4FF] px-1 md:px-4 xl:px-[5px] 2xl:px-4 2xl:py-2 md:pb-2 pb-6 text-[#190E79] dark:text-white flex flex-col items-center rounded-xl border-2 border-secondary relative">
             {/* Top Row */}
             <div className="flex justify-between items-center w-full">
               <div className="h-full flex items-center">
-                <span className="text-sm md:text-lg mt-1 font-khand font-medium">
+                <span className="text-xs md:text-sm 2xl:text-base 2xl:mt-1 font-khand font-medium">
                   You will <br /> Stake:
                 </span>
               </div>
               <div className="flex flex-col">
-                <span className="text-sm md:text-2xl font-khand font-semibold">
+                <span className="text-xs md:text-lg 2xl:text-2xl font-khand font-semibold border-b-1 border-white/40 mb-4">
                   1,234,222.00
                 </span>
-                <div className="absolute bottom-5 right-0 h-[1px] bg-white/40 w-38" />
+                {/* <div className="hidden md:block absolute bottom-5 right-0 h-[1px] bg-white/40 w-38" /> */}
               </div>
             </div>
 
             {/* Bottom Text */}
-            <div className="absolute right-2 bottom-0 text-xs md:text-sm flex justify-end w-full font-khand font-medium">
+            <div className="absolute right-2 bottom-0 text-[10px] sm:text-sm flex justify-end w-full font-khand font-medium xl:-mb-1 2xl:mb-0">
               this is what you will stake
             </div>
           </div>

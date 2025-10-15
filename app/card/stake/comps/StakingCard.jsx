@@ -41,7 +41,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
 
   return (
     <div
-      className="rounded-4xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-4"
+      className="rounded-4xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-2"
       style={{
         background:
           resolvedTheme === "dark"

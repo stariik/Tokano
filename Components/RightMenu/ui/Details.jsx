@@ -86,7 +86,7 @@ function Details() {
 
   return (
     <div>
-      <div className="mx-6 border-2 border-t-0 border-secondary">
+      <div className="mx-2 md:mx-6 border-2 border-t-1 md:border-t-0 border-secondary">
         <div className="bg-gradient-to-r dark:from-[#2f01ba] dark:to-[#0C0D1C] from-[#9876ff] to-white px-4 py-3">
           <h2 className="text-xl">Details</h2>
         </div>
