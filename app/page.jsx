@@ -17,10 +17,10 @@ export default function Home() {
   }, [tokens]);
 
   return (
-    <main className="dark:bg-dark text-light relative bg-white px-2 py-8 md:px-6 md:py-6">
+    <main className="lg:px-6 px-2 py-8 lg:py-6 dark:bg-dark bg-white text-light relative">
       <div className="">
-        <div className="grid md:grid-cols-2 xl:grid-cols-3">
-          <div className="border-secondary col-span-2 grid gap-4 rounded-tr-4xl border-2 md:grid-cols-2">
+        <div className="lg:grid-cols-3 grid ">
+          <div className="col-span-2 rounded-tr-4xl grid gap-4 lg:grid-cols-2">
             <LaunchingSoon />
             <Live />
           </div>
@@ -77,8 +77,8 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className={`border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x-1 border-r-1 bg-white px-2 py-1 text-sm font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl md:hidden ${
-          isMobileMenuOpen ? "pointer-events-none opacity-0" : "opacity-100"
+        className={`[writing-mode:vertical-rl] lg:hidden fixed bottom-22 left-0 z-70 bg-white border-r-1 border-x-1 border-secondary text-[#190E79] flex flex-col items-center justify-center px-2 py-1 rounded-r-lg shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
         id="left-menu-button"
         style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)" }}
@@ -89,7 +89,7 @@ export default function Home() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="menu-overlay-active fixed inset-0 z-50 bg-black/60 backdrop-blur-sm md:hidden"
+          className="menu-overlay-active lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div

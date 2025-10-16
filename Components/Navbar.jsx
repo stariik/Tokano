@@ -224,12 +224,9 @@ function Navbar() {
   return (
     <>
       {/* Top Section - Mobile Header */}
-      <div className="dark:bg-dark dark:text-light fixed top-0 z-50 w-full border-b border-gray-200 bg-white py-4 text-black md:hidden dark:border-transparent">
-        <div className="flex items-center justify-between px-4 md:justify-center md:gap-40">
-          <Link
-            href="/"
-            className="flex items-center gap-2"
-          >
+      <div className="w-full z-50 fixed top-0 bg-white dark:bg-dark text-black dark:text-light py-4 lg:hidden border-b border-gray-200 dark:border-transparent">
+        <div className="flex items-center justify-between px-4 lg:justify-center lg:gap-40">
+          <Link href="/" className="flex items-center gap-2">
             {resolvedTheme === "dark" ? (
               // 🌙 DARK MODE SVG
               <svg
@@ -310,9 +307,7 @@ function Navbar() {
               </svg>
             )}
 
-            <h1 className="font-khand text-xl font-bold text-[#0E1379] md:text-2xl dark:text-white">
-              TOKANO
-            </h1>
+            <h1 className="lg:text-2xl text-xl font-khand font-bold dark:text-white text-[#0E1379]">TOKANO</h1>
           </Link>
           <div className="flex items-center gap-3">
             <button
@@ -334,12 +329,9 @@ function Navbar() {
       </div>
 
       {/* Navigation Section - Desktop */}
-      <div className="dark:bg-dark dark:text-light hidden grid-cols-3 items-center border-b border-gray-200 bg-white py-6 text-black md:grid dark:border-transparent">
-        <div className="flex items-center justify-center gap-2">
-          <Link
-            href="/"
-            className="flex items-center gap-2"
-          >
+      <div className="hidden lg:grid grid-cols-3 items-center bg-white dark:bg-dark text-black dark:text-light py-6 border-b border-gray-200 dark:border-transparent">
+        <div className="flex items-center gap-2 justify-center">
+          <Link href="/" className="flex items-center gap-2">
             {resolvedTheme === "dark" ? (
               // 🌙 DARK MODE SVG
               <svg
@@ -420,13 +412,11 @@ function Navbar() {
               </svg>
             )}
 
-            <h1 className="font-khand text-xl font-bold text-[#0E1379] md:text-3xl dark:text-white">
-              TOKANO
-            </h1>
+            <h1 className="lg:text-3xl text-xl font-bold font-khand dark:text-white text-[#0E1379]">TOKANO</h1>
           </Link>
         </div>
 
-        <div className="text-md font-khand flex justify-center gap-4 font-medium md:gap-8 md:text-2xl">
+        <div className="flex lg:gap-8 gap-4 justify-center lg:text-2xl text-md font-medium font-khand">
           {navigationItems
             .filter((item) => item.name !== "HOME")
             .map((item) => (
@@ -460,7 +450,7 @@ function Navbar() {
 
       {/* Bottom Navigation for Mobile */}
       <div
-        className="text-light fixed bottom-0 z-50 w-full py-3 md:hidden"
+        className="lg:hidden fixed bottom-0 w-full text-light py-3 z-50"
         style={{
           background:
             resolvedTheme === "dark"

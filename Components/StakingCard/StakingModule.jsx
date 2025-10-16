@@ -9,8 +9,8 @@ function StakingModule() {
   ];
 
   return (
-    <div className="border-secondary mx-2 overflow-hidden rounded-4xl border-2 md:mx-6">
-      <div className="grid grid-cols-2 bg-gradient-to-r from-[#8D85FB] to-[#4B317C] text-white dark:from-[#574DDD] dark:to-[#330E79] dark:text-[#190E79]">
+    <div className="rounded-4xl border-2 border-secondary overflow-hidden">
+      <div className="grid grid-cols-2 bg-gradient-to-r dark:from-[#574DDD] dark:to-[#330E79] from-[#8D85FB] to-[#4B317C] dark:text-[#190E79] text-white">
         {/* Left side */}
         <div className="font-khand border-secondary flex items-center justify-between border-r-2 p-4 text-xl font-semibold 2xl:text-4xl dark:text-white">
           <div className="flex w-full flex-col items-center justify-center leading-none">

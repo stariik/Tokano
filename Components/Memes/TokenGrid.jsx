@@ -198,8 +198,8 @@ function TokenGrid({
       {hideOnMobile && (
         <button
           onClick={() => setShow(true)}
-          className={`font-khand border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x-1 border-r-1 bg-white px-2 py-1 font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl md:hidden ${
-            show ? "pointer-events-none opacity-0" : "opacity-100"
+        className={`[writing-mode:vertical-rl] lg:hidden font-khand fixed bottom-22 left-0 z-70 bg-white border-r-1 border-x-1 border-secondary text-[#190E79] flex flex-col items-center justify-center px-2  py-1 rounded-r-lg shadow-2xl font-bold hover:shadow-xl transition-all duration-300 ease-in-out ${
+            show ? 'opacity-0 pointer-events-none' : 'opacity-100'
           }`}
           id="tokengrid-menu-button"
           style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)" }}

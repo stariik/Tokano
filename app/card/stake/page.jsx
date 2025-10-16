@@ -9,26 +9,26 @@ import Details from "@/Components/RightMenu/ui/Details";
 
 function page() {
   return (
-    <div className="grid py-18 md:grid-cols-2 md:px-6 md:py-6 xl:grid-cols-3 2xl:px-2">
-      <div className="col-span-2 grid gap-2 rounded-tr-4xl lg:grid-cols-7 2xl:gap-8">
+    <div className="lg:grid-cols-3 grid py-18 lg:py-6 md:px-6 2xl:px-2">
+      <div className="lg:col-span-2 w-full rounded-tr-4xl lg:grid gap-2 2xl:gap-8 lg:grid-cols-7">
         <div className="col-span-3">
           <TokenGrid
             gridCols="grid-cols-2"
             filterVariant="portfolio"
           />
         </div>
-        <div className="col-span-4">
+        <div className="lg:col-span-4 mx-2 sm:mx-auto max-w-full sm:max-w-2/3 lg:max-w-full">
           <div className="">
             <StakingCard />
           </div>
-          <div className="mt-8">
+          <div className="mt-4 lg:mt-8 ">
             <StakingModule />
           </div>
           {/* Show MyStaking on desktop, Details on mobile */}
-          <div className="hidden text-[#190E79] md:block dark:text-white">
+          <div className="hidden lg:block text-[#190E79] dark:text-white">
             <MyStaking />
           </div>
-          <div className="py-6 text-[#190E79] md:hidden dark:text-white">
+          <div className="lg:hidden text-[#190E79] dark:text-white py-6 max-w-2xl rounded-2xl overflow-hidden lg:rounded-none">
             <Details />
           </div>
         </div>

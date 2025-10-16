@@ -67,7 +67,7 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
   return (
     <div className="mx-auto max-w-4xl">
       {/* Fund Cards */}
-      <div className="grid grid-cols-2 gap-4 p-6 md:grid-cols-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-4 px-2">
         {FUND_TYPES.map((fund) => (
           <div
             key={fund.id}
@@ -118,7 +118,9 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
 
       {/* Selected Fund Component */}
       {selectedFund && (
-        <div className="px-2 pb-6 md:px-6">{renderFundComponent()}</div>
+        <div className="px-2 md:px-0 pb-6">
+          {renderFundComponent()}
+        </div>
       )}
     </div>
   );

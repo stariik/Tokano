@@ -8,10 +8,10 @@ function Live() {
   const { resolvedTheme } = useTheme();
 
   return (
-    <div>
-      <div className="border-secondary border-l-2">
+    <div className="mx-auto lg:mx-0">
+      <div className="border-2 border-secondary lg:rounded-tr-4xl overflow-hidden h-full">
         <div
-          className={`border-secondary font-khand relative flex justify-center rounded-tr-4xl border-b-2 py-2 text-2xl font-semibold shadow-lg shadow-black/30 lg:py-4 ${
+          className={`border-b-2 border-secondary  flex justify-center py-2 lg:py-4 text-2xl font-khand font-semibold shadow-lg shadow-black/30 relative ${
             resolvedTheme === "dark"
               ? "dark-custom-header2-gradient"
               : "custom-header2-gradient text-[#9C004B]"
