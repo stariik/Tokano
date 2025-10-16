@@ -8,19 +8,23 @@ import Vest from "./TokenCards/Vest";
 import Soon from "./TokenCards/Soon";
 import Stake from "./TokenCards/Stake";
 
-function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true, filterVariant = "default" }) {
+function TokenGrid({
+  gridCols = "grid-cols-2",
+  hideOnMobile = true,
+  filterVariant = "default",
+}) {
   const [show, setShow] = useState(false);
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
 
   // Prevent body scroll when menu is open on mobile
   useEffect(() => {
     if (show && hideOnMobile) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [show, hideOnMobile]);
 
@@ -28,7 +32,7 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true, filterVarian
     <>
       <GridFilter variant={filterVariant} />
       <div
-        className="overflow-y-auto text-[#190E79] dark:text-white custom-scrollbar m-4"
+        className="custom-scrollbar m-4 overflow-y-auto text-[#190E79] dark:text-white"
         style={{ maxHeight: "100vh", minHeight: "400px" }}
       >
         <div className={`grid gap-3 ${gridCols}`}>
@@ -164,7 +168,10 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true, filterVarian
 
   return (
     <>
-      <style jsx global>{`
+      <style
+        jsx
+        global
+      >{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px !important;
         }
@@ -191,40 +198,40 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true, filterVarian
       {hideOnMobile && (
         <button
           onClick={() => setShow(true)}
-        className={`[writing-mode:vertical-rl] md:hidden font-khand fixed bottom-22 left-0 z-70 bg-white border-r-1 border-x-1 border-secondary text-[#190E79] flex flex-col items-center justify-center px-2  py-1 rounded-r-lg shadow-2xl font-bold hover:shadow-xl transition-all duration-300 ease-in-out ${
-            show ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          className={`font-khand border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x-1 border-r-1 bg-white px-2 py-1 font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl md:hidden ${
+            show ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
           id="tokengrid-menu-button"
-          style={{ boxShadow: '0 8px 25px rgba(0, 0, 0, 0.5)' }}
+          style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)" }}
         >
-        MEM
+          MEM
         </button>
       )}
 
       {/* Mobile Menu Overlay */}
       {hideOnMobile && show && (
         <div
-          className="menu-overlay-active lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-999"
+          className="menu-overlay-active fixed inset-0 z-999 bg-black/60 backdrop-blur-sm lg:hidden"
           onClick={() => setShow(false)}
         >
           <div
-            className="fixed top-0 left-0 h-screen w-[95vw] max-w-md bg-[#fafafa] dark:bg-[#13153A] transform transition-transform duration-300 ease-in-out border-r-2 border-[#292B8C] flex flex-col overflow-hidden"
+            className="fixed top-0 left-0 flex h-screen w-[95vw] max-w-md transform flex-col overflow-hidden border-r-2 border-[#292B8C] bg-[#fafafa] transition-transform duration-300 ease-in-out dark:bg-[#13153A]"
             onClick={(e) => e.stopPropagation()}
             style={{
               borderTopRightRadius: "1.5rem",
             }}
           >
-            <div className="flex justify-between items-center px-3 py-2 border-b border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] flex-shrink-0">
+            <div className="flex flex-shrink-0 items-center justify-between border-b border-[#292B8C] bg-[#fafafa] px-3 py-2 dark:bg-[#13153A]">
               <h2 className="text-xl font-semibold">TOKENS</h2>
               <button
                 onClick={() => setShow(false)}
-                className="text-[#190E79] dark:text-white hover:text-purple-400 transition-colors text-3xl"
+                className="text-3xl text-[#190E79] transition-colors hover:text-purple-400 dark:text-white"
               >
                 ×
               </button>
             </div>
             <GridFilter variant={filterVariant} />
-            <div className="flex-1 overflow-y-auto custom-scrollbar text-[#190E79] dark:text-white">
+            <div className="custom-scrollbar flex-1 overflow-y-auto text-[#190E79] dark:text-white">
               {tokenContentMobile}
             </div>
           </div>
@@ -233,7 +240,7 @@ function TokenGrid({ gridCols = "grid-cols-2", hideOnMobile = true, filterVarian
 
       {/* Desktop view - always visible based on visibilityClass */}
       <div
-        className={`bg-[#fafafa] dark:bg-[#13153A] rounded-2xl border border-[#292B8C] ${visibilityClass}`}
+        className={`rounded-2xl border border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] ${visibilityClass}`}
       >
         {tokenContentDesktop}
       </div>

@@ -7,11 +7,18 @@ import { FIcon, SIcon, StakeIcon, StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 
-function StakeCard({ id, title, created, marketCap, wallet, variant = "default" }) {
+function StakeCard({
+  id,
+  title,
+  created,
+  marketCap,
+  wallet,
+  variant = "default",
+}) {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
-      className="w-[47px] h-[47px] lg:w-[57px] lg:h-[57px]"
+      className="h-[47px] w-[47px] lg:h-[57px] lg:w-[57px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +49,7 @@ function StakeCard({ id, title, created, marketCap, wallet, variant = "default" 
   return (
     <Link
       href={`/card/stake`}
-      className="font-khand font-semibold block rounded-4xl hover:opacity-90 transition dark:text-white text-primary"
+      className="font-khand text-primary block rounded-4xl font-semibold transition hover:opacity-90 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -51,7 +58,7 @@ function StakeCard({ id, title, created, marketCap, wallet, variant = "default" 
       }}
     >
       <div
-        className="p-4 relative rounded-4xl flex"
+        className="relative flex rounded-4xl p-4"
         style={{
           background:
             resolvedTheme === "dark"
@@ -60,34 +67,34 @@ function StakeCard({ id, title, created, marketCap, wallet, variant = "default" 
         }}
       >
         {/* Right side elements */}
-        <div className="absolute right-4 md:right-6 top-4 md:top-6">
+        <div className="absolute top-4 right-4 md:top-6 md:right-6">
           <CiPill
             color="#5ecb89"
             size={25}
-            className="md:w-[30px] md:h-[30px]"
+            className="md:h-[30px] md:w-[30px]"
           />
         </div>
-        <div className="absolute top-12 md:top-16 bg-[#2B923E] dark:bg-[#2B923E] rounded-l-2xl pl-2 right-0 text-xs md:text-sm font-khand font-normal text-white">
+        <div className="font-khand absolute top-12 right-0 rounded-l-2xl bg-[#2B923E] pl-2 text-xs font-normal text-white md:top-16 md:text-sm dark:bg-[#2B923E]">
           21.04.25/12:24
         </div>
-        <div className="absolute right-4 md:right-6 top-2/3 transform -translate-y-1/2">
+        <div className="absolute top-2/3 right-4 -translate-y-1/2 transform md:right-6">
           <StarIcon />
         </div>
 
-        <div className="flex flex-col relative justify-start ml-2 md:ml-0 lg:ml-2">
+        <div className="relative ml-2 flex flex-col justify-start md:ml-0 lg:ml-2">
           <img
             src="/fired.png"
-            className="w-20  md:w-24 lg:w-38 rounded-2xl md:rounded-3xl lg:rounded-4xl mr-4 lg:mr-2 md:mr-4"
+            className="mr-4 w-20 rounded-2xl md:mr-4 md:w-24 md:rounded-3xl lg:mr-2 lg:w-38 lg:rounded-4xl"
           />
           <div className="mt-8 lg:mt-6">
-            <div className="absolute left-0 w-80 z-5 flex">
-              <div className="items-center flex mx-3 text-xl lg:text-3xl">
+            <div className="absolute left-0 z-5 flex w-80">
+              <div className="mx-3 flex items-center text-xl lg:text-3xl">
                 STAKE
               </div>
               <StakeIcon />
-              <div className="flex flex-col lg:text-sm text-xs mt-2 text-white">
+              <div className="mt-2 flex flex-col text-xs text-white lg:text-sm">
                 <div
-                  className={`${variant === "portfolio" ? "pr-6" : "pr-12 xl:pr-14 2xl:pr-24"} pl-8 -ml-6 -z-1 rounded-full`}
+                  className={`${variant === "portfolio" ? "pr-6" : "pr-12 xl:pr-14 2xl:pr-24"} -z-1 -ml-6 rounded-full pl-8`}
                   style={{
                     background:
                       resolvedTheme === "dark"
@@ -99,7 +106,7 @@ function StakeCard({ id, title, created, marketCap, wallet, variant = "default" 
                 </div>
 
                 <div
-                  className="pr-0 pl-8 -ml-6 -z-1 mr-2 rounded-full "
+                  className="-z-1 mr-2 -ml-6 rounded-full pr-0 pl-8"
                   style={{
                     background:
                       resolvedTheme === "dark"
@@ -113,13 +120,13 @@ function StakeCard({ id, title, created, marketCap, wallet, variant = "default" 
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full pr-8 mb-6">
-          <div className="flex w-full justify-start pl-2 md:pl-4 items-center">
+        <div className="mb-6 flex w-full flex-col pr-8">
+          <div className="flex w-full items-center justify-start pl-2 md:pl-4">
             <h1 className="text-lg lg:text-2xl 2xl:text-3xl [@media(min-width:1610px)]:text-4xl">
               {title}
             </h1>
           </div>
-          <div className="pl-2 md:pl-4 text-left mt-1 md:mt-2 text-xs lg:text-base font-khand font-normal">
+          <div className="font-khand mt-1 pl-2 text-left text-xs font-normal md:mt-2 md:pl-4 lg:text-base">
             <p>
               <span className="font-semibold">Pool ID: </span> {wallet}
             </p>
@@ -132,12 +139,12 @@ function StakeCard({ id, title, created, marketCap, wallet, variant = "default" 
             </p>
           </div>
         </div>
-        <p className="absolute right-2 md:right-5 text-[#FFB01C] bottom-0 text-lg md:text-2xl md:pr-2 pr-6 font-khand font-semibold">
+        <p className="font-khand absolute right-2 bottom-0 pr-6 text-lg font-semibold text-[#FFB01C] md:right-5 md:pr-2 md:text-2xl">
           1.2K
         </p>
       </div>
-      <div className="pb-2 pr-4 flex justify-end items-center gap-6">
-        <p className="text-lg lg:text-2xl pr-1">stakers</p>
+      <div className="flex items-center justify-end gap-6 pr-4 pb-2">
+        <p className="pr-1 text-lg lg:text-2xl">stakers</p>
       </div>
     </Link>
   );

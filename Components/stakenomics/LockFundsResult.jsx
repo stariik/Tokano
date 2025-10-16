@@ -23,7 +23,7 @@ function LockFundsResult({ token, formData }) {
 
   const LockIcon = () => (
     <svg
-      className="w-[47px] h-[47px] lg:w-[80px] lg:h-[57px]"
+      className="h-[47px] w-[47px] lg:h-[57px] lg:w-[80px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -61,57 +61,53 @@ function LockFundsResult({ token, formData }) {
 
   return (
     <div
-      className="rounded-3xl pb-2 lg:pb-4 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0 mx-4"
+      className="border-secondary mx-4 rounded-3xl border-1 pb-2 text-[#190E79] lg:mx-0 lg:pb-4 dark:text-white"
       style={{
-        background: resolvedTheme === "dark"
-          ? "linear-gradient(90deg, #5d9beb 10%, #041d33 80%)"
-          : "linear-gradient(90deg, #EFEFEF 0%, #2B6EC5 100%)",
+        background:
+          resolvedTheme === "dark"
+            ? "linear-gradient(90deg, #5d9beb 10%, #041d33 80%)"
+            : "linear-gradient(90deg, #EFEFEF 0%, #2B6EC5 100%)",
       }}
     >
       <div
-        className="rounded-3xl px-4 md:px-8 pt-4 relative"
+        className="relative rounded-3xl px-4 pt-4 md:px-8"
         style={{
-          background: resolvedTheme === "dark"
-            ? "linear-gradient(45deg, #5d9beb 0%, #041d33 100%)"
-            : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
+          background:
+            resolvedTheme === "dark"
+              ? "linear-gradient(45deg, #5d9beb 0%, #041d33 100%)"
+              : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
         }}
       >
         <div className="flex flex-row-reverse">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-28 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8"
+            className="ml-4 h-full w-20 rounded-2xl md:w-24 lg:w-28 lg:rounded-3xl xl:ml-8"
           />
-          <div className="font-khand font-normal ml-4 lg:ml-8">
-            <h1
-              className="font-khand font-semibold xl:text-4xl lg:text-2xl md:text-xl sm:text-2xl text-lg lg:mr-36 xl:mr-18 sm:mr-64 mr-18"
-            >
+          <div className="font-khand ml-4 font-normal lg:ml-8">
+            <h1 className="font-khand mr-18 text-lg font-semibold sm:mr-64 sm:text-2xl md:text-xl lg:mr-36 lg:text-2xl xl:mr-18 xl:text-4xl">
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-sm md:text-base sm:text-lg lg:text-base 2xl:text-xl mt-1 ml-6 md:ml-12">
+            <div className="mt-1 ml-6 pl-1 text-sm sm:text-lg md:ml-12 md:text-base lg:text-base 2xl:text-xl">
               <p>Lock ID: {formatWallet(formData?.recipientWallet)}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
             </div>
           </div>
         </div>
         <div className="absolute top-10 left-0">
-          <div className="ml-4 lg:mr-12 mt-6">
+          <div className="mt-6 ml-4 lg:mr-12">
             <CiPill size={28} />
           </div>
         </div>
 
-        <div className="absolute left-0  w-12/13 md:w-11/13 z-5 flex">
-          <div
-            className="items-center flex mx-2 md:mx-4 text-xl lg:text-3xl font-khand font-semibold"
-          >
+        <div className="absolute left-0 z-5 flex w-12/13 md:w-11/13">
+          <div className="font-khand mx-2 flex items-center text-xl font-semibold md:mx-4 lg:text-3xl">
             LOCK
           </div>
           <LockIcon />
-          <div
-            className="flex flex-col lg:text-sm text-xs my-auto w-full font-khand font-normal"
-          >
+          <div className="font-khand my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
             <div
-              className="pl-4 2xl:pl-6 pr-1 md:pr-5 -ml-4 py-1 -z-1 rounded-full text-white flex justify-between font-khand font-medium bg-[#f0ebfa] dark:bg-transparent"
+              className="font-khand -z-1 -ml-4 flex justify-between rounded-full bg-[#f0ebfa] py-1 pr-1 pl-4 font-medium text-white md:pr-5 2xl:pl-6 dark:bg-transparent"
               style={{
                 background: "var(--gradient-lock-result)",
               }}
@@ -149,16 +145,12 @@ function LockFundsResult({ token, formData }) {
           </div>
         </div>
 
-        <div
-          className="text-[#FFB01C] text-end text-2xl lg:text-3xl font-khand font-semibold mr-1 mt-8"
-        >
+        <div className="font-khand mt-8 mr-1 text-end text-2xl font-semibold text-[#FFB01C] lg:text-3xl">
           {formatNumber(formData?.tokenAmount)}
         </div>
       </div>
 
-      <div
-        className="mr-12 text-end text-xl lg:text-2xl font-khand font-medium"
-      >
+      <div className="font-khand mr-12 text-end text-xl font-medium lg:text-2xl">
         locked
       </div>
     </div>

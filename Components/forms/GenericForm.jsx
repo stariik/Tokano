@@ -7,7 +7,12 @@ import Success from "@/Components/popups/Success";
 import Failed from "@/Components/popups/Failed";
 import Attention from "@/Components/popups/Attention";
 
-export default function GenericForm({ fundType, token, onDataChange, onClose }) {
+export default function GenericForm({
+  fundType,
+  token,
+  onDataChange,
+  onClose,
+}) {
   const config = getFormConfig(fundType);
 
   if (!config || !token) {
@@ -21,9 +26,9 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   // Initialize form data with default values
   const initializeFormData = () => {
     const data = {};
-    config.fields.forEach(field => {
+    config.fields.forEach((field) => {
       if (field.type === "dual-number" && field.fields) {
-        field.fields.forEach(subField => {
+        field.fields.forEach((subField) => {
           data[subField.name] = "";
         });
       } else if (field.defaultValue !== undefined) {
@@ -46,11 +51,11 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   // Add custom styles for gradients
   const gradientStyles = {
     bgGradientMain: {
-      background: 'linear-gradient(135deg, #6b7fd7 0%, #8b6db8 100%)'
+      background: "linear-gradient(135deg, #6b7fd7 0%, #8b6db8 100%)",
     },
     bgGradientContainer: {
-      background: 'linear-gradient(180deg, #9b8fd4 0%, #b5a8e3 100%)'
-    }
+      background: "linear-gradient(180deg, #9b8fd4 0%, #b5a8e3 100%)",
+    },
   };
 
   const handleInputChange = (field, value) => {
@@ -69,17 +74,24 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
     switch (type) {
       case "dual-number":
         return (
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             {field.fields.map((subField, index) => (
-              <div key={subField.name} className="flex gap-2 items-center">
+              <div
+                key={subField.name}
+                className="flex items-center gap-2"
+              >
                 <input
                   type="number"
                   value={formData[subField.name] || ""}
-                  onChange={(e) => handleInputChange(subField.name, e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(subField.name, e.target.value)
+                  }
                   placeholder={subField.placeholder}
-                  className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-20 text-center placeholder-gray-400 font-khand"
+                  className="font-khand w-20 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
                 />
-                <span className="text-[#190E79] dark:text-white font-bold text-[13px] font-khand">{subField.suffix}</span>
+                <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+                  {subField.suffix}
+                </span>
               </div>
             ))}
           </div>
@@ -90,22 +102,27 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
           <select
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-40 font-khand"
+            className="font-khand w-40 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
           >
-            {options.map(option => (
-              <option key={option} value={option}>{option}</option>
+            {options.map((option) => (
+              <option
+                key={option}
+                value={option}
+              >
+                {option}
+              </option>
             ))}
           </select>
         );
 
       case "datetime-local":
         return (
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <input
               type={type}
               value={value || ""}
               onChange={(e) => handleInputChange(name, e.target.value)}
-              className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold flex-1 max-w-[280px] font-khand"
+              className="font-khand max-w-[280px] flex-1 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
               required={required}
             />
             {name === "activationDateTime" && (
@@ -113,12 +130,14 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
                 type="button"
                 onClick={() => {
                   const now = new Date();
-                  const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+                  const localDateTime = new Date(
+                    now.getTime() - now.getTimezoneOffset() * 60000,
+                  )
                     .toISOString()
                     .slice(0, 16);
                   handleInputChange(name, localDateTime);
                 }}
-                className="bg-[#29a13f] hover:bg-[#238033] text-white font-bold text-xs md:text-base p-1 rounded-lg transition-colors font-khand"
+                className="font-khand rounded-lg bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] md:text-base"
                 title="Set to current time"
               >
                 now
@@ -134,7 +153,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold flex-1 max-w-[280px] placeholder-gray-400 font-khand"
+            className="font-khand max-w-[280px] flex-1 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
             required={required}
           />
         );
@@ -145,7 +164,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             type={type}
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold flex-1 max-w-[280px] font-khand"
+            className="font-khand max-w-[280px] flex-1 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
             required={required}
           />
         );
@@ -156,7 +175,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             type={type}
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
-            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-[100px] font-khand"
+            className="font-khand w-[100px] rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
             required={required}
           />
         );
@@ -168,7 +187,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-40 text-center placeholder-gray-400 font-khand"
+            className="font-khand w-40 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
             required={required}
           />
         );
@@ -180,7 +199,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
             value={value || ""}
             onChange={(e) => handleInputChange(name, e.target.value)}
             placeholder={placeholder}
-            className="bg-[#e8e4f8] dark:bg-[#453DC8] border-none rounded-lg px-3 py-2.5 text-[13px] text-[#190E79] dark:text-white font-bold w-24 placeholder-gray-400 font-khand"
+            className="font-khand w-24 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
             required={required}
           />
         );
@@ -190,17 +209,25 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   const renderFieldWithLayout = (field) => {
     const { type, suffix } = field;
 
-    if (type === "datetime-local" || type === "text" || type === "dual-number") {
+    if (
+      type === "datetime-local" ||
+      type === "text" ||
+      type === "dual-number"
+    ) {
       return (
-        <div className="flex gap-2 items-center mb-1.5">
+        <div className="mb-1.5 flex items-center gap-2">
           {renderField(field)}
         </div>
       );
     } else {
       return (
-        <div className="flex gap-2 items-center mb-1.5">
+        <div className="mb-1.5 flex items-center gap-2">
           {renderField(field)}
-          {suffix && <span className="text-[#190E79] dark:text-white font-bold text-[13px] font-khand">{suffix}</span>}
+          {suffix && (
+            <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              {suffix}
+            </span>
+          )}
         </div>
       );
     }
@@ -212,21 +239,21 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
         activationDateTime: "Pool activation date and time (UTC)",
         rewardAmount: "Total reward token amount",
         distributionLength: "Duration of total reward distribution",
-        unstakingPeriod: "Unstaking becomes available in"
+        unstakingPeriod: "Unstaking becomes available in",
       },
       "LOCK FUNDS": {
         lockDateTime: "Lock date and time (UTC)",
         tokenAmount: "Token amount to lock",
         releaseDate: "Release date and time (UTC)",
-        recipientWallet: "Recipient wallet address"
+        recipientWallet: "Recipient wallet address",
       },
       "VEST FUNDS": {
         activationDateTime: "Vesting activation date and time (UTC)",
         tokenAmount: "Total token amount to vest",
         cliffPeriod: "Cliff period",
         releaseModel: "Release model",
-        recipientWallet: "Recipient wallet address"
-      }
+        recipientWallet: "Recipient wallet address",
+      },
     };
 
     return labelMap[fundType]?.[field.name] || field.label;
@@ -235,24 +262,37 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   const getFieldDescription = (field, fundType) => {
     const descriptionMap = {
       "STAKING POOL": {
-        activationDateTime: "Set the exact date and time when the staking pool becomes active. Before this time, the pool will show \"Launching Soon\".",
-        rewardAmount: "Enter the total number of tokens you wish to allocate as rewards. These will be distributed to stakers while the pool is active.",
-        distributionLength: "Define the time period over which rewards will be fully distributed to stakers.",
-        unstakingPeriod: "Once users stake their tokens in this pool, they will only be able to unstake them after this lock period has elapsed."
+        activationDateTime:
+          'Set the exact date and time when the staking pool becomes active. Before this time, the pool will show "Launching Soon".',
+        rewardAmount:
+          "Enter the total number of tokens you wish to allocate as rewards. These will be distributed to stakers while the pool is active.",
+        distributionLength:
+          "Define the time period over which rewards will be fully distributed to stakers.",
+        unstakingPeriod:
+          "Once users stake their tokens in this pool, they will only be able to unstake them after this lock period has elapsed.",
       },
       "LOCK FUNDS": {
-        lockDateTime: "Set the exact date and time when tokens will be locked and become inaccessible until the release date.",
-        tokenAmount: "Enter the number of tokens you want to lock. These tokens will be inaccessible until the release date.",
-        releaseDate: "Set the exact date and time when the locked tokens can be claimed by the recipient.",
-        recipientWallet: "In case left empty, tokens go back to wallet of origin when claimed after unlock date."
+        lockDateTime:
+          "Set the exact date and time when tokens will be locked and become inaccessible until the release date.",
+        tokenAmount:
+          "Enter the number of tokens you want to lock. These tokens will be inaccessible until the release date.",
+        releaseDate:
+          "Set the exact date and time when the locked tokens can be claimed by the recipient.",
+        recipientWallet:
+          "In case left empty, tokens go back to wallet of origin when claimed after unlock date.",
       },
       "VEST FUNDS": {
-        activationDateTime: "Set the exact date and time when the vesting schedule begins.",
-        tokenAmount: "Enter the total number of tokens to be vested over the specified period.",
-        cliffPeriod: "Days until first unlock happens. Choose zero in case you do not want this to happen.",
-        releaseModel: "Choose how frequently tokens are released: monthly, weekly, or daily.",
-        recipientWallet: "The wallet address that will receive the vested tokens as they are released."
-      }
+        activationDateTime:
+          "Set the exact date and time when the vesting schedule begins.",
+        tokenAmount:
+          "Enter the total number of tokens to be vested over the specified period.",
+        cliffPeriod:
+          "Days until first unlock happens. Choose zero in case you do not want this to happen.",
+        releaseModel:
+          "Choose how frequently tokens are released: monthly, weekly, or daily.",
+        recipientWallet:
+          "The wallet address that will receive the vested tokens as they are released.",
+      },
     };
 
     return descriptionMap[fundType]?.[field.name] || "";
@@ -263,45 +303,53 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       "STAKING POOL": [
         {
           title: "Reward Claim Frequency",
-          description: "Stakers can claim their rewards once every 24 hours."
+          description: "Stakers can claim their rewards once every 24 hours.",
         },
         {
           title: "Unclaimed Rewards",
-          description: "Rewards not claimed within 365 days will be converted to Takana native tokens. After conversion, users must contact support to retrieve them."
+          description:
+            "Rewards not claimed within 365 days will be converted to Takana native tokens. After conversion, users must contact support to retrieve them.",
         },
         {
           title: "Undistributed Tokens",
-          description: "Any undistributed tokens remaining in the pool will be available for extraction to the creator's wallet for 365 days after the pool's distribution period ends. After this period, tokens will be converted to Takana native tokens, and the creator must contact support to retrieve them."
-        }
+          description:
+            "Any undistributed tokens remaining in the pool will be available for extraction to the creator's wallet for 365 days after the pool's distribution period ends. After this period, tokens will be converted to Takana native tokens, and the creator must contact support to retrieve them.",
+        },
       ],
       "LOCK FUNDS": [
         {
           title: "Manual Claiming Required",
-          description: "Tokens will not be transferred automatically and need to be claimed by owner after the unlock date."
+          description:
+            "Tokens will not be transferred automatically and need to be claimed by owner after the unlock date.",
         },
         {
           title: "Lock Period",
-          description: "Once locked, tokens cannot be accessed until the specified release date and time."
+          description:
+            "Once locked, tokens cannot be accessed until the specified release date and time.",
         },
         {
           title: "Recipient Wallet",
-          description: "If no recipient wallet is specified, tokens will return to the original wallet when claimed."
-        }
+          description:
+            "If no recipient wallet is specified, tokens will return to the original wallet when claimed.",
+        },
       ],
       "VEST FUNDS": [
         {
           title: "Reward Claim Frequency",
-          description: "Users can claim their vested tokens once every 24 hours as they become available."
+          description:
+            "Users can claim their vested tokens once every 24 hours as they become available.",
         },
         {
           title: "Cliff Period",
-          description: "No tokens will be released until the cliff period expires, after which vesting begins according to the release model."
+          description:
+            "No tokens will be released until the cliff period expires, after which vesting begins according to the release model.",
         },
         {
           title: "Release Schedule",
-          description: "Tokens are released according to the chosen model (daily, weekly, or monthly) after the cliff period."
-        }
-      ]
+          description:
+            "Tokens are released according to the chosen model (daily, weekly, or monthly) after the cliff period.",
+        },
+      ],
     };
 
     return attentionMap[fundType] || [];
@@ -321,7 +369,7 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
   };
 
   const handleCreatePool = () => {
-    setShowPopup('attention');
+    setShowPopup("attention");
     setIsClosing(false);
   };
 
@@ -335,61 +383,89 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
 
   const renderResultPreview = () => {
     if (fundType === "STAKING POOL") {
-      return <StakingPoolResult token={token} formData={formData} />;
+      return (
+        <StakingPoolResult
+          token={token}
+          formData={formData}
+        />
+      );
     }
     if (fundType === "LOCK FUNDS") {
-      return <LockFundsResult token={token} formData={formData} />;
+      return (
+        <LockFundsResult
+          token={token}
+          formData={formData}
+        />
+      );
     }
     if (fundType === "VEST FUNDS") {
-      return <VestFundsResult token={token} formData={formData} />;
+      return (
+        <VestFundsResult
+          token={token}
+          formData={formData}
+        />
+      );
     }
     return null;
   };
 
   return (
-    <div className="w-full mx-auto rounded-3xl p-4 shadow-2xl border-[3px] border-[#CDCDE9] dark:border-[#453DC8] bg-[#EEEDFF] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 px-1">
+      <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
-          <div className="bg-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-[#6b4d9f] text-base flex-shrink-0 font-khand">
+          <div className="font-khand flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-white text-base font-bold text-[#6b4d9f]">
             {getIcon()}
           </div>
-          <div className="text-[#190E79] dark:text-white text-sm font-semibold font-khand">
-            Fill the form to {fundType === "STAKING POOL" ? "create staking pool for" : fundType === "LOCK FUNDS" ? "lock funds for" : "create linear vesting for"}: {token.name}
+          <div className="font-khand text-sm font-semibold text-[#190E79] dark:text-white">
+            Fill the form to{" "}
+            {fundType === "STAKING POOL"
+              ? "create staking pool for"
+              : fundType === "LOCK FUNDS"
+                ? "lock funds for"
+                : "create linear vesting for"}
+            : {token.name}
           </div>
         </div>
-      
       </div>
 
       {/* Form Container */}
-      <div className="rounded-2xl p-6 mb-6">
+      <div className="mb-6 rounded-2xl p-6">
         {config.fields.map((field, index) => (
-          <div key={field.name} className="mb-5">
-            <label className="block text-[#190E79] dark:text-white font-bold text-[13px] mb-2 font-khand">
-              <span className="text-[#190E79] dark:text-white font-bold mr-1">{index + 1}.</span>
+          <div
+            key={field.name}
+            className="mb-5"
+          >
+            <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                {index + 1}.
+              </span>
               {getFieldLabel(field, fundType)}:
             </label>
             {renderFieldWithLayout(field)}
-            <div className="text-[#190E79] dark:text-white text-[10px] leading-tight mt-1.5 font-medium opacity-80 font-khand">
+            <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 dark:text-white">
               {getFieldDescription(field, fundType)}
             </div>
           </div>
         ))}
-
       </div>
 
       {/* Warning Box */}
-      <div className="bg-[#e8e4f8] dark:bg-[#453DC8] border-2 border-red-400 dark:border-[#6b4d9f] rounded-xl p-4 mt-2">
-        <div className="flex items-center justify-center gap-2 text-[#190E79] dark:text-white font-bold text-xs mb-3 font-khand">
+      <div className="mt-2 rounded-xl border-2 border-red-400 bg-[#e8e4f8] p-4 dark:border-[#6b4d9f] dark:bg-[#453DC8]">
+        <div className="font-khand mb-3 flex items-center justify-center gap-2 text-xs font-bold text-[#190E79] dark:text-white">
           <span className="text-sm">⚠️</span>
           <span>ATTENTION</span>
           <span className="text-sm">⚠️</span>
         </div>
         <ul className="list-none">
           {getAttentionItems(fundType).map((item, index) => (
-            <li key={index} className="text-[#190E79] dark:text-white text-[10px] leading-relaxed mb-2.5 pl-3 relative font-medium font-khand">
+            <li
+              key={index}
+              className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-[#190E79] dark:text-white"
+            >
               <span className="absolute left-0 font-bold">{index + 1}.</span>
-              <span className="font-bold">{item.title}:</span> {item.description}
+              <span className="font-bold">{item.title}:</span>{" "}
+              {item.description}
             </li>
           ))}
         </ul>
@@ -397,20 +473,22 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
 
       {/* Preview Section */}
       <div className="mt-6">
-        <h3 className="text-2xl font-bold text-[#190E79] dark:text-white mb-4 font-khand">PREVIEW YOUR POOL:</h3>
+        <h3 className="font-khand mb-4 text-2xl font-bold text-[#190E79] dark:text-white">
+          PREVIEW YOUR POOL:
+        </h3>
         {renderResultPreview()}
 
         {/* CREATE POOL Button */}
-        <div className="flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8] mt-6">
-          <div className="md:ml-6 ml-4 text-xs md:text-base items-center flex text-[#190E79] dark:text-white font-khand">
+        <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
+          <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
             creation fee: <span className="ml-2"> 12345678 Limas</span>
           </div>
-          <div className="flex items-center text-[#190E79] text-xs md:text-base">
+          <div className="flex items-center text-xs text-[#190E79] md:text-base">
             <button
               onClick={handleCreatePool}
-              className="rounded-full py-1 md:py-2 px-2 md:px-4 bg-[#0E1379] relative flex cursor-pointer hover:bg-[#1a1f9e] transition-colors"
+              className="relative flex cursor-pointer rounded-full bg-[#0E1379] px-2 py-1 transition-colors hover:bg-[#1a1f9e] md:px-4 md:py-2"
             >
-              <div className="px-3 py-1 mr-2 rounded-full border-2 border-white">
+              <div className="mr-2 rounded-full border-2 border-white px-3 py-1">
                 <svg
                   width="8"
                   height="20"
@@ -425,9 +503,9 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
                 </svg>
               </div>
 
-              <span className="text-white relative inline-block text-sm md:text-base font-khand">
+              <span className="font-khand relative inline-block text-sm text-white md:text-base">
                 CREATE POOL
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
+                <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
               </span>
             </button>
           </div>
@@ -437,18 +515,18 @@ export default function GenericForm({ fundType, token, onDataChange, onClose }) 
       {/* Popup overlay */}
       {showPopup && (
         <div
-          className={`fixed inset-0 bg-[#eeeded] dark:bg-[#000310a6] bg-opacity-80 flex items-center justify-center z-50 ${
-            isClosing ? 'animate-fadeOut' : 'animate-fadeIn'
+          className={`bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-[#eeeded] dark:bg-[#000310a6] ${
+            isClosing ? "animate-fadeOut" : "animate-fadeIn"
           }`}
           onClick={closePopup}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={isClosing ? 'animate-scaleOut' : 'animate-scaleIn'}
+            className={isClosing ? "animate-scaleOut" : "animate-scaleIn"}
           >
-            {showPopup === 'success' && <Success />}
-            {showPopup === 'failed' && <Failed />}
-            {showPopup === 'attention' && <Attention />}
+            {showPopup === "success" && <Success />}
+            {showPopup === "failed" && <Failed />}
+            {showPopup === "attention" && <Attention />}
           </div>
         </div>
       )}

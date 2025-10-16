@@ -310,7 +310,9 @@ function Navbar() {
               </svg>
             )}
 
-            <h1 className="md:text-2xl text-xl font-khand font-bold dark:text-white text-[#0E1379]">TOKANO</h1>
+            <h1 className="font-khand text-xl font-bold text-[#0E1379] md:text-2xl dark:text-white">
+              TOKANO
+            </h1>
           </Link>
           <div className="flex items-center gap-3">
             <button
@@ -418,7 +420,9 @@ function Navbar() {
               </svg>
             )}
 
-            <h1 className="md:text-3xl text-xl font-bold font-khand dark:text-white text-[#0E1379]">TOKANO</h1>
+            <h1 className="font-khand text-xl font-bold text-[#0E1379] md:text-3xl dark:text-white">
+              TOKANO
+            </h1>
           </Link>
         </div>
 

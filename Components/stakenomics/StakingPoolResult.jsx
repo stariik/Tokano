@@ -20,7 +20,7 @@ function StakingPoolResult({ token, formData }) {
 
   const StakeIcon = () => (
     <svg
-      className="w-[47px] lg:w-[80px] h-full -mr-1 absolute"
+      className="absolute -mr-1 h-full w-[47px] lg:w-[80px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -50,34 +50,34 @@ function StakingPoolResult({ token, formData }) {
 
   return (
     <div
-      className="rounded-3xl pb-4 lg:pb-8 border-1 border-secondary text-[#190E79] dark:text-white"
+      className="border-secondary rounded-3xl border-1 pb-4 text-[#190E79] lg:pb-8 dark:text-white"
       style={{
-        background: resolvedTheme === "dark"
-          ? "linear-gradient(90deg, #2f1f7b 10%, #622ea9 80%)"
-          : "linear-gradient(90deg, rgb(255 255 255) 0%, rgb(206 193 255) 100%)",
+        background:
+          resolvedTheme === "dark"
+            ? "linear-gradient(90deg, #2f1f7b 10%, #622ea9 80%)"
+            : "linear-gradient(90deg, rgb(255 255 255) 0%, rgb(206 193 255) 100%)",
       }}
     >
       <div
-        className="rounded-3xl p-4 md:p-8 pb-0 relative"
+        className="relative rounded-3xl p-4 pb-0 md:p-8"
         style={{
-          background: resolvedTheme === "dark"
-            ? "linear-gradient(45deg, #2f1f7b 0%, #622ea9 100%)"
-            : "linear-gradient(45deg, rgb(255 255 255) 0%, rgb(232, 228, 248) 100%)",
+          background:
+            resolvedTheme === "dark"
+              ? "linear-gradient(45deg, #2f1f7b 0%, #622ea9 100%)"
+              : "linear-gradient(45deg, rgb(255 255 255) 0%, rgb(232, 228, 248) 100%)",
         }}
       >
         <div className="flex">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-34 h-full lg:rounded-3xl rounded-2xl md:ml-4 mb-4"
+            className="mb-4 h-full w-20 rounded-2xl md:ml-4 md:w-24 lg:w-34 lg:rounded-3xl"
           />
-          <div className="font-khand font-normal ml-4 lg:ml-8">
-            <h1
-              className="font-khand font-semibold 2xl:text-4xl xl:text-2xl lg:text-xl md:text-lg text-base"
-            >
+          <div className="font-khand ml-4 font-normal lg:ml-8">
+            <h1 className="font-khand text-base font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl">
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-xs md:text-sm lg:text-base 2xl:text-lg mt-1">
+            <div className="mt-1 pl-1 text-xs md:text-sm lg:text-base 2xl:text-lg">
               <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
               <p>Creator: {formData?.creator || "Anonymous"}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
@@ -85,60 +85,54 @@ function StakingPoolResult({ token, formData }) {
           </div>
         </div>
         <div className="absolute top-10 right-0">
-          <div className="lg:mr-12 mr-2 justify-end flex">
+          <div className="mr-2 flex justify-end lg:mr-12">
             <CiPill size={28} />
           </div>
 
-          <div
-            className="mt-2 md:mt-6 bg-[#2B923E] dark:bg-[#2B923E] text-white rounded-l-2xl pl-2 pr-2 text-xs md:text-sm font-khand font-normal"
-          >
+          <div className="font-khand mt-2 rounded-l-2xl bg-[#2B923E] pr-2 pl-2 text-xs font-normal text-white md:mt-6 md:text-sm dark:bg-[#2B923E]">
             {formData?.activationDateTime === "IMMEDIATELY"
               ? "IMMEDIATELY"
               : formData?.activationDateTime
-              ? new Date(formData.activationDateTime)
-                  .toLocaleString("en-GB", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })
-                  .replace(",", "")
-              : "DD.MM.YY HH:MM"}
+                ? new Date(formData.activationDateTime)
+                    .toLocaleString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                    .replace(",", "")
+                : "DD.MM.YY HH:MM"}
           </div>
         </div>
 
         <div
-          className="text-[#311880] text-center text-sm md:text-base lg:text-lg 2xl:text-2xl font-khand font-semibold mb-12 -mt-2 rounded-2xl px-1 mx-14"
+          className="font-khand mx-14 -mt-2 mb-12 rounded-2xl px-1 text-center text-sm font-semibold text-[#311880] md:text-base lg:text-lg 2xl:text-2xl"
           style={{
-            background: resolvedTheme === "dark"
-              ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
-              : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
+            background:
+              resolvedTheme === "dark"
+                ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
+                : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
           }}
         >
           LAUNCHING IN: {formData?.distributionLength || "0"} days
         </div>
 
-        <div
-          className="text-end text-xl lg:text-2xl font-khand font-medium -mt-8"
-        >
-          <div className="left-0 w-full z-5 flex mt-2 bottom-0 relative">
-            <div
-              className="items-center flex mx-4 text-xl lg:text-3xl max-w-20 font-khand font-semibold"
-            >
+        <div className="font-khand -mt-8 text-end text-xl font-medium lg:text-2xl">
+          <div className="relative bottom-0 left-0 z-5 mt-2 flex w-full">
+            <div className="font-khand mx-4 flex max-w-20 items-center text-xl font-semibold lg:text-3xl">
               STAKING POOL
             </div>
-            <div
-              className="flex flex-col lg:text-sm text-xs my-auto w-full relative font-khand font-normal"
-            >
+            <div className="font-khand relative my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
               <StakeIcon />
 
               <div
-                className="pl-4 md:pl-10 w-3/4 ml-8 py-1 -z-1 rounded-full text-white pr-2 font-khand font-medium"
+                className="font-khand -z-1 ml-8 w-3/4 rounded-full py-1 pr-2 pl-4 font-medium text-white md:pl-10"
                 style={{
-                  background: resolvedTheme === "dark"
-                    ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
-                    : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
+                  background:
+                    resolvedTheme === "dark"
+                      ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
+                      : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
                 }}
               >
                 <div className="flex justify-between">
@@ -150,11 +144,12 @@ function StakingPoolResult({ token, formData }) {
                 </div>
               </div>
               <div
-                className="pl-4 pr-2 md:pl-10 w-2/3 ml-8 py-1 -z-1 rounded-full text-black font-khand font-medium"
+                className="font-khand -z-1 ml-8 w-2/3 rounded-full py-1 pr-2 pl-4 font-medium text-black md:pl-10"
                 style={{
-                  background: resolvedTheme === "dark"
-                    ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
-                    : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
+                  background:
+                    resolvedTheme === "dark"
+                      ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
+                      : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
                 }}
               >
                 <div className="flex justify-between">

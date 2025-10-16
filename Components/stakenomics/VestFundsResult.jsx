@@ -25,12 +25,22 @@ function VestFundsResult({ token, formData }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 80 80"
-      className="w-[47px] h-[47px] lg:w-[80px] lg:h-[57px]"
+      className="h-[47px] w-[47px] lg:h-[57px] lg:w-[80px]"
       fill="none"
     >
-      <circle cx="40" cy="40" r="40" fill="white" />
+      <circle
+        cx="40"
+        cy="40"
+        r="40"
+        fill="white"
+      />
 
-      <circle cx="40" cy="40" r="27" fill="#2D178D" />
+      <circle
+        cx="40"
+        cy="40"
+        r="27"
+        fill="#2D178D"
+      />
 
       <path
         d="M28 34h8v8h8v8h8"
@@ -44,57 +54,53 @@ function VestFundsResult({ token, formData }) {
 
   return (
     <div
-      className="rounded-3xl pb-2 lg:pb-4 border-1 border-secondary text-[#190E79] dark:text-white lg:mx-0"
+      className="border-secondary rounded-3xl border-1 pb-2 text-[#190E79] lg:mx-0 lg:pb-4 dark:text-white"
       style={{
-        background: resolvedTheme === "dark"
-          ? "linear-gradient(90deg, #9D05A1 10%, #1A1E5F 100%)"
-          : "linear-gradient(90deg, #EFEFEF 0%, #9C3B8A 100%)",
+        background:
+          resolvedTheme === "dark"
+            ? "linear-gradient(90deg, #9D05A1 10%, #1A1E5F 100%)"
+            : "linear-gradient(90deg, #EFEFEF 0%, #9C3B8A 100%)",
       }}
     >
       <div
-        className="rounded-3xl px-4 md:px-8 pt-4 relative"
+        className="relative rounded-3xl px-4 pt-4 md:px-8"
         style={{
-          background: resolvedTheme === "dark"
-            ? "linear-gradient(45deg, #9D05A1 0%, #1A1E5F 100%)"
-            : "linear-gradient(45deg, #EFEFEF 30%, #9C3B8A 100%)",
+          background:
+            resolvedTheme === "dark"
+              ? "linear-gradient(45deg, #9D05A1 0%, #1A1E5F 100%)"
+              : "linear-gradient(45deg, #EFEFEF 30%, #9C3B8A 100%)",
         }}
       >
         <div className="flex flex-row-reverse">
           <img
             src="/vest.png"
-            className="w-20 md:w-24 lg:w-28 h-full lg:rounded-3xl rounded-2xl ml-4 xl:ml-8"
+            className="ml-4 h-full w-20 rounded-2xl md:w-24 lg:w-28 lg:rounded-3xl xl:ml-8"
           />
-          <div className="font-khand font-normal ml-4 lg:ml-8">
-            <h1
-              className="font-khand font-semibold xl:text-4xl lg:text-2xl md:text-xl text-lg xl:mr-12 lg:mr-32 mr-18"
-            >
+          <div className="font-khand ml-4 font-normal lg:ml-8">
+            <h1 className="font-khand mr-18 text-lg font-semibold md:text-xl lg:mr-32 lg:text-2xl xl:mr-12 xl:text-4xl">
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="pl-1 text-sm md:text-base lg:text-base 2xl:text-xl mt-1 ml-12">
+            <div className="mt-1 ml-12 pl-1 text-sm md:text-base lg:text-base 2xl:text-xl">
               <p>Vest ID: {formatWallet(formData?.recipientWallet)}</p>
               <p>Token ID: {token?.id || "0x0000...0000"}</p>
             </div>
           </div>
         </div>
         <div className="absolute top-10 left-0">
-          <div className="ml-4 lg:mr-12 mt-6">
+          <div className="mt-6 ml-4 lg:mr-12">
             <CiPill size={28} />
           </div>
         </div>
 
-        <div className="absolute left-0 w-12/13 md:w-11/13 z-5 flex">
-          <div
-            className="items-center flex md:mx-4 mx-2 text-xl lg:text-3xl font-khand font-semibold"
-          >
+        <div className="absolute left-0 z-5 flex w-12/13 md:w-11/13">
+          <div className="font-khand mx-2 flex items-center text-xl font-semibold md:mx-4 lg:text-3xl">
             VEST
           </div>
           <VestIcon />
-          <div
-            className="flex flex-col lg:text-sm text-xs my-auto w-3/5 md:w-5/5 font-khand font-normal"
-          >
+          <div className="font-khand my-auto flex w-3/5 flex-col text-xs font-normal md:w-5/5 lg:text-sm">
             <div
-              className="pl-4 2xl:pl-6 pr-2 2xl:pr-5 -ml-2 md:-ml-4 py-1 -z-1 mt-2 rounded-full text-white flex justify-between w-9/10 md:w-2/3 lg:w-3/4 xl:w-6/7 2xl:w-4/5 font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
+              className="font-khand -z-1 mt-2 -ml-2 flex w-9/10 justify-between rounded-full bg-[#e3f2fd] py-1 pr-2 pl-4 font-normal text-white md:-ml-4 md:w-2/3 lg:w-3/4 xl:w-6/7 2xl:w-4/5 2xl:pr-5 2xl:pl-6 dark:bg-transparent"
               style={{
                 background: "var(--gradient-vest-1)",
               }}
@@ -112,7 +118,7 @@ function VestFundsResult({ token, formData }) {
                 START:{" "}
                 {formData?.activationDateTime
                   ? new Date(formData.activationDateTime).toLocaleDateString(
-                      "en-GB"
+                      "en-GB",
                     )
                   : "11.22.3333"}
               </div>
@@ -120,7 +126,7 @@ function VestFundsResult({ token, formData }) {
             </div>
 
             <div
-              className="pl-2 2xl:pl-6 pr-2 2xl:pr-5 py-1 -z-1 rounded-full text-white flex justify-between w-12/13 md:w-5/6 ml-3 sm:ml-8 mt-1 lg:ml-10 xl:ml-8 2xl:ml-14 font-khand font-normal bg-[#e3f2fd] dark:bg-transparent"
+              className="font-khand -z-1 mt-1 ml-3 flex w-12/13 justify-between rounded-full bg-[#e3f2fd] py-1 pr-2 pl-2 font-normal text-white sm:ml-8 md:w-5/6 lg:ml-10 xl:ml-8 2xl:ml-14 2xl:pr-5 2xl:pl-6 dark:bg-transparent"
               style={{
                 background: "var(--gradient-vest-2)",
               }}
@@ -140,7 +146,7 @@ function VestFundsResult({ token, formData }) {
                 {formData?.recipientWallet
                   ? `${formData.recipientWallet.slice(
                       0,
-                      6
+                      6,
                     )}...${formData.recipientWallet.slice(-4)}`
                   : "N/A"}
               </div>
@@ -148,16 +154,12 @@ function VestFundsResult({ token, formData }) {
           </div>
         </div>
 
-        <div
-          className="text-[#FFB01C] text-end text-2xl lg:text-3xl font-khand font-semibold mr-1 mt-8"
-        >
+        <div className="font-khand mt-8 mr-1 text-end text-2xl font-semibold text-[#FFB01C] lg:text-3xl">
           {formatNumber(formData?.tokenAmount)}
         </div>
       </div>
 
-      <div
-        className="mr-6 md:mr-12 text-end text-xl lg:text-2xl font-khand font-medium"
-      >
+      <div className="font-khand mr-6 text-end text-xl font-medium md:mr-12 lg:text-2xl">
         vesting
       </div>
     </div>
