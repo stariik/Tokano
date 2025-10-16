@@ -9,6 +9,8 @@ import {
 } from "@solana/wallet-adapter-react";
 import { RPC_ENDPOINT } from "@/lib/constants";
 import { ThemeProvider } from "@/hooks/useTheme";
+import TokanoSdkProvider from "@/contexts/tokano-sdk-context";
+import BalancesProvider from "@/contexts/balances-context";
 
 export default function LayoutProviders({
   children,
@@ -23,7 +25,11 @@ export default function LayoutProviders({
         wallets={wallets}
         autoConnect={true}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <BalancesProvider>
+          <TokanoSdkProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </TokanoSdkProvider>
+        </BalancesProvider>
       </WalletProvider>
     </ConnectionProvider>
   );
