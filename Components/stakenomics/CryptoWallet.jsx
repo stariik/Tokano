@@ -7,7 +7,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
   const selectedTokenData = tokens.find((token) => token.id === selectedToken);
 
   return (
-    <div className="max-w-4xl lg:mx-auto bg-[#C7C1F5] dark:bg-[#231570] rounded-3xl overflow-hidden font-sans shadow-2xl">
+    <div className="max-w-4xl overflow-hidden rounded-3xl bg-[#C7C1F5] font-sans shadow-2xl lg:mx-auto dark:bg-[#231570]">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-[#CDCDE9] dark:border-secondary bg-[#C7C1F5] px-6 py-3 dark:bg-[#231570]">
         <h1 className="font-khand text-base font-bold tracking-wide text-[#190E79] lg:text-2xl dark:text-white">
