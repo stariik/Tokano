@@ -1,27 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Live from "@/Components/Live/Live";
 import LaunchingSoon from "@/Components/LaunchingSoon/LaunchingSoon";
 import TokenTable from "@/Components/PlatformStats/ui/TokenTable";
 import PlatformStats from "@/Components/PlatformStats/PlatformStats";
 import TokenGrid from "@/Components/Memes/TokenGrid";
+import { useBalances } from "@/contexts/balances-context";
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { tokens } = useBalances();
+
+  useEffect(() => {
+    console.log("tokens", tokens);
+  }, [tokens]);
 
   return (
-    <main className="md:px-6 px-2 py-8 md:py-6 dark:bg-dark bg-white text-light relative">
+    <main className="dark:bg-dark text-light relative bg-white px-2 py-8 md:px-6 md:py-6">
       <div className="">
-        <div className="xl:grid-cols-3 md:grid-cols-2 grid ">
-          <div className="col-span-2 border-2 border-secondary rounded-tr-4xl grid gap-4 md:grid-cols-2">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3">
+          <div className="border-secondary col-span-2 grid gap-4 rounded-tr-4xl border-2 md:grid-cols-2">
             <LaunchingSoon />
             <Live />
           </div>
           <div className="col-span-2">
-            <div className="border-x-2 border-b-2 border-secondary w-full">
-              <div className="bg-[#eeeded] dark:bg-[#14121f] border-b border-secondary bg-[radial-gradient(circle,_rgba(238,237,237,1)_29%,_rgb(233_198_255)_100%)] dark:bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)] w-full py-2 flex justify-center text-2xl">
-                <p className="font-khand font-medium dark:text-white text-[#464B7E]">
+            <div className="border-secondary w-full border-x-2 border-b-2">
+              <div className="border-secondary flex w-full justify-center border-b bg-[#eeeded] bg-[radial-gradient(circle,_rgba(238,237,237,1)_29%,_rgb(233_198_255)_100%)] py-2 text-2xl dark:bg-[#14121f] dark:bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)]">
+                <p className="font-khand font-medium text-[#464B7E] dark:text-white">
                   PLATFORM STATS
                 </p>
               </div>
@@ -30,14 +36,17 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full mt-6">
+      <div className="mt-6 w-full">
         <TokenGrid
           hideOnMobile={false}
           gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7"
         />
       </div>
 
-      <style jsx global>{`
+      <style
+        jsx
+        global
+      >{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;
         }
@@ -68,11 +77,11 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className={`[writing-mode:vertical-rl] md:hidden fixed bottom-22 left-0 z-70 bg-white border-r-1 border-x-1 border-secondary text-[#190E79] flex flex-col items-center justify-center px-2 py-1 rounded-r-lg shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
+        className={`border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x-1 border-r-1 bg-white px-2 py-1 text-sm font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl md:hidden ${
+          isMobileMenuOpen ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
         id="left-menu-button"
-        style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)"}}
+        style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)" }}
       >
         Soon
       </button>
@@ -80,11 +89,11 @@ export default function Home() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="menu-overlay-active md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+          className="menu-overlay-active fixed inset-0 z-50 bg-black/60 backdrop-blur-sm md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div
-            className={`fixed top-0 left-0 h-screen w-[90vw] max-w-sm bg-dark transform transition-transform duration-300 ease-in-out rounded-tr-[2.5rem] rounded-br-[2.5rem] border-r-2 border-secondary flex flex-col overflow-hidden ${
+            className={`bg-dark border-secondary fixed top-0 left-0 flex h-screen w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] rounded-br-[2.5rem] border-r-2 transition-transform duration-300 ease-in-out ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             }`}
             onClick={(e) => e.stopPropagation()}
@@ -93,18 +102,18 @@ export default function Home() {
               borderBottomRightRadius: "2.5rem",
             }}
           >
-            <div className="flex justify-between items-center p-4 border-b border-secondary bg-dark flex-shrink-0">
-              <h2 className="text-xl font-khand font-semibold">
+            <div className="border-secondary bg-dark flex flex-shrink-0 items-center justify-between border-b p-4">
+              <h2 className="font-khand text-xl font-semibold">
                 LAUNCHING SOON
               </h2>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-[#190E79] dark:text-white hover:text-purple-400 transition-colors text-3xl"
+                className="text-3xl text-[#190E79] transition-colors hover:text-purple-400 dark:text-white"
               >
                 ×
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto custom-scrollbar pb-6">
+            <div className="custom-scrollbar flex-1 overflow-y-auto pb-6">
               <LaunchingSoon isMobile={true} />
             </div>
           </div>
