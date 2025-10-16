@@ -28,7 +28,7 @@ function StakingScroll({ stakingData = [] }) {
           scrollbar-color: #8b5cf6 transparent;
         }
       `}</style>
-      <div className="border-secondary font-khand mx-4 rounded-3xl border-1 text-[#190E79] dark:text-white">
+      <div className="border-secondary font-khand rounded-3xl border-1 text-[#190E79] dark:text-white">
         <div className="border-secondary border-b-1 py-2 pl-6 text-xl">
           YOU ARE STAKING
         </div>
