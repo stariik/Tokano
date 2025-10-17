@@ -124,7 +124,7 @@ export default function TestPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="max-w-2/3 p-4">
       <h1 className="mb-4 text-2xl font-bold">Staking Test Page</h1>
 
       <CreatePool onPoolCreated={handlePoolCreated} />
@@ -141,7 +141,7 @@ export default function TestPage() {
         ) : stakePools.length === 0 ? (
           <p>No stake pools found.</p>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {stakePools.map((pool, index) => (
               <div
                 key={index}
@@ -215,7 +215,7 @@ export default function TestPage() {
                   {selectedUserStakedAccount.stakedTokenBalance.toString()}
                 </p>
                 <p>Rewards: {selectedUserStakedAccount.rewards.toString()}</p>
-                <p>Release Time: {selectedUserStakedAccount.releaseTime}</p>
+                {/*<p>Release Time: {selectedUserStakedAccount.releaseTime}</p>*/}
               </div>
             )}
 
@@ -254,14 +254,14 @@ export default function TestPage() {
         )}
       </div>
 
-      <div>
+      <div className="mb-8">
         <h2 className="mb-2 text-xl font-semibold">User Created Stake Pools</h2>
         {userCreatedStakePools === undefined ? (
           <p>Loading user created stake pools...</p>
         ) : userCreatedStakePools.length === 0 ? (
           <p>No user created stake pools found.</p>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {userCreatedStakePools.map((pool, index) => (
               <div
                 key={index}
