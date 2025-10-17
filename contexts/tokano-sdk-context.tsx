@@ -20,8 +20,8 @@ export default function TokanoSdkProvider({
 }: {
   children: ReactNode;
 }) {
-  const [staking, setStaking] = useState<TokanoStaking>();
-  const [vesting, setVesting] = useState<TokanoVesting>();
+  const [staking, setStaking] = useState<TokanoStaking | undefined>();
+  const [vesting, setVesting] = useState<TokanoVesting | undefined>();
 
   const { connection } = useConnection();
 
