@@ -1,7 +1,7 @@
 "use client";
 
 import { useTokano } from "@/contexts/tokano-sdk-context";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useState } from "react";
 import { PoolState, UserState } from "tokano-sdk";
 import { useBalances } from "@/contexts/balances-context";
@@ -17,9 +17,10 @@ export default function CreateStake({
   userStakedAccounts,
   onStakeCreated,
 }: CreateStakeProps) {
-  const { publicKey } = useWallet();
+  const { publicKey, signTransaction } = useWallet();
   const { staking } = useTokano();
   const { tokens } = useBalances();
+  const { connection } = useConnection();
 
   const [selectedPoolAddress, setSelectedPoolAddress] = useState("");
   const [amount, setAmount] = useState("");
@@ -52,14 +53,21 @@ export default function CreateStake({
     }
 
     try {
-      const signature = await staking.stake({
+      const tx = await staking.stake({
         walletPk: publicKey,
-        poolAddress: selectedPool.initializer,
+        poolAddress: selectedPool.poolAddress,
         amount,
         userStakeAccount: userHasStakeInPool,
       });
 
-      alert(`Staked successfully! Signature: ${signature}`);
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+
+      alert(`Staked successfully! Signature: ${txId}`);
       onStakeCreated();
     } catch (error) {
       console.error("Error staking:", error);
@@ -70,9 +78,11 @@ export default function CreateStake({
     staking,
     selectedPoolAddress,
     amount,
-    userHasStakeInPool,
-    onStakeCreated,
     selectedPool,
+    userHasStakeInPool,
+    connection,
+    signTransaction,
+    onStakeCreated,
   ]);
 
   return (
@@ -92,7 +102,7 @@ export default function CreateStake({
           ) : (
             stakePools.map((pool) => (
               <option
-                key={pool.initializer.toBase58()}
+                key={pool.poolAddress.toBase58()}
                 value={pool.initializer.toBase58()}
               >
                 {pool.initializer.toBase58().slice(0, 16)}...
