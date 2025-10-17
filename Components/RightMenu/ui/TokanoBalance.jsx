@@ -7,7 +7,7 @@ import TokanoBalanceData from "./TokanoBalanceData";
 
 export default function TokanoBalance() {
   return (
-    <div className="border-2 border-[#7B3FE4] bg-[#f5f3fb] dark:bg-[#1a0033]">
+    <div className="border-2 border-[#CDCDE9] dark:border-secondary bg-[#f5f3fb] dark:bg-[#1a0033]">
       <TokanoToken TableName="YOUR TOKANO BALANCE">
         {/* Main Balance Row */}
         <TokanoBalanceData />

@@ -6,7 +6,7 @@ function TokanoBalanceData() {
 
   return (
     <div className="flex items-stretch">
-      <div className="flex min-w-[80px] flex-col items-center justify-center border-r-2 border-[#7B3FE4] bg-[#f0edf8] px-4 py-4 dark:bg-[#2d0a5c]">
+      <div className="flex min-w-[80px] flex-col items-center justify-center border-r-2 border-[#CDCDE9] dark:border-secondary bg-[#f0edf8] px-4 py-4 dark:bg-[#2d0a5c]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG
           <svg
