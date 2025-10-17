@@ -6,6 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { PoolState, UserState } from "tokano-sdk";
 import CreatePool from "@/Components/staking/create-pool";
 import CreateStake from "@/Components/staking/create-stake";
+import StakeWithdraw from "@/Components/staking/stake-withdraw";
 
 export default function TestPage() {
   const { publicKey } = useWallet();
@@ -16,7 +17,6 @@ export default function TestPage() {
     useState<PoolState[]>();
   const [selectedUserStakedAccount, setSelectedUserStakedAccount] =
     useState<UserState | null>(null);
-  const [unstakeAmount, setUnstakeAmount] = useState("");
 
   const fetchStakingPools = useCallback(async () => {
     const pools = await staking?.fetchStakePools();
@@ -53,50 +53,10 @@ export default function TestPage() {
     fetchStakingPools();
   }, [fetchUserStakeAccounts, fetchStakingPools]);
 
-  const handleGetReward = useCallback(async () => {
-    if (!publicKey || !selectedUserStakedAccount) return;
-
-    try {
-      const signature = await staking?.getReward({
-        walletPk: publicKey,
-        poolAddress: selectedUserStakedAccount.poolAddress,
-      });
-      console.log("Get Reward Signature:", signature);
-      alert(`Get Reward successful! Signature: ${signature}`);
-      // Re-fetch user accounts to see updated rewards
-      fetchUserStakeAccounts();
-    } catch (error) {
-      console.error("Error getting reward:", error);
-      alert(`Error getting reward: ${error}`);
-    }
-  }, [publicKey, selectedUserStakedAccount, staking, fetchUserStakeAccounts]);
-
-  const handleUnstake = useCallback(async () => {
-    if (!publicKey || !selectedUserStakedAccount || !unstakeAmount) return;
-
-    try {
-      const signature = await staking?.withdraw({
-        walletPk: publicKey,
-        poolAddress: selectedUserStakedAccount.poolAddress,
-        amount: unstakeAmount,
-      });
-      console.log("Unstake Signature:", signature);
-      alert(`Unstake successful! Signature: ${signature}`);
-      fetchUserStakeAccounts();
-      fetchStakingPools();
-      setUnstakeAmount("");
-    } catch (error) {
-      console.error("Error unstaking:", error);
-      alert(`Error unstaking: ${error}`);
-    }
-  }, [
-    publicKey,
-    selectedUserStakedAccount,
-    staking,
-    fetchUserStakeAccounts,
-    fetchStakingPools,
-    unstakeAmount,
-  ]);
+  const handleWithdrawAction = useCallback(() => {
+    fetchUserStakeAccounts();
+    fetchStakingPools();
+  }, [fetchUserStakeAccounts, fetchStakingPools]);
 
   useEffect(() => {
     if (publicKey) {
@@ -219,37 +179,10 @@ export default function TestPage() {
               </div>
             )}
 
-            <div className="flex items-center gap-4">
-              <button
-                onClick={handleGetReward}
-                disabled={!selectedUserStakedAccount || !publicKey}
-                className="rounded bg-blue-500 px-4 py-2 text-white disabled:bg-gray-400"
-              >
-                Get Reward
-              </button>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  placeholder="Amount to Unstake"
-                  value={unstakeAmount}
-                  onChange={(e) => setUnstakeAmount(e.target.value)}
-                  className="rounded border p-2"
-                  disabled={!selectedUserStakedAccount}
-                />
-                <button
-                  onClick={handleUnstake}
-                  disabled={
-                    !selectedUserStakedAccount ||
-                    !publicKey ||
-                    !unstakeAmount ||
-                    parseFloat(unstakeAmount) <= 0
-                  }
-                  className="rounded bg-red-500 px-4 py-2 text-white disabled:bg-gray-400"
-                >
-                  Unstake
-                </button>
-              </div>
-            </div>
+            <StakeWithdraw
+              selectedUserStakedAccount={selectedUserStakedAccount}
+              onAction={handleWithdrawAction}
+            />
           </div>
         )}
       </div>
