@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PoolState, UserState } from "tokano-sdk";
 import CreatePool from "@/Components/staking/create-pool";
+import CreateStake from "@/Components/staking/create-stake";
 
 export default function TestPage() {
   const { publicKey } = useWallet();
@@ -15,6 +16,7 @@ export default function TestPage() {
     useState<PoolState[]>();
   const [selectedUserStakedAccount, setSelectedUserStakedAccount] =
     useState<UserState | null>(null);
+  const [unstakeAmount, setUnstakeAmount] = useState("");
 
   const fetchStakingPools = useCallback(async () => {
     const pools = await staking?.fetchStakePools();
@@ -29,6 +31,8 @@ export default function TestPage() {
     setUserStakedAccounts(accounts);
     if (accounts && accounts.length > 0) {
       setSelectedUserStakedAccount(accounts[0]);
+    } else {
+      setSelectedUserStakedAccount(null);
     }
   }, [publicKey, staking]);
 
@@ -43,6 +47,11 @@ export default function TestPage() {
     fetchStakingPools();
     fetchUserCreatedStakePools();
   }, [fetchStakingPools, fetchUserCreatedStakePools]);
+
+  const handleStakeCreated = useCallback(() => {
+    fetchUserStakeAccounts();
+    fetchStakingPools();
+  }, [fetchUserStakeAccounts, fetchStakingPools]);
 
   const handleGetReward = useCallback(async () => {
     if (!publicKey || !selectedUserStakedAccount) return;
@@ -62,17 +71,48 @@ export default function TestPage() {
     }
   }, [publicKey, selectedUserStakedAccount, staking, fetchUserStakeAccounts]);
 
+  const handleUnstake = useCallback(async () => {
+    if (!publicKey || !selectedUserStakedAccount || !unstakeAmount) return;
+
+    try {
+      const signature = await staking?.withdraw({
+        walletPk: publicKey,
+        poolAddress: selectedUserStakedAccount.poolAddress,
+        amount: unstakeAmount,
+      });
+      console.log("Unstake Signature:", signature);
+      alert(`Unstake successful! Signature: ${signature}`);
+      fetchUserStakeAccounts();
+      fetchStakingPools();
+      setUnstakeAmount("");
+    } catch (error) {
+      console.error("Error unstaking:", error);
+      alert(`Error unstaking: ${error}`);
+    }
+  }, [
+    publicKey,
+    selectedUserStakedAccount,
+    staking,
+    fetchUserStakeAccounts,
+    fetchStakingPools,
+    unstakeAmount,
+  ]);
+
   useEffect(() => {
-    fetchUserStakeAccounts();
-  }, [fetchUserStakeAccounts]);
+    if (publicKey) {
+      fetchUserStakeAccounts();
+    }
+  }, [publicKey, fetchUserStakeAccounts]);
 
   useEffect(() => {
     fetchStakingPools();
   }, [fetchStakingPools]);
 
   useEffect(() => {
-    fetchUserCreatedStakePools();
-  }, [fetchUserCreatedStakePools]);
+    if (publicKey) {
+      fetchUserCreatedStakePools();
+    }
+  }, [publicKey, fetchUserCreatedStakePools]);
 
   const handleAccountChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPoolAddress = event.target.value;
@@ -88,6 +128,11 @@ export default function TestPage() {
       <h1 className="mb-4 text-2xl font-bold">Staking Test Page</h1>
 
       <CreatePool onPoolCreated={handlePoolCreated} />
+      <CreateStake
+        stakePools={stakePools}
+        userStakedAccounts={userStakedAccounts}
+        onStakeCreated={handleStakeCreated}
+      />
 
       <div className="mb-8">
         <h2 className="mb-2 text-xl font-semibold">Stake Pools</h2>
@@ -174,13 +219,37 @@ export default function TestPage() {
               </div>
             )}
 
-            <button
-              onClick={handleGetReward}
-              disabled={!selectedUserStakedAccount || !publicKey}
-              className="rounded bg-blue-500 px-4 py-2 text-white disabled:bg-gray-400"
-            >
-              Get Reward
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handleGetReward}
+                disabled={!selectedUserStakedAccount || !publicKey}
+                className="rounded bg-blue-500 px-4 py-2 text-white disabled:bg-gray-400"
+              >
+                Get Reward
+              </button>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  placeholder="Amount to Unstake"
+                  value={unstakeAmount}
+                  onChange={(e) => setUnstakeAmount(e.target.value)}
+                  className="rounded border p-2"
+                  disabled={!selectedUserStakedAccount}
+                />
+                <button
+                  onClick={handleUnstake}
+                  disabled={
+                    !selectedUserStakedAccount ||
+                    !publicKey ||
+                    !unstakeAmount ||
+                    parseFloat(unstakeAmount) <= 0
+                  }
+                  className="rounded bg-red-500 px-4 py-2 text-white disabled:bg-gray-400"
+                >
+                  Unstake
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
