@@ -9,10 +9,10 @@ function StakingModule() {
   ];
 
   return (
-    <div className="rounded-4xl border-2 border-secondary overflow-hidden">
+    <div className="rounded-4xl border-2 border-[#CDCDE9] dark:border-secondary overflow-hidden">
       <div className="grid grid-cols-2 bg-gradient-to-r dark:from-[#574DDD] dark:to-[#330E79] from-[#8D85FB] to-[#4B317C] dark:text-[#190E79] text-white">
         {/* Left side */}
-        <div className="font-khand border-secondary flex items-center justify-between border-r-2 p-4 text-xl font-semibold 2xl:text-4xl dark:text-white">
+        <div className="font-khand flex items-center justify-between border-r-2 border-[#CDCDE9] dark:border-secondary p-4 text-xl font-semibold 2xl:text-4xl dark:text-white">
           <div className="flex w-full flex-col items-center justify-center leading-none">
             <span>Staking</span>
             <span>Module</span>
@@ -48,7 +48,7 @@ function StakingModule() {
           </div>
           {/* <div className="flex justify-center">You Will Stake:</div> */}
 
-          <div className="border-secondary relative flex flex-col items-center rounded-xl border-2 bg-gradient-to-t from-[#DEDEDE] to-[#EAE4FF] px-1 pb-6 text-[#190E79] md:px-4 md:pb-2 xl:px-[5px] 2xl:px-4 2xl:py-2 dark:from-[#0A0C50] dark:to-[#24068E] dark:text-white">
+          <div className="relative flex flex-col items-center rounded-xl border-2 border-[#CDCDE9] dark:border-secondary bg-gradient-to-t from-[#DEDEDE] to-[#EAE4FF] px-1 pb-6 text-[#190E79] md:px-4 md:pb-2 xl:px-[5px] 2xl:px-4 2xl:py-2 dark:from-[#0A0C50] dark:to-[#24068E] dark:text-white">
             {/* Top Row */}
             <div className="flex w-full items-center justify-between">
               <div className="flex h-full items-center">
@@ -81,7 +81,7 @@ function StakingModule() {
         </div>
       </div>
 
-      <div className="border-secondary font-khand flex items-center justify-end gap-8 border-t-2 bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 pr-8 text-xs font-semibold text-white md:gap-16 md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
+      <div className="font-khand flex items-center justify-end gap-8 border-t-2 border-[#CDCDE9] dark:border-secondary bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 pr-8 text-xs font-semibold text-white md:gap-16 md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
         You are Staking: 123,456,789
         <button className="flex cursor-pointer items-center gap-4 rounded-xl border-1 border-white bg-[#32138b] px-2 py-1 text-lg md:text-2xl">
           STAKE

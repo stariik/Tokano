@@ -30,7 +30,7 @@ function LaunchingSoon({ isMobile = false }) {
 
   if (isMobile) {
     return (
-      <div className="border-secondary">
+      <div className="border-[#CDCDE9] dark:border-secondary">
         <div className="space-y-2 px-2">
           {cardData.map((item) => (
             <div key={item.id}>
@@ -43,9 +43,9 @@ function LaunchingSoon({ isMobile = false }) {
   }
 
   return (
-    <div className="hidden lg:block border-2 border-secondary">
+    <div className="hidden lg:block border-2 border-[#CDCDE9] dark:border-secondary">
       <div
-        className={`border-b-2 border-secondary flex justify-center py-4 text-2xl font-khand font-semibold ${
+        className={`border-b-2 border-[#CDCDE9] dark:border-secondary flex justify-center py-4 text-2xl font-khand font-semibold ${
           resolvedTheme === "dark"
             ? "dark-custom-header-gradient"
             : "custom-header-gradient text-primary"

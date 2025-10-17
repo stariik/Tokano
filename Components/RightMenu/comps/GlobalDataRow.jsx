@@ -6,7 +6,7 @@ function GlobalDataRow() {
 
   return (
     <div
-      className="font-khand grid grid-cols-10 border-2 border-[#7B3FE4] text-base font-normal text-[#190E79] dark:text-white"
+      className="-m-0.5 font-khand grid grid-cols-10 border-2 dark:border-secondary border-[#CDCDE9] text-base font-normal text-[#190E79] dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -15,11 +15,11 @@ function GlobalDataRow() {
       }}
     >
       {/* Left label */}
-      <div className="col-span-2 flex flex-col items-center justify-center border-r-2 border-[#7B3FE4] py-1 text-lg">
+      <div className="col-span-2 flex flex-col items-center justify-center border-r-2 border-[#CDCDE9] dark:border-secondary py-1 text-lg">
         VESTED
       </div>
       {/* Supply and holders */}
-      <div className="col-span-3 flex flex-col justify-center border-r-2 border-[#7B3FE4] px-2 py-1 text-xs md:text-lg">
+      <div className="col-span-3 flex flex-col justify-center border-r-2 border-[#CDCDE9] dark:border-secondary px-2 py-1 text-xs md:text-lg">
         <div>
           supply: <span className="ml-2">1.00073B</span>
         </div>

@@ -86,22 +86,22 @@ function Details() {
 
   return (
     <div>
-      <div className="border-2 border-t-1 md:border-t-0 border-secondary">
+      <div className="border-2 border-t-1 md:border-t-0 border-[#CDCDE9] dark:border-secondary">
         <div className="bg-gradient-to-r dark:from-[#2f01ba] dark:to-[#0C0D1C] from-[#9876ff] to-white px-4 py-3">
           <h2 className="text-xl">Details</h2>
         </div>
 
         {/* Header Row */}
         <div className="grid grid-cols-2 bg-white text-sm font-semibold text-[#190E79] md:grid-cols-3 dark:bg-[#2A1C78] dark:text-white">
-          <div className="border-secondary flex items-center justify-center border-y bg-[#4244C4] py-2 text-white dark:bg-[#2A1C78]">
+          <div className="border-[#CDCDE9] dark:border-secondary flex items-center justify-center border-y bg-[#4244C4] py-2 text-white dark:bg-[#2A1C78]">
             <span className="text-red-500">/-Un/</span>Staked (Period)
           </div>
-          <div className="border-secondary hidden items-center justify-center border-1 text-center md:flex">
+          <div className="border-[#CDCDE9] dark:border-secondary hidden items-center justify-center border-1 text-center md:flex">
             select position to unstake
             <br />
             or claim reward
           </div>
-          <div className="border-secondary flex items-center justify-center border-y bg-[#4244C4] text-white dark:bg-[#2A1C78]">
+          <div className="border-[#CDCDE9] dark:border-secondary flex items-center justify-center border-y bg-[#4244C4] text-white dark:bg-[#2A1C78]">
             Rewards (Last)
           </div>
         </div>
@@ -123,7 +123,7 @@ function Details() {
           {/* Fixed continuous middle column background */}
           <div className="absolute inset-0 z-0 grid grid-cols-3">
             <div></div>
-            <div className="border-secondary hidden border-x bg-gradient-to-b from-white to-[#e7e7e7] md:block dark:from-[#4000FF] dark:to-[#0C0D1C]"></div>
+            <div className="border-[#CDCDE9] dark:border-secondary hidden border-x bg-gradient-to-b from-white to-[#e7e7e7] md:block dark:from-[#4000FF] dark:to-[#0C0D1C]"></div>
             <div></div>
           </div>
 
@@ -151,7 +151,7 @@ function Details() {
                 }`}
               >
                 <div className="flex cursor-pointer">
-                  <div className="border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r">
+                  <div className="border-[#CDCDE9] dark:border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r">
                     <span className="text-sm font-semibold text-[#190E79] dark:text-white">
                       {index + 1}
                     </span>
@@ -186,7 +186,7 @@ function Details() {
                     {popup.type === "claim" && (
                       <div className="absolute top-1/2 left-full h-px w-8 -translate-y-1/2 transform bg-purple-400"></div>
                     )}
-                    <div className="border-secondary min-w-[160px] rounded-lg border-2 bg-[#eeeded] p-4 text-center shadow-xl dark:bg-[#0C0D1C]">
+                    <div className="border-[#CDCDE9] dark:border-secondary min-w-[160px] rounded-lg border-2 bg-[#eeeded] p-4 text-center shadow-xl dark:bg-[#0C0D1C]">
                       <div className="mb-3">
                         <div className="text-sm font-semibold text-[#190E79] dark:text-white">
                           {popup.type === "unstake" ? "UNSTAKE?" : "CLAIM?"}
@@ -229,7 +229,7 @@ function Details() {
                   </div>
                 )}
                 <div
-                  className="border-secondary mr-3 cursor-pointer border-r text-center hover:bg-[#f5f3fb] md:text-lg dark:hover:bg-[#2A1C78]"
+                  className="border-[#CDCDE9] dark:border-secondary mr-3 cursor-pointer border-r text-center hover:bg-[#f5f3fb] md:text-lg dark:hover:bg-[#2A1C78]"
                   onClick={() =>
                     setPopup({
                       show: true,
@@ -249,7 +249,7 @@ function Details() {
         </div>
 
         {/* History Button */}
-        <div className="border-secondary relative z-50 mb-2 border-y-1 bg-[#4244C4] px-4 py-1 text-center dark:bg-[#2A1C78]">
+        <div className="border-[#CDCDE9] dark:border-secondary relative z-50 mb-2 border-y-1 bg-[#4244C4] px-4 py-1 text-center dark:bg-[#2A1C78]">
           <button className="font-semibold text-white">▼ History</button>
         </div>
       </div>

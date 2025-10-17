@@ -25,8 +25,8 @@ export default function Home() {
             <Live />
           </div>
           <div className="col-span-2">
-            <div className="border-secondary w-full border-x-2 border-b-2">
-              <div className="border-secondary flex w-full justify-center border-b bg-[#eeeded] bg-[radial-gradient(circle,_rgba(238,237,237,1)_29%,_rgb(233_198_255)_100%)] py-2 text-2xl dark:bg-[#14121f] dark:bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)]">
+            <div className="border-[#CDCDE9] dark:border-secondary w-full border-x-2 border-b-2">
+              <div className="border-[#CDCDE9] dark:border-secondary flex w-full justify-center border-b bg-[#eeeded] bg-[radial-gradient(circle,_rgba(238,237,237,1)_29%,_rgb(233_198_255)_100%)] py-2 text-2xl dark:bg-[#14121f] dark:bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)]">
                 <p className="font-khand font-medium text-[#464B7E] dark:text-white">
                   PLATFORM STATS
                 </p>
@@ -77,7 +77,7 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className={`[writing-mode:vertical-rl] lg:hidden fixed bottom-22 left-0 z-70 bg-white border-r-1 border-x-1 border-secondary text-[#190E79] flex flex-col items-center justify-center px-2 py-1 rounded-r-lg shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
+        className={`[writing-mode:vertical-rl] lg:hidden fixed bottom-22 left-0 z-70 bg-white border-r-1 border-x-1 border-[#CDCDE9] dark:border-secondary text-[#190E79] flex flex-col items-center justify-center px-2 py-1 rounded-r-lg shadow-2xl font-bold text-sm hover:shadow-xl transition-all duration-300 ease-in-out ${
           isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
         id="left-menu-button"
@@ -93,7 +93,7 @@ export default function Home() {
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div
-            className={`bg-dark border-secondary fixed top-0 left-0 flex h-screen w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] rounded-br-[2.5rem] border-r-2 transition-transform duration-300 ease-in-out ${
+            className={`bg-dark border-[#CDCDE9] dark:border-secondary fixed top-0 left-0 flex h-screen w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] rounded-br-[2.5rem] border-r-2 transition-transform duration-300 ease-in-out ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             }`}
             onClick={(e) => e.stopPropagation()}
@@ -102,7 +102,7 @@ export default function Home() {
               borderBottomRightRadius: "2.5rem",
             }}
           >
-            <div className="border-secondary bg-dark flex flex-shrink-0 items-center justify-between border-b p-4">
+            <div className="border-[#CDCDE9] dark:border-secondary bg-dark flex flex-shrink-0 items-center justify-between border-b p-4">
               <h2 className="font-khand text-xl font-semibold">
                 LAUNCHING SOON
               </h2>

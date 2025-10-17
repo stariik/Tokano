@@ -9,7 +9,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
   return (
     <div className="max-w-4xl lg:mx-auto bg-[#C7C1F5] dark:bg-[#231570] rounded-3xl overflow-hidden font-sans shadow-2xl">
       {/* Header */}
-      <div className="dark:border-secondary flex items-center justify-between border-b border-white bg-[#C7C1F5] px-6 py-3 dark:bg-[#231570]">
+      <div className="flex items-center justify-between border-b border-[#CDCDE9] dark:border-secondary bg-[#C7C1F5] px-6 py-3 dark:bg-[#231570]">
         <h1 className="font-khand text-base font-bold tracking-wide text-[#190E79] lg:text-2xl dark:text-white">
           YOUR WALLET
         </h1>
@@ -22,7 +22,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
       <div className="px-1 md:px-2 lg:px-4">
         <div className="grid grid-cols-2 gap-1 md:gap-4">
           {/* Token List - Left Side */}
-          <div className="border-opacity-40 dark:border-secondary border-x border-white px-0 pb-1 md:px-2">
+          <div className="border-opacity-40 border-x border-[#CDCDE9] dark:border-secondary px-0 pb-1 md:px-2">
             <div className="dark:[&::-webkit-scrollbar-thumb]:bg-opacity-30 max-h-[270px] space-y-1.5 overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#190E79] dark:[&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-track]:bg-transparent">
               {tokens.map((token, index) => (
                 <div
@@ -30,7 +30,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
                   onClick={() => setSelectedToken(token.id)}
                   className={`flex cursor-pointer items-center border px-1.5 py-1.5 transition-all duration-200 ${
                     selectedToken === token.id
-                      ? "border-opacity-60 dark:bg-secondary dark:bg-opacity-10 dark:border-secondary mr-1 rounded-md border-white bg-[#ddd9f9] md:mr-2"
+                      ? "border-opacity-60 dark:bg-secondary dark:bg-opacity-10 mr-1 rounded-md border-[#CDCDE9] dark:border-secondary bg-[#ddd9f9] md:mr-2"
                       : "hover:bg-opacity-50 dark:hover:bg-secondary dark:hover:bg-opacity-10 mr-1 rounded-md border-transparent hover:bg-[#ddd9f9] md:mr-2"
                   }`}
                 >
@@ -50,7 +50,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
           {/* Token Details - Right Side */}
           <div className="">
             {/* Balance Display */}
-            <div className="border-opacity-40 dark:border-secondary flex items-center justify-end border-x border-white p-3">
+            <div className="border-opacity-40 flex items-center justify-end border-x border-[#CDCDE9] dark:border-secondary p-3">
               <div className="text-right">
                 <div className="font-khand text-base font-bold text-[#190E79] md:text-sm lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
                   {selectedTokenData?.balance} {selectedTokenData?.ticker}
@@ -59,7 +59,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
             </div>
 
             {/* Token Information */}
-            <div className="border-opacity-40 dark:border-secondary h-full flex-1 border-x border-t border-white p-2 md:p-4">
+            <div className="border-opacity-40 h-full flex-1 border-x border-t border-[#CDCDE9] dark:border-secondary p-2 md:p-4">
               <div className="space-y-2">
                 <div>
                   <span className="font-khand text-sm font-semibold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
@@ -100,7 +100,7 @@ function CryptoWallet({ selectedToken, setSelectedToken, tokens }) {
 
         {/* Solana Balance - Bottom */}
       </div>
-      <div className="border-opacity-40 dark:border-secondary relative z-10 border-t border-white bg-[#ddd9f9] px-6 py-2 dark:bg-[#231570]">
+      <div className="border-opacity-40 relative z-10 border-t border-[#CDCDE9] dark:border-secondary bg-[#ddd9f9] px-6 py-2 dark:bg-[#231570]">
         <div className="flex items-center">
           <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-blue-600">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">

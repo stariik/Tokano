@@ -439,7 +439,7 @@ function Navbar() {
           </button>
           <button
             onClick={cycleTheme}
-            className="border-secondary ml-12 flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition hover:opacity-70"
+            className="border-[#CDCDE9] dark:border-secondary ml-12 flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition hover:opacity-70"
             title={`Current: ${theme} mode. Click to change`}
           >
             <span className="text-xl">{getThemeIcon()}</span>
