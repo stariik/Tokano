@@ -95,18 +95,20 @@ export default function Home() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="menu-overlay-active fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="menu-overlay-active fixed z-30 bg-black/60 lg:hidden"
+          style={{ top: "3rem", bottom: 0, left: 0, right: 0 }}
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div
-            className={`bg-dark dark:border-secondary fixed top-0 left-0 flex h-screen w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] rounded-br-[2.5rem] border-r-2 border-[#CDCDE9] transition-transform duration-300 ease-in-out ${
+            className={`bg-dark dark:border-secondary fixed left-0 flex w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] transition-transform duration-300 ease-in-out top-13 ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             }`}
-            onClick={(e) => e.stopPropagation()}
             style={{
               borderTopRightRadius: "2.5rem",
-              borderBottomRightRadius: "2.5rem",
+              bottom: 0,
+              height: "auto",
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="dark:border-secondary bg-dark flex flex-shrink-0 items-center justify-between border-b border-[#CDCDE9] p-4">
               <h2 className="font-khand text-xl font-semibold">
