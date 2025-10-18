@@ -11,7 +11,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
-      className="h-[47px] w-[47px] lg:h-[57px] lg:w-[80px]"
+      className="h-[47px] w-[47px] lg:h-[50px] lg:w-[50px] xl:h-[57px] xl:w-[57px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -67,16 +67,16 @@ function LockCard({ id, title, created, marketCap, wallet }) {
               : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
         }}
       >
-        <div className="absolute top-6 right-6">
+        <div className="absolute top-6 right-4">
           <StarIcon />
         </div>
         <div className="flex w-full flex-col">
           <div className="flex w-full items-center justify-between pr-2 md:pr-4">
             <CiPill
               color="#5ecb89"
-              size={30}
+              size={24}
             />
-            <h1 className="md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl">
+            <h1 className="xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl">
               {title}
             </h1>
           </div>
@@ -92,17 +92,17 @@ function LockCard({ id, title, created, marketCap, wallet }) {
         <div className="flex flex-col justify-start">
           <img
             src="/vest.png"
-            className="mr-28 mb-4 w-20 rounded-2xl md:mr-30 lg:w-28 lg:rounded-3xl"
+            className="mr-26 mb-4 w-20 rounded-2xl lg:rounded-3xl xl:w-24 2xl:w-28"
           />
 
           {/*  */}
 
           <div className="absolute -bottom-6 left-0 z-5 flex w-11/13">
-            <div className="mx-4 flex items-center text-xl lg:text-3xl">
+            <div className="mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
               LOCK
             </div>
             <StakeIcon />
-            <div className="my-auto flex w-full flex-col text-xs lg:text-sm">
+            <div className=":text-sm my-auto flex w-full flex-col text-xs">
               <div
                 className="-z-1 -ml-2 flex w-full justify-between rounded-full bg-[#e3f2fd] pr-4 pl-4 text-white dark:bg-transparent"
                 style={{

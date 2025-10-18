@@ -13,7 +13,7 @@ function VestCard({ id, title, created, marketCap, wallet }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 80 80"
-      className="h-[57px] w-[57px] lg:h-[80px] lg:w-[80px]"
+      className="h-[57px] w-[57px] xl:h-[80px] xl:w-[80px]"
       fill="none"
     >
       <circle
@@ -60,20 +60,20 @@ function VestCard({ id, title, created, marketCap, wallet }) {
               : "linear-gradient(45deg, #EFEFEF 30%, #9F4EA3 100%)",
         }}
       >
-        <div className="absolute top-6 right-6">
+        <div className="absolute top-6 right-4">
           <StarIcon />
         </div>
         <div className="flex w-full flex-col">
           <div className="flex w-full items-center justify-between pr-4">
             <CiPill
               color="#5ecb89"
-              size={30}
+              size={24}
             />
             <h1 className="xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl">
               {title}
             </h1>
           </div>
-          <div className="font-khand mt-2 pr-4 text-right font-normal">
+          <div className="font-khand mt-2 pr-4 text-right text-sm font-normal xl:text-base 2xl:text-lg">
             <p>
               <span className="font-semibold">Pool ID: </span> {wallet}
             </p>
@@ -85,17 +85,15 @@ function VestCard({ id, title, created, marketCap, wallet }) {
         <div className="flex flex-col justify-start">
           <img
             src="/vest.png"
-            className="mr-26 mb-4 w-20 rounded-2xl lg:w-28 lg:rounded-3xl"
+            className="mr-26 mb-4 w-20 rounded-2xl lg:rounded-3xl xl:w-24 2xl:w-28"
           />
 
-          {/*  */}
-
           <div className="absolute -bottom-6 left-4 z-2 flex w-7/10">
-            <div className="mx-4 flex items-center text-xl lg:text-3xl">
+            <div className="mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
               VEST
             </div>
             <VestIcon />
-            <div className="my-auto flex w-full flex-col text-xs lg:text-sm">
+            <div className="my-auto flex w-full flex-col text-xs xl:text-sm">
               <div
                 className="-z-1 -ml-2 flex justify-end rounded-full bg-[#e3f2fd] pr-1 pl-1 text-white dark:bg-transparent"
                 style={{
@@ -111,7 +109,7 @@ function VestCard({ id, title, created, marketCap, wallet }) {
                     );
                   }
                 `}</style>
-                <div className="font-khand font-normal">
+                <div className="font-khand font-normal lg:pr-1 xl:pr-0">
                   TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" /> CLIFF:
                   |5d
                 </div>
@@ -123,9 +121,9 @@ function VestCard({ id, title, created, marketCap, wallet }) {
         </div>
         <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">120M</p>
       </div>
-      <div className="flex items-center justify-end gap-6 pr-4 pb-2">
+      <div className="flex items-center justify-end gap-2 pr-4 pb-2 xl:gap-6">
         <div
-          className="font-khand mt-1 flex rounded-xl bg-[#e3f2fd] px-2 py-0 text-xs font-normal text-white md:text-sm dark:bg-transparent"
+          className="font-khand mt-2 flex rounded-xl bg-[#e3f2fd] px-2 py-0 text-xs font-normal text-white xl:text-sm dark:bg-transparent"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}

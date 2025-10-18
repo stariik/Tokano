@@ -18,7 +18,7 @@ function StakeCard({
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
-      className="h-[47px] w-[47px] lg:h-[57px] lg:w-[57px]"
+      className="h-[47px] w-[47px] lg:h-[50px] lg:w-[50px] xl:h-[57px] xl:w-[57px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -70,11 +70,11 @@ function StakeCard({
         <div className="absolute top-4 right-4 md:top-6 md:right-6">
           <CiPill
             color="#5ecb89"
-            size={25}
-            className="md:h-[30px] md:w-[30px]"
+            size={24}
+            // className="md:h-[30px] md:w-[30px]"
           />
         </div>
-        <div className="font-khand absolute top-12 right-0 rounded-l-2xl bg-[#2B923E] pl-2 text-xs font-normal text-white md:top-16 md:text-sm dark:bg-[#2B923E]">
+        <div className="font-khand absolute top-12 right-0 rounded-l-2xl bg-[#2B923E] pl-2 text-xs font-normal text-white md:top-16 xl:text-sm dark:bg-[#2B923E]">
           21.04.25/12:24
         </div>
         <div className="absolute top-2/3 right-4 -translate-y-1/2 transform md:right-6">
@@ -84,17 +84,17 @@ function StakeCard({
         <div className="relative ml-2 flex flex-col justify-start md:ml-0 lg:ml-2">
           <img
             src="/fired.png"
-            className="mr-4 w-20 rounded-2xl md:mr-4 md:w-24 md:rounded-3xl lg:mr-2 lg:w-38 lg:rounded-4xl"
+            className="mr-4 w-20 rounded-2xl md:mr-4 md:w-24 md:rounded-3xl lg:mr-2 lg:w-32 lg:rounded-4xl"
           />
-          <div className="mt-8 lg:mt-6">
+          <div className="mt-8 lg:mt-6 xl:mt-8">
             <div className="absolute left-0 z-5 flex w-80">
-              <div className="mx-3 flex items-center text-xl lg:text-3xl">
+              <div className="mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
                 STAKE
               </div>
               <StakeIcon />
-              <div className="mt-2 flex flex-col text-xs text-white lg:text-sm">
+              <div className="mt-2 flex flex-col text-xs text-white xl:text-sm">
                 <div
-                  className={`${variant === "portfolio" ? "pr-6" : "pr-12 xl:pr-14 2xl:pr-24"} -z-1 -ml-6 rounded-full pl-8`}
+                  className={`${variant === "portfolio" ? "pr-6" : "pr-12 xl:pr-14 2xl:pr-18"} -z-1 -ml-6 rounded-full pl-8`}
                   style={{
                     background:
                       resolvedTheme === "dark"
@@ -122,11 +122,11 @@ function StakeCard({
         </div>
         <div className="mb-6 flex w-full flex-col pr-8">
           <div className="flex w-full items-center justify-start pl-2 md:pl-4">
-            <h1 className="text-lg lg:text-2xl 2xl:text-3xl [@media(min-width:1610px)]:text-4xl">
+            <h1 className="xl:text-2xl 2xl:text-3xl [@media(min-width:1700px)]:text-4xl">
               {title}
             </h1>
           </div>
-          <div className="font-khand mt-1 pl-2 text-left text-xs font-normal md:mt-2 md:pl-4 lg:text-base">
+          <div className="font-khand mt-1 pl-2 text-left text-xs font-normal md:mt-2 md:pl-4 xl:text-base">
             <p>
               <span className="font-semibold">Pool ID: </span> {wallet}
             </p>
