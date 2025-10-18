@@ -10,7 +10,7 @@ import { MdStar } from "react-icons/md";
 
 const StakeIcon = () => (
   <svg
-    className="h-[47px] w-[47px] lg:h-[57px] lg:w-[57px]"
+    className="h-[34px] w-[34px] lg:h-[38px] lg:w-[38px] xl:h-[47px] xl:w-[47px]"
     viewBox="0 0 57 57"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +44,7 @@ function SoonCard({ id }) {
   return (
     <Link
       href={`/card/soon`}
-      className="text-primary block rounded-4xl pb-4 transition hover:opacity-90 lg:pb-8 dark:text-white"
+      className="text-primary block rounded-4xl pb-4 transition hover:opacity-90 lg:pb-4 xl:pb-8 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -65,7 +65,7 @@ function SoonCard({ id }) {
           <img
             src="/image.png"
             alt=""
-            className="mt-2 ml-4 w-24 rounded-4xl md:mt-4 md:ml-8 lg:w-36"
+            className="mt-2 ml-4 w-24 rounded-4xl md:mt-4 md:ml-8 lg:ml-4 lg:w-28 xl:ml-4 xl:w-36"
           />
         </div>
 
@@ -73,19 +73,18 @@ function SoonCard({ id }) {
           <div className="relative flex w-1/5 justify-center md:w-1/4 md:pl-0">
             <CiPill
               color="#5ecb89"
-              size={25}
-              className="absolute top-1"
+              className="absolute top-1 xl:h-6 xl:w-6"
             />
           </div>
           <div className="flex-col items-center justify-center text-center">
-            <p className="text-md font-khand mt-2 font-semibold md:text-lg lg:text-xl 2xl:text-2xl">
+            <p className="text-md font-khand mt-2 font-semibold md:text-lg lg:text-base xl:text-xl 2xl:text-2xl">
               YOU'RE FIRED (FIRED)
             </p>
-            <h1 className="font-khand text-xl font-bold md:text-2xl lg:mt-4 lg:text-3xl 2xl:text-4xl">
+            <h1 className="font-khand text-xl font-bold md:text-2xl lg:mt-4 lg:text-2xl 2xl:text-4xl">
               LAUNCHING SOON
             </h1>
             <p
-              className="font-khand mx-auto mt-2 w-38 rounded-2xl text-xs font-semibold text-[#311880] lg:w-48 lg:text-sm"
+              className="font-khand mx-auto mt-2 w-38 rounded-2xl text-xs font-semibold text-[#311880] lg:w-38 lg:text-sm xl:w-48"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -95,31 +94,31 @@ function SoonCard({ id }) {
             >
               LAUNCHING IN : 23d 45h 12m
             </p>
-            <div className="absolute top-1/2 right-0.5 xl:right-4">
+            <div className="absolute top-1/2 right-0.5 xl:right-2 2xl:right-4">
               {/* <StarIcon />  */}
               <MdStar
                 color={resolvedTheme === "dark" ? "white" : "#F92C9D"}
-                size={30}
+                className="xl:h-6 xl:w-6"
               />
             </div>
           </div>
         </div>
         <div className="relative mx-auto my-6">
-          <div className="absolute -top-[20px] -left-[30px] flex gap-2 lg:-left-[50px]">
-            <div className="font-khand mt-4 text-xl font-semibold lg:text-3xl">
+          <div className="absolute -top-[20px] -left-[35px] flex gap-2 lg:-left-[40px] xl:-left-[50px]">
+            <div className="font-khand mt-4 font-semibold lg:text-xl xl:text-2xl 2xl:text-3xl">
               STAKE
             </div>
-            <div className="z-10 rounded-full bg-[#f5f3fb] p-1 pr-0 pl-2 dark:bg-[#2A1C7B]">
+            <div className="z-10 mt-2 rounded-full bg-[#f5f3fb] p-1 pr-0 pl-2 lg:mt-1 xl:mt-0 dark:bg-[#2A1C7B]">
               <StakeIcon />
             </div>
           </div>
           <div className="absolute top-[20px] left-[80px] h-[3px] rounded-full bg-gradient-to-r from-[#002382] from-25% to-[#8B0000] xl:w-[100px] 2xl:w-[280px] dark:from-[#190E79] [@media(min-width:1720px)]:w-[330px]"></div>
         </div>
-        <div className="font-khand mt-4 pl-4 text-xs lg:text-base">
-          Pool ID: 0xdlc3…ezx41
+        <div className="font-khand mt-4 pl-1 text-xs lg:pl-2 xl:pl-4 2xl:text-base">
+          Pool ID: 0xdl3…ezx41
         </div>
-        <div className="font-khand mt-4 text-xs lg:text-base">
-          Token ID: 0xfca9…ed1d
+        <div className="font-khand mt-4 text-xs 2xl:text-base">
+          Token ID: 0xfc9…ed1d
         </div>
       </div>
     </Link>

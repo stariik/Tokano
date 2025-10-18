@@ -18,7 +18,7 @@ export default function Home() {
   }, [tokens]);
 
   return (
-    <main className="dark:bg-dark text-light relative bg-white px-2 py-8 lg:px-6 lg:py-6">
+    <main className="dark:bg-dark relative bg-white px-2 py-8 lg:px-2 lg:py-6">
       <div className="">
         <div className="grid lg:grid-cols-3 lg:gap-2 xl:gap-4">
           <div className="col-span-2 lg:grid lg:grid-cols-2 gap-2 xl:gap-4">
