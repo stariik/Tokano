@@ -85,7 +85,7 @@ function Details() {
           {/* Data Rows Container with scroll in third column */}
           <div
             ref={scrollContainerRef}
-            className="scrollbar-thin relative z-10 max-h-[440px] overflow-x-hidden overflow-y-auto"
+            className="scrollbar-thin relative z-10 max-h-[440px] overflow-x-hidden overflow-y-scroll"
             style={{
               scrollBehavior: "auto",
               scrollbarWidth: "thin",
@@ -194,7 +194,7 @@ function Details() {
                   </div>
                 )}
                 <div
-                  className="border-[#CDCDE9] dark:border-secondary mr-3 cursor-pointer border-r text-center hover:bg-[#f5f3fb] md:text-lg dark:hover:bg-[#2A1C78]"
+                  className="border-[#CDCDE9] dark:border-secondary cursor-pointer border-r text-center md:text-lg"
                   onClick={() =>
                     setPopup({
                       show: true,
@@ -214,7 +214,7 @@ function Details() {
         </div>
 
         {/* History Button */}
-        <div className="border-[#CDCDE9] dark:border-secondary relative z-50 mb-2 border-y-1 bg-[#4244C4] px-4 py-1 text-center dark:bg-[#2A1C78]">
+        <div className="border-[#CDCDE9] dark:border-secondary relative z-50 mb-2 border-y-1 bg-[#4244C4]  px-4 py-1 text-center dark:bg-[#2A1C78]">
           <button className="font-semibold text-white">▼ History</button>
         </div>
       </div>

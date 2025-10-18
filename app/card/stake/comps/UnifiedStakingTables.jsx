@@ -44,11 +44,11 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
           <div className="border-[#CDCDE9] dark:border-secondary border-r">
             <div className="absolute inset-0 grid grid-cols-2">
               <div></div>
-              <div className="-l border-[#CDCDE9] dark:border-secondary"></div>
+              <div className=""></div>
             </div>
           </div>
           {/* Right table background */}
-          <div>
+          <div className="">
             <div className="absolute inset-0 grid grid-cols-2">
               <div></div>
               <div className="-l border-[#CDCDE9] dark:border-secondary"></div>
@@ -59,7 +59,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
         {/* Single Scrollable Data Container */}
         <div
           ref={scrollRef}
-          className="scrollbar-thin relative z-10 max-h-[440px] overflow-x-hidden overflow-y-auto"
+          className="scrollbar-thin relative z-10 max-h-[440px] overflow-x-hidden overflow-y-scroll"
           style={{
             scrollBehavior: "auto",
             scrollbarWidth: "thin",
@@ -88,7 +88,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
               className="font-khand grid grid-cols-2 gap-4 font-medium"
             >
               {/* Left Table Row - Positions & Unstake */}
-              <div className="border-[#CDCDE9] dark:border-secondary border-r">
+              <div className="">
                 <div
                   ref={(el) => (itemRefs.current[index] = el)}
                   className={`relative grid grid-cols-2 border-purple-300 text-sm ${
@@ -106,7 +106,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                     }
                   >
                     <div className="border-[#CDCDE9] dark:border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r">
-                      <span className="font-khand text-sm font-medium font-semibold text-[#190E79] dark:text-white">
+                      <span className="font-khand text-sm font-medium lg:font-semibold text-[#190E79] dark:text-white">
                         {index + 1}
                       </span>
                     </div>
@@ -133,7 +133,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                             </div>
                             <div className="flex flex-col space-y-2">
                               <button
-                                className="rounded-full bg-red-500 px-6 py-1 text-sm font-bold text-[#190E79] hover:bg-red-600 lg:py-2 dark:text-white"
+                                className="rounded-full bg-red-500 px-6 py-1 text-sm font-bold hover:bg-red-600 lg:py-2 text-white"
                                 onClick={() => {
                                   console.log(
                                     `unstake YES for position ${popup.positionId}`,
@@ -148,7 +148,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                                 YES
                               </button>
                               <button
-                                className="rounded-full bg-gray-600 px-6 py-1 text-sm font-bold text-[#190E79] hover:bg-gray-700 lg:py-2 dark:text-white"
+                                className="rounded-full bg-gray-600 px-6 py-1 text-sm font-bold hover:bg-gray-700 lg:py-2 text-white"
                                 onClick={() =>
                                   setPopup({
                                     show: false,
@@ -170,12 +170,12 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
               {/* Right Table Row - Rewards & Claim */}
               <div>
                 <div
-                  className={`relative grid grid-cols-2 border-purple-300 text-sm ${
+                  className={`relative grid grid-cols-2 border-purple-300 text-sm ml-1 ${
                     position.highlight ? "" : ""
                   }`}
                 >
                   <div
-                    className="border-[#CDCDE9] dark:border-secondary min-w-full cursor-pointer border-x-1 p-2 text-center hover:bg-[#f5f3fb] md:text-lg dark:hover:bg-[#2A1C78]"
+                    className="border-[#CDCDE9] dark:border-secondary cursor-pointer border-x-1 p-2 text-center hover:bg-[#f5f3fb] md:text-lg dark:hover:bg-[#2A1C78]"
                     onClick={() =>
                       setPopup({
                         show: true,
@@ -206,7 +206,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                             </div>
                             <div className="flex flex-col space-y-2">
                               <button
-                                className="rounded-full bg-green-500 px-6 py-1 text-sm font-bold text-[#190E79] hover:bg-green-600 lg:py-2 dark:text-white"
+                                className="rounded-full bg-green-500 px-6 py-1 text-sm font-bold  hover:bg-green-600 lg:py-2 text-white"
                                 onClick={() => {
                                   console.log(
                                     `claim YES for position ${popup.positionId}`,
@@ -221,7 +221,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                                 YES
                               </button>
                               <button
-                                className="rounded-full bg-gray-600 px-6 py-1 text-sm font-bold text-[#190E79] hover:bg-gray-700 lg:py-2 dark:text-white"
+                                className="rounded-full bg-gray-600 px-6 py-1 text-sm font-bold  hover:bg-gray-700 lg:py-2 text-white"
                                 onClick={() =>
                                   setPopup({
                                     show: false,
