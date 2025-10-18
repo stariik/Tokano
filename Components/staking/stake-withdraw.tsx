@@ -2,8 +2,9 @@
 
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useCallback, useState } from "react";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { UserState } from "tokano-sdk";
+import { transactionListener } from "@/lib/balances";
 
 interface StakeWithdrawProps {
   selectedUserStakedAccount: UserState | null;
@@ -14,26 +15,48 @@ export default function StakeWithdraw({
   selectedUserStakedAccount,
   onAction,
 }: StakeWithdrawProps) {
-  const { publicKey } = useWallet();
   const { staking } = useTokano();
+  const { connection } = useConnection();
+  const { publicKey, signTransaction } = useWallet();
   const [unstakeAmount, setUnstakeAmount] = useState("");
 
   const handleGetReward = useCallback(async () => {
     if (!publicKey || !selectedUserStakedAccount) return;
 
     try {
-      const signature = await staking?.getReward({
+      const tx = await staking?.getReward({
         walletPk: publicKey,
         poolAddress: selectedUserStakedAccount.poolAddress,
       });
-      console.log("Get Reward Signature:", signature);
-      alert(`Get Reward successful! Signature: ${signature}`);
-      onAction();
+      // Always add recent blockhash
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+
+      // todo: transaction sent, we're waiting for the tx confirmation
+      transactionListener(connection, txId, (completed) => {
+        if (completed) {
+          // todo: show transaction completed notification
+        } else {
+          // todo: show transaction could not be completed notification
+        }
+        onAction();
+      });
     } catch (error) {
-      console.error("Error getting reward:", error);
-      alert(`Error getting reward: ${error}`);
+      // todo: show tx generation error
+      console.error("Error generating transaction:", error);
     }
-  }, [publicKey, selectedUserStakedAccount, staking, onAction]);
+  }, [
+    publicKey,
+    selectedUserStakedAccount,
+    staking,
+    connection,
+    signTransaction,
+    onAction,
+  ]);
 
   const handleUnstake = useCallback(async () => {
     if (!publicKey || !selectedUserStakedAccount || !unstakeAmount) return;
