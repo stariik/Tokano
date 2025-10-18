@@ -6,7 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { PoolState, UserState } from "tokano-sdk";
 import CreatePool from "@/Components/staking/create-pool";
 import CreateStake from "@/Components/staking/create-stake";
-import StakeWithdraw from "@/Components/staking/stake-withdraw";
+import StakeActions from "@/Components/staking/stake-actions";
 
 export default function StakingTestPage() {
   const { publicKey } = useWallet();
@@ -179,7 +179,7 @@ export default function StakingTestPage() {
               </div>
             )}
 
-            <StakeWithdraw
+            <StakeActions
               selectedUserStakedAccount={selectedUserStakedAccount}
               onAction={handleWithdrawAction}
             />

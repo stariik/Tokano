@@ -11,7 +11,7 @@ interface StakeWithdrawProps {
   onAction: () => void;
 }
 
-export default function StakeWithdraw({
+export default function StakeActions({
   selectedUserStakedAccount,
   onAction,
 }: StakeWithdrawProps) {
