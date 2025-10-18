@@ -5,7 +5,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useState } from "react";
 import { PublicKey } from "@solana/web3.js";
 import { BalanceLoadState, useBalances } from "@/contexts/balances-context";
-import { SOL_MINT } from "@/lib/balances";
+import { SOL_MINT, transactionListener } from "@/lib/balances";
 
 interface CreatePoolProps {
   onPoolCreated: () => void;
@@ -73,11 +73,18 @@ export default function CreatePool({ onPoolCreated }: CreatePoolProps) {
       const signedTx = await signTransaction(tx);
       const txId = await connection.sendRawTransaction(signedTx.serialize());
 
-      alert(`Pool created successfully! Signature: ${txId}`);
-      onPoolCreated(); // Refresh the pool list on the parent page
+      // todo: transaction sent, we're waiting for the tx confirmation
+      transactionListener(connection, txId, (completed) => {
+        if (completed) {
+          // todo: show transaction completed notification
+        } else {
+          // todo: show transaction could not be completed notification
+        }
+        onPoolCreated();
+      });
     } catch (error) {
-      console.error("Error creating pool:", error);
-      alert(`Error creating pool: ${error}`);
+      // todo: show tx generation error
+      console.error("Error generating transaction:", error);
     }
   }, [
     publicKey,
