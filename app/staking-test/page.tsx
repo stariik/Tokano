@@ -8,7 +8,7 @@ import CreatePool from "@/Components/staking/create-pool";
 import CreateStake from "@/Components/staking/create-stake";
 import StakeWithdraw from "@/Components/staking/stake-withdraw";
 
-export default function TestPage() {
+export default function StakingTestPage() {
   const { publicKey } = useWallet();
   const { staking } = useTokano();
   const [stakePools, setStakePools] = useState<PoolState[]>();

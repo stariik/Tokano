@@ -6,7 +6,7 @@ import {
 } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { TokenBalanceT } from "@/contexts/balances-context";
-import { blob, nu64, struct, u8 } from "@solana/buffer-layout";
+import { blob, nu64, struct } from "@solana/buffer-layout";
 
 export const SOL_MINT = "11111111111111111111111111111111";
 
@@ -138,4 +138,50 @@ export function rawAmountToUiString(amount: number, decimals: number) {
   }
 
   return integerPartString;
+}
+
+export type TransactionListenerCallbackProps = {
+  completed: boolean;
+  txId: string;
+};
+
+export function transactionListener(
+  connection: Connection,
+  txId: string,
+  callback: (
+    transactionListenerCallbackProps: TransactionListenerCallbackProps,
+  ) => void,
+  timeOut = 30_000,
+) {
+  let isAlreadySent = false;
+  let timer: number | null = setTimeout(async () => {
+    const txResult = await connection.getTransaction(txId, {
+      commitment: "confirmed",
+      maxSupportedTransactionVersion: 0,
+    });
+    if (!timer) return;
+    if (!isAlreadySent) {
+      isAlreadySent = true;
+      callback({
+        completed: !!txResult && (!txResult.meta || txResult.meta.err === null),
+        txId,
+      });
+    }
+  }, timeOut);
+
+  connection.onSignature(
+    txId,
+    (txResult) => {
+      if (timer) clearTimeout(timer);
+      timer = null;
+      if (!isAlreadySent) {
+        isAlreadySent = true;
+        callback({
+          completed: !!txResult && txResult.err === null,
+          txId,
+        });
+      }
+    },
+    "confirmed",
+  );
 }

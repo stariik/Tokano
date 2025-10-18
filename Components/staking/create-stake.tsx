@@ -5,6 +5,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useState } from "react";
 import { PoolState, UserState } from "tokano-sdk";
 import { useBalances } from "@/contexts/balances-context";
+import { transactionListener } from "@/lib/balances";
 
 interface CreateStakeProps {
   stakePools: PoolState[] | undefined;
@@ -67,11 +68,18 @@ export default function CreateStake({
       const signedTx = await signTransaction(tx);
       const txId = await connection.sendRawTransaction(signedTx.serialize());
 
-      alert(`Staked successfully! Signature: ${txId}`);
-      onStakeCreated();
+      // todo: transaction sent, we're waiting for the tx confirmation
+      transactionListener(connection, txId, (completed) => {
+        if (completed) {
+          // todo: show transaction completed notification
+        } else {
+          // todo: show transaction could not be completed notification
+        }
+        onStakeCreated();
+      });
     } catch (error) {
-      console.error("Error staking:", error);
-      alert(`Error staking: ${error}`);
+      // todo: show tx generation error
+      console.error("Error generating transaction:", error);
     }
   }, [
     publicKey,
