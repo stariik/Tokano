@@ -59,16 +59,26 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
         {/* Single Scrollable Data Container */}
         <div
           ref={scrollRef}
-          className="relative z-10 max-h-[440px] overflow-x-hidden overflow-y-auto"
+          className="scrollbar-thin relative z-10 max-h-[440px] overflow-x-hidden overflow-y-auto"
           style={{
             scrollBehavior: "auto",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
+            scrollbarWidth: "thin",
+            scrollbarColor: "#a855f7 transparent",
           }}
         >
           <style jsx>{`
             div::-webkit-scrollbar {
-              display: none;
+              width: 6px;
+            }
+            div::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            div::-webkit-scrollbar-thumb {
+              background-color: #a855f7;
+              border-radius: 3px;
+            }
+            div::-webkit-scrollbar-thumb:hover {
+              background-color: #9333ea;
             }
           `}</style>
 

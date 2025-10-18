@@ -11,7 +11,6 @@ function MyStaking() {
   });
 
   const scrollContainerRef = useRef(null);
-  const scrollIndicatorRef = useRef(null);
   const itemRefs = useRef([]);
 
   const handleScrollSnap = () => {
@@ -34,55 +33,23 @@ function MyStaking() {
     }
   };
 
-  const updateScrollIndicator = () => {
-    if (!scrollContainerRef.current || !scrollIndicatorRef.current) return;
-
-    const container = scrollContainerRef.current;
-    const indicator = scrollIndicatorRef.current;
-
-    if (container.scrollHeight <= container.clientHeight) {
-      indicator.style.display = "none";
-      return;
-    }
-
-    indicator.style.display = "block";
-    const scrollPercentage =
-      container.scrollTop / (container.scrollHeight - container.clientHeight);
-    const trackHeight = container.clientHeight;
-    const thumbHeight = Math.max(
-      (container.clientHeight / container.scrollHeight) * trackHeight,
-      20,
-    );
-    const maxTop = trackHeight - thumbHeight;
-
-    indicator.style.height = `${thumbHeight}px`;
-    indicator.style.top = `${scrollPercentage * maxTop}px`;
-  };
-
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
     let scrollTimeout;
-    let animationFrame;
 
     const handleScroll = () => {
-      // Update indicator immediately without lag
-      if (animationFrame) cancelAnimationFrame(animationFrame);
-      animationFrame = requestAnimationFrame(updateScrollIndicator);
-
       // Handle snap with timeout
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(handleScrollSnap, 150);
     };
 
     container.addEventListener("scroll", handleScroll, { passive: true });
-    updateScrollIndicator();
 
     return () => {
       container.removeEventListener("scroll", handleScroll);
       clearTimeout(scrollTimeout);
-      if (animationFrame) cancelAnimationFrame(animationFrame);
     };
   }, []);
 
@@ -115,18 +82,6 @@ function MyStaking() {
 
       {/* Two Side-by-Side Tables */}
       <div className="relative">
-        {/* Mini scrollbar indicator - moved to the very right */}
-        <div className="absolute top-[60px] right-2 bottom-0 z-30 w-0.5">
-          <div className="bg-secondary absolute top-0 bottom-0 -left-1 w-px"></div>
-          <div className="relative h-full w-0.5 rounded-full bg-gray-700/20">
-            <div
-              ref={scrollIndicatorRef}
-              className="absolute right-0 mb-4 w-0.5 rounded-full bg-purple-500"
-              style={{ minHeight: "15px", transition: "none" }}
-            ></div>
-          </div>
-        </div>
-
         <UnifiedStakingTables
           data={stakingPositions}
           popup={popup}

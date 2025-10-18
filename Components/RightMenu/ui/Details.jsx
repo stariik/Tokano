@@ -9,7 +9,6 @@ function Details() {
   });
 
   const scrollContainerRef = useRef(null);
-  const scrollIndicatorRef = useRef(null);
   const itemRefs = useRef([]);
 
   const handleScrollSnap = () => {
@@ -32,55 +31,23 @@ function Details() {
     }
   };
 
-  const updateScrollIndicator = () => {
-    if (!scrollContainerRef.current || !scrollIndicatorRef.current) return;
-
-    const container = scrollContainerRef.current;
-    const indicator = scrollIndicatorRef.current;
-
-    if (container.scrollHeight <= container.clientHeight) {
-      indicator.style.display = "none";
-      return;
-    }
-
-    indicator.style.display = "block";
-    const scrollPercentage =
-      container.scrollTop / (container.scrollHeight - container.clientHeight);
-    const trackHeight = container.clientHeight;
-    const thumbHeight = Math.max(
-      (container.clientHeight / container.scrollHeight) * trackHeight,
-      20,
-    );
-    const maxTop = trackHeight - thumbHeight;
-
-    indicator.style.height = `${thumbHeight}px`;
-    indicator.style.top = `${scrollPercentage * maxTop}px`;
-  };
-
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
     let scrollTimeout;
-    let animationFrame;
 
     const handleScroll = () => {
-      // Update indicator immediately without lag
-      if (animationFrame) cancelAnimationFrame(animationFrame);
-      animationFrame = requestAnimationFrame(updateScrollIndicator);
-
       // Handle snap with timeout
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(handleScrollSnap, 150);
     };
 
     container.addEventListener("scroll", handleScroll, { passive: true });
-    updateScrollIndicator();
 
     return () => {
       container.removeEventListener("scroll", handleScroll);
       clearTimeout(scrollTimeout);
-      if (animationFrame) cancelAnimationFrame(animationFrame);
     };
   }, []);
 
@@ -108,18 +75,6 @@ function Details() {
 
         {/* Container with fixed background */}
         <div className="relative max-h-[440px]">
-          {/* Mini scrollbar indicator */}
-          <div className="absolute top-0 right-2 bottom-0 z-30 w-0.5">
-            <div className="bg-secondary absolute top-0 bottom-0 -left-1 w-px"></div>
-            <div className="relative h-full w-0.5 rounded-full bg-gray-700/20">
-              <div
-                ref={scrollIndicatorRef}
-                className="absolute right-0 mt-2 mb-4 w-0.5 rounded-full bg-purple-500"
-                style={{ minHeight: "15px", transition: "none" }}
-              ></div>
-            </div>
-          </div>
-
           {/* Fixed continuous middle column background */}
           <div className="absolute inset-0 z-0 grid grid-cols-3">
             <div></div>
@@ -130,16 +85,26 @@ function Details() {
           {/* Data Rows Container with scroll in third column */}
           <div
             ref={scrollContainerRef}
-            className="relative z-10 max-h-[440px] overflow-x-hidden overflow-y-auto"
+            className="scrollbar-thin relative z-10 max-h-[440px] overflow-x-hidden overflow-y-auto"
             style={{
               scrollBehavior: "auto",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
+              scrollbarWidth: "thin",
+              scrollbarColor: "#a855f7 transparent",
             }}
           >
             <style jsx>{`
               div::-webkit-scrollbar {
-                display: none;
+                width: 6px;
+              }
+              div::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              div::-webkit-scrollbar-thumb {
+                background-color: #a855f7;
+                border-radius: 3px;
+              }
+              div::-webkit-scrollbar-thumb:hover {
+                background-color: #9333ea;
               }
             `}</style>
             {stakingPositions.map((position, index) => (

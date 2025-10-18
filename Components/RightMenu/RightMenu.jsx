@@ -96,10 +96,10 @@ function RightMenu() {
 
       {/* Right-side menu */}
       <div
-        className={`border-[#CDCDE9] dark:border-secondary custom-scrollbar shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed top-0 right-0 z-50 h-screen w-[90vw] overflow-y-auto rounded-tl-[2.5rem] border-l-2 bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} lg:static lg:top-2 lg:z-0 lg:h-auto lg:w-auto lg:translate-x-0 lg:border-2 lg:pb-0 lg:shadow-none`}
+        className={`dark:border-secondary custom-scrollbar shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed top-0 right-0 z-50 h-screen w-[90vw] overflow-y-auto rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} lg:static lg:top-2 lg:z-0 lg:h-auto lg:w-auto lg:translate-x-0 lg:border-2 lg:pb-0 lg:shadow-none`}
       >
         <div
-          className={`border-[#CDCDE9] dark:border-secondary flex items-center justify-between rounded-tr-4xl border-b-2 px-6 py-3 text-4xl`}
+          className={`dark:border-secondary flex items-center justify-between rounded-tr-4xl border-b-2 border-[#CDCDE9] px-6 py-3 text-4xl`}
         >
           <h1>TOKANO</h1>
           <button
@@ -116,11 +116,13 @@ function RightMenu() {
         <div className="lg:px-6">
           <TokanoBalance />
         </div>
-        <div>
+        <div className="mx-2">
           {/* <div className="p-4 border-2 border-secondary mx-6">Details</div>
           <DataStat /> */}
         </div>
-        <Details />
+        <div className="mx-6">
+          <Details />
+        </div>
         {/* Staking Positions List */}
         <div className="dark:border-secondary border-t-1 border-[#CDCDE9] py-2 pl-14 text-2xl">
           TOKANO

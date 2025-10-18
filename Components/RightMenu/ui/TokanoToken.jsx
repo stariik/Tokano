@@ -4,7 +4,7 @@ function TokanoToken({ children, TableName }) {
   return (
     <div className="font-khand">
       <div
-        className="-mt-0.5 flex justify-start border-2 border-[#CDCDE9] bg-[#d5d2ec] pl-12 md:text-2xl dark:bg-transparent"
+        className="-mt-0.5 flex justify-start border-2 dark:border-secondary border-[#CDCDE9] bg-[#d5d2ec] pl-12 md:text-2xl dark:bg-transparent"
         style={{
           background: "var(--gradient-tokano-top)",
         }}
@@ -29,7 +29,7 @@ function TokanoToken({ children, TableName }) {
       </div>
       {children}
       <div
-        className="-my-0.5 flex justify-end border-2 border-[#CDCDE9] bg-[#d5d2ec] pr-12 md:text-xl dark:bg-transparent"
+        className="-my-0.5 flex justify-end border-2 dark:border-secondary border-[#CDCDE9] bg-[#d5d2ec] pr-12 md:text-xl dark:bg-transparent"
         style={{
           background: "var(--gradient-tokano-bottom)",
         }}
