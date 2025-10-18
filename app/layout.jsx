@@ -63,9 +63,9 @@ export default function RootLayout({ children }) {
 
           <div className="relative">
             <div className="">{children}</div>
-            <div className="dark:text-light absolute top-0 right-0 w-1/3 py-18 pr-4 text-black md:py-6 2xl:w-6/19">
+            {/* <div className="dark:text-light absolute top-0 right-0 w-1/3 py-18 pr-4 text-black md:py-6 2xl:w-6/19">
               <RightMenu />
-            </div>
+            </div> */}
           </div>
         </LayoutProviders>
       </body>

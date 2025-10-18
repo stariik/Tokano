@@ -19,8 +19,8 @@ function Navbar() {
       href: "/",
       icon: (isActive) => (
         <svg
-          width="28"
-          height="28"
+          width="24"
+          height="24"
           viewBox="0 0 34 34"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -62,8 +62,8 @@ function Navbar() {
       href: "/stakenomics",
       icon: (isActive) => (
         <svg
-          width="28"
-          height="28"
+          width="24"
+          height="24"
           viewBox="0 0 28 28"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -116,8 +116,8 @@ function Navbar() {
       href: "/portfolio",
       icon: (isActive) => (
         <svg
-          width="28"
-          height="28"
+          width="24"
+          height="24"
           viewBox="0 0 28 28"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -224,9 +224,12 @@ function Navbar() {
   return (
     <>
       {/* Top Section - Mobile Header */}
-      <div className="w-full z-50 fixed top-0 bg-white dark:bg-dark text-black dark:text-light py-4 lg:hidden border-b border-gray-200 dark:border-transparent">
+      <div className="dark:bg-dark dark:text-light fixed top-0 z-50 w-full border-b border-gray-200 bg-white py-2 md:py-4 text-black lg:hidden dark:border-transparent">
         <div className="flex items-center justify-between px-4 lg:justify-center lg:gap-40">
-          <Link href="/" className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+          >
             {resolvedTheme === "dark" ? (
               // 🌙 DARK MODE SVG
               <svg
@@ -307,7 +310,9 @@ function Navbar() {
               </svg>
             )}
 
-            <h1 className="lg:text-2xl text-xl font-khand font-bold dark:text-white text-[#0E1379]">TOKANO</h1>
+            <h1 className="font-khand text-xl font-bold text-[#0E1379] lg:text-2xl dark:text-white">
+              TOKANO
+            </h1>
           </Link>
           <div className="flex items-center gap-3">
             <button
@@ -329,9 +334,12 @@ function Navbar() {
       </div>
 
       {/* Navigation Section - Desktop */}
-      <div className="hidden lg:grid grid-cols-3 items-center bg-white dark:bg-dark text-black dark:text-light py-6 border-b border-gray-200 dark:border-transparent">
-        <div className="flex items-center gap-2 justify-center">
-          <Link href="/" className="flex items-center gap-2">
+      <div className="dark:bg-dark dark:text-light hidden grid-cols-3 items-center border-b border-gray-200 bg-white py-6 text-black lg:grid dark:border-transparent">
+        <div className="flex items-center justify-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+          >
             {resolvedTheme === "dark" ? (
               // 🌙 DARK MODE SVG
               <svg
@@ -412,11 +420,13 @@ function Navbar() {
               </svg>
             )}
 
-            <h1 className="lg:text-3xl text-xl font-bold font-khand dark:text-white text-[#0E1379]">TOKANO</h1>
+            <h1 className="font-khand text-xl font-bold text-[#0E1379] lg:text-3xl dark:text-white">
+              TOKANO
+            </h1>
           </Link>
         </div>
 
-        <div className="flex lg:gap-8 gap-4 justify-center lg:text-2xl text-md font-medium font-khand">
+        <div className="text-md font-khand flex justify-center gap-4 font-medium lg:gap-8 lg:text-2xl">
           {navigationItems
             .filter((item) => item.name !== "HOME")
             .map((item) => (
@@ -439,7 +449,7 @@ function Navbar() {
           </button>
           <button
             onClick={cycleTheme}
-            className="border-[#CDCDE9] dark:border-secondary ml-12 flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition hover:opacity-70"
+            className="dark:border-secondary ml-12 flex cursor-pointer items-center gap-2 rounded-lg border border-[#CDCDE9] px-3 py-2 text-sm transition hover:opacity-70"
             title={`Current: ${theme} mode. Click to change`}
           >
             <span className="text-xl">{getThemeIcon()}</span>
@@ -450,7 +460,7 @@ function Navbar() {
 
       {/* Bottom Navigation for Mobile */}
       <div
-        className="lg:hidden fixed bottom-0 w-full text-light py-3 z-50"
+        className="text-light fixed bottom-0 z-50 w-full py-1 lg:hidden"
         style={{
           background:
             resolvedTheme === "dark"
