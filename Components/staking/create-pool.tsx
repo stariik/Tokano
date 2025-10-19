@@ -132,7 +132,7 @@ export default function CreatePool({ onPoolCreated }: CreatePoolProps) {
           />
           {selectedToken && (
             <span className="ml-2 text-sm whitespace-nowrap text-gray-500">
-              Max: {selectedToken.amount}
+              Max: {selectedToken.amount} ({selectedToken.decimals})
             </span>
           )}
         </div>

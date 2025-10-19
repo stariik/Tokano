@@ -7,6 +7,7 @@ import { PoolState, UserState } from "tokano-sdk";
 import CreatePool from "@/Components/staking/create-pool";
 import CreateStake from "@/Components/staking/create-stake";
 import StakeActions from "@/Components/staking/stake-actions";
+import ClosePool from "@/Components/staking/close-pool";
 
 export default function StakingTestPage() {
   const { publicKey } = useWallet();
@@ -58,6 +59,11 @@ export default function StakingTestPage() {
     fetchStakingPools();
   }, [fetchUserStakeAccounts, fetchStakingPools]);
 
+  const handlePoolClosed = useCallback(() => {
+    fetchUserCreatedStakePools();
+    fetchStakingPools();
+  }, [fetchUserCreatedStakePools, fetchStakingPools]);
+
   useEffect(() => {
     if (publicKey) {
       fetchUserStakeAccounts();
@@ -75,10 +81,10 @@ export default function StakingTestPage() {
   }, [publicKey, fetchUserCreatedStakePools]);
 
   const handleAccountChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedPoolAddress = event.target.value;
+    const selectedAccontAddress = event.target.value;
     const selectedAccount =
       userStakedAccounts?.find(
-        (acc) => acc.poolAddress.toBase58() === selectedPoolAddress,
+        (acc) => acc.accountAddress.toBase58() === selectedAccontAddress,
       ) || null;
     setSelectedUserStakedAccount(selectedAccount);
   };
@@ -146,15 +152,17 @@ export default function StakingTestPage() {
               <select
                 id="user-staked-accounts-select"
                 onChange={handleAccountChange}
-                value={selectedUserStakedAccount?.poolAddress.toBase58() || ""}
+                value={
+                  selectedUserStakedAccount?.accountAddress.toBase58() || ""
+                }
                 className="rounded border p-2"
               >
                 {userStakedAccounts.map((account) => (
                   <option
-                    key={account.poolAddress.toBase58()}
-                    value={account.poolAddress.toBase58()}
+                    key={account.accountAddress.toBase58()}
+                    value={account.accountAddress.toBase58()}
                   >
-                    {account.poolAddress.toBase58()}
+                    {account.accountAddress.toBase58()}
                   </option>
                 ))}
               </select>
@@ -222,6 +230,10 @@ export default function StakingTestPage() {
                 <p>Reward Distributed: {pool.rewardDistributed.toString()}</p>
                 <p>Start Timestamp: {pool.startTimestamp.toString()}</p>
                 <p>End Timestamp: {pool.endTimestamp.toString()}</p>
+                <ClosePool
+                  pool={pool}
+                  onPoolClosed={handlePoolClosed}
+                />
               </div>
             ))}
           </div>

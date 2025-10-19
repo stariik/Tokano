@@ -27,6 +27,7 @@ export default function StakeActions({
       const tx = await staking?.getReward({
         walletPk: publicKey,
         poolAddress: selectedUserStakedAccount.poolAddress,
+        accountAddress: selectedUserStakedAccount.accountAddress,
       });
       // Always add recent blockhash
       const { blockhash } = await connection.getLatestBlockhash();
@@ -65,6 +66,7 @@ export default function StakeActions({
       const tx = await staking?.withdraw({
         walletPk: publicKey,
         poolAddress: selectedUserStakedAccount.poolAddress,
+        accountAddress: selectedUserStakedAccount.accountAddress,
         amount: unstakeAmount,
       });
       const { blockhash } = await connection.getLatestBlockhash();
@@ -73,13 +75,16 @@ export default function StakeActions({
 
       const signedTx = await signTransaction(tx);
       const txId = await connection.sendRawTransaction(signedTx.serialize());
+      console.log("Transaction sent: ", txId);
 
       // todo: transaction sent, we're waiting for the tx confirmation
       transactionListener(connection, txId, (completed) => {
         if (completed) {
           // todo: show transaction completed notification
+          console.log("Transaction completed");
         } else {
           // todo: show transaction could not be completed notification
+          console.log("Transaction failed");
         }
         onAction();
       });
@@ -91,6 +96,43 @@ export default function StakeActions({
     publicKey,
     selectedUserStakedAccount,
     unstakeAmount,
+    staking,
+    connection,
+    signTransaction,
+    onAction,
+  ]);
+
+  const handleCloseAccount = useCallback(async () => {
+    if (!publicKey || !selectedUserStakedAccount) return;
+
+    try {
+      const tx = await staking?.closeStakeAccount({
+        walletPk: publicKey,
+        accountAddress: selectedUserStakedAccount.accountAddress,
+      });
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      console.log("Transaction sent: ", txId);
+
+      transactionListener(connection, txId, (completed) => {
+        if (completed) {
+          console.log("Transaction completed");
+        } else {
+          console.log("Transaction failed");
+        }
+        onAction();
+      });
+    } catch (error) {
+      console.error("Error closing account:", error);
+      alert(`Error closing account: ${error}`);
+    }
+  }, [
+    publicKey,
+    selectedUserStakedAccount,
     staking,
     connection,
     signTransaction,
@@ -128,6 +170,13 @@ export default function StakeActions({
           Unstake
         </button>
       </div>
+      <button
+        onClick={handleCloseAccount}
+        disabled={!selectedUserStakedAccount || !publicKey}
+        className="rounded bg-red-700 px-4 py-2 text-white disabled:bg-gray-400"
+      >
+        Close Account
+      </button>
     </div>
   );
 }
