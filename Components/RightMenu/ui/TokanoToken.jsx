@@ -1,10 +1,10 @@
 import React from "react";
 
-function TokanoToken({ children, TableName }) {
+function TokanoToken({ children, TableName, className = "" }) {
   return (
     <div className="font-khand">
       <div
-        className="-mt-0.5 flex justify-start border-2 dark:border-secondary border-[#CDCDE9] bg-[#d5d2ec] pl-12 md:text-2xl dark:bg-transparent"
+        className={`-mt-0.5 flex justify-start border-2 dark:border-secondary border-[#CDCDE9] bg-[#d5d2ec] pl-12 md:text-2xl lg:text-lg xl:text-xl 2xl:text-2xl dark:bg-transparent ${className}`}
         style={{
           background: "var(--gradient-tokano-top)",
         }}
@@ -29,7 +29,7 @@ function TokanoToken({ children, TableName }) {
       </div>
       {children}
       <div
-        className="-my-0.5 flex justify-end border-2 dark:border-secondary border-[#CDCDE9] bg-[#d5d2ec] pr-12 md:text-xl dark:bg-transparent"
+        className="-my-0.5 flex justify-end border-2 dark:border-secondary border-[#CDCDE9] bg-[#d5d2ec] pr-12 md:text-xl lg:text-base xl:text-lg 2xl:text-xl dark:bg-transparent"
         style={{
           background: "var(--gradient-tokano-bottom)",
         }}

@@ -6,7 +6,7 @@ function GlobalDataRow() {
 
   return (
     <div
-      className="-m-0.5 font-khand grid grid-cols-10 border-2 dark:border-secondary border-[#CDCDE9] text-base font-normal text-[#190E79] dark:text-white"
+      className="font-khand dark:border-secondary -m-0.5 grid grid-cols-10 border-2 border-[#CDCDE9] text-base font-normal text-[#190E79] dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -15,20 +15,20 @@ function GlobalDataRow() {
       }}
     >
       {/* Left label */}
-      <div className="col-span-2 flex flex-col items-center justify-center border-r-2 border-[#CDCDE9] dark:border-secondary py-1 text-lg">
+      <div className="dark:border-secondary col-span-2 flex flex-col items-center justify-center border-r-2 border-[#CDCDE9] py-1 text-lg">
         VESTED
       </div>
       {/* Supply and holders */}
-      <div className="col-span-3 flex flex-col justify-center border-r-2 border-[#CDCDE9] dark:border-secondary px-2 py-1 text-xs md:text-lg">
+      <div className="dark:border-secondary col-span-3 flex flex-col justify-center border-r-2 border-[#CDCDE9] px-2 py-1 text-xs md:text-lg lg:px-1 lg:text-xs xl:px-2 xl:text-base 2xl:text-lg">
         <div>
-          supply: <span className="ml-2">1.00073B</span>
+          supply: <span className="ml-2">1.073B</span>
         </div>
         <div>
           holders: <span className="ml-2">3111</span>
         </div>
       </div>
       {/* m-cap and price */}
-      <div className="col-span-5 flex flex-col justify-center px-2 py-1 text-xs md:text-lg">
+      <div className="col-span-5 flex flex-col justify-center px-2 py-1 text-xs md:text-lg lg:px-1 lg:text-xs xl:px-2 xl:text-base 2xl:text-lg">
         <div>
           m-cap: <span className="ml-2">$12m / 1244 SOL</span>
         </div>
