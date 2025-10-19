@@ -86,7 +86,7 @@ function BalanceComp() {
             />
           </svg>
         )}
-        <span className="ml-1 text-xs font-bold text-[#190E79] sm:ml-2 sm:text-sm md:text-lg dark:text-white">
+        <span className="ml-1 text-xs font-bold text-[#190E79] sm:ml-2 sm:text-sm md:text-lg lg:text-sm xl:text-base 2xl:text-lg dark:text-white">
           13,000
         </span>
       </div>

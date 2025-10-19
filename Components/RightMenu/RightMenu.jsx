@@ -115,7 +115,7 @@ function RightMenu() {
         <div className="dark:border-secondary w-full border-y-2 border-[#CDCDE9] py-2 pl-4 text-3xl">
           TOKANO
         </div>
-        <div className="lg:px-6">
+        <div className="lg:px-2 xl:px-4 2xl:px-6">
           <TokanoBalance />
         </div>
         <div className="mx-2">

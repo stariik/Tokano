@@ -6,7 +6,7 @@ function TokanoBalanceData() {
 
   return (
     <div className="flex items-stretch">
-      <div className="flex min-w-[80px] flex-col items-center justify-center border-r-2 border-[#CDCDE9] dark:border-secondary bg-[#f0edf8] px-4 py-4 dark:bg-[#2d0a5c]">
+      <div className="dark:border-secondary flex min-w-[80px] flex-col items-center justify-center border-r-2 border-[#CDCDE9] bg-[#f0edf8] px-4 py-4 dark:bg-[#2d0a5c]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG
           <svg
@@ -86,16 +86,16 @@ function TokanoBalanceData() {
             />
           </svg>
         )}
-        <span className="text-lg tracking-widest text-[#190E79] uppercase dark:text-white">
+        <span className="text-lg tracking-widest text-[#190E79] uppercase lg:text-base xl:text-lg dark:text-white">
           Tokano
         </span>
       </div>
-      <div className="flex flex-1 flex-col justify-center bg-gradient-to-r from-white px-4 py-2 dark:from-[#391667] dark:to-[#061a2e]">
+      <div className="font-khand flex flex-1 flex-col justify-center bg-gradient-to-r from-white px-4 py-2 dark:from-[#391667] dark:to-[#061a2e]">
         <div className="flex items-center justify-between border-b border-[#7B3FE4] py-1">
-          <span className="text-base text-[#190E79] dark:text-white/80">
+          <span className="text-base text-[#190E79] lg:text-xs xl:text-base dark:text-white/80">
             Available:
           </span>
-          <span className="text-right text-xl font-bold text-[#190E79] dark:text-white">
+          <span className="text-right text-xl font-bold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
             13,000,239.<span className="align-super text-sm">127</span>
           </span>
           <span className="ml-2 text-sm text-[#048e7c] dark:text-[#12e6c8]">
@@ -103,10 +103,10 @@ function TokanoBalanceData() {
           </span>
         </div>
         <div className="flex items-center justify-between border-b border-[#7B3FE4] py-1">
-          <span className="text-base text-[#190E79] dark:text-white/80">
+          <span className="text-base text-[#190E79] lg:text-xs xl:text-base dark:text-white/80">
             Staked:
           </span>
-          <span className="text-xl font-bold text-[#190E79] dark:text-white">
+          <span className="text-xl font-bold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
             120,000.<span className="align-super text-sm">200</span>
           </span>
           <span className="ml-2 text-sm text-[#048e7c] dark:text-[#12e6c8]">
@@ -114,10 +114,10 @@ function TokanoBalanceData() {
           </span>
         </div>
         <div className="flex items-center justify-between py-1">
-          <span className="text-base text-[#190E79] dark:text-white/80">
+          <span className="text-base text-[#190E79] lg:text-xs xl:text-base dark:text-white/80">
             Locked:
           </span>
-          <span className="text-xl font-bold text-[#190E79] dark:text-white">
+          <span className="text-xl font-bold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
             120,000.<span className="align-super text-sm">200</span>
           </span>
           <span className="ml-2 text-sm text-[#048e7c] dark:text-[#12e6c8]">
