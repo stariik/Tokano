@@ -118,11 +118,11 @@ function RightMenu() {
         <div className="lg:px-2 xl:px-4 2xl:px-6">
           <TokanoBalance />
         </div>
-        <div className="mx-2">
+        {/* <div className="mx-2"> */}
           {/* <div className="p-4 border-2 border-secondary mx-6">Details</div>
           <DataStat /> */}
-        </div>
-        <div className="mx-6">
+        {/* </div> */}
+        <div className="lg:px-2 xl:px-4 2xl:px-6">
           <Details />
         </div>
         {/* Staking Positions List */}
