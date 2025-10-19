@@ -90,9 +90,9 @@ function Vest() {
             </div>
           </div>
         </div>
-        <div className="absolute top-10 right-0">
-          <div className="ml-4 lg:mr-12 xl:mr-6">
-            <CiPill size={28} />
+        <div className="absolute top-8 right-0 lg:top-4 xl:top-10">
+          <div className="ml-4 xl:mr-6">
+            <CiPill className="h-5 w-5 lg:h-5 lg:w-5 xl:h-7 xl:w-7" />
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">

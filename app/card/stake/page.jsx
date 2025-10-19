@@ -10,8 +10,8 @@ import RightMenu from "@/Components/RightMenu/RightMenu";
 
 function page() {
   return (
-    <div className="lg:grid-cols-3 gap-2 grid py-18 lg:py-6 md:px-2 2xl:px-2">
-      <div className="lg:col-span-2 w-full rounded-tr-4xl lg:grid gap-2 2xl:gap-8 lg:grid-cols-7">
+    <div className="lg:grid-cols-3 gap-2 2xl:gap-4 grid py-18 lg:py-6 md:px-2 2xl:px-2">
+      <div className="lg:col-span-2 w-full rounded-tr-4xl lg:grid gap-2 2xl:gap-4 lg:grid-cols-7">
         <div className="col-span-3">
           <TokenGrid
             gridCols="grid-cols-2"

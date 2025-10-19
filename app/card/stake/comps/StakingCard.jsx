@@ -41,7 +41,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
 
   return (
     <div
-      className="rounded-4xl pb-2 xl:pb-4 border-1 border-[#CDCDE9] dark:border-secondary text-[#190E79] dark:text-white"
+      className="dark:border-secondary rounded-4xl border-1 border-[#CDCDE9] pb-2 text-[#190E79] xl:pb-4 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -50,7 +50,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
       }}
     >
       <div
-        className="relative rounded-4xl p-8 pb-0 lg:p-4 xl:p-8 lg:pb-0 xl:pb-0"
+        className="relative rounded-4xl p-8 pb-0 lg:p-4 lg:pb-0 xl:p-8 xl:pb-0"
         style={{
           background:
             resolvedTheme === "dark"
@@ -58,22 +58,22 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
               : "linear-gradient(45deg, rgb(255 255 255) 0%, rgb(232, 228, 248) 100%)",
         }}
       >
-        <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-6 xl:top-12 xl:left-4 lg:left-2 lg:gap-2 xl:gap-4">
-          <div className="rounded-full bg-[#0088cc] p-1 text-white text-base lg:text-xs xl:text-base">
+        <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-6 lg:left-2 lg:gap-2 xl:top-12 xl:left-4 xl:gap-4">
+          <div className="rounded-full bg-[#0088cc] p-1 text-base text-white lg:text-xs xl:text-base">
             <FaTelegramPlane />
           </div>
-          <div className="rounded-full bg-black p-1 text-white text-base lg:text-xs xl:text-base">
+          <div className="rounded-full bg-black p-1 text-base text-white lg:text-xs xl:text-base">
             <FaXTwitter />
           </div>
           <div className="text-base lg:text-xs xl:text-base">
-            <TbWorld className="w-6 h-6 lg:w-5 lg:h-5 xl:w-6 xl:h-6" />
+            <TbWorld className="h-6 w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6" />
           </div>
         </div>
 
         <div className="flex">
           <img
             src="/vest.png"
-            className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 xl:w-32 2xl:w-38 lg:rounded-3xl xl:ml-8"
+            className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:rounded-3xl xl:ml-8 xl:w-32 2xl:w-38"
           />
           <div className="font-khand ml-4 font-normal lg:ml-2 xl:ml-8">
             <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl">
@@ -88,9 +88,9 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
             </div>
           </div>
         </div>
-        <div className="absolute top-10 right-0">
-          <div className="ml-4 lg:mr-12 xl:mr-6">
-            <CiPill size={28} />
+        <div className="absolute top-8 right-0 lg:top-4 xl:top-10">
+          <div className="ml-4 xl:mr-6">
+            <CiPill className="h-5 w-5 lg:h-5 lg:w-5 xl:h-7 xl:w-7" />
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
@@ -102,7 +102,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
         </div>
 
         <div className="relative bottom-0 left-0 z-5 mt-6 flex w-full">
-          <div className="font-khand mx-4 lg:mx-2 xl:mx-4 flex max-w-20 items-center text-xl font-semibold xl:text-3xl">
+          <div className="font-khand mx-4 flex max-w-20 items-center text-xl font-semibold lg:mx-2 xl:mx-4 xl:text-3xl">
             STAKING POOL
           </div>
           <div className="font-khand relative my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
@@ -138,7 +138,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
         </div>
       </div>
 
-      <div className="font-khand mr-12 lg:mr-8 xl:mr-12 text-end text-xl font-medium lg:text-2xl">
+      <div className="font-khand mr-12 text-end text-xl font-medium lg:mr-8 lg:text-2xl xl:mr-12">
         locked
       </div>
     </div>
