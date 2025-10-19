@@ -120,7 +120,8 @@ export default function StakingTestPage() {
                   {new Date(pool.lastUpdateTime).toLocaleString()}
                 </p>
                 <p>Reward Distributed: {pool.rewardDistributed.toString()}</p>
-                {/*<p>Start Timestamp: {pool.startTimestamp}</p>*/}
+                <p>Start Timestamp: {pool.startTimestamp.toString()}</p>
+                <p>End Timestamp: {pool.endTimestamp.toString()}</p>
               </div>
             ))}
           </div>
@@ -174,8 +175,14 @@ export default function StakingTestPage() {
                   Staked Token Balance:{" "}
                   {selectedUserStakedAccount.stakedTokenBalance.toString()}
                 </p>
-                <p>Rewards: {selectedUserStakedAccount.rewards.toString()}</p>
-                {/*<p>Release Time: {selectedUserStakedAccount.releaseTime}</p>*/}
+                <p>
+                  Approx. Rewards:{" "}
+                  {selectedUserStakedAccount.approximateReward.toNumber()}
+                </p>
+                <p>
+                  Release Time:{" "}
+                  {selectedUserStakedAccount.releaseTime.toString()}
+                </p>
               </div>
             )}
 
@@ -213,7 +220,8 @@ export default function StakingTestPage() {
                   {new Date(pool.lastUpdateTime).toLocaleString()}
                 </p>
                 <p>Reward Distributed: {pool.rewardDistributed.toString()}</p>
-                {/*<p>Start Timestamp: {pool.startTimestamp}</p>*/}
+                <p>Start Timestamp: {pool.startTimestamp.toString()}</p>
+                <p>End Timestamp: {pool.endTimestamp.toString()}</p>
               </div>
             ))}
           </div>

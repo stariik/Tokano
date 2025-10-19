@@ -52,9 +52,7 @@ export default function CreatePool({ onPoolCreated }: CreatePoolProps) {
     }
 
     try {
-      const startTimeStamp = Math.floor(
-        new Date(startTime).getTime() / 1000,
-      ).toString();
+      const startTimeStamp = Math.floor(new Date(startTime).getTime() / 1000);
 
       const tx = await staking.initializePool({
         walletPk: publicKey,

@@ -62,20 +62,40 @@ export default function StakeActions({
     if (!publicKey || !selectedUserStakedAccount || !unstakeAmount) return;
 
     try {
-      const signature = await staking?.withdraw({
+      const tx = await staking?.withdraw({
         walletPk: publicKey,
         poolAddress: selectedUserStakedAccount.poolAddress,
         amount: unstakeAmount,
       });
-      console.log("Unstake Signature:", signature);
-      alert(`Unstake successful! Signature: ${signature}`);
-      onAction();
-      setUnstakeAmount("");
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+
+      // todo: transaction sent, we're waiting for the tx confirmation
+      transactionListener(connection, txId, (completed) => {
+        if (completed) {
+          // todo: show transaction completed notification
+        } else {
+          // todo: show transaction could not be completed notification
+        }
+        onAction();
+      });
     } catch (error) {
       console.error("Error unstaking:", error);
       alert(`Error unstaking: ${error}`);
     }
-  }, [publicKey, selectedUserStakedAccount, staking, onAction, unstakeAmount]);
+  }, [
+    publicKey,
+    selectedUserStakedAccount,
+    unstakeAmount,
+    staking,
+    connection,
+    signTransaction,
+    onAction,
+  ]);
 
   return (
     <div className="flex items-center gap-4">
