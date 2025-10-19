@@ -27,7 +27,7 @@ export default function CreateStake({
   const [amount, setAmount] = useState("");
 
   const selectedPool = stakePools?.find(
-    (p) => p.initializer.toBase58() === selectedPoolAddress,
+    (p) => p.poolAddress.toBase58() === selectedPoolAddress,
   );
   const userHasStakeInPool = userStakedAccounts?.find(
     (u) => u.poolAddress.toBase58() === selectedPoolAddress,
@@ -111,9 +111,9 @@ export default function CreateStake({
             stakePools.map((pool) => (
               <option
                 key={pool.poolAddress.toBase58()}
-                value={pool.initializer.toBase58()}
+                value={pool.poolAddress.toBase58()}
               >
-                {pool.initializer.toBase58().slice(0, 16)}...
+                {pool.poolAddress.toBase58().slice(0, 16)}...
               </option>
             ))
           )}
