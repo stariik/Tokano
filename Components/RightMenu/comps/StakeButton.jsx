@@ -8,7 +8,7 @@ function StakeButton() {
     <div className="flex items-center">
       <button
         // flex cursor-pointer items-center justify-between gap-1 rounded-full border-2 border-white py-1 pr-2 pl-1 text-xs transition-all duration-200 sm:gap-2 sm:border-4 sm:py-2 sm:pr-4 sm:pl-2 sm:text-base md:text-xl lg:gap-0.5 xl:gap-1 2xl:gap-2
-        className="flex cursor-pointer items-center gap-2 rounded-full border-2 border-white lg:p-1 lg:px-2"
+        className="flex cursor-pointer items-center gap-2 rounded-full border-2 border-white p-1 px-2"
         style={{
           background:
             resolvedTheme === "dark"
@@ -17,7 +17,7 @@ function StakeButton() {
           boxShadow: "0 2px 8px 0 #0002",
         }}
       >
-        <span className="flex items-center justify-center rounded-full bg-white lg:p-1 lg:px-2 xl:px-3 transition-all duration-200">
+        <span className="flex items-center justify-center rounded-full bg-white p-1 px-2 xl:px-3 transition-all duration-200">
           <svg
             className="h-5 w-2 lg:h-4 lg:w-1.5 xl:h-5 xl:w-2"
             viewBox="0 0 8 21"

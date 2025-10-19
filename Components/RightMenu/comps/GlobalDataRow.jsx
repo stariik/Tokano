@@ -19,7 +19,7 @@ function GlobalDataRow() {
         VESTED
       </div>
       {/* Supply and holders */}
-      <div className="dark:border-secondary col-span-3 flex flex-col justify-center border-r-2 border-[#CDCDE9] px-2 py-1 text-xs md:text-lg lg:px-1 lg:text-xs xl:px-2 xl:text-base 2xl:text-lg">
+      <div className="dark:border-secondary col-span-3 flex flex-col justify-center border-r-2 border-[#CDCDE9] px-2 py-1 text-xs md:text-sm lg:px-1 lg:text-xs xl:px-2 xl:text-base 2xl:text-lg">
         <div>
           supply: <span className="ml-2">1.073B</span>
         </div>
@@ -28,7 +28,7 @@ function GlobalDataRow() {
         </div>
       </div>
       {/* m-cap and price */}
-      <div className="col-span-5 flex flex-col justify-center px-2 py-1 text-xs md:text-lg lg:px-1 lg:text-xs xl:px-2 xl:text-base 2xl:text-lg">
+      <div className="col-span-5 flex flex-col justify-center px-2 py-1 text-xs md:text-sm lg:px-1 lg:text-xs xl:px-2 xl:text-base 2xl:text-lg">
         <div>
           m-cap: <span className="ml-2">$12m / 1244 SOL</span>
         </div>

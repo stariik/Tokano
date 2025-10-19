@@ -4,9 +4,9 @@ import GlobalDataRow from "../comps/GlobalDataRow";
 
 function GlobalData() {
   return (
-    <div className="md:px-6 lg:px-2 xl:px-4 2xl:px-6">
+    <div className="px-2 xl:px-4 2xl:px-6">
       <TokanoToken TableName={"Global Data"}>
-        <div className="font-khand dark:bg[#231570] dark:border-secondary grid grid-cols-4 border-x-2 border-[#CDCDE9] bg-[#BEB3FF] py-0.5 pr-6 pl-4 dark:bg-[#231570] lg:text-xs xl:text-sm 2xl:text-base">
+        <div className="font-khand dark:bg[#231570] dark:border-secondary grid grid-cols-4 border-x-2 border-[#CDCDE9] bg-[#BEB3FF] py-0.5 pr-6 pl-4 dark:bg-[#231570] text-xs xl:text-sm 2xl:text-base">
           <div className="">TOKANO</div>
           <div className="">M-cap: $230k</div>
           <div className="">24h Vol: 3M</div>

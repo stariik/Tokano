@@ -53,13 +53,13 @@ function Details() {
 
   return (
     <div>
-      <div className="dark:border-secondary border-2 border-t-1 border-[#CDCDE9] md:border-t-0">
-        <div className="bg-gradient-to-r from-[#9876ffa3] to-white px-4 py-3 lg:py-1 xl:py-2 2xl:py-3 dark:from-[#2f01ba] dark:to-[#0C0D1C]">
+      <div className="dark:border-secondary border-2  border-[#CDCDE9]">
+        <div className="bg-gradient-to-r from-[#9876ffa3] to-white px-4 py-1 xl:py-2 2xl:py-3 dark:from-[#2f01ba] dark:to-[#0C0D1C]">
           <h2 className="text-xl">Details</h2>
         </div>
 
         {/* Header Row */}
-        <div className="grid grid-cols-2 bg-white text-sm font-semibold text-[#190E79] md:grid-cols-3 lg:text-xs 2xl:text-sm dark:bg-[#2A1C78] dark:text-white">
+        <div className="grid grid-cols-2 bg-white font-semibold text-[#190E79] md:grid-cols-3 text-xs 2xl:text-sm dark:bg-[#2A1C78] dark:text-white">
           <div className="dark:border-secondary flex items-center justify-center border-y border-[#CDCDE9] bg-[#4244C4] py-2 text-white dark:bg-[#2A1C78]">
             <span className="text-red-500">/-Un/</span>Staked (Period)
           </div>
@@ -122,7 +122,7 @@ function Details() {
                     </span>
                   </div>
                   <div
-                    className="flex-1 p-2 text-center hover:bg-[#f5f3fb] md:text-lg lg:text-sm 2xl:text-lg dark:hover:bg-[#2A1C78]"
+                    className="flex-1 p-2 text-center hover:bg-[#f5f3fb] text-sm 2xl:text-lg dark:hover:bg-[#2A1C78]"
                     onClick={() =>
                       setPopup({
                         show: true,
@@ -194,7 +194,7 @@ function Details() {
                   </div>
                 )}
                 <div
-                  className="dark:border-secondary cursor-pointer border-r border-[#CDCDE9] text-center md:text-lg lg:text-sm 2xl:text-lg"
+                  className="dark:border-secondary cursor-pointer border-r border-[#CDCDE9] text-center text-sm 2xl:text-lg"
                   onClick={() =>
                     setPopup({
                       show: true,

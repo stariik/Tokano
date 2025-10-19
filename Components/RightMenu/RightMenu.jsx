@@ -97,7 +97,7 @@ function RightMenu() {
 
       {/* Right-side menu */}
       <div
-        className={`dark:border-secondary custom-scrollbar shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed right-0 z-40 w-[90vw] overflow-y-auto rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} lg:static lg:top-2 lg:z-0 lg:h-auto lg:w-auto lg:translate-x-0 lg:border-2 lg:pb-0 lg:shadow-none`}
+        className={`dark:border-secondary custom-scrollbar shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed right-0 z-40 max-w-sm w-[90vw] overflow-y-auto rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} lg:static lg:top-2 lg:z-0 lg:h-auto lg:w-auto lg:max-w-none lg:translate-x-0 lg:border-2 lg:pb-0 lg:shadow-none`}
         style={{ top: "3.5rem", bottom: 0, height: "auto" }}
       >
         <div
@@ -115,14 +115,14 @@ function RightMenu() {
         <div className="dark:border-secondary w-full border-y-2 border-[#CDCDE9] py-2 pl-4 text-3xl">
           TOKANO
         </div>
-        <div className="lg:px-2 xl:px-4 2xl:px-6">
+        <div className="px-2 xl:px-4 2xl:px-6">
           <TokanoBalance />
         </div>
         {/* <div className="mx-2"> */}
           {/* <div className="p-4 border-2 border-secondary mx-6">Details</div>
           <DataStat /> */}
         {/* </div> */}
-        <div className="lg:px-2 xl:px-4 2xl:px-6">
+        <div className="px-2 xl:px-4 2xl:px-6 ">
           <Details />
         </div>
         {/* Staking Positions List */}
