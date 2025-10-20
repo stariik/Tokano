@@ -37,7 +37,7 @@ export const fetchSolBalance = async (
   }
 
   return {
-    amount: (accountInfo.lamports / SOL_INFO.decimals).toString(),
+    amount: (accountInfo.lamports / 10 ** SOL_INFO.decimals).toString(),
     amountRaw: accountInfo.lamports,
     decimals: 9,
     mintAddress: SOL_MINT,
