@@ -5,6 +5,7 @@ import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useCallback, useEffect, useState } from "react";
 import { VestingState } from "tokano-sdk";
 import CreateVesting from "@/Components/vesting/create-vesting";
+import ClaimVesting from "@/Components/vesting/claim-vesting";
 
 export default function VestingTestPage() {
   const { publicKey } = useWallet();
@@ -77,6 +78,10 @@ export default function VestingTestPage() {
                   </p>
                   <p>Start: {account.startTime.toLocaleString()}</p>
                   <p>End: {account.endTime.toLocaleString()}</p>
+                  <ClaimVesting
+                    vestingAccountAddress={account.address}
+                    onVestingClaimed={fetchVestedAccounts}
+                  />
                 </div>
               ))
             ) : (
