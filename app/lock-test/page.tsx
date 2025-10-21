@@ -23,11 +23,11 @@ export default function LockTestPage() {
   const [userCreatedLockAccounts, setUserCreatedLockAccounts] = useState<
     LockStateWithTokenInfo[]
   >([]);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const fetchLockedAccounts = useCallback(async () => {
     if (!publicKey || !lock) return;
     const accounts = await lock.fetchUserLocks(publicKey);
-    console.log("Locked Accounts", accounts);
     const mints = accounts.map((acc) => acc.tokenMint.toBase58());
     const tokenInfos = await fetchTokenInfo(mints);
     const enrichedAccounts = accounts.map((account) => ({
@@ -40,7 +40,6 @@ export default function LockTestPage() {
   const fetchUserCreatedLockAccounts = useCallback(async () => {
     if (!publicKey || !lock) return;
     const accounts = await lock.fetchUserCreatedLocks(publicKey);
-    console.log("User Created Lock Accounts", accounts);
     const mints = accounts.map((acc) => acc.tokenMint.toBase58());
     const tokenInfos = await fetchTokenInfo(mints);
     const enrichedAccounts = accounts.map((account) => ({
@@ -56,6 +55,13 @@ export default function LockTestPage() {
       fetchUserCreatedLockAccounts();
     }
   }, [publicKey, lock, fetchLockedAccounts, fetchUserCreatedLockAccounts]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="mx-auto max-w-4xl p-4">
@@ -100,9 +106,8 @@ export default function LockTestPage() {
                     Mint: {account.tokenMint.toBase58()}
                   </p>
                   <p>Lock Amount: {account.lockAmount.toString()}</p>
-                  <p>Start: {account.startTime.toLocaleString()}</p>
-                  <p>End: {account.endTime.toLocaleString()}</p>
-                  {new Date() > account.endTime && (
+                  <p>Unlock Date: {account.unlockTime.toLocaleString()}</p>
+                  {currentTime > account.unlockTime && (
                     <ClaimLock
                       lockAccountAddress={account.address}
                       onLockClaimed={fetchLockedAccounts}
@@ -155,8 +160,7 @@ export default function LockTestPage() {
                     Mint: {account.tokenMint.toBase58()}
                   </p>
                   <p>Lock Amount: {account.lockAmount.toString()}</p>
-                  <p>Start: {account.startTime.toLocaleString()}</p>
-                  <p>End: {account.endTime.toLocaleString()}</p>
+                  <p>Unlock Time: {account.unlockTime.toLocaleString()}</p>
                 </div>
               ))
             ) : (

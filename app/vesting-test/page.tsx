@@ -27,7 +27,6 @@ export default function VestingTestPage() {
   const fetchVestedAccounts = useCallback(async () => {
     if (!publicKey || !vesting) return;
     const accounts = await vesting.fetchUserVestings(publicKey);
-    console.log("Vested Accounts", accounts);
     const mints = accounts.map((acc) => acc.tokenMint.toBase58());
     const tokenInfos = await fetchTokenInfo(mints);
     const enrichedAccounts = accounts.map((account) => ({
@@ -40,7 +39,6 @@ export default function VestingTestPage() {
   const fetchUserCreatedVestingAccounts = useCallback(async () => {
     if (!publicKey || !vesting) return;
     const accounts = await vesting.fetchUserCreatedVestings(publicKey);
-    console.log("User Created Vested Accounts", accounts);
     const mints = accounts.map((acc) => acc.tokenMint.toBase58());
     const tokenInfos = await fetchTokenInfo(mints);
     const enrichedAccounts = accounts.map((account) => ({
