@@ -80,7 +80,7 @@ function GridFilter({ variant = "default" }) {
         </div>
 
         {/* Row 2: Sort and Show */}
-        <div className="flex items-center justify-between border-b border-[#292B8C] px-4 py-3 text-xs">
+        <div className="flex items-center justify-between border-b border-[#292B8C] px-1 md:px-4 py-3 text-xs">
           <div className="whitespace-nowrap">
             <span className="mr-2">sort:</span>
             <span className="cursor-pointer hover:text-[#190E79] dark:text-white">

@@ -9,7 +9,7 @@ function page() {
       <div className="w-full gap-2 rounded-tr-4xl lg:col-span-2 lg:grid lg:grid-cols-7 2xl:gap-4">
         <div className="col-span-3">
           <TokenGrid
-            gridCols="grid-cols-2"
+            gridCols="grid-cols-2 lg:grid-cols-1 xl:grid-cols-2"
             filterVariant="portfolio"
           />
         </div>

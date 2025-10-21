@@ -7,7 +7,7 @@ function Soon({ token }) {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <svg
-      className="h-full w-[35px] md:w-[37px] lg:w-[47px]"
+      className="h-full w-[35px] md:w-[37px] xl:w-[47px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@ function Soon({ token }) {
         {/* Title & Star */}
         <div className="mb-2 flex items-center justify-between">
           <span
-            className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px]"
+            className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px] lg:text-[10px] xl:text-[14px]"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -70,7 +70,7 @@ function Soon({ token }) {
           <span className="ml-2 text-xl text-[#FF00A8]">★</span>
         </div>
         <div
-          className="font-khand -ml-4 max-w-24 rounded-r-xl pl-4 text-sm font-semibold text-[#311880]"
+          className="font-khand -ml-4 max-w-24 rounded-r-xl pl-4 lg:pl-2 xl:pl-4 text-sm lg:text-xs xl:text-sm font-semibold text-[#311880]"
           style={{
             background:
               resolvedTheme === "dark"
@@ -82,7 +82,7 @@ function Soon({ token }) {
         </div>
         {/* Stats Row */}
         <div className="font-khand flex items-center justify-end gap-4 font-semibold">
-          <div className="rounded-full bg-white">
+          <div className="rounded-full lg:mt-1 xl:mt-0">
             <StakeIcon />
           </div>
           <div className="flex text-2xl text-white xl:text-3xl 2xl:text-4xl">

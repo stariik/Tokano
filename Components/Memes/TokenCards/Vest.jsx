@@ -21,11 +21,11 @@ function Lock({ token }) {
         />
       </div>
       {/* Card Content */}
-      <div className="flex flex-1 flex-col px-3 py-2">
+      <div className="flex flex-1 flex-col px-3 py-2 lg:px-1.5 xl:px-2 2xl:px-3">
         {/* Title & Star */}
         <div className="mb-1 flex items-center justify-between">
           <span
-            className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px]"
+            className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px] lg:text-[10px] xl:text-[14px]"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
@@ -34,10 +34,12 @@ function Lock({ token }) {
         </div>
         {/* Stats Row */}
         <div className="font-khand mb-1 flex items-center justify-between font-semibold">
-          <div className="flex text-xl text-white lg:text-2xl">Vest</div>
+          <div className="flex text-xl text-white lg:text-lg xl:text-2xl">
+            Vest
+          </div>
           <div className="rounded-3xl bg-white">
             <div className="m-2 rounded-2xl bg-[#190E79] p-2">
-              <FaStairs className="h-[10px] w-[10px] text-white lg:h-[14px] lg:w-[14px]" />
+              <FaStairs className="h-[10px] w-[10px] text-white xl:h-[14px] xl:w-[14px]" />
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -53,7 +55,7 @@ function Lock({ token }) {
       {/* Bottom Bar */}
       <div className="flex flex-row justify-between gap-1 text-white">
         <div
-          className="font-khand h-6 basis-40 rounded-r-xl text-center text-xs font-medium md:text-sm"
+          className="font-khand h-6 basis-40 rounded-r-xl text-center text-xs font-medium md:text-sm lg:text-[10px] xl:text-sm flex items-center justify-center"
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
@@ -61,7 +63,7 @@ function Lock({ token }) {
           TYPE: LIN/MONTHLY
         </div>
         <div
-          className="font-khand h-6 w-30 rounded-l-xl text-center text-xs font-medium md:text-sm"
+          className="font-khand h-6 w-30 rounded-l-xl text-center text-xs font-medium md:text-sm lg:text-[10px] xl:text-sm flex items-center justify-center"
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}

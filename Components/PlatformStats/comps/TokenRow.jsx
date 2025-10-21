@@ -5,11 +5,11 @@ function TokenRow({ data }) {
     <>
       <div
         key={data.id}
-        className="grid w-full grid-cols-3 px-2 py-2 text-sm md:text-lg"
+        className="grid w-full grid-cols-3 px-2 py-1 text-xs sm:py-2 sm:text-sm md:text-base lg:text-sm xl:text-base"
       >
-        <div>Logo</div>
-        <div>{data.token}</div>
-        <div>{data.price}</div>
+        <div className="truncate">Logo</div>
+        <div className="truncate">{data.token}</div>
+        <div className="truncate">{data.price}</div>
       </div>
     </>
   );

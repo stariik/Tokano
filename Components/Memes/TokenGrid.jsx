@@ -8,11 +8,7 @@ import Vest from "./TokenCards/Vest";
 import Soon from "./TokenCards/Soon";
 import Stake from "./TokenCards/Stake";
 
-function TokenGrid({
-  gridCols = "grid-cols-2",
-  hideOnMobile = true,
-  filterVariant = "default",
-}) {
+function TokenGrid({ hideOnMobile = true, filterVariant = "default", gridCols }) {
   const [show, setShow] = useState(false);
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
 
@@ -32,10 +28,10 @@ function TokenGrid({
     <>
       <GridFilter variant={filterVariant} />
       <div
-        className="custom-scrollbar m-4 overflow-y-auto text-[#190E79] dark:text-white"
+        className="custom-scrollbar m-2 overflow-y-auto text-[#190E79] sm:m-3 lg:m-2 xl:m-3 dark:text-white"
         style={{ maxHeight: "100vh", minHeight: "400px" }}
       >
-        <div className={`grid gap-3 ${gridCols}`}>
+        <div className={`grid gap-2 sm:gap-3 lg:gap-1 xl:gap-2 ${gridCols || "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7"}`}>
           {tokens.map((token, idx) => (
             <React.Fragment key={idx}>
               <Stake
@@ -102,7 +98,7 @@ function TokenGrid({
   );
 
   const tokenContentMobile = (
-    <div className={`grid gap-3 ${gridCols} p-2`}>
+    <div className={`grid gap-2 p-2 ${gridCols || "grid-cols-1 sm:grid-cols-2"}`}>
       {tokens.map((token, idx) => (
         <React.Fragment key={idx}>
           <Stake
@@ -198,8 +194,8 @@ function TokenGrid({
       {hideOnMobile && (
         <button
           onClick={() => setShow(true)}
-        className={`[writing-mode:vertical-rl] lg:hidden font-khand fixed bottom-22 left-0 z-70 bg-white border-r-1 border-x-1 border-[#CDCDE9] dark:border-secondary text-[#190E79] flex flex-col items-center justify-center px-2  py-1 rounded-r-lg shadow-2xl font-bold hover:shadow-xl transition-all duration-300 ease-in-out ${
-            show ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          className={`font-khand dark:border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x-1 border-r-1 border-[#CDCDE9] bg-white px-2 py-1 font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl lg:hidden ${
+            show ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
           id="tokengrid-menu-button"
           style={{ boxShadow: "0 8px 25px rgba(0, 0, 0, 0.5)" }}

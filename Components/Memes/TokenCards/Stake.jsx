@@ -7,7 +7,7 @@ function Stake({ token }) {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <div className="relative z-10 flex-shrink-0">
-      <div className="-mr-18 flex w-12 items-center justify-center rounded-full bg-white">
+      <div className="-mr-18 flex w-12 lg:w-10 xl:w-12 2xl:w-13 items-center justify-center rounded-full bg-white">
         <svg
           className="w-16"
           viewBox="0 0 57 57"
@@ -62,30 +62,32 @@ function Stake({ token }) {
         />
       </div>
       {/* Card Content */}
-      <div className="flex flex-1 flex-col px-1 pt-2 2xl:px-3">
+      <div className="flex flex-1 flex-col px-1 pt-1.5 sm:pt-2 xl:px-2 2xl:px-3">
         {/* Title & Star */}
-        <div className="mb-2 flex items-center justify-between">
+        <div className="mb-1.5 flex items-center justify-between sm:mb-2">
           <span
-            className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px]"
+            className="font-khand text-[11px] leading-tight font-semibold tracking-tight text-[#E6E6E6] sm:text-[12px] md:text-[13px] lg:text-[12px] xl:text-[13px] 2xl:text-[14px]"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
           </span>
-          <span className="ml-2 text-xl text-[#FF00A8]">★</span>
+          <span className="ml-1.5 text-lg text-[#FF00A8] sm:ml-2 sm:text-xl">
+            ★
+          </span>
         </div>
 
         {/* Stats Row */}
-        <div className="font-khand relative flex items-center justify-between gap-4 font-semibold">
+        <div className="font-khand relative flex items-center justify-between gap-2 font-semibold sm:gap-3 md:gap-4">
           <StakeIcon />
 
           {/* Divider Line */}
           {/* <div className="w-px h-24 bg-white mx-4"></div> */}
 
           {/* Text Content */}
-          <div className="absolute left-6 flex flex-col lg:left-10 xl:w-1/2 2xl:w-3/5">
+          <div className="absolute left-5 flex flex-col sm:left-6 lg:left-8 xl:left-10 xl:w-1/2 ">
             {/* Time Display Bar */}
             <div
-              className="flex items-center rounded-full py-1 pl-6 lg:-ml-4"
+              className="flex items-center rounded-full pl-6 pr-1 py-1 sm:pl-5 md:pl-6 lg:-ml-4"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -93,15 +95,15 @@ function Stake({ token }) {
                     : "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)",
               }}
             >
-              <div className="mr-1.5 h-3 w-px bg-indigo-950 opacity-50"></div>
-              <span className="text-xs font-bold text-white md:pr-2 lg:pr-0">
+              <div className="w-px bg-indigo-950 opacity-50 mr-1.5 h-3"></div>
+              <span className="font-bold text-white text-xs md:pr-2 lg:pr-0 lg:text-[10px] xl:text-xs">
                 2d-12h-45m
               </span>
             </div>
 
             {/* Percentage Display Bar */}
             <div
-              className="flex w-3/4 items-center rounded-full py-1 pl-6 md:w-full lg:-ml-4"
+              className="flex w-3/4 items-center rounded-full pl-6 py-1 sm:pl-5 md:w-full md:pl-6 lg:-ml-4"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -109,16 +111,20 @@ function Stake({ token }) {
                     : "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)",
               }}
             >
-              <div className="mr-1.5 h-3 w-px bg-indigo-950 opacity-50"></div>
-              <span className="text-xs font-bold text-[#1E1E1E]">30%</span>
+              <div className="mr-1 h-2.5 w-px bg-indigo-950 opacity-50 sm:mr-1.5 sm:h-3"></div>
+              <span className="text-[10px] font-bold text-[#1E1E1E] sm:text-xs lg:text-[10px] xl:text-xs">
+                30%
+              </span>
             </div>
           </div>
 
           <div className="flex flex-col">
-            <div className="flex justify-end gap-0 text-xl text-[#FFB01C] lg:text-3xl">
+            <div className="flex justify-end gap-0 text-base text-[#FFB01C] sm:text-lg md:text-xl lg:text-2xl 2xl:text-3xl">
               12K
             </div>
-            <div className="-ml-2 text-white md:ml-0">stakers</div>
+            <div className="-ml-1.5 text-xs text-white sm:-ml-2 sm:text-sm md:ml-0">
+              stakers
+            </div>
           </div>
         </div>
       </div>
