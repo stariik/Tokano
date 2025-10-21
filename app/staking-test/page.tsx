@@ -33,7 +33,6 @@ export default function StakingTestPage() {
   const fetchStakingPools = useCallback(async () => {
     if (!staking) return;
     const pools = await staking.fetchStakePools();
-    console.log("Pools", pools);
     const mints = pools.map((p) => p.tokenMint.toBase58());
     const tokenInfos = await fetchTokenInfo(mints);
     const enrichedPools = pools.map((pool) => ({
@@ -46,8 +45,6 @@ export default function StakingTestPage() {
   const fetchUserStakeAccounts = useCallback(async () => {
     if (!publicKey || !staking || !stakePools) return;
     const accounts = await staking.fetchUserStakeAccounts(publicKey);
-    console.log("User Staked Accounts", accounts);
-
     const enrichedAccounts = accounts.map((account) => {
       const pool = stakePools.find((p) =>
         p.poolAddress.equals(account.poolAddress),
@@ -69,7 +66,6 @@ export default function StakingTestPage() {
   const fetchUserCreatedStakePools = useCallback(async () => {
     if (!publicKey || !staking) return;
     const pools = await staking.fetchUserCreatedStakePools(publicKey);
-    console.log("User Created Stake Pools", pools);
     const mints = pools.map((p) => p.tokenMint.toBase58());
     const tokenInfos = await fetchTokenInfo(mints);
     const enrichedPools = pools.map((pool) => ({

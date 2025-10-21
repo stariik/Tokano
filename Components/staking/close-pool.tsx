@@ -33,10 +33,13 @@ export default function ClosePool({ pool, onPoolClosed }: ClosePoolProps) {
         const txId = await connection.sendRawTransaction(signedTx.serialize());
         console.log("Transaction sent: ", txId);
 
+        // todo: transaction sent, we're waiting for the tx confirmation
         transactionListener(connection, txId, (completed) => {
           if (completed) {
+            // todo: show transaction completed notification
             console.log("Transaction completed");
           } else {
+            // todo: show transaction could not be completed notification
             console.log("Transaction failed");
           }
           onPoolClosed();
