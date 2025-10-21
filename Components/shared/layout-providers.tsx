@@ -12,6 +12,7 @@ import { ThemeProvider } from "@/hooks/useTheme";
 import TokanoSdkProvider from "@/contexts/tokano-sdk-context";
 import BalancesProvider from "@/contexts/balances-context";
 import { WalletConnectWalletAdapter } from "@walletconnect/solana-adapter";
+import { TokensProvider } from "@/contexts/tokens-context";
 
 export default function LayoutProviders({
   children,
@@ -45,11 +46,13 @@ export default function LayoutProviders({
         wallets={wallets}
         autoConnect={true}
       >
-        <BalancesProvider>
-          <TokanoSdkProvider>
-            <ThemeProvider>{children}</ThemeProvider>
-          </TokanoSdkProvider>
-        </BalancesProvider>
+        <TokensProvider>
+          <BalancesProvider>
+            <TokanoSdkProvider>
+              <ThemeProvider>{children}</ThemeProvider>
+            </TokanoSdkProvider>
+          </BalancesProvider>
+        </TokensProvider>
       </WalletProvider>
     </ConnectionProvider>
   );

@@ -6,29 +6,49 @@ import { useCallback, useEffect, useState } from "react";
 import { LockState } from "tokano-sdk";
 import CreateLock from "@/Components/lock/create-lock";
 import ClaimLock from "@/Components/lock/claim-lock";
+import { TokenInfo, useTokens } from "@/contexts/tokens-context";
+
+interface LockStateWithTokenInfo extends LockState {
+  tokenInfo?: TokenInfo;
+}
 
 export default function LockTestPage() {
   const { publicKey } = useWallet();
   const { lock } = useTokano();
+  const { fetchTokenInfo } = useTokens();
 
-  const [lockedAccounts, setLockedAccounts] = useState<LockState[]>([]);
+  const [lockedAccounts, setLockedAccounts] = useState<
+    LockStateWithTokenInfo[]
+  >([]);
   const [userCreatedLockAccounts, setUserCreatedLockAccounts] = useState<
-    LockState[]
+    LockStateWithTokenInfo[]
   >([]);
 
   const fetchLockedAccounts = useCallback(async () => {
     if (!publicKey || !lock) return;
     const accounts = await lock.fetchUserLocks(publicKey);
     console.log("Locked Accounts", accounts);
-    setLockedAccounts(accounts);
-  }, [publicKey, lock]);
+    const mints = accounts.map((acc) => acc.tokenMint.toBase58());
+    const tokenInfos = await fetchTokenInfo(mints);
+    const enrichedAccounts = accounts.map((account) => ({
+      ...account,
+      tokenInfo: tokenInfos[account.tokenMint.toBase58()],
+    }));
+    setLockedAccounts(enrichedAccounts);
+  }, [publicKey, lock, fetchTokenInfo]);
 
   const fetchUserCreatedLockAccounts = useCallback(async () => {
     if (!publicKey || !lock) return;
     const accounts = await lock.fetchUserCreatedLocks(publicKey);
     console.log("User Created Lock Accounts", accounts);
-    setUserCreatedLockAccounts(accounts);
-  }, [publicKey, lock]);
+    const mints = accounts.map((acc) => acc.tokenMint.toBase58());
+    const tokenInfos = await fetchTokenInfo(mints);
+    const enrichedAccounts = accounts.map((account) => ({
+      ...account,
+      tokenInfo: tokenInfos[account.tokenMint.toBase58()],
+    }));
+    setUserCreatedLockAccounts(enrichedAccounts);
+  }, [publicKey, lock, fetchTokenInfo]);
 
   useEffect(() => {
     if (publicKey && lock) {
@@ -61,6 +81,18 @@ export default function LockTestPage() {
                   key={index}
                   className="rounded-lg border bg-gray-800 p-4 text-sm"
                 >
+                  {account.tokenInfo && (
+                    <div className="mb-2 flex items-center gap-2">
+                      <img
+                        src={account.tokenInfo.icon}
+                        alt={account.tokenInfo.name}
+                        className="h-6 w-6 rounded-full"
+                      />
+                      <span className="font-bold">
+                        {account.tokenInfo.name} ({account.tokenInfo.symbol})
+                      </span>
+                    </div>
+                  )}
                   <p className="font-mono">
                     Address: {account.address.toBase58()}
                   </p>
@@ -101,6 +133,18 @@ export default function LockTestPage() {
                   key={index}
                   className="rounded-lg border bg-gray-800 p-4 text-sm"
                 >
+                  {account.tokenInfo && (
+                    <div className="mb-2 flex items-center gap-2">
+                      <img
+                        src={account.tokenInfo.icon}
+                        alt={account.tokenInfo.name}
+                        className="h-6 w-6 rounded-full"
+                      />
+                      <span className="font-bold">
+                        {account.tokenInfo.name} ({account.tokenInfo.symbol})
+                      </span>
+                    </div>
+                  )}
                   <p className="font-mono">
                     Address: {account.address.toBase58()}
                   </p>

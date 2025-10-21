@@ -8,41 +8,76 @@ import CreatePool from "@/Components/staking/create-pool";
 import CreateStake from "@/Components/staking/create-stake";
 import StakeActions from "@/Components/staking/stake-actions";
 import ClosePool from "@/Components/staking/close-pool";
+import { TokenInfo, useTokens } from "@/contexts/tokens-context";
+
+interface PoolStateWithTokenInfo extends PoolState {
+  tokenInfo?: TokenInfo;
+}
+
+interface UserStateWithTokenInfo extends UserState {
+  tokenInfo?: TokenInfo;
+}
 
 export default function StakingTestPage() {
   const { publicKey } = useWallet();
   const { staking } = useTokano();
-  const [stakePools, setStakePools] = useState<PoolState[]>();
-  const [userStakedAccounts, setUserStakedAccounts] = useState<UserState[]>();
+  const { fetchTokenInfo } = useTokens();
+  const [stakePools, setStakePools] = useState<PoolStateWithTokenInfo[]>();
+  const [userStakedAccounts, setUserStakedAccounts] =
+    useState<UserStateWithTokenInfo[]>();
   const [userCreatedStakePools, setUserCreatedStakePools] =
-    useState<PoolState[]>();
+    useState<PoolStateWithTokenInfo[]>();
   const [selectedUserStakedAccount, setSelectedUserStakedAccount] =
-    useState<UserState | null>(null);
+    useState<UserStateWithTokenInfo | null>(null);
 
   const fetchStakingPools = useCallback(async () => {
-    const pools = await staking?.fetchStakePools();
+    if (!staking) return;
+    const pools = await staking.fetchStakePools();
     console.log("Pools", pools);
-    setStakePools(pools);
-  }, [staking]);
+    const mints = pools.map((p) => p.tokenMint.toBase58());
+    const tokenInfos = await fetchTokenInfo(mints);
+    const enrichedPools = pools.map((pool) => ({
+      ...pool,
+      tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
+    }));
+    setStakePools(enrichedPools);
+  }, [staking, fetchTokenInfo]);
 
   const fetchUserStakeAccounts = useCallback(async () => {
-    if (!publicKey) return;
-    const accounts = await staking?.fetchUserStakeAccounts(publicKey);
+    if (!publicKey || !staking || !stakePools) return;
+    const accounts = await staking.fetchUserStakeAccounts(publicKey);
     console.log("User Staked Accounts", accounts);
-    setUserStakedAccounts(accounts);
-    if (accounts && accounts.length > 0) {
-      setSelectedUserStakedAccount(accounts[0]);
+
+    const enrichedAccounts = accounts.map((account) => {
+      const pool = stakePools.find((p) =>
+        p.poolAddress.equals(account.poolAddress),
+      );
+      return {
+        ...account,
+        tokenInfo: pool?.tokenInfo,
+      };
+    });
+
+    setUserStakedAccounts(enrichedAccounts);
+    if (enrichedAccounts && enrichedAccounts.length > 0) {
+      setSelectedUserStakedAccount(enrichedAccounts[0]);
     } else {
       setSelectedUserStakedAccount(null);
     }
-  }, [publicKey, staking]);
+  }, [publicKey, staking, stakePools]);
 
   const fetchUserCreatedStakePools = useCallback(async () => {
-    if (!publicKey) return;
-    const pools = await staking?.fetchUserCreatedStakePools(publicKey);
+    if (!publicKey || !staking) return;
+    const pools = await staking.fetchUserCreatedStakePools(publicKey);
     console.log("User Created Stake Pools", pools);
-    setUserCreatedStakePools(pools);
-  }, [publicKey, staking]);
+    const mints = pools.map((p) => p.tokenMint.toBase58());
+    const tokenInfos = await fetchTokenInfo(mints);
+    const enrichedPools = pools.map((pool) => ({
+      ...pool,
+      tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
+    }));
+    setUserCreatedStakePools(enrichedPools);
+  }, [publicKey, staking, fetchTokenInfo]);
 
   const handlePoolCreated = useCallback(() => {
     fetchStakingPools();
@@ -65,14 +100,14 @@ export default function StakingTestPage() {
   }, [fetchUserCreatedStakePools, fetchStakingPools]);
 
   useEffect(() => {
-    if (publicKey) {
-      fetchUserStakeAccounts();
-    }
-  }, [publicKey, fetchUserStakeAccounts]);
-
-  useEffect(() => {
     fetchStakingPools();
   }, [fetchStakingPools]);
+
+  useEffect(() => {
+    if (publicKey && stakePools) {
+      fetchUserStakeAccounts();
+    }
+  }, [publicKey, stakePools, fetchUserStakeAccounts]);
 
   useEffect(() => {
     if (publicKey) {
@@ -113,9 +148,23 @@ export default function StakingTestPage() {
                 key={index}
                 className="rounded bg-gray-800 p-4"
               >
-                <h3 className="font-semibold">
-                  Pool {pool.poolAddress.toBase58()}
-                </h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">
+                    Pool {pool.poolAddress.toBase58()}
+                  </h3>
+                  {pool.tokenInfo && (
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={pool.tokenInfo.icon}
+                        alt={pool.tokenInfo.name}
+                        className="h-6 w-6 rounded-full"
+                      />
+                      <span className="font-bold">
+                        {pool.tokenInfo.name} ({pool.tokenInfo.symbol})
+                      </span>
+                    </div>
+                  )}
+                </div>
                 <p>Initializer: {pool.initializer.toBase58()}</p>
                 <p>Total Token Staked: {pool.totalTokenStaked.toString()}</p>
                 <p>Token Mint: {pool.tokenMint.toBase58()}</p>
@@ -170,7 +219,22 @@ export default function StakingTestPage() {
 
             {selectedUserStakedAccount && (
               <div className="mb-4 rounded bg-gray-800 p-4">
-                <h3 className="font-semibold">Selected Account Details</h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">Selected Account Details</h3>
+                  {selectedUserStakedAccount.tokenInfo && (
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={selectedUserStakedAccount.tokenInfo.icon}
+                        alt={selectedUserStakedAccount.tokenInfo.name}
+                        className="h-6 w-6 rounded-full"
+                      />
+                      <span className="font-bold">
+                        {selectedUserStakedAccount.tokenInfo.name} (
+                        {selectedUserStakedAccount.tokenInfo.symbol})
+                      </span>
+                    </div>
+                  )}
+                </div>
                 <p>
                   Initializer:{" "}
                   {selectedUserStakedAccount.initializerUser.toBase58()}
@@ -215,9 +279,23 @@ export default function StakingTestPage() {
                 key={index}
                 className="rounded bg-gray-800 p-4"
               >
-                <h3 className="font-semibold">
-                  Pool {pool.poolAddress.toBase58()}
-                </h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">
+                    Pool {pool.poolAddress.toBase58()}
+                  </h3>
+                  {pool.tokenInfo && (
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={pool.tokenInfo.icon}
+                        alt={pool.tokenInfo.name}
+                        className="h-6 w-6 rounded-full"
+                      />
+                      <span className="font-bold">
+                        {pool.tokenInfo.name} ({pool.tokenInfo.symbol})
+                      </span>
+                    </div>
+                  )}
+                </div>
                 <p>Initializer: {pool.initializer.toBase58()}</p>
                 <p>Total Token Staked: {pool.totalTokenStaked.toString()}</p>
                 <p>Token Mint: {pool.tokenMint.toBase58()}</p>

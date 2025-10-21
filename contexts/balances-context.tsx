@@ -8,14 +8,12 @@ import {
   useState,
 } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { fetchWalletBalances, subscribeToWalletBalances } from "@/lib/balances";
-
-export interface TokenBalanceT {
-  amount: string;
-  amountRaw: number;
-  decimals: number;
-  mintAddress: string;
-}
+import {
+  fetchWalletBalances,
+  subscribeToWalletBalances,
+  TokenBalanceT,
+} from "@/lib/balances";
+import { TokenInfo, useTokens } from "./tokens-context";
 
 export enum BalanceLoadState {
   NOT_INITIALIZED,
@@ -23,10 +21,11 @@ export enum BalanceLoadState {
   LOADED,
 }
 
+export type TokenBalanceWithInfo = TokenBalanceT & { info?: TokenInfo };
+
 interface BalancesContextT {
-  tokens: TokenBalanceT[];
+  tokens: TokenBalanceWithInfo[];
   loadState: BalanceLoadState;
-  findAndReplace: (token: TokenBalanceT) => void;
 }
 
 const BalancesContext = createContext<BalancesContextT | null>(null);
@@ -38,21 +37,28 @@ export default function BalancesProvider({
 }) {
   const { connection } = useConnection();
   const { publicKey } = useWallet();
+  const { fetchTokenInfo } = useTokens();
   const lastSubscriptionId = useRef<number>(-1);
-  const [tokens, setTokens] = useState<TokenBalanceT[]>([]);
+  const [tokens, setTokens] = useState<TokenBalanceWithInfo[]>([]);
   const [loadState, setLoadState] = useState<BalanceLoadState>(
     BalanceLoadState.NOT_INITIALIZED,
   );
 
-  const findAndReplace = useCallback((token: TokenBalanceT) => {
-    setTokens((previous) => {
-      const newArray = previous?.filter(
-        (item) => item.mintAddress !== token.mintAddress,
-      );
-      newArray?.push(token);
-      return newArray;
-    });
-  }, []);
+  const findAndReplace = useCallback(
+    async (token: TokenBalanceT) => {
+      const tokenInfos = await fetchTokenInfo([token.mintAddress], true);
+      const tokenInfo = tokenInfos[token.mintAddress];
+
+      setTokens((previous) => {
+        const newArray = previous?.filter(
+          (item) => item.mintAddress !== token.mintAddress,
+        );
+        newArray?.push({ ...token, info: tokenInfo });
+        return newArray;
+      });
+    },
+    [fetchTokenInfo],
+  );
 
   useEffect(() => {
     setLoadState(BalanceLoadState.NOT_INITIALIZED);
@@ -61,7 +67,15 @@ export default function BalancesProvider({
     setLoadState(BalanceLoadState.LOADING);
     const fetchBalances = async () => {
       const balances = await fetchWalletBalances(connection, publicKey);
-      setTokens(balances);
+      const mints = balances.map((balance) => balance.mintAddress);
+      const tokenInfos = await fetchTokenInfo(mints);
+
+      const tokensWithInfo = balances.map((balance) => ({
+        ...balance,
+        info: tokenInfos[balance.mintAddress],
+      }));
+
+      setTokens(tokensWithInfo);
       lastSubscriptionId.current = subscribeToWalletBalances(
         connection,
         publicKey,
@@ -79,14 +93,13 @@ export default function BalancesProvider({
         );
       }
     };
-  }, [connection, findAndReplace, publicKey]);
+  }, [connection, publicKey, fetchTokenInfo, findAndReplace]);
 
   return (
     <BalancesContext.Provider
       value={{
         tokens,
         loadState,
-        findAndReplace,
       }}
     >
       {children}

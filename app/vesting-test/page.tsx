@@ -6,29 +6,49 @@ import { useCallback, useEffect, useState } from "react";
 import { VestingState } from "tokano-sdk";
 import CreateVesting from "@/Components/vesting/create-vesting";
 import ClaimVesting from "@/Components/vesting/claim-vesting";
+import { TokenInfo, useTokens } from "@/contexts/tokens-context";
+
+interface VestingStateWithTokenInfo extends VestingState {
+  tokenInfo?: TokenInfo;
+}
 
 export default function VestingTestPage() {
   const { publicKey } = useWallet();
   const { vesting } = useTokano();
+  const { fetchTokenInfo } = useTokens();
 
-  const [vestedAccounts, setVestedAccounts] = useState<VestingState[]>([]);
+  const [vestedAccounts, setVestedAccounts] = useState<
+    VestingStateWithTokenInfo[]
+  >([]);
   const [userCreatedVestingAccounts, setUserCreatedVestingAccounts] = useState<
-    VestingState[]
+    VestingStateWithTokenInfo[]
   >([]);
 
   const fetchVestedAccounts = useCallback(async () => {
     if (!publicKey || !vesting) return;
     const accounts = await vesting.fetchUserVestings(publicKey);
     console.log("Vested Accounts", accounts);
-    setVestedAccounts(accounts);
-  }, [publicKey, vesting]);
+    const mints = accounts.map((acc) => acc.tokenMint.toBase58());
+    const tokenInfos = await fetchTokenInfo(mints);
+    const enrichedAccounts = accounts.map((account) => ({
+      ...account,
+      tokenInfo: tokenInfos[account.tokenMint.toBase58()],
+    }));
+    setVestedAccounts(enrichedAccounts);
+  }, [publicKey, vesting, fetchTokenInfo]);
 
   const fetchUserCreatedVestingAccounts = useCallback(async () => {
     if (!publicKey || !vesting) return;
     const accounts = await vesting.fetchUserCreatedVestings(publicKey);
     console.log("User Created Vested Accounts", accounts);
-    setUserCreatedVestingAccounts(accounts);
-  }, [publicKey, vesting]);
+    const mints = accounts.map((acc) => acc.tokenMint.toBase58());
+    const tokenInfos = await fetchTokenInfo(mints);
+    const enrichedAccounts = accounts.map((account) => ({
+      ...account,
+      tokenInfo: tokenInfos[account.tokenMint.toBase58()],
+    }));
+    setUserCreatedVestingAccounts(enrichedAccounts);
+  }, [publicKey, vesting, fetchTokenInfo]);
 
   useEffect(() => {
     if (publicKey && vesting) {
@@ -65,6 +85,18 @@ export default function VestingTestPage() {
                   key={index}
                   className="rounded-lg border bg-gray-800 p-4 text-sm"
                 >
+                  {account.tokenInfo && (
+                    <div className="mb-2 flex items-center gap-2">
+                      <img
+                        src={account.tokenInfo.icon}
+                        alt={account.tokenInfo.name}
+                        className="h-6 w-6 rounded-full"
+                      />
+                      <span className="font-bold">
+                        {account.tokenInfo.name} ({account.tokenInfo.symbol})
+                      </span>
+                    </div>
+                  )}
                   <p className="font-mono">
                     Address: {account.address.toBase58()}
                   </p>
@@ -107,6 +139,18 @@ export default function VestingTestPage() {
                   key={index}
                   className="rounded-lg border bg-gray-800 p-4 text-sm"
                 >
+                  {account.tokenInfo && (
+                    <div className="mb-2 flex items-center gap-2">
+                      <img
+                        src={account.tokenInfo.icon}
+                        alt={account.tokenInfo.name}
+                        className="h-6 w-6 rounded-full"
+                      />
+                      <span className="font-bold">
+                        {account.tokenInfo.name} ({account.tokenInfo.symbol})
+                      </span>
+                    </div>
+                  )}
                   <p className="font-mono">
                     Address: {account.address.toBase58()}
                   </p>
