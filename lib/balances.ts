@@ -5,10 +5,16 @@ import {
   PublicKey,
 } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { TokenBalanceT } from "@/contexts/balances-context";
 import { blob, nu64, struct } from "@solana/buffer-layout";
 
-export const SOL_MINT = "11111111111111111111111111111111";
+export interface TokenBalanceT {
+  amount: string;
+  amountRaw: number;
+  decimals: number;
+  mintAddress: string;
+}
+
+export const SOL_MINT = "So11111111111111111111111111111111111111112";
 
 export const SOL_INFO: TokenBalanceT = {
   amount: "0",
@@ -27,7 +33,7 @@ export const fetchWalletBalances = async (
   return [solBalance, ...tokens];
 };
 
-export const fetchSolBalance = async (
+const fetchSolBalance = async (
   connection: Connection,
   publicKey: PublicKey,
 ): Promise<TokenBalanceT> => {
@@ -44,7 +50,7 @@ export const fetchSolBalance = async (
   };
 };
 
-export const fetchSplTokens = async (
+const fetchSplTokens = async (
   connection: Connection,
   publicKey: PublicKey,
 ): Promise<TokenBalanceT[]> => {
@@ -54,18 +60,18 @@ export const fetchSplTokens = async (
     "confirmed",
   );
 
-  console.log("Resp", resp);
-
-  return resp.value.map((value) => {
-    return {
-      mintAddress: value.account.data.parsed.info.mint,
-      decimals: value.account.data.parsed.info.tokenAmount.decimals,
-      amount: value.account.data.parsed.info.tokenAmount.uiAmountString,
-      amountRaw: Number.parseInt(
-        value.account.data.parsed.info.tokenAmount.amount,
-      ),
-    };
-  });
+  return resp.value
+    .map((value) => {
+      return {
+        mintAddress: value.account.data.parsed.info.mint,
+        decimals: value.account.data.parsed.info.tokenAmount.decimals,
+        amount: value.account.data.parsed.info.tokenAmount.uiAmountString,
+        amountRaw: Number.parseInt(
+          value.account.data.parsed.info.tokenAmount.amount,
+        ),
+      };
+    })
+    .filter((value) => value.decimals > 0);
 };
 
 const ACCOUNT_LAYOUT = struct<{
@@ -94,6 +100,8 @@ export const subscribeToWalletBalances = (
       }
       const decimals = (mintInfo.value.data as ParsedAccountData).parsed.info
         .decimals;
+
+      if (decimals <= 0) return;
 
       findAndReplace({
         amount: rawAmountToUiString(amountRaw, decimals),
