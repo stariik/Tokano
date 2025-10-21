@@ -151,15 +151,15 @@ function Details() {
                     {popup.type === "claim" && (
                       <div className="absolute top-1/2 left-full h-px w-8 -translate-y-1/2 transform bg-purple-400"></div>
                     )}
-                    <div className="dark:border-secondary min-w-[160px] rounded-lg border-2 border-[#CDCDE9] bg-[#eeeded] p-4 text-center shadow-xl dark:bg-[#0C0D1C]">
-                      <div className="mb-3">
-                        <div className="text-sm font-semibold text-[#190E79] dark:text-white">
+                    <div className="dark:border-secondary min-w-[100px] rounded-lg border-2 border-[#CDCDE9] bg-[#eeeded] p-2 text-center shadow-xl dark:bg-[#0C0D1C]">
+                      <div className="mb-2">
+                        <div className="text-xs font-semibold text-[#190E79] dark:text-white">
                           {popup.type === "unstake" ? "UNSTAKE?" : "CLAIM?"}
                         </div>
                       </div>
-                      <div className="flex flex-col space-y-2">
+                      <div className="flex flex-col space-y-1">
                         <button
-                          className={`rounded-full px-6 py-2 text-sm font-bold text-white ${
+                          className={`rounded-full px-4 py-1 text-xs font-bold text-white ${
                             popup.type === "unstake"
                               ? "bg-red-500 hover:bg-red-600"
                               : "bg-green-500 hover:bg-green-600"
@@ -178,7 +178,7 @@ function Details() {
                           YES
                         </button>
                         <button
-                          className="rounded-full bg-gray-600 px-6 py-2 text-sm font-bold text-white hover:bg-gray-700"
+                          className="rounded-full bg-gray-600 px-4 py-1 text-xs font-bold text-white hover:bg-gray-700"
                           onClick={() =>
                             setPopup({
                               show: false,

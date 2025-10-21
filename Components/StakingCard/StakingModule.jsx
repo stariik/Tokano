@@ -9,11 +9,11 @@ function StakingModule() {
   ];
 
   return (
-    <div className="rounded-4xl border-2 border-[#CDCDE9] dark:border-secondary overflow-hidden">
-      <div className="grid grid-cols-2 bg-gradient-to-r dark:from-[#574DDD] dark:to-[#330E79] from-[#8D85FB] to-[#4B317C] dark:text-[#190E79] text-white">
+    <div className="dark:border-secondary font-khand overflow-hidden rounded-4xl border-2 border-[#CDCDE9]">
+      <div className="grid grid-cols-2 bg-gradient-to-r from-[#8D85FB] to-[#4B317C] text-white dark:from-[#574DDD] dark:to-[#330E79] dark:text-[#190E79]">
         {/* Left side */}
-        <div className="font-khand flex items-center justify-between border-r-2 border-[#CDCDE9] dark:border-secondary p-4 text-xl font-semibold 2xl:text-4xl dark:text-white">
-          <div className="flex w-full flex-col items-center justify-center leading-none">
+        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] p-4 text-xl font-semibold lg:p-2 lg:text-xs xl:p-4 xl:text-base 2xl:text-4xl dark:text-white">
+          <div className="flex flex-col items-center justify-center leading-none">
             <span>Staking</span>
             <span>Module</span>
           </div>
@@ -23,8 +23,8 @@ function StakingModule() {
               alt=""
               className="m-2 w-8 rounded-full md:m-4 md:w-12"
             />
-            FIRED
           </div>
+          <div className=" ">FIRED</div>
         </div>
 
         {/* Right side */}
@@ -32,7 +32,7 @@ function StakingModule() {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="font-khand flex items-center justify-between text-sm font-medium last:mb-0 md:text-lg dark:text-white"
+              className="font-khand flex items-center justify-between text-sm font-medium last:mb-0 md:text-lg lg:text-xs xl:text-base dark:text-white"
             >
               <span>{stat.label}</span>
               <span>{stat.value}</span>
@@ -42,13 +42,13 @@ function StakingModule() {
       </div>
 
       <div className="bg-gradient-to-r from-[#C9CDD7] to-[#EAE4FF] py-4 text-[#190E79] dark:from-[#130C71] dark:to-[#173991] dark:text-white">
-        <div className="grid grid-cols-3">
-          <div className="ml-4 flex items-center justify-center text-xs md:text-base">
+        <div className="grid min-h-18 grid-cols-7">
+          <div className="col-span-2 ml-4 flex items-center justify-center text-xs md:text-base">
             Available: 21,234,222.00
           </div>
           {/* <div className="flex justify-center">You Will Stake:</div> */}
 
-          <div className="relative flex flex-col items-center rounded-xl border-2 border-[#CDCDE9] dark:border-secondary bg-gradient-to-t from-[#DEDEDE] to-[#EAE4FF] px-1 pb-6 text-[#190E79] md:px-4 md:pb-2 xl:px-[5px] 2xl:px-4 2xl:py-2 dark:from-[#0A0C50] dark:to-[#24068E] dark:text-white">
+          <div className="dark:border-secondary relative col-span-3 flex flex-col items-center rounded-xl border-2 border-[#CDCDE9] bg-gradient-to-t from-[#DEDEDE] to-[#EAE4FF] px-1 pb-6 text-[#190E79] md:px-4 md:pb-2 xl:px-[5px] 2xl:px-4 2xl:py-2 dark:from-[#0A0C50] dark:to-[#24068E] dark:text-white">
             {/* Top Row */}
             <div className="flex w-full items-center justify-between">
               <div className="flex h-full items-center">
@@ -56,7 +56,7 @@ function StakingModule() {
                   You will <br /> Stake:
                 </span>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center">
                 <span className="font-khand mb-4 border-b-1 border-white/40 text-xs font-semibold md:text-lg 2xl:text-2xl">
                   1,234,222.00
                 </span>
@@ -65,23 +65,23 @@ function StakingModule() {
             </div>
 
             {/* Bottom Text */}
-            <div className="font-khand absolute right-2 bottom-0 flex w-full justify-end text-[10px] font-medium sm:text-sm xl:-mb-1 2xl:mb-0">
+            <div className="font-khand absolute right-2 bottom-1 flex w-full justify-end text-[10px] font-medium sm:text-sm lg:text-xs xl:text-[10px]">
               this is what you will stake
             </div>
           </div>
 
-          <div className="flex items-center justify-center text-xs md:text-base">
+          <div className="col-span-2 flex items-center justify-center text-xs md:text-base">
             Unlocking: <span className="">5days</span>
           </div>
         </div>
-        <div className="font-khand mx-4 mt-6 text-center text-sm font-medium md:mx-20">
+        <div className="font-khand mx-4 mt-6 text-center text-sm font-medium md:mx-20 lg:mx-16 lg:mt-4 lg:text-xs xl:mx-20 xl:mt-6 xl:text-sm">
           !!! Please keep in mind, either STAKEING or UNBONDING needs some
           amount of SOL on wallet available for network fees or the transaction
           will fail. !!!
         </div>
       </div>
 
-      <div className="font-khand flex items-center justify-end gap-8 border-t-2 border-[#CDCDE9] dark:border-secondary bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 pr-8 text-xs font-semibold text-white md:gap-16 md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
+      <div className="font-khand dark:border-secondary flex items-center justify-end gap-8 border-t-2 border-[#CDCDE9] bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 pr-8 text-xs font-semibold text-white md:gap-16 md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
         You are Staking: 123,456,789
         <button className="flex cursor-pointer items-center gap-4 rounded-xl border-1 border-white bg-[#32138b] px-2 py-1 text-lg md:text-2xl">
           STAKE

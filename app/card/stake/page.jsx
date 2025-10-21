@@ -22,7 +22,7 @@ function page() {
           <div className="">
             <StakingCard />
           </div>
-          <div className="mt-4 lg:mt-8 ">
+          <div className="mt-4 xl:mt-6 ">
             <StakingModule />
           </div>
           {/* Show MyStaking on desktop, Details on mobile */}

@@ -23,7 +23,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
 
         {/* Second Table Header */}
         <div>
-          <div className="grid grid-cols-2 bg-[#f5f3fb] text-sm font-semibold text-[#190E79] dark:bg-[#2A1C78] dark:text-white">
+          <div className="grid grid-cols-2 bg-[#f5f3fb] text-xs font-semibold text-[#190E79] dark:bg-[#2A1C78] dark:text-white">
             <div className="border-[#CDCDE9] dark:border-secondary flex items-center justify-center border-y border-l">
               Rewards (Last)
             </div>
@@ -105,13 +105,13 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                       })
                     }
                   >
-                    <div className="border-[#CDCDE9] dark:border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r">
+                    <div className="border-[#CDCDE9] dark:border-secondary mx-auto flex min-w-[30px] lg:min-w-[20px] xl:min-w-[30px] items-center justify-center border-r">
                       <span className="font-khand text-sm font-medium lg:font-semibold text-[#190E79] dark:text-white">
                         {index + 1}
                       </span>
                     </div>
                     <div className="border-[#CDCDE9] dark:border-secondary min-w-full flex-1 border-r-1 p-2 text-center hover:bg-[#f5f3fb] md:text-lg dark:hover:bg-[#2A1C78]">
-                      <div className="font-semibold">{position.staked}</div>
+                      <div className="font-khand ">{position.staked}</div>
                       <div className="text-xs text-purple-300 md:text-sm">
                         ({position.period})
                       </div>
@@ -170,7 +170,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
               {/* Right Table Row - Rewards & Claim */}
               <div>
                 <div
-                  className={`relative grid grid-cols-2 border-purple-300 text-sm ml-1 ${
+                  className={`relative grid grid-cols-2 border-purple-300 text-xs ${
                     position.highlight ? "" : ""
                   }`}
                 >
@@ -184,7 +184,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                       })
                     }
                   >
-                    <div className="font-semibold">{position.rewards}</div>
+                    <div className="font-khand">{position.rewards}</div>
                     <div className="text-xs text-purple-300 md:text-sm">
                       ({position.rewardsSub})
                     </div>
