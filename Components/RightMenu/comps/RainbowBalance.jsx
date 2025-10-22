@@ -81,7 +81,7 @@ export default function RainbowBalance() {
           >
             <stop
               offset="0.103121"
-              stop-color="#6D11B3"
+              stopColor="#6D11B3"
             />
             <stop
               offset="0.351201"
