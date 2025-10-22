@@ -50,7 +50,7 @@ function Lock({ id, title, created, marketCap, wallet }) {
 
   return (
     <div
-      className="dark:border-secondary mx-4 rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:mx-0 lg:pb-2 dark:text-white"
+      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:mx-0 lg:pb-2 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"

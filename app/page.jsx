@@ -21,8 +21,7 @@ export default function Home() {
   return (
     <main className="dark:bg-dark relative bg-white px-2 py-8 lg:px-2 lg:py-6">
       <div className="lg:mb-4">
-        
-        <div className="grid md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-2 xl:gap-4">
+        {/* <div className="grid md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-2 xl:gap-4">
           <div className="gap-2 md:col-span-1 lg:col-span-2 lg:grid lg:grid-cols-2 xl:gap-4">
             <div className="">
               <LaunchingSoon />
@@ -32,6 +31,18 @@ export default function Home() {
             </div>
           </div>
           <RightMenu />
+        </div> */}
+
+        <div className="mx-auto flex justify-between gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">
+          <div className="lg:w-1/3">
+            <LaunchingSoon />
+          </div>
+          <div className="md:w-1/2 lg:w-1/3 2xl:max-w-2xl">
+            <Live />
+          </div>
+          <div className="md:w-1/2 lg:w-1/3">
+            <RightMenu />
+          </div>
         </div>
       </div>
       <Banner src={"banner1.png"} />
