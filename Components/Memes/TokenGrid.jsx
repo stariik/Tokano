@@ -8,7 +8,11 @@ import Vest from "./TokenCards/Vest";
 import Soon from "./TokenCards/Soon";
 import Stake from "./TokenCards/Stake";
 
-function TokenGrid({ hideOnMobile = true, filterVariant = "default", gridCols }) {
+function TokenGrid({
+  hideOnMobile = true,
+  filterVariant = "default",
+  gridCols,
+}) {
   const [show, setShow] = useState(false);
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
 
@@ -31,7 +35,9 @@ function TokenGrid({ hideOnMobile = true, filterVariant = "default", gridCols })
         className="custom-scrollbar m-2 overflow-y-auto text-[#190E79] sm:m-3 lg:m-2 xl:m-3 dark:text-white"
         style={{ maxHeight: "100vh", minHeight: "400px" }}
       >
-        <div className={`grid gap-2 sm:gap-3 lg:gap-1 xl:gap-2 ${gridCols || "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7"}`}>
+        <div
+          className={`grid gap-2 sm:gap-3 lg:gap-1 xl:gap-2 ${gridCols || "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7"}`}
+        >
           {tokens.map((token, idx) => (
             <React.Fragment key={idx}>
               <Stake
@@ -98,7 +104,9 @@ function TokenGrid({ hideOnMobile = true, filterVariant = "default", gridCols })
   );
 
   const tokenContentMobile = (
-    <div className={`grid gap-2 p-2 ${gridCols || "grid-cols-1 sm:grid-cols-2"}`}>
+    <div
+      className={`grid gap-2 p-2 ${gridCols || "grid-cols-1 sm:grid-cols-2"}`}
+    >
       {tokens.map((token, idx) => (
         <React.Fragment key={idx}>
           <Stake

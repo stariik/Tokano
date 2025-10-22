@@ -7,7 +7,7 @@ function Stake({ token }) {
   const { resolvedTheme } = useTheme();
   const StakeIcon = () => (
     <div className="relative z-10 flex-shrink-0">
-      <div className="-mr-18 flex w-12 lg:w-10 xl:w-12 2xl:w-13 items-center justify-center rounded-full bg-white">
+      <div className="-mr-18 flex w-12 items-center justify-center rounded-full bg-white lg:w-10 xl:w-12 2xl:w-13">
         <svg
           className="w-16"
           viewBox="0 0 57 57"
@@ -84,10 +84,10 @@ function Stake({ token }) {
           {/* <div className="w-px h-24 bg-white mx-4"></div> */}
 
           {/* Text Content */}
-          <div className="absolute left-5 flex flex-col sm:left-6 lg:left-8 xl:left-10 xl:w-1/2 ">
+          <div className="absolute left-5 flex flex-col sm:left-6 lg:left-8 xl:left-10 xl:w-1/2">
             {/* Time Display Bar */}
             <div
-              className="flex items-center rounded-full pl-6 pr-1 py-1 sm:pl-5 md:pl-6 lg:-ml-4"
+              className="flex items-center rounded-full py-1 pr-1 pl-6 sm:pl-5 md:pl-6 lg:-ml-4"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -95,15 +95,15 @@ function Stake({ token }) {
                     : "linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #5eead4 100%)",
               }}
             >
-              <div className="w-px bg-indigo-950 opacity-50 mr-1.5 h-3"></div>
-              <span className="font-bold text-white text-xs md:pr-2 lg:pr-0 lg:text-[10px] xl:text-xs">
+              <div className="mr-1.5 h-3 w-px bg-indigo-950 opacity-50"></div>
+              <span className="text-xs font-bold text-white md:pr-2 lg:pr-0 lg:text-[10px] xl:text-xs">
                 2d-12h-45m
               </span>
             </div>
 
             {/* Percentage Display Bar */}
             <div
-              className="flex w-3/4 items-center rounded-full pl-6 py-1 sm:pl-5 md:w-full md:pl-6 lg:-ml-4"
+              className="flex w-3/4 items-center rounded-full py-1 pl-6 sm:pl-5 md:w-full md:pl-6 lg:-ml-4"
               style={{
                 background:
                   resolvedTheme === "dark"

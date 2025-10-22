@@ -41,7 +41,9 @@ function Lock({ token }) {
         </div>
         {/* Stats Row */}
         <div className="font-khand mb-1 flex items-center justify-between font-semibold">
-          <div className="flex text-xl text-white lg:text-lg xl:text-2xl">LOCK</div>
+          <div className="flex text-xl text-white lg:text-lg xl:text-2xl">
+            LOCK
+          </div>
           <div className="rounded-3xl bg-white">
             <div className="m-2 rounded-2xl bg-[#190E79] p-2">
               <SiVerizon className="h-[10px] w-[10px] text-white xl:h-[14px] xl:w-[14px]" />
@@ -59,7 +61,7 @@ function Lock({ token }) {
       </div>
       {/* Bottom Bar */}
       <div
-        className="font-khand mx-auto xl:py-1 w-30 rounded-xl text-center text-sm font-medium md:text-base lg:text-xs xl:text-sm"
+        className="font-khand mx-auto w-30 rounded-xl text-center text-sm font-medium md:text-base lg:text-xs xl:py-1 xl:text-sm"
         style={{
           background:
             resolvedTheme === "dark"

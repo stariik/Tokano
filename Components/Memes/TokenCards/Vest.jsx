@@ -55,7 +55,7 @@ function Lock({ token }) {
       {/* Bottom Bar */}
       <div className="flex flex-row justify-between gap-1 text-white">
         <div
-          className="font-khand h-6 basis-40 rounded-r-xl text-center text-xs font-medium md:text-sm lg:text-[10px] xl:text-sm flex items-center justify-center"
+          className="font-khand flex h-6 basis-40 items-center justify-center rounded-r-xl text-center text-xs font-medium md:text-sm lg:text-[10px] xl:text-sm"
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
@@ -63,7 +63,7 @@ function Lock({ token }) {
           TYPE: LIN/MONTHLY
         </div>
         <div
-          className="font-khand h-6 w-30 rounded-l-xl text-center text-xs font-medium md:text-sm lg:text-[10px] xl:text-sm flex items-center justify-center"
+          className="font-khand flex h-6 w-30 items-center justify-center rounded-l-xl text-center text-xs font-medium md:text-sm lg:text-[10px] xl:text-sm"
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}

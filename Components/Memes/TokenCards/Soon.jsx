@@ -70,7 +70,7 @@ function Soon({ token }) {
           <span className="ml-2 text-xl text-[#FF00A8]">★</span>
         </div>
         <div
-          className="font-khand -ml-4 max-w-24 rounded-r-xl pl-4 lg:pl-2 xl:pl-4 text-sm lg:text-xs xl:text-sm font-semibold text-[#311880]"
+          className="font-khand -ml-4 max-w-24 rounded-r-xl pl-4 text-sm font-semibold text-[#311880] lg:pl-2 lg:text-xs xl:pl-4 xl:text-sm"
           style={{
             background:
               resolvedTheme === "dark"
