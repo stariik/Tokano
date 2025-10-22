@@ -39,7 +39,7 @@ export default function RainbowBalance() {
       </div>
        */}
       <svg
-        className="w-[170px] h-[25px] lg:w-[145px] lg:h-[19px] xl:w-[193px] xl:h-[25px] 2xl:w-[210px] 2xl:h-[27px]"
+        className="h-[25px] w-[170px] lg:h-[19px] lg:w-[145px] xl:h-[25px] xl:w-[193px] 2xl:h-[27px] 2xl:w-[210px]"
         viewBox="0 0 193 25"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +83,7 @@ export default function RainbowBalance() {
               offset="0.103121"
               stopColor="#6D11B3"
             />
-            
+
             <stop
               offset="0.351201"
               stopColor="#F92C9D"

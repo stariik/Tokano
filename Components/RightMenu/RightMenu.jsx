@@ -95,10 +95,9 @@ function RightMenu() {
         />
       )}
 
-
       {/* Right-side menu */}
       <div
-        className={`dark:border-secondary lg:min-h-[83rem] lg:max-h-[83rem] xl:max-h-full shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed right-0 z-40 w-[90vw] max-w-sm rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} md:static md:top-2 md:z-0 md:h-auto md:w-auto md:max-w-none 2xl:max-w-[620px] md:translate-x-0 md:border-2 md:pb-0 md:shadow-none`}
+        className={`dark:border-secondary shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed right-0 z-40 w-[90vw] max-w-sm rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out lg:max-h-[83rem] lg:min-h-[83rem] xl:max-h-full dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} md:static md:top-2 md:z-0 md:h-auto md:w-auto md:max-w-none md:translate-x-0 md:border-2 md:pb-0 md:shadow-none 2xl:max-w-[620px]`}
         style={{ top: "3.5rem", bottom: 0, height: "auto" }}
       >
         <div
@@ -127,7 +126,7 @@ function RightMenu() {
           <Details />
         </div>
         {/* Staking Positions List */}
-        <div className="dark:border-secondary border-t-1 border-[#CDCDE9] py-2 pl-14 text-2xl xl:text-2xl lg:text-xl">
+        <div className="dark:border-secondary border-t-1 border-[#CDCDE9] py-2 pl-14 text-2xl lg:text-xl xl:text-2xl">
           TOKANO
         </div>
       </div>

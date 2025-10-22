@@ -20,7 +20,7 @@ function page() {
             filterVariant="portfolio"
           />
         </div>
-        <div className="mx-2 max-w-full sm:mx-auto sm:max-w-2/3 md:mx-0 lg:col-span-6 lg:max-w-full flex justify-center md:block 2xl:flex 2xl:flex-col">
+        <div className="mx-2 max-w-full sm:mx-auto sm:max-w-2/3 md:mx-0 lg:col-span-6 lg:max-w-full flex justify-center md:block ">
           <div className="">
             <CryptoWallet
               selectedToken={selectedToken}
