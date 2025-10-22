@@ -23,20 +23,8 @@ export default function Home() {
         <div className="grid lg:grid-cols-3 lg:gap-2 xl:gap-4">
           <div className="col-span-2 gap-2 lg:grid lg:grid-cols-2 xl:gap-4">
             <LaunchingSoon />
-            <div className="flex justify-center">
+            <div className="flex justify-center max-h-">
               <Live />
-            </div>
-            <div className="col-span-2">
-              <div className="col-span-2">
-                <div className="dark:border-secondary w-full border-x-2 border-b-2 border-[#CDCDE9]">
-                  <div className="dark:border-secondary flex w-full justify-center border-b border-[#CDCDE9] bg-[#eeeded] bg-[radial-gradient(circle,_rgba(238,237,237,1)_29%,_rgb(233_198_255)_100%)] py-2 text-2xl dark:bg-[#14121f] dark:bg-[radial-gradient(circle,_rgba(20,18,31,1)_29%,_rgba(42,0,168,1)_100%)]">
-                    <p className="font-khand font-medium text-[#464B7E] dark:text-white">
-                      PLATFORM STATS
-                    </p>
-                  </div>
-                  <PlatformStats />
-                </div>
-              </div>
             </div>
           </div>
           <RightMenu />

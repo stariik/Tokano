@@ -65,7 +65,6 @@ function Details() {
           </div>
           <div className="dark:border-secondary hidden items-center justify-center border-1 border-[#CDCDE9] text-center md:flex">
             select position to unstake
-            <br />
             or claim reward
           </div>
           <div className="dark:border-secondary flex items-center justify-center border-y border-[#CDCDE9] bg-[#4244C4] text-white dark:bg-[#2A1C78]">

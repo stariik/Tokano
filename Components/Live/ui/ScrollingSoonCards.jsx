@@ -4,7 +4,7 @@ import SoonCard from "@/Components/Tokens/SoonCard";
 
 function ScrollingCards({ cards }) {
   return (
-    <div className="custom-scroll max-h-306 space-y-2 overflow-y-auto px-2 xl:px-4">
+    <div className="custom-scroll space-y-2 overflow-y-auto px-2 xl:px-4 ">
       {cards.map((item) => (
         <SoonCard key={item.id} />
       ))}
