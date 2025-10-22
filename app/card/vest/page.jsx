@@ -5,7 +5,7 @@ import RightMenu from "@/Components/RightMenu/RightMenu";
 
 function page() {
   return (
-    <div className="grid gap-2 py-18 md:px-2 2xl:gap-4 lg:grid-cols-3 lg:py-6 2xl:px-2">
+    <div className="grid gap-2 py-18 md:px-2 lg:grid-cols-3 lg:py-6 2xl:gap-4 2xl:px-2">
       <div className="w-full gap-2 rounded-tr-4xl lg:col-span-2 lg:grid lg:grid-cols-7 2xl:gap-4">
         <div className="col-span-3">
           <TokenGrid

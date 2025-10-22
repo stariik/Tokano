@@ -5,7 +5,8 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useState } from "react";
 import { PublicKey } from "@solana/web3.js";
 import { BalanceLoadState, useBalances } from "@/contexts/balances-context";
-import { SOL_MINT, transactionListener } from "@/lib/balances";
+import { SOL_MINT, toSmallestUnit, transactionListener } from "@/lib/balances";
+import { NumericFormat, type NumberFormatValues } from "react-number-format";
 
 interface CreatePoolProps {
   onPoolCreated: () => void;
@@ -45,25 +46,30 @@ export default function CreatePool({ onPoolCreated }: CreatePoolProps) {
       !rewardAmount ||
       !rewardPeriodInSeconds ||
       !lockingPeriodForStakers ||
-      !startTime
+      !startTime ||
+      !selectedToken
     ) {
       alert("Please fill in all fields.");
       return;
     }
 
     try {
+      const amountInSmallestUnit = toSmallestUnit(
+        rewardAmount,
+        selectedToken.decimals,
+      );
+
       const startTimeStamp = Math.floor(new Date(startTime).getTime() / 1000);
 
       const tx = await staking.initializePool({
         walletPk: publicKey,
         tokenMint: new PublicKey(tokenMint),
-        rewardAmount,
+        rewardAmount: amountInSmallestUnit,
         rewardPeriodInSeconds,
         lockingPeriodForStakers,
         startTimeStamp,
       });
 
-      // Always add recent blockhash
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
@@ -98,6 +104,7 @@ export default function CreatePool({ onPoolCreated }: CreatePoolProps) {
     signTransaction,
     connection,
     onPoolCreated,
+    selectedToken,
   ]);
 
   return (
@@ -126,11 +133,16 @@ export default function CreatePool({ onPoolCreated }: CreatePoolProps) {
           )}
         </select>
         <div className="flex items-center">
-          <input
-            type="number"
+          <NumericFormat
             placeholder="Reward Amount"
             value={rewardAmount}
-            onChange={(e) => setRewardAmount(e.target.value)}
+            onValueChange={(values: NumberFormatValues) =>
+              setRewardAmount(values.value)
+            }
+            valueIsNumericString={true}
+            allowNegative={false}
+            thousandSeparator=","
+            decimalScale={selectedToken?.decimals}
             className="w-full rounded border-gray-600 bg-gray-800 p-2 text-white"
           />
           {selectedToken && (

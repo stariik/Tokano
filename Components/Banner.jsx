@@ -2,7 +2,7 @@ import React from "react";
 
 function Banner({ src }) {
   return (
-    <div className="mb-2 lg:flex justify-center hidden">
+    <div className="mb-2 hidden justify-center lg:flex">
       <img
         src={src}
         alt=""

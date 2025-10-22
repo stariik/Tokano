@@ -224,7 +224,7 @@ function Navbar() {
   return (
     <>
       {/* Top Section - Mobile Header */}
-      <div className="dark:bg-dark dark:text-light fixed top-0 z-50 w-full border-b border-gray-200 bg-white py-2 md:py-4 text-black lg:hidden dark:border-transparent">
+      <div className="dark:bg-dark dark:text-light fixed top-0 z-50 w-full border-b border-gray-200 bg-white py-2 text-black md:py-4 lg:hidden dark:border-transparent">
         <div className="flex items-center justify-between px-4 lg:justify-center lg:gap-40">
           <Link
             href="/"

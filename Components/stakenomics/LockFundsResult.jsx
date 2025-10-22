@@ -61,7 +61,7 @@ function LockFundsResult({ token, formData }) {
 
   return (
     <div
-      className="mx-4 rounded-3xl border-1 border-[#CDCDE9] dark:border-secondary pb-2 text-[#190E79] lg:mx-0 lg:pb-4 dark:text-white"
+      className="dark:border-secondary mx-4 rounded-3xl border-1 border-[#CDCDE9] pb-2 text-[#190E79] lg:mx-0 lg:pb-4 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"

@@ -53,13 +53,13 @@ function Details() {
 
   return (
     <div>
-      <div className="dark:border-secondary border-2  border-[#CDCDE9]">
+      <div className="dark:border-secondary border-2 border-[#CDCDE9]">
         <div className="bg-gradient-to-r from-[#9876ffa3] to-white px-4 py-1 xl:py-2 2xl:py-3 dark:from-[#2f01ba] dark:to-[#0C0D1C]">
           <h2 className="text-xl">Details</h2>
         </div>
 
         {/* Header Row */}
-        <div className="grid grid-cols-2 bg-white font-semibold text-[#190E79] md:grid-cols-3 text-xs 2xl:text-sm dark:bg-[#2A1C78] dark:text-white">
+        <div className="grid grid-cols-2 bg-white text-xs font-semibold text-[#190E79] md:grid-cols-3 2xl:text-sm dark:bg-[#2A1C78] dark:text-white">
           <div className="dark:border-secondary flex items-center justify-center border-y border-[#CDCDE9] bg-[#4244C4] py-2 text-white dark:bg-[#2A1C78]">
             <span className="text-red-500">/-Un/</span>Staked (Period)
           </div>
@@ -116,13 +116,13 @@ function Details() {
                 }`}
               >
                 <div className="flex cursor-pointer">
-                  <div className="dark:border-secondary mx-auto flex min-w-[30px] lg:min-w-[16px] items-center justify-center border-r border-[#CDCDE9]">
+                  <div className="dark:border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r border-[#CDCDE9] lg:min-w-[16px]">
                     <span className="text-sm font-semibold text-[#190E79] dark:text-white">
                       {index + 1}
                     </span>
                   </div>
                   <div
-                    className="flex-1 p-2 text-center hover:bg-[#f5f3fb] text-sm 2xl:text-lg dark:hover:bg-[#2A1C78]"
+                    className="flex-1 p-2 text-center text-sm hover:bg-[#f5f3fb] 2xl:text-lg dark:hover:bg-[#2A1C78]"
                     onClick={() =>
                       setPopup({
                         show: true,

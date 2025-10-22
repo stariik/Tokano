@@ -50,7 +50,7 @@ function StakingPoolResult({ token, formData }) {
 
   return (
     <div
-      className="rounded-3xl border-1 border-[#CDCDE9] dark:border-secondary pb-4 text-[#190E79] lg:pb-8 dark:text-white"
+      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:pb-8 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"

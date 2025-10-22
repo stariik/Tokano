@@ -5,8 +5,9 @@ import { PublicKey, Transaction } from "@solana/web3.js";
 import { useCallback, useEffect, useState } from "react";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { VestingSchedule } from "tokano-sdk";
-import { transactionListener } from "@/lib/balances";
+import { toSmallestUnit, transactionListener } from "@/lib/balances";
 import { BalanceLoadState, useBalances } from "@/contexts/balances-context";
+import { NumericFormat, type NumberFormatValues } from "react-number-format";
 
 interface CreateVestingProps {
   onVestingCreated: () => void;
@@ -42,7 +43,8 @@ export const CreateVesting = ({ onVestingCreated }: CreateVestingProps) => {
       !tokenMint ||
       !totalVestingAmount ||
       !startTimestamp ||
-      !vestingDuration
+      !vestingDuration ||
+      !selectedToken
     ) {
       alert("Please fill in all fields.");
       return;
@@ -54,11 +56,16 @@ export const CreateVesting = ({ onVestingCreated }: CreateVestingProps) => {
     }
 
     try {
+      const amountInSmallestUnit = toSmallestUnit(
+        totalVestingAmount,
+        selectedToken.decimals,
+      );
+
       const tx: Transaction = await vesting.initializeVesting({
         walletPk: publicKey,
         receiverPk: new PublicKey(receiverPk),
         tokenMint: new PublicKey(tokenMint),
-        totalVestingAmount: totalVestingAmount,
+        totalVestingAmount: amountInSmallestUnit,
         startTimestamp: Math.floor(new Date(startTimestamp).getTime() / 1000),
         vestingDuration: parseInt(vestingDuration, 10),
         scheduleType,
@@ -98,6 +105,7 @@ export const CreateVesting = ({ onVestingCreated }: CreateVestingProps) => {
     connection,
     signTransaction,
     onVestingCreated,
+    selectedToken,
   ]);
 
   return (
@@ -135,11 +143,16 @@ export const CreateVesting = ({ onVestingCreated }: CreateVestingProps) => {
           )}
         </select>
         <div className="flex items-center">
-          <input
-            type="number"
+          <NumericFormat
             placeholder="Total Vesting Amount"
             value={totalVestingAmount}
-            onChange={(e) => setTotalVestingAmount(e.target.value)}
+            onValueChange={(values: NumberFormatValues) =>
+              setTotalVestingAmount(values.value)
+            }
+            valueIsNumericString={true}
+            allowNegative={false}
+            thousandSeparator=","
+            decimalScale={selectedToken?.decimals}
             className="w-full rounded border-gray-600 bg-gray-800 p-2 text-white"
           />
           {selectedToken && (

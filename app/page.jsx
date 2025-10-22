@@ -21,7 +21,7 @@ export default function Home() {
     <main className="dark:bg-dark relative bg-white px-2 py-8 lg:px-2 lg:py-6">
       <div className="">
         <div className="grid lg:grid-cols-3 lg:gap-2 xl:gap-4">
-          <div className="col-span-2 lg:grid lg:grid-cols-2 gap-2 xl:gap-4">
+          <div className="col-span-2 gap-2 lg:grid lg:grid-cols-2 xl:gap-4">
             <LaunchingSoon />
             <div className="flex justify-center">
               <Live />
@@ -100,7 +100,7 @@ export default function Home() {
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div
-            className={`bg-dark dark:border-secondary fixed left-0 flex w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] transition-transform duration-300 ease-in-out top-13 ${
+            className={`bg-dark dark:border-secondary fixed top-13 left-0 flex w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] transition-transform duration-300 ease-in-out ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             }`}
             style={{

@@ -5,7 +5,8 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useState } from "react";
 import { PoolState, UserState } from "tokano-sdk";
 import { useBalances } from "@/contexts/balances-context";
-import { transactionListener } from "@/lib/balances";
+import { toSmallestUnit, transactionListener } from "@/lib/balances";
+import { NumericFormat, type NumberFormatValues } from "react-number-format";
 
 interface CreateStakeProps {
   stakePools: PoolState[] | undefined;
@@ -38,26 +39,31 @@ export default function CreateStake({
 
   useEffect(() => {
     if (stakePools && stakePools.length > 0 && !selectedPoolAddress) {
-      setSelectedPoolAddress(stakePools[0].initializer.toBase58());
+      setSelectedPoolAddress(stakePools[0].poolAddress.toBase58());
     }
   }, [stakePools, selectedPoolAddress]);
 
   const handleStake = useCallback(async () => {
-    if (!publicKey || !staking || !selectedPoolAddress) {
+    if (!publicKey || !staking || !selectedPoolAddress || !selectedPool) {
       alert("Please connect your wallet and select a pool.");
       return;
     }
 
-    if (!amount || parseFloat(amount) <= 0) {
+    if (!amount || parseFloat(amount) <= 0 || !availableToken) {
       alert("Please enter a valid amount to stake.");
       return;
     }
 
     try {
+      const amountInSmallestUnit = toSmallestUnit(
+        amount,
+        availableToken.decimals,
+      );
+
       const tx = await staking.stake({
         walletPk: publicKey,
         poolAddress: selectedPool.poolAddress,
-        amount,
+        amount: amountInSmallestUnit,
         userStakeAccount: userHasStakeInPool,
       });
 
@@ -94,6 +100,7 @@ export default function CreateStake({
     connection,
     signTransaction,
     onStakeCreated,
+    availableToken,
   ]);
 
   return (
@@ -122,11 +129,16 @@ export default function CreateStake({
           )}
         </select>
         <div className="flex items-center">
-          <input
-            type="number"
+          <NumericFormat
             placeholder="Amount to Stake"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onValueChange={(values: NumberFormatValues) =>
+              setAmount(values.value)
+            }
+            valueIsNumericString={true}
+            allowNegative={false}
+            thousandSeparator=","
+            decimalScale={availableToken?.decimals}
             className="w-full rounded border p-2"
             disabled={!selectedPool}
           />
