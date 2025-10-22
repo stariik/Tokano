@@ -38,7 +38,7 @@ function StakeButton() {
         </span>
       </button> */}
       <svg
-        className="w-[120px] h-[40px] lg:w-[90px] lg:h-[30px] xl:w-[120px] xl:h-[40px] 2xl:w-[130px] 2xl:h-[43px]"
+        className="h-[40px] w-[100px] lg:h-[30px] lg:w-[90px] xl:h-[40px] xl:w-[120px] 2xl:h-[43px] 2xl:w-[130px]"
         viewBox="0 0 123 43"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

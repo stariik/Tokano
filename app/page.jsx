@@ -8,6 +8,7 @@ import RightMenu from "@/Components/RightMenu/RightMenu";
 import PlatformStats from "@/Components/PlatformStats/PlatformStats";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import { useBalances } from "@/contexts/balances-context";
+import Banner from "@/Components/Banner";
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -19,18 +20,22 @@ export default function Home() {
 
   return (
     <main className="dark:bg-dark relative bg-white px-2 py-8 lg:px-2 lg:py-6">
-      <div className="">
-        <div className="grid lg:grid-cols-3 lg:gap-2 xl:gap-4">
-          <div className="col-span-2 gap-2 lg:grid lg:grid-cols-2 xl:gap-4">
-            <LaunchingSoon />
-            <div className="flex justify-center max-h-">
+      <div className="lg:mb-4">
+        <div className="grid md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-2 xl:gap-4">
+          <div className="gap-2 md:col-span-1 lg:col-span-2 lg:grid lg:grid-cols-2 xl:gap-4">
+            <div className="">
+              <LaunchingSoon />
+            </div>
+            <div className="flex justify-center md:block 2xl:flex ">
               <Live />
             </div>
           </div>
           <RightMenu />
         </div>
       </div>
-      <div className="mt-6 w-full">
+      <Banner src={"banner1.png"} />
+
+      <div className="mt-4 w-full">
         <TokenGrid
           hideOnMobile={false}
           gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7"

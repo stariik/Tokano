@@ -5,7 +5,7 @@ import { FaStairs } from "react-icons/fa6";
 function Lock({ token }) {
   return (
     <div
-      className="relative flex w-full flex-col overflow-hidden rounded border-2 border-[#292B8C] shadow-lg"
+      className="relative flex w-full flex-col overflow-hidden rounded shadow-lg"
       style={{
         background: "linear-gradient(45deg, #88048B 10%, #110C58 65%)",
       }}

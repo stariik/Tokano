@@ -41,7 +41,7 @@ function Stake({ token }) {
 
   return (
     <div
-      className="relative flex w-full flex-col overflow-hidden rounded border-2 border-[#292B8C] bg-[#f5f3fb] shadow-lg dark:bg-transparent"
+      className="relative flex w-full flex-col overflow-hidden rounded bg-[#f5f3fb] shadow-lg dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}

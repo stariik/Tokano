@@ -21,7 +21,7 @@ function LaunchingSoon({ isMobile = false }) {
   }
 
   return (
-    <div className="dark:border-secondary hidden max-h-332 overflow-hidden border-2 border-[#CDCDE9] lg:flex lg:flex-col xl:max-h-359 2xl:max-h-378">
+    <div className="dark:border-secondary hidden max-h-332 overflow-hidden border-2 border-[#CDCDE9] lg:flex lg:flex-col xl:max-h-359 2xl:max-h-378 2xl:max-w-[620px]">
       <div
         className={`dark:border-secondary font-khand flex justify-center border-b-2 border-[#CDCDE9] py-4 text-2xl font-semibold ${
           resolvedTheme === "dark"

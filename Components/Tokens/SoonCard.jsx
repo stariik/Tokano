@@ -112,7 +112,7 @@ function SoonCard({ id }) {
               <StakeIcon />
             </div>
           </div>
-          <div className="absolute top-[20px] left-[80px] h-[3px] rounded-full bg-gradient-to-r from-[#002382] from-25% to-[#8B0000] xl:w-[100px] 2xl:w-[280px] dark:from-[#190E79] [@media(min-width:1720px)]:w-[330px]"></div>
+          <div className="absolute top-[20px] left-[80px] h-[3px] rounded-full bg-gradient-to-r from-[#002382] from-25% to-[#8B0000] xl:w-[100px] 2xl:w-[280px] dark:from-[#190E79]"></div>
         </div>
         <div className="font-khand mt-4 pl-1 text-xs lg:pl-2 xl:pl-4 2xl:text-base">
           Pool ID: 0xdl3…ezx41

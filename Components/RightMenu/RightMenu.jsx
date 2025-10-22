@@ -21,7 +21,7 @@ function RightMenu() {
   }, [show]);
 
   return (
-    <div className="font-khand font-normal">
+    <div className="font-khand font-normal 2xl:flex 2xl:justify-end">
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;
@@ -45,7 +45,7 @@ function RightMenu() {
       {/* Toggle button - mobile only */}
       <button
         onClick={() => setShow(true)}
-        className={`border-secondary fixed right-0 bottom-22 z-70 flex flex-col items-center justify-center rounded-l-lg border-x-1 border-l-1 bg-white px-1 pl-1 text-sm font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl lg:hidden dark:text-white ${
+        className={`border-secondary fixed right-0 bottom-22 z-70 flex flex-col items-center justify-center rounded-l-lg border-x-1 border-l-1 bg-white px-1 pl-1 text-sm font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl md:hidden dark:text-white ${
           show ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
         id="right-menu-button"
@@ -89,7 +89,7 @@ function RightMenu() {
       {/* Overlay - mobile only */}
       {show && (
         <div
-          className="menu-overlay-active fixed z-40 bg-black/60 lg:hidden"
+          className="menu-overlay-active fixed z-40 bg-black/60 md:hidden"
           style={{ top: "3.5rem", bottom: 0, left: 0, right: 0 }}
           onClick={() => setShow(false)}
         />
@@ -98,7 +98,7 @@ function RightMenu() {
 
       {/* Right-side menu */}
       <div
-        className={`dark:border-secondary custom-scrollbar lg:min-h-[83rem] lg:max-h-[83rem] xl:max-h-full shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed right-0 z-40 w-[90vw] max-w-sm overflow-y-auto rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} lg:static lg:top-2 lg:z-0 lg:h-auto lg:w-auto lg:max-w-none lg:translate-x-0 lg:border-2 lg:pb-0 lg:shadow-none`}
+        className={`dark:border-secondary lg:min-h-[83rem] lg:max-h-[83rem] xl:max-h-full shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed right-0 z-40 w-[90vw] max-w-sm rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} md:static md:top-2 md:z-0 md:h-auto md:w-auto md:max-w-none 2xl:max-w-[620px] md:translate-x-0 md:border-2 md:pb-0 md:shadow-none`}
         style={{ top: "3.5rem", bottom: 0, height: "auto" }}
       >
         <div
@@ -107,7 +107,7 @@ function RightMenu() {
           <h1>TOKANO</h1>
           <button
             onClick={() => setShow(false)}
-            className="text-3xl text-[#190E79] transition-colors hover:text-purple-400 lg:hidden dark:text-white"
+            className="text-3xl text-[#190E79] transition-colors hover:text-purple-400 md:hidden dark:text-white"
           >
             ✕
           </button>

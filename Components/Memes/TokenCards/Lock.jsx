@@ -7,7 +7,7 @@ function Lock({ token }) {
   const { resolvedTheme } = useTheme();
   return (
     <div
-      className="relative flex w-full flex-col overflow-hidden rounded border-2 border-[#292B8C] bg-[#e3f2fd] shadow-lg dark:bg-transparent"
+      className="relative flex w-full flex-col overflow-hidden rounded bg-[#e3f2fd] shadow-lg dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}
