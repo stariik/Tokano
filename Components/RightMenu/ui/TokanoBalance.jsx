@@ -27,13 +27,13 @@ export default function TokanoBalance() {
           </span>
         </div>
         {/* Progress Bar & Stake Row */}
-        <div className="flex items-center justify-between bg-[#f5f3fb] py-2 pr-4 lg:py-1 2xl:py-2 dark:bg-[#1a0033]">
+        <div className="flex items-center justify-between bg-[#f5f3fb] py-2 lg:py-1 2xl:py-2 pr-2 2xl:pr-6 dark:bg-[#1a0033]">
           {/* Progress bar */}
           <div className="relative flex items-center gap-2">
             <RainbowBalance />
             <BalanceComp />
           </div>
-          <div>
+          <div className="-mt-1 lg:-mt-2 xl:-mt-1">
             <StakeButton />
           </div>
         </div>
