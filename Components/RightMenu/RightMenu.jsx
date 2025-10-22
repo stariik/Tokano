@@ -95,6 +95,7 @@ function RightMenu() {
         />
       )}
 
+
       {/* Right-side menu */}
       <div
         className={`dark:border-secondary custom-scrollbar lg:min-h-[83rem] lg:max-h-[83rem] xl:max-h-full shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed right-0 z-40 w-[90vw] max-w-sm overflow-y-auto rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-[#f5f3fb] pb-6 transition-transform duration-300 ease-in-out dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} lg:static lg:top-2 lg:z-0 lg:h-auto lg:w-auto lg:max-w-none lg:translate-x-0 lg:border-2 lg:pb-0 lg:shadow-none`}
