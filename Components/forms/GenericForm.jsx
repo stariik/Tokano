@@ -452,7 +452,7 @@ export default function GenericForm({
 
       {/* Warning Box */}
       <div className="mt-2 rounded-xl border-2 border-red-400 bg-[#e8e4f8] p-4 dark:border-[#6b4d9f] dark:bg-[#453DC8]">
-        <div className="font-khand mb-3 flex items-center justify-center gap-2 text-xs font-bold text-[#190E79] dark:text-white">
+        <div className="font-khand mb-3 flex items-center justify-center gap-2 text-xs font-bold text-red-500">
           <span className="text-sm">⚠️</span>
           <span>ATTENTION</span>
           <span className="text-sm">⚠️</span>
@@ -461,7 +461,7 @@ export default function GenericForm({
           {getAttentionItems(fundType).map((item, index) => (
             <li
               key={index}
-              className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-[#190E79] dark:text-white"
+              className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500"
             >
               <span className="absolute left-0 font-bold">{index + 1}.</span>
               <span className="font-bold">{item.title}:</span>{" "}

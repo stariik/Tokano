@@ -107,7 +107,7 @@ function StakingPoolResult({ token, formData }) {
         </div>
 
         <div
-          className="font-khand mx-14 -mt-2 mb-12 rounded-2xl px-1 text-center text-sm font-semibold text-[#311880] md:text-base lg:text-lg 2xl:text-2xl"
+          className="font-khand mx-auto w-fit -mt-2 mb-12 rounded-2xl px-4 text-center text-sm font-semibold text-[#311880] md:text-base lg:text-lg 2xl:text-2xl"
           style={{
             background:
               resolvedTheme === "dark"
