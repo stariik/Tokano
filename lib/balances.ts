@@ -6,6 +6,7 @@ import {
 } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { blob, nu64, struct } from "@solana/buffer-layout";
+import BN from "bn.js";
 
 export interface TokenBalanceT {
   amount: string;
@@ -21,6 +22,26 @@ export const SOL_INFO: TokenBalanceT = {
   amountRaw: 0,
   decimals: 9,
   mintAddress: SOL_MINT,
+};
+
+export const toSmallestUnit = (amount: string, decimals: number): string => {
+  if (!amount) {
+    return "0";
+  }
+  let [integer, fraction = ""] = amount.split(".");
+
+  if (!integer) {
+    integer = "0";
+  }
+
+  // The fraction needs to be padded with zeros to match the token's decimals
+  if (fraction.length > decimals) {
+    fraction = fraction.slice(0, decimals);
+  } else {
+    fraction = fraction.padEnd(decimals, "0");
+  }
+
+  return new BN(integer + fraction).toString();
 };
 
 export const fetchWalletBalances = async (

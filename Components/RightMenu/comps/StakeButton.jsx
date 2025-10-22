@@ -17,7 +17,7 @@ function StakeButton() {
           boxShadow: "0 2px 8px 0 #0002",
         }}
       >
-        <span className="flex items-center justify-center rounded-full bg-white p-1 px-2 xl:px-3 transition-all duration-200">
+        <span className="flex items-center justify-center rounded-full bg-white p-1 px-2 transition-all duration-200 xl:px-3">
           <svg
             className="h-5 w-2 lg:h-4 lg:w-1.5 xl:h-5 xl:w-2"
             viewBox="0 0 8 21"

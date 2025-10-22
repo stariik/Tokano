@@ -30,7 +30,7 @@ export default function RainbowBalance() {
         {percents.map((item) => (
           <span
             key={item.value}
-            className={`${item.color} text-xs xl:text-sm font-bold`}
+            className={`${item.color} text-xs font-bold xl:text-sm`}
             style={{ fontFamily: "inherit" }}
           >
             {item.value}

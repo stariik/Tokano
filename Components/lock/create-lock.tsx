@@ -4,8 +4,9 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useCallback, useEffect, useState } from "react";
 import { useTokano } from "@/contexts/tokano-sdk-context";
-import { transactionListener } from "@/lib/balances";
+import { toSmallestUnit, transactionListener } from "@/lib/balances";
 import { BalanceLoadState, useBalances } from "@/contexts/balances-context";
+import { NumericFormat, type NumberFormatValues } from "react-number-format";
 
 interface CreateLockProps {
   onLockCreated: () => void;
@@ -36,7 +37,8 @@ export const CreateLock = ({ onLockCreated }: CreateLockProps) => {
       !receiverPk ||
       !tokenMint ||
       !lockAmount ||
-      !unlockTimestamp
+      !unlockTimestamp ||
+      !selectedToken
     ) {
       alert("Please fill in all fields.");
       return;
@@ -48,11 +50,16 @@ export const CreateLock = ({ onLockCreated }: CreateLockProps) => {
     }
 
     try {
+      const amountInSmallestUnit = toSmallestUnit(
+        lockAmount,
+        selectedToken.decimals,
+      );
+
       const tx: Transaction = await lock.initializeLock({
         walletPk: publicKey,
         receiverPk: new PublicKey(receiverPk),
         tokenMint: new PublicKey(tokenMint),
-        lockAmount: lockAmount,
+        lockAmount: amountInSmallestUnit,
         unlockTimestamp: Math.floor(new Date(unlockTimestamp).getTime() / 1000),
       });
 
@@ -88,6 +95,7 @@ export const CreateLock = ({ onLockCreated }: CreateLockProps) => {
     connection,
     signTransaction,
     onLockCreated,
+    selectedToken,
   ]);
 
   return (
@@ -123,11 +131,16 @@ export const CreateLock = ({ onLockCreated }: CreateLockProps) => {
           )}
         </select>
         <div className="flex items-center">
-          <input
-            type="number"
+          <NumericFormat
             placeholder="Lock Amount"
             value={lockAmount}
-            onChange={(e) => setLockAmount(e.target.value)}
+            onValueChange={(values: NumberFormatValues) =>
+              setLockAmount(values.value)
+            }
+            valueIsNumericString={true}
+            allowNegative={false}
+            thousandSeparator=","
+            decimalScale={selectedToken?.decimals}
             className="w-full rounded border-gray-600 bg-gray-800 p-2 text-white"
           />
           {selectedToken && (

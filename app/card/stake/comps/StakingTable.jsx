@@ -16,10 +16,10 @@ function StakingTable({
     <div>
       {/* Header Row */}
       <div className="grid grid-cols-2 bg-[#f5f3fb] text-sm font-semibold text-[#190E79] dark:bg-[#2A1C78] dark:text-white">
-        <div className="border-[#CDCDE9] dark:border-secondary flex items-center justify-center border-y">
+        <div className="dark:border-secondary flex items-center justify-center border-y border-[#CDCDE9]">
           {title}
         </div>
-        <div className="border-[#CDCDE9] dark:border-secondary flex items-center justify-center border-y text-center">
+        <div className="dark:border-secondary flex items-center justify-center border-y border-[#CDCDE9] text-center">
           {actionType === "unstake" && (
             <span className="text-red-500">/-Un/</span>
           )}
@@ -32,7 +32,7 @@ function StakingTable({
         {/* Fixed continuous second column background */}
         <div className="absolute inset-0 z-0 grid grid-cols-2">
           <div></div>
-          <div className="border-[#CDCDE9] dark:border-secondary border-l bg-gradient-to-b from-[#4000FF] to-[#0C0D1C]"></div>
+          <div className="dark:border-secondary border-l border-[#CDCDE9] bg-gradient-to-b from-[#4000FF] to-[#0C0D1C]"></div>
         </div>
 
         {/* Data Rows Container */}
@@ -74,7 +74,7 @@ function StakingTable({
               >
                 {actionType === "unstake" ? (
                   <>
-                    <div className="border-[#CDCDE9] dark:border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r">
+                    <div className="dark:border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r border-[#CDCDE9]">
                       <span className="text-sm font-semibold text-[#190E79] dark:text-white">
                         {index + 1}
                       </span>
@@ -118,7 +118,7 @@ function StakingTable({
                   popup.positionId === position.id &&
                   popup.type === actionType && (
                     <div className="absolute top-1/2 left-1/2 z-70 -translate-x-1/2 -translate-y-1/2 transform">
-                      <div className="border-[#CDCDE9] dark:border-secondary min-w-[160px] rounded-lg border-2 bg-[#eeeded] p-4 text-center shadow-xl dark:bg-[#0C0D1C]">
+                      <div className="dark:border-secondary min-w-[160px] rounded-lg border-2 border-[#CDCDE9] bg-[#eeeded] p-4 text-center shadow-xl dark:bg-[#0C0D1C]">
                         <div className="mb-3">
                           <div className="text-sm font-semibold text-[#190E79] dark:text-white">
                             {actionTitle.toUpperCase()}?
