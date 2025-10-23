@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 import Banner from "@/Components/Banner";
+import Footer from "@/Components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import LayoutProviders from "@/Components/shared/layout-providers";
 
@@ -58,19 +59,20 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark dark:text-light bg-white text-black antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark dark:text-light bg-white text-black antialiased flex flex-col min-h-screen`}
       >
         <LayoutProviders>
           <Analytics />
           <Navbar />
           <Banner src={"banner1.png"} />
 
-          <div className="relative">
+          <div className="relative flex-grow">
             <div className="">{children}</div>
             {/* <div className="dark:text-light absolute top-0 right-0 w-1/3 py-18 pr-4 text-black md:py-6 2xl:w-6/19">
               <RightMenu />
             </div> */}
           </div>
+          <Footer />
         </LayoutProviders>
       </body>
     </html>
