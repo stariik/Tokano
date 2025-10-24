@@ -32,8 +32,8 @@ function TokenGrid({
     <>
       <GridFilter variant={filterVariant} />
       <div
-        className="custom-scrollbar m-2 overflow-y-auto text-[#190E79] sm:m-3 lg:m-2 xl:m-3 dark:text-white"
-        style={{ maxHeight: "100vh", minHeight: "400px" }}
+        className="custom-scrollbar m-2 max-h-300 overflow-y-auto text-[#190E79] sm:m-3 lg:m-2 xl:m-3 xl:max-h-325 2xl:max-h-335 dark:text-white"
+        style={{ minHeight: "400px" }}
       >
         <div
           className={`grid gap-2 sm:gap-3 lg:gap-1 xl:gap-2 ${gridCols || "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7"}`}
@@ -244,7 +244,7 @@ function TokenGrid({
 
       {/* Desktop view - always visible based on visibilityClass */}
       <div
-        className={`rounded-2xl border border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] ${visibilityClass}`}
+        className={`h-full rounded-2xl border border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] ${visibilityClass}`}
       >
         {tokenContentDesktop}
       </div>

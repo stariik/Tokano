@@ -9,10 +9,10 @@ function StakingModule() {
   ];
 
   return (
-    <div className="dark:border-secondary font-khand overflow-hidden rounded-4xl border-2 border-[#CDCDE9]">
+    <div className="dark:border-secondary font-khand overflow-hidden rounded-4xl border-2 border-[#CDCDE9] mt-4">
       <div className="grid grid-cols-2 bg-gradient-to-r from-[#8D85FB] to-[#4B317C] text-white dark:from-[#574DDD] dark:to-[#330E79] dark:text-[#190E79]">
         {/* Left side */}
-        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] p-4 text-xl font-semibold lg:p-2 lg:text-xs xl:p-4 xl:text-base 2xl:text-4xl dark:text-white">
+        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] px-4 py-2 text-xl font-semibold lg:p-2 lg:text-xs xl:p-4 xl:text-base 2xl:text-4xl dark:text-white">
           <div className="flex flex-col items-center justify-center leading-none">
             <span>Staking</span>
             <span>Module</span>
@@ -28,11 +28,11 @@ function StakingModule() {
         </div>
 
         {/* Right side */}
-        <div className="p-4">
+        <div className="px-4 py-2 ">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="font-khand flex items-center justify-between text-sm font-medium last:mb-0 md:text-lg lg:text-xs xl:text-base dark:text-white"
+              className="font-khand flex items-center justify-between text-sm font-medium last:mb-0 md:text-sm lg:text-xs xl:text-base dark:text-white"
             >
               <span>{stat.label}</span>
               <span>{stat.value}</span>
@@ -41,7 +41,7 @@ function StakingModule() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-[#C9CDD7] to-[#EAE4FF] py-4 text-[#190E79] dark:from-[#130C71] dark:to-[#173991] dark:text-white">
+      <div className="bg-gradient-to-r from-[#C9CDD7] to-[#EAE4FF] py-4 pb-1 text-[#190E79] dark:from-[#130C71] dark:to-[#173991] dark:text-white">
         <div className="grid min-h-18 grid-cols-7">
           <div className="col-span-2 ml-4 flex items-center justify-center text-xs md:text-base">
             Available: 21,234,222.00
@@ -74,10 +74,12 @@ function StakingModule() {
             Unlocking: <span className="">5days</span>
           </div>
         </div>
-        <div className="font-khand mx-4 mt-6 text-center text-sm font-medium md:mx-20 lg:mx-16 lg:mt-4 lg:text-xs xl:mx-20 xl:mt-6 xl:text-sm">
-          !!! Please keep in mind, either STAKEING or UNBONDING needs some
-          amount of SOL on wallet available for network fees or the transaction
-          will fail. !!!
+        <div className="font-khand mx-auto mt-4 max-w-full px-2 lg:mt-4 xl:mt-6 2xl:mx-8">
+          <p className="line-clamp-2 text-center text-sm font-medium lg:text-xs xl:text-sm px-4">
+            !!! Please keep in mind, either STAKEING or UNBONDING needs some
+            amount of SOL on wallet available for network fees or the transaction
+            will fail. !!!
+          </p>
         </div>
       </div>
 
@@ -114,7 +116,7 @@ function StakingModule() {
             fill="#120560"
             fillOpacity="0.56"
             stroke="white"
-            stroke-width="2"
+            strokeWidth="2"
           />
           <ellipse
             cx="124.672"

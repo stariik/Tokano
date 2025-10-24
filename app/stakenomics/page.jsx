@@ -1,15 +1,28 @@
 "use client";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import CryptoWallet from "@/Components/stakenomics/CryptoWallet";
 import FundCards from "@/Components/stakenomics/FundCards";
 import { TOKENS, getTokenById } from "../../lib/constants";
 import RightMenu from "@/Components/RightMenu/RightMenu";
+import { useBalances, BalanceLoadState } from "@/contexts/balances-context";
 
 function page() {
+  const { tokens: walletTokens, loadState } = useBalances();
   const [selectedToken, setSelectedToken] = useState(3); // LIMASIRA is selected by default
+  const [selectedWalletTokenIndex, setSelectedWalletTokenIndex] = useState(0);
 
-  const selectedTokenData = getTokenById(selectedToken);
+  // Use real wallet tokens if available, otherwise use mock tokens
+  const useWalletTokens = loadState === BalanceLoadState.LOADED && walletTokens.length > 0;
+
+  const selectedTokenData = useWalletTokens
+    ? {
+        ...walletTokens[selectedWalletTokenIndex],
+        id: walletTokens[selectedWalletTokenIndex].mintAddress,
+        name: walletTokens[selectedWalletTokenIndex].info?.name || "Unknown Token",
+        tokenId: walletTokens[selectedWalletTokenIndex].mintAddress,
+      }
+    : getTokenById(selectedToken);
 
   return (
     <div className="mx-auto flex justify-between gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">

@@ -55,24 +55,24 @@ function MyStaking() {
 
   return (
     <div className="font-khand dark:border-secondary mt-6 rounded-2xl border-2 border-[#CDCDE9] text-[#190E79] dark:text-white">
-      <div className="flex items-center justify-between gap-8 rounded-t-2xl bg-gradient-to-r px-4 py-3 dark:from-[#2f01ba] dark:to-[#0C0D1C]">
+      <div className="flex items-center justify-between gap-8 rounded-t-2xl bg-gradient-to-r px-4 py-3 lg:text-base xl:text-lg dark:from-[#2f01ba] dark:to-[#0C0D1C]">
         <div className="flex w-full justify-between">
-          <h2 className="text-xl font-medium">My Staking </h2>
-          <h2 className="text-xl font-bold">FIRED</h2>
+          <h2 className="font-medium">My Staking </h2>
+          <h2 className="font-bold">FIRED</h2>
         </div>
         <div className="flex w-full">
-          <h2 className="px-auto ml-6 text-xl font-medium">show:</h2>
-          <h2 className="border-r-1 text-xl font-medium">
+          <h2 className="px-auto ml-2 font-medium">show:</h2>
+          <h2 className="border-r-1 font-medium">
             <div className="cursor-pointer rounded px-2 transition hover:text-purple-600 dark:hover:text-purple-300">
               all
             </div>
           </h2>
-          <h2 className="border-r-1 text-xl font-medium">
+          <h2 className="border-r-1 font-medium">
             <div className="cursor-pointer rounded px-2 transition hover:text-purple-600 dark:hover:text-purple-300">
               staked
             </div>
           </h2>
-          <h2 className="text-xl font-medium">
+          <h2 className="font-medium">
             <div className="cursor-pointer rounded px-2 transition hover:text-purple-600 dark:hover:text-purple-300">
               unstaked
             </div>

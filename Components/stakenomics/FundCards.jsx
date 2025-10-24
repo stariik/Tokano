@@ -1,7 +1,9 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
 import { FUND_TYPES } from "../../lib/constants";
-import GenericForm from "@/Components/forms/GenericForm";
+import StakingPoolForm from "@/Components/forms/StakingPoolForm";
+import LockFundsForm from "@/Components/forms/LockFundsForm";
+import VestFundsForm from "@/Components/forms/VestFundsForm";
 
 export default function FundCards({ selectedToken, selectedTokenData }) {
   const [selectedFund, setSelectedFund] = useState(FUND_TYPES[0]); // Default to Staking Pool
@@ -54,14 +56,35 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
   const renderFundComponent = () => {
     if (!selectedFund) return null;
 
-    return (
-      <GenericForm
-        fundType={selectedFund.title}
-        token={selectedTokenData}
-        onDataChange={handleFormDataChange}
-        onClose={() => setSelectedFund(null)}
-      />
-    );
+    // Render specific form component based on fund type
+    switch (selectedFund.title) {
+      case "STAKING POOL":
+        return (
+          <StakingPoolForm
+            token={selectedTokenData}
+            onDataChange={handleFormDataChange}
+            onClose={() => setSelectedFund(null)}
+          />
+        );
+      case "LOCK FUNDS":
+        return (
+          <LockFundsForm
+            token={selectedTokenData}
+            onDataChange={handleFormDataChange}
+            onClose={() => setSelectedFund(null)}
+          />
+        );
+      case "VEST FUNDS":
+        return (
+          <VestFundsForm
+            token={selectedTokenData}
+            onDataChange={handleFormDataChange}
+            onClose={() => setSelectedFund(null)}
+          />
+        );
+      default:
+        return null;
+    }
   };
 
   return (
