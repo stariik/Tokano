@@ -2,12 +2,15 @@ import React from "react";
 import Image from "next/image";
 import { SiVerizon } from "react-icons/si";
 import { useTheme } from "@/hooks/useTheme";
+import { useRouter } from "next/navigation";
 
 function Lock({ token }) {
   const { resolvedTheme } = useTheme();
+  const router = useRouter();
   return (
     <div
-      className="relative flex w-full flex-col overflow-hidden rounded bg-[#e3f2fd] shadow-lg dark:bg-transparent"
+      onClick={() => router.push("/card/lock")}
+      className="relative flex w-full flex-col overflow-hidden rounded bg-[#e3f2fd] shadow-lg cursor-pointer dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}

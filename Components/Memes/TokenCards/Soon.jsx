@@ -2,9 +2,11 @@ import React from "react";
 import Image from "next/image";
 import { SiVerizon } from "react-icons/si";
 import { useTheme } from "@/hooks/useTheme";
+import { useRouter } from "next/navigation";
 
 function Soon({ token }) {
   const { resolvedTheme } = useTheme();
+  const router = useRouter();
   const StakeIcon = () => (
     <svg
       className="h-full w-[35px] md:w-[37px] xl:w-[47px]"
@@ -37,7 +39,8 @@ function Soon({ token }) {
 
   return (
     <div
-      className="relative flex w-full flex-col overflow-hidden rounded bg-[#f5f3fb] pb-1 shadow-lg dark:bg-transparent"
+      onClick={() => router.push("/card/soon")}
+      className="relative flex w-full flex-col overflow-hidden rounded bg-[#f5f3fb] pb-1 shadow-lg cursor-pointer dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}

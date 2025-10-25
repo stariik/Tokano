@@ -1,11 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import { FaStairs } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 function Lock({ token }) {
+  const router = useRouter();
   return (
     <div
-      className="relative flex w-full flex-col overflow-hidden rounded shadow-lg"
+      onClick={() => router.push("/card/vest")}
+      className="relative flex w-full flex-col overflow-hidden rounded shadow-lg cursor-pointer"
       style={{
         background: "linear-gradient(45deg, #88048B 10%, #110C58 65%)",
       }}

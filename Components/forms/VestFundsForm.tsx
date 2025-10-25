@@ -23,7 +23,11 @@ interface VestFundsFormProps {
   onClose?: () => void;
 }
 
-export default function VestFundsForm({ token, onDataChange, onClose }: VestFundsFormProps) {
+export default function VestFundsForm({
+  token,
+  onDataChange,
+  onClose,
+}: VestFundsFormProps) {
   const { vesting } = useTokano();
   const { connection } = useConnection();
   const { publicKey, signTransaction } = useWallet();
@@ -35,7 +39,9 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
     releaseModel: "monthly",
     recipientWallet: "",
   });
-  const [showPopup, setShowPopup] = useState<"success" | "failed" | "attention" | null>(null);
+  const [showPopup, setShowPopup] = useState<
+    "success" | "failed" | "attention" | null
+  >(null);
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
 
@@ -88,7 +94,7 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
       let decimals = token.decimals;
       if (!decimals) {
         const mintInfo = await connection.getParsedAccountInfo(tokenMint);
-        if (mintInfo?.value?.data && 'parsed' in mintInfo.value.data) {
+        if (mintInfo?.value?.data && "parsed" in mintInfo.value.data) {
           decimals = mintInfo.value.data.parsed.info.decimals;
         } else {
           throw new Error("Could not fetch token decimals from blockchain");
@@ -123,14 +129,17 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
       }
 
       // Convert cliff period from days to seconds
-      const cliffPeriodInSeconds = parseInt(formData.cliffPeriod) * 24 * 60 * 60;
+      const cliffPeriodInSeconds =
+        parseInt(formData.cliffPeriod) * 24 * 60 * 60;
 
       // Recipient wallet public key - validate it's a valid base58 address
       let receiverPk: PublicKey;
       try {
         receiverPk = new PublicKey(formData.recipientWallet);
       } catch (e) {
-        throw new Error(`Invalid recipient wallet address. Please enter a valid Solana address.`);
+        throw new Error(
+          `Invalid recipient wallet address. Please enter a valid Solana address.`,
+        );
       }
 
       // Initialize vesting on blockchain
@@ -175,14 +184,7 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
       setIsClosing(false);
       alert(`Error creating vesting: ${error.message}`);
     }
-  }, [
-    publicKey,
-    vesting,
-    formData,
-    token,
-    signTransaction,
-    connection,
-  ]);
+  }, [publicKey, vesting, formData, token, signTransaction, connection]);
 
   const closePopup = () => {
     setIsClosing(true);
@@ -193,7 +195,7 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-8 pt-4 pb-4 shadow-2xl dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -207,21 +209,23 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl p-6">
+      <div className="mb-6 rounded-2xl bg-white p-6 dark:bg-[#1B105C]">
         {/* Activation Date and Time */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">1.</span>
-            Vesting activation date and time (UTC):
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                1.
+              </span>
+              Vesting activation date and time (UTC):
+            </label>
             <input
               type="datetime-local"
               value={formData.activationDateTime || ""}
               onChange={(e) =>
                 handleInputChange("activationDateTime", e.target.value)
               }
-              className="font-khand max-w-[280px] flex-1 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -248,17 +252,19 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
 
         {/* Token Amount */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">2.</span>
-            Total token amount to vest:
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                2.
+              </span>
+              Total token amount to vest:
+            </label>
             <input
               type="number"
               value={formData.tokenAmount || ""}
               onChange={(e) => handleInputChange("tokenAmount", e.target.value)}
               placeholder="0"
-              className="font-khand w-40 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-40 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
@@ -273,17 +279,19 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
 
         {/* Cliff Period */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">3.</span>
-            Cliff period:
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                3.
+              </span>
+              Cliff period:
+            </label>
             <input
               type="number"
               value={formData.cliffPeriod || ""}
               onChange={(e) => handleInputChange("cliffPeriod", e.target.value)}
               placeholder="0"
-              className="font-khand w-40 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-40 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
@@ -298,15 +306,19 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
 
         {/* Release Model */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">4.</span>
-            Release model:
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                4.
+              </span>
+              Release model:
+            </label>
             <select
               value={formData.releaseModel || "monthly"}
-              onChange={(e) => handleInputChange("releaseModel", e.target.value)}
-              className="font-khand w-40 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
+              onChange={(e) =>
+                handleInputChange("releaseModel", e.target.value)
+              }
+              className="font-khand w-40 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
             >
               <option value="monthly">monthly</option>
               <option value="weekly">weekly</option>
@@ -314,17 +326,20 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
             </select>
           </div>
           <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 dark:text-white">
-            Choose how frequently tokens are released: monthly, weekly, or daily.
+            Choose how frequently tokens are released: monthly, weekly, or
+            daily.
           </div>
         </div>
 
         {/* Recipient Wallet */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">5.</span>
-            Recipient wallet address:
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                5.
+              </span>
+              Recipient wallet address:
+            </label>
             <input
               type="text"
               value={formData.recipientWallet || ""}
@@ -332,7 +347,7 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
                 handleInputChange("recipientWallet", e.target.value)
               }
               placeholder="e.g. 5Yf8M2Z3...7FqK4Bc (Solana address)"
-              className="font-khand max-w-[280px] flex-1 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
               required
             />
           </div>
@@ -341,43 +356,48 @@ export default function VestFundsForm({ token, onDataChange, onClose }: VestFund
             released.
           </div>
         </div>
-      </div>
 
-      {/* Warning Box */}
-      <div className="mt-2 rounded-xl border-2 border-red-400 bg-[#e8e4f8] p-4 dark:border-[#6b4d9f] dark:bg-[#453DC8]">
-        <div className="font-khand mb-3 flex items-center justify-center gap-2 text-xs font-bold text-red-500">
-          <span className="text-sm">⚠️</span>
-          <span>ATTENTION</span>
-          <span className="text-sm">⚠️</span>
+        {/* Warning Box */}
+        <div className="mt-2 rounded-xl border-2 border-red-400 bg-[#e8e4f8] p-4 dark:border-[#6b4d9f] dark:bg-[#453DC8]">
+          <div className="font-khand mb-3 flex items-center justify-center gap-2 text-xs font-bold text-red-500">
+            <span className="text-sm">⚠️</span>
+            <span>ATTENTION</span>
+            <span className="text-sm">⚠️</span>
+          </div>
+          <ul className="list-none">
+            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+              <span className="absolute left-0 font-bold">1.</span>
+              <span className="font-bold">Reward Claim Frequency:</span> Users
+              can claim their vested tokens once every 24 hours as they become
+              available.
+            </li>
+            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+              <span className="absolute left-0 font-bold">2.</span>
+              <span className="font-bold">Cliff Period:</span> No tokens will be
+              released until the cliff period expires, after which vesting
+              begins according to the release model.
+            </li>
+            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+              <span className="absolute left-0 font-bold">3.</span>
+              <span className="font-bold">Release Schedule:</span> Tokens are
+              released according to the chosen model (daily, weekly, or monthly)
+              after the cliff period.
+            </li>
+          </ul>
         </div>
-        <ul className="list-none">
-          <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
-            <span className="absolute left-0 font-bold">1.</span>
-            <span className="font-bold">Reward Claim Frequency:</span> Users can
-            claim their vested tokens once every 24 hours as they become available.
-          </li>
-          <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
-            <span className="absolute left-0 font-bold">2.</span>
-            <span className="font-bold">Cliff Period:</span> No tokens will be
-            released until the cliff period expires, after which vesting begins
-            according to the release model.
-          </li>
-          <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
-            <span className="absolute left-0 font-bold">3.</span>
-            <span className="font-bold">Release Schedule:</span> Tokens are
-            released according to the chosen model (daily, weekly, or monthly)
-            after the cliff period.
-          </li>
-        </ul>
+        <div className="mt-6">
+          <h3 className="font-khand mb-4 text-2xl font-bold text-[#190E79] dark:text-white">
+            PREVIEW YOUR VESTING:
+          </h3>
+          <VestFundsResult
+            token={token}
+            formData={formData}
+          />
+        </div>
       </div>
 
       {/* Preview Section */}
       <div className="mt-6">
-        <h3 className="font-khand mb-4 text-2xl font-bold text-[#190E79] dark:text-white">
-          PREVIEW YOUR VESTING:
-        </h3>
-        <VestFundsResult token={token} formData={formData} />
-
         {/* CREATE VESTING Button */}
         <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
           <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">

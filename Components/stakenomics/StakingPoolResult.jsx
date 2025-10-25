@@ -50,7 +50,7 @@ function StakingPoolResult({ token, formData }) {
 
   return (
     <div
-      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:pb-8 dark:text-white"
+      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:pb-12 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -59,7 +59,7 @@ function StakingPoolResult({ token, formData }) {
       }}
     >
       <div
-        className="relative rounded-3xl p-4 pb-0 md:p-8"
+        className="relative rounded-3xl p-4 pb-0 md:p-6 md:pb-2"
         style={{
           background:
             resolvedTheme === "dark"
@@ -67,29 +67,29 @@ function StakingPoolResult({ token, formData }) {
               : "linear-gradient(45deg, rgb(255 255 255) 0%, rgb(232, 228, 248) 100%)",
         }}
       >
-        <div className="flex">
+        <div className="grid grid-cols-3 items-center">
           <img
             src="/vest.png"
-            className="mb-4 h-full w-20 rounded-2xl md:ml-4 md:w-24 lg:w-34 lg:rounded-3xl"
+            className="mb-4 w-16 rounded-2xl  xl:ml-4 2xl:ml-10 md:w-18 lg:w-16 xl:w-22 lg:rounded-3xl "
           />
-          <div className="font-khand ml-4 font-normal lg:ml-8">
+          <div className="font-khand font-normal col-span-2">
             <h1 className="font-khand text-base font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl">
               {token?.name || "TOKEN NAME"}
             </h1>
 
-            <div className="mt-1 pl-1 text-xs md:text-sm lg:text-base 2xl:text-lg">
+            <div className="mt-1 pl-1 text-xs md:text-sm lg:text-base 2xl:text-base">
               <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
               <p>Creator: {formData?.creator || "Anonymous"}</p>
-              <p>Token ID: {token?.id || "0x0000...0000"}</p>
+              <p>Token ID: {token?.id ? (token.id.length > 12 ? `${token.id.slice(0, 6)}...${token.id.slice(-4)}` : token.id) : "0x0000...0000"}</p>
             </div>
           </div>
         </div>
         <div className="absolute top-10 right-0">
           <div className="mr-2 flex justify-end lg:mr-12">
-            <CiPill size={28} />
+            <CiPill size={36} />
           </div>
 
-          <div className="font-khand mt-2 rounded-l-2xl bg-[#2B923E] pr-2 pl-2 text-xs font-normal text-white md:mt-6 md:text-sm dark:bg-[#2B923E]">
+          <div className="font-khand mt-2 rounded-l-2xl bg-[#2B923E] pr-2 pl-2 text-[10px] font-normal text-white md:mt-6 lg:text-sm lg:text-xs xl:text-sm dark:bg-[#2B923E]">
             {formData?.activationDateTime === "IMMEDIATELY"
               ? "IMMEDIATELY"
               : formData?.activationDateTime
@@ -107,7 +107,7 @@ function StakingPoolResult({ token, formData }) {
         </div>
 
         <div
-          className="font-khand mx-auto w-fit -mt-2 mb-12 rounded-2xl px-4 text-center text-sm font-semibold text-[#311880] md:text-base lg:text-lg 2xl:text-2xl"
+          className="font-khand mx-auto w-fit mt-2 mb-10 rounded-2xl px-4 text-center text-sm font-semibold text-[#311880] md:text-sm lg:text-lg 2xl:text-2xl"
           style={{
             background:
               resolvedTheme === "dark"
@@ -118,16 +118,16 @@ function StakingPoolResult({ token, formData }) {
           LAUNCHING IN: {formData?.distributionLength || "0"} days
         </div>
 
-        <div className="font-khand -mt-8 text-end text-xl font-medium lg:text-2xl">
-          <div className="relative bottom-0 left-0 z-5 mt-2 flex w-full">
-            <div className="font-khand mx-4 flex max-w-20 items-center text-xl font-semibold lg:text-3xl">
+        <div className="font-khand relative text-end text-xl font-medium lg:text-2xl">
+          <div className="absolute -bottom-4 lg:-bottom-8 xl:-bottom-11 z-5 mt-2 flex w-full">
+            <div className="font-khand 2xl:mx-4 flex max-w-20 items-center text-xl font-semibold lg:text-xl text-left">
               STAKING POOL
             </div>
             <div className="font-khand relative my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
               <StakeIcon />
 
               <div
-                className="font-khand -z-1 ml-8 w-3/4 rounded-full py-1 pr-2 pl-4 font-medium text-white md:pl-10"
+                className="font-khand -z-1 ml-8 w-3/4 rounded-full py-0.5 lg:py-1 pr-2 pl-4 font-medium text-white md:pl-10"
                 style={{
                   background:
                     resolvedTheme === "dark"
@@ -144,7 +144,7 @@ function StakingPoolResult({ token, formData }) {
                 </div>
               </div>
               <div
-                className="font-khand -z-1 ml-8 w-2/3 rounded-full py-1 pr-2 pl-4 font-medium text-black md:pl-10"
+                className="font-khand -z-1 ml-8 w-2/3 rounded-full py-0.5 lg:py-1 pr-2 pl-4 font-medium text-black md:pl-10"
                 style={{
                   background:
                     resolvedTheme === "dark"

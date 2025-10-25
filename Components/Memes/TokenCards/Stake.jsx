@@ -2,9 +2,11 @@ import React from "react";
 import Image from "next/image";
 import { SiVerizon } from "react-icons/si";
 import { useTheme } from "@/hooks/useTheme";
+import { useRouter } from "next/navigation";
 
 function Stake({ token }) {
   const { resolvedTheme } = useTheme();
+  const router = useRouter();
   const StakeIcon = () => (
     <div className="relative z-10 flex-shrink-0">
       <div className="-mr-18 flex w-12 items-center justify-center rounded-full bg-white lg:w-10 xl:w-12 2xl:w-13">
@@ -41,7 +43,8 @@ function Stake({ token }) {
 
   return (
     <div
-      className="relative flex w-full flex-col overflow-hidden rounded bg-[#f5f3fb] shadow-lg dark:bg-transparent"
+      onClick={() => router.push("/card/stake")}
+      className="relative flex w-full flex-col overflow-hidden rounded bg-[#f5f3fb] shadow-lg cursor-pointer dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}

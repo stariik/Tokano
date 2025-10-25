@@ -13,7 +13,18 @@ export default function RainbowBalance() {
   const { resolvedTheme } = useTheme();
 
   return (
-    <div className="h-7 overflow-hidden">
+    <div className="h-7 overflow-hidden rainbow-balance-wrapper">
+      <style jsx>{`
+        .rainbow-balance-wrapper svg path {
+          fill: attr(fill) !important;
+        }
+        .rainbow-balance-wrapper svg path[fill="#330E79"] {
+          fill: #330E79 !important;
+        }
+        .rainbow-balance-wrapper svg path[fill="#FBFBFB"] {
+          fill: #FBFBFB !important;
+        }
+      `}</style>
       {/* Gradient bar with curved right edge */}
       {/* <div
         className="flex h-full items-center gap-1 px-2 md:gap-2 lg:gap-1 xl:gap-3"

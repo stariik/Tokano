@@ -22,7 +22,11 @@ interface StakingPoolFormProps {
   onClose?: () => void;
 }
 
-export default function StakingPoolForm({ token, onDataChange, onClose }: StakingPoolFormProps) {
+export default function StakingPoolForm({
+  token,
+  onDataChange,
+  onClose,
+}: StakingPoolFormProps) {
   const { staking } = useTokano();
   const { connection } = useConnection();
   const { publicKey, signTransaction } = useWallet();
@@ -34,7 +38,9 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
     unstakingPeriodDays: "",
     unstakingPeriodHours: "",
   });
-  const [showPopup, setShowPopup] = useState<"success" | "failed" | "attention" | null>(null);
+  const [showPopup, setShowPopup] = useState<
+    "success" | "failed" | "attention" | null
+  >(null);
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
 
@@ -86,7 +92,7 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
       let decimals = token.decimals;
       if (!decimals) {
         const mintInfo = await connection.getParsedAccountInfo(tokenMint);
-        if (mintInfo?.value?.data && 'parsed' in mintInfo.value.data) {
+        if (mintInfo?.value?.data && "parsed" in mintInfo.value.data) {
           decimals = mintInfo.value.data.parsed.info.decimals;
         } else {
           throw new Error("Could not fetch token decimals from blockchain");
@@ -105,12 +111,14 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
       );
 
       // Convert distribution length from days to seconds
-      const rewardPeriodInSeconds = parseInt(formData.distributionLength) * 24 * 60 * 60;
+      const rewardPeriodInSeconds =
+        parseInt(formData.distributionLength) * 24 * 60 * 60;
 
       // Convert unstaking period to seconds (days + hours)
       const unstakingDays = parseInt(formData.unstakingPeriodDays || "0");
       const unstakingHours = parseInt(formData.unstakingPeriodHours || "0");
-      const lockingPeriodForStakers = (unstakingDays * 24 * 60 * 60) + (unstakingHours * 60 * 60);
+      const lockingPeriodForStakers =
+        unstakingDays * 24 * 60 * 60 + unstakingHours * 60 * 60;
 
       // Initialize pool on blockchain
       const tx = await staking.initializePool({
@@ -153,14 +161,7 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
       setIsClosing(false);
       alert(`Error creating pool: ${error.message}`);
     }
-  }, [
-    publicKey,
-    staking,
-    formData,
-    token,
-    signTransaction,
-    connection,
-  ]);
+  }, [publicKey, staking, formData, token, signTransaction, connection]);
 
   const closePopup = () => {
     setIsClosing(true);
@@ -171,7 +172,7 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-8 pt-4 pb-4 shadow-2xl dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -188,20 +189,20 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
       <div className="mb-6 rounded-2xl bg-white p-6 dark:bg-[#1B105C]">
         {/* Pool Activation Date and Time */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">
-              1.
-            </span>
-            Pool activation date and time (UTC):
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                1.
+              </span>
+              Pool activation date and time (UTC):
+            </label>
             <input
               type="datetime-local"
               value={formData.activationDateTime || ""}
               onChange={(e) =>
                 handleInputChange("activationDateTime", e.target.value)
               }
-              className="font-khand max-w-[280px] flex-1 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -229,13 +230,13 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
 
         {/* Total Reward Token Amount */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">
-              2.
-            </span>
-            Total reward token amount:
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                2.
+              </span>
+              Total reward token amount:
+            </label>
             <input
               type="number"
               value={formData.rewardAmount || ""}
@@ -243,7 +244,7 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
                 handleInputChange("rewardAmount", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-40 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-40 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
@@ -258,13 +259,13 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
 
         {/* Distribution Length */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">
-              3.
-            </span>
-            Duration of total reward distribution:
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                3.
+              </span>
+              Duration of total reward distribution:
+            </label>
             <input
               type="number"
               value={formData.distributionLength || ""}
@@ -272,7 +273,7 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
                 handleInputChange("distributionLength", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-40 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-40 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
@@ -287,13 +288,13 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
 
         {/* Unstaking Period */}
         <div className="mb-5">
-          <label className="font-khand mb-2 block text-[13px] font-bold text-[#190E79] dark:text-white">
-            <span className="mr-1 font-bold text-[#190E79] dark:text-white">
-              4.
-            </span>
-            Unstaking becomes available in:
-          </label>
-          <div className="mb-1.5 flex items-center gap-2">
+          <div className="mb-1.5 flex items-center gap-3">
+            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
+                4.
+              </span>
+              Unstaking becomes available in:
+            </label>
             <input
               type="number"
               value={formData.unstakingPeriodDays || ""}
@@ -301,7 +302,7 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
                 handleInputChange("unstakingPeriodDays", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-20 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
             />
             <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
               days
@@ -313,7 +314,7 @@ export default function StakingPoolForm({ token, onDataChange, onClose }: Stakin
                 handleInputChange("unstakingPeriodHours", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-20 rounded-lg border-none bg-[#e8e4f8] px-3 py-2.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
             />
             <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
               hours
