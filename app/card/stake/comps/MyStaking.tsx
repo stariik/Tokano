@@ -136,7 +136,9 @@ function MyStaking({ pool }: MyStakingProps) {
     const timeUntilRelease = releaseTime
       ? Math.max(0, releaseTime.getTime() - now.getTime())
       : 0;
-    const daysUntilRelease = Math.floor(timeUntilRelease / (1000 * 60 * 60 * 24));
+    const daysUntilRelease = Math.floor(
+      timeUntilRelease / (1000 * 60 * 60 * 24),
+    );
     const hoursUntilRelease = Math.floor(
       (timeUntilRelease % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
     );
@@ -211,7 +213,7 @@ function MyStaking({ pool }: MyStakingProps) {
       {/* Two Side-by-Side Tables */}
       <div className="relative">
         {rpcLimitError ? (
-          <div className="flex flex-col items-center justify-center py-8 px-4">
+          <div className="flex flex-col items-center justify-center px-4 py-8">
             <p className="mb-2 text-center text-sm font-semibold text-yellow-600 dark:text-yellow-400">
               ⚠️ RPC Limit Reached
             </p>

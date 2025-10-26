@@ -110,8 +110,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
     if (!publicKey || !vesting || !selectedToken) return;
 
     try {
-      const allVests = await vesting.fetchUserVestingAccounts(publicKey);
-
+      const allVests = await vesting.fetchUserVestings(publicKey);
+      // fetchUserVestingAccounts
       // Filter vests for selected token
       const tokenVests = allVests.filter(
         (vest: any) => vest.tokenMint?.toBase58() === selectedToken.mintAddress,
@@ -129,8 +129,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
     if (!publicKey || !lock || !selectedToken) return;
 
     try {
-      const allLocks = await lock.fetchUserLockAccounts(publicKey);
-
+      const allLocks = await lock.fetchUserLocks(publicKey);
+      // fetchUserLockAccounts
       // Filter locks for selected token
       const tokenLocks = allLocks.filter(
         (lockItem: any) =>
