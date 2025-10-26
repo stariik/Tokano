@@ -1,26 +1,32 @@
 "use client";
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import CryptoWallet from "@/Components/stakenomics/CryptoWallet";
 import FundCards from "@/Components/stakenomics/FundCards";
 import { TOKENS, getTokenById } from "../../lib/constants";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 import { useBalances, BalanceLoadState } from "@/contexts/balances-context";
+import { SOL_MINT } from "@/lib/balances";
 
 function page() {
   const { tokens: walletTokens, loadState } = useBalances();
-  const [selectedToken, setSelectedToken] = useState(3); // LIMASIRA is selected by default
+  const [selectedToken, setSelectedToken] = useState(3); // LIMASIRA is selected by default (for fallback)
   const [selectedWalletTokenIndex, setSelectedWalletTokenIndex] = useState(0);
 
   // Use real wallet tokens if available, otherwise use mock tokens
   const useWalletTokens = loadState === BalanceLoadState.LOADED && walletTokens.length > 0;
 
-  const selectedTokenData = useWalletTokens
+  // Filter out SOL from available tokens for fund operations
+  const availableTokens = walletTokens.filter((token) => token.mintAddress !== SOL_MINT);
+
+  const selectedTokenData = useWalletTokens && availableTokens.length > 0
     ? {
-        ...walletTokens[selectedWalletTokenIndex],
-        id: walletTokens[selectedWalletTokenIndex].mintAddress,
-        name: walletTokens[selectedWalletTokenIndex].info?.name || "Unknown Token",
-        tokenId: walletTokens[selectedWalletTokenIndex].mintAddress,
+        ...availableTokens[selectedWalletTokenIndex],
+        id: availableTokens[selectedWalletTokenIndex].mintAddress,
+        name: availableTokens[selectedWalletTokenIndex].info?.name || "Unknown Token",
+        tokenId: availableTokens[selectedWalletTokenIndex].mintAddress,
+        ticker: availableTokens[selectedWalletTokenIndex].info?.symbol || "N/A",
+        balance: availableTokens[selectedWalletTokenIndex].amount,
       }
     : getTokenById(selectedToken);
 
@@ -33,11 +39,7 @@ function page() {
         />
       </div>
       <div className="w-3xl gap-4">
-        <CryptoWallet
-          selectedToken={selectedToken}
-          setSelectedToken={setSelectedToken}
-          tokens={TOKENS}
-        />
+        <CryptoWallet />
         <FundCards
           selectedToken={selectedToken}
           selectedTokenData={selectedTokenData}

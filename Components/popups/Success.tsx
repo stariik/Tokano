@@ -3,8 +3,20 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { MdOutlineDone } from "react-icons/md";
 
-function Success() {
+interface SuccessProps {
+  poolAddress?: string;
+}
+
+function Success({ poolAddress }: SuccessProps) {
   const router = useRouter();
+
+  const handleViewClick = () => {
+    if (poolAddress) {
+      router.push(`/card/stake?pool=${poolAddress}`);
+    } else {
+      router.push("/card/stake");
+    }
+  };
 
   return (
     <div className="py relative flex max-w-md items-center justify-center rounded-full border-4 border-gray-200 bg-white px-8 shadow-lg">
@@ -18,7 +30,7 @@ function Success() {
         />
       </div>
       <button
-        onClick={() => router.push("/card/stake")}
+        onClick={handleViewClick}
         className="font-khand ml-4 flex items-center justify-center text-xs font-bold text-gray-700 hover:text-black"
       >
         click here

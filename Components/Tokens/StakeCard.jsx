@@ -14,8 +14,35 @@ function StakeCard({
   marketCap,
   wallet,
   variant = "default",
+  stakeTimestamp,
+  stakersCount,
+  poolEndTimestamp,
 }) {
   const { resolvedTheme } = useTheme();
+
+  // Calculate time remaining until pool ends
+  const calculateTimeLeft = () => {
+    if (!poolEndTimestamp) return "0d.0h";
+
+    const now = Math.floor(Date.now() / 1000);
+    const secondsLeft = poolEndTimestamp - now;
+
+    if (secondsLeft <= 0) return "Ended";
+
+    const days = Math.floor(secondsLeft / 86400);
+    const hours = Math.floor((secondsLeft % 86400) / 3600);
+
+    return `${days}d.${hours}h`;
+  };
+
+  // Format stakers count (e.g., 1234 -> "1.2K")
+  const formatStakersCount = (count) => {
+    if (!count || count === 0) return "0";
+    if (count >= 1000) {
+      return `${(count / 1000).toFixed(1)}K`;
+    }
+    return count.toString();
+  };
   const StakeIcon = () => (
     <svg
       className="h-[47px] w-[47px] lg:h-[50px] lg:w-[50px] xl:h-[57px] xl:w-[57px]"
@@ -75,7 +102,7 @@ function StakeCard({
           />
         </div>
         <div className="font-khand absolute top-12 right-0 rounded-l-2xl bg-[#2B923E] pl-2 text-xs font-normal text-white md:top-16 xl:text-sm dark:bg-[#2B923E]">
-          21.04.25/12:24
+          {stakeTimestamp || "N/A"}
         </div>
         <div className="absolute top-2/3 right-4 -translate-y-1/2 transform md:right-6">
           <StarIcon />
@@ -102,7 +129,7 @@ function StakeCard({
                         : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
                   }}
                 >
-                  ENDS: |2d.12h
+                  ENDS: |{calculateTimeLeft()}
                 </div>
 
                 <div
@@ -140,7 +167,7 @@ function StakeCard({
           </div>
         </div>
         <p className="font-khand absolute right-2 bottom-0 pr-6 text-lg font-semibold text-[#FFB01C] md:right-5 md:pr-2 md:text-2xl">
-          1.2K
+          {formatStakersCount(stakersCount)}
         </p>
       </div>
       <div className="flex items-center justify-end gap-6 pr-4 pb-2">

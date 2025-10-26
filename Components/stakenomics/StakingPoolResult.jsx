@@ -121,7 +121,10 @@ function StakingPoolResult({ token, formData }) {
         <div className="font-khand relative text-end text-xl font-medium lg:text-2xl">
           <div className="absolute -bottom-4 lg:-bottom-8 xl:-bottom-11 z-5 mt-2 flex w-full">
             <div className="font-khand 2xl:mx-4 flex max-w-20 items-center text-xl font-semibold lg:text-xl text-left">
-              STAKING POOL
+              <div className="leading-tight">
+                <div>STAKING</div>
+                <div>POOL</div>
+              </div>
             </div>
             <div className="font-khand relative my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
               <StakeIcon />

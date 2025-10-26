@@ -43,6 +43,9 @@ export default function StakingPoolForm({
   >(null);
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
+  const [createdPoolAddress, setCreatedPoolAddress] = useState<string | null>(
+    null,
+  );
 
   if (!token) {
     return (
@@ -130,6 +133,26 @@ export default function StakingPoolForm({
         startTimeStamp,
       });
 
+      // Extract pool address from transaction (it's typically in the first instruction's accounts)
+      // The pool state PDA is usually one of the writable accounts
+      let poolAddressFromTx: string | null = null;
+      if (tx.instructions && tx.instructions.length > 0) {
+        const instruction = tx.instructions[0];
+        // The pool address is typically the first or second account in the instruction
+        // We need to find the pool state account (usually a writable non-signer account)
+        for (const accountMeta of instruction.keys) {
+          // Pool state is writable but not a signer, and it's not the user's wallet
+          if (
+            accountMeta.isWritable &&
+            !accountMeta.isSigner &&
+            !accountMeta.pubkey.equals(publicKey)
+          ) {
+            poolAddressFromTx = accountMeta.pubkey.toBase58();
+            break;
+          }
+        }
+      }
+
       // Get latest blockhash and set fee payer
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
@@ -146,6 +169,9 @@ export default function StakingPoolForm({
         setIsCreating(false);
         if (completed) {
           console.log("Pool created successfully!");
+          if (poolAddressFromTx) {
+            setCreatedPoolAddress(poolAddressFromTx);
+          }
           setShowPopup("success");
           setIsClosing(false);
         } else {
@@ -415,7 +441,9 @@ export default function StakingPoolForm({
             onClick={(e) => e.stopPropagation()}
             className={isClosing ? "animate-scaleOut" : "animate-scaleIn"}
           >
-            {showPopup === "success" && <Success />}
+            {showPopup === "success" && (
+              <Success poolAddress={createdPoolAddress || undefined} />
+            )}
             {showPopup === "failed" && <Failed />}
             {showPopup === "attention" && <Attention />}
           </div>

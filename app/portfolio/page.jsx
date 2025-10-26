@@ -2,12 +2,11 @@
 import { React, useState } from "react";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import CryptoWallet from "@/Components/stakenomics/CryptoWallet";
-import { TOKENS } from "../../lib/constants";
 import StakingScroll from "./comps/StakingScroll";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 
 function page() {
-  const [selectedToken, setSelectedToken] = useState(3); // LIMASIRA is selected by default
+  const [selectedTokenIndex, setSelectedTokenIndex] = useState(0);
 
   return (
     <div className="mx-auto flex justify-between gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">
@@ -19,12 +18,11 @@ function page() {
       </div>
       <div className="w-3xl gap-4">
         <CryptoWallet
-          selectedToken={selectedToken}
-          setSelectedToken={setSelectedToken}
-          tokens={TOKENS}
+          selectedTokenIndex={selectedTokenIndex}
+          onTokenSelect={setSelectedTokenIndex}
         />
 
-        <StakingScroll />
+        <StakingScroll selectedTokenIndex={selectedTokenIndex} />
       </div>
       <RightMenu />
     </div>

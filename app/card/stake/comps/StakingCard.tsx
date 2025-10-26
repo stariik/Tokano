@@ -4,11 +4,58 @@ import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
 import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
-
 import { CiPill } from "react-icons/ci";
+import { PoolState } from "tokano-sdk";
 
-function StakingCard({ id, title, created, marketCap, wallet }) {
+interface StakingCardProps {
+  pool: any;
+}
+
+function StakingCard({ pool }: StakingCardProps) {
   const { resolvedTheme } = useTheme();
+
+  // Format date from timestamp
+  const formatDate = (timestamp: Date) => {
+    const date = new Date(timestamp);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2);
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${day}.${month}.${year}/${hours}:${minutes}`;
+  };
+
+  // Calculate decimals
+  const decimals = pool.tokenInfo?.decimals || 9;
+
+  // Format token amounts
+  const totalRewardAmount =
+    pool.rewardDistributed.toNumber() / Math.pow(10, decimals);
+  const totalStaked = pool.totalTokenStaked.toNumber() / Math.pow(10, decimals);
+
+  // Get token metadata
+  const tokenName = pool.tokenInfo?.name || "Unknown Token";
+  const tokenSymbol = pool.tokenInfo?.symbol || "N/A";
+  const tokenIcon = pool.tokenInfo?.icon || "/fired.png";
+
+  // Pool creator (first 4 and last 4 chars)
+  const creator = pool.creator?.toBase58() || "";
+  const creatorShort = creator
+    ? creator.slice(0, 4) + "..." + creator.slice(-4)
+    : "N/A";
+
+  // Pool ID (first 6 and last 6 chars)
+  const poolId = pool.poolAddress?.toBase58() || "";
+  const poolIdShort = poolId
+    ? poolId.slice(0, 6) + "..." + poolId.slice(-6)
+    : "N/A";
+
+  // Token mint (first 6 and last 6 chars)
+  const tokenMint = pool.tokenMint?.toBase58() || "";
+  const tokenMintShort = tokenMint
+    ? tokenMint.slice(0, 6) + "..." + tokenMint.slice(-6)
+    : "N/A";
+
   const StakeIcon = () => (
     <svg
       className="absolute -mr-1 h-full w-[47px] lg:w-[80px]"
@@ -72,19 +119,25 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
 
         <div className="flex">
           <img
-            src="/vest.png"
+            src={tokenIcon}
             className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:rounded-3xl xl:ml-8 xl:w-32 2xl:w-38"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = "/fired.png";
+            }}
           />
           <div className="font-khand ml-4 font-normal lg:ml-2 xl:ml-8">
             <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl">
-              YOU'RE FIRED (FIRED)
+              {tokenName} ({tokenSymbol})
             </h1>
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
-              <p>Pool ID: 0x4v49...hssdas</p>
-              <p>Creator: Anonymouse</p>
-              <p>Token ID: 0x4v49...hssdas</p>
-              <p>Market cap: $4.3K</p>
+              <p>Pool ID: {poolIdShort}</p>
+              <p>Creator: {creatorShort}</p>
+              <p>Token ID: {tokenMintShort}</p>
+              <p>
+                Total Rewards: {totalRewardAmount.toFixed(2)} {tokenSymbol}
+              </p>
             </div>
           </div>
         </div>
@@ -94,7 +147,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
-            21.04.25/12:24
+            {formatDate(pool.startTimestamp)}
           </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
@@ -117,7 +170,7 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
                     : "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
               }}
             >
-              <div>LOCKED: 21.04.2025</div>
+              <div>LOCKED: {formatDate(pool.endTimestamp)}</div>
             </div>
             <div
               className="font-khand -z-1 ml-8 w-2/3 rounded-full py-1 pl-4 font-medium text-black md:pl-10"
@@ -128,18 +181,21 @@ function StakingCard({ id, title, created, marketCap, wallet }) {
                     : "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
               }}
             >
-              <div>LOCKED: 21.04.2025</div>
+              <div>START: {formatDate(pool.startTimestamp)}</div>
             </div>
           </div>
         </div>
 
         <div className="font-khand mr-4 text-end text-2xl font-semibold text-[#FFB01C] xl:text-3xl">
-          120M
+          {totalStaked.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </div>
       </div>
 
       <div className="font-khand mr-12 text-end text-xl font-medium lg:mr-8 lg:text-2xl xl:mr-12">
-        locked
+        total staked
       </div>
     </div>
   );
