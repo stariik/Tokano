@@ -42,6 +42,9 @@ export default function LockFundsForm({
   >(null);
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
+  const [createdLockAddress, setCreatedLockAddress] = useState<string | null>(
+    null,
+  );
 
   if (!token) {
     return (
@@ -131,6 +134,35 @@ export default function LockFundsForm({
         unlockTimestamp: unlockTimestamp,
       });
 
+      // Extract lock address from transaction
+      let lockAddressFromTx: string | null = null;
+      if (tx.instructions && tx.instructions.length > 0) {
+        console.log("Extracting lock address from transaction with", tx.instructions.length, "instructions");
+        const instruction = tx.instructions[0];
+        console.log("First instruction has", instruction.keys.length, "account keys");
+
+        for (const accountMeta of instruction.keys) {
+          console.log("Account:", accountMeta.pubkey.toBase58(),
+                     "isWritable:", accountMeta.isWritable,
+                     "isSigner:", accountMeta.isSigner,
+                     "isUserWallet:", accountMeta.pubkey.equals(publicKey));
+
+          if (
+            accountMeta.isWritable &&
+            !accountMeta.isSigner &&
+            !accountMeta.pubkey.equals(publicKey)
+          ) {
+            lockAddressFromTx = accountMeta.pubkey.toBase58();
+            console.log("Found lock address:", lockAddressFromTx);
+            break;
+          }
+        }
+      }
+
+      if (!lockAddressFromTx) {
+        console.warn("Could not extract lock address from transaction");
+      }
+
       // Get latest blockhash and set fee payer
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
@@ -138,7 +170,11 @@ export default function LockFundsForm({
 
       // Sign and send transaction
       const signedTx = await signTransaction(tx);
-      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      const txId = await connection.sendRawTransaction(signedTx.serialize(), {
+        skipPreflight: false,
+        preflightCommitment: 'confirmed',
+        maxRetries: 3
+      });
 
       console.log("Transaction sent: ", txId);
 
@@ -147,6 +183,9 @@ export default function LockFundsForm({
         setIsCreating(false);
         if (completed) {
           console.log("Lock created successfully!");
+          if (lockAddressFromTx) {
+            setCreatedLockAddress(lockAddressFromTx);
+          }
           setShowPopup("success");
           setIsClosing(false);
         } else {
@@ -155,12 +194,35 @@ export default function LockFundsForm({
           setIsClosing(false);
         }
       });
-    } catch (error) {
+    } catch (error: any) {
       setIsCreating(false);
       console.error("Error creating lock:", error);
+
+      // Check if it's a "transaction already processed" error - this means it actually succeeded
+      if (error?.message?.includes("already been processed")) {
+        console.log("Transaction was already processed - treating as success");
+        setShowPopup("success");
+        setIsClosing(false);
+        return;
+      }
+
+      // Check if it's a SendTransactionError with logs
+      let errorMessage = error?.message || "Unknown error occurred";
+
+      if (error?.logs) {
+        console.error("Transaction logs:", error.logs);
+
+        // Check for common errors in logs
+        if (error.logs.some((log: string) => log.includes("insufficient funds"))) {
+          errorMessage = "Insufficient token balance to create the lock. Please ensure you have enough tokens in your wallet.";
+        } else if (error.logs.some((log: string) => log.includes("custom program error"))) {
+          errorMessage = "Program execution failed. Please check your wallet balance and try again.";
+        }
+      }
+
       setShowPopup("failed");
       setIsClosing(false);
-      alert(`Error creating lock: ${error.message}`);
+      alert(`Error creating lock: ${errorMessage}`);
     }
   }, [publicKey, lock, formData, token, signTransaction, connection]);
 
@@ -392,7 +454,7 @@ export default function LockFundsForm({
             onClick={(e) => e.stopPropagation()}
             className={isClosing ? "animate-scaleOut" : "animate-scaleIn"}
           >
-            {showPopup === "success" && <Success />}
+            {showPopup === "success" && <Success type="lock" poolAddress={createdLockAddress || undefined} />}
             {showPopup === "failed" && <Failed />}
             {showPopup === "attention" && <Attention />}
           </div>

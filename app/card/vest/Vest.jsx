@@ -1,15 +1,74 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
 import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
+import { useTokens } from "@/contexts/tokens-context";
 
 import { CiPill } from "react-icons/ci";
 
-function Vest() {
+function Vest({ vestData, vestAddress }) {
   const { resolvedTheme } = useTheme();
+  const { fetchTokenInfo } = useTokens();
+  const [tokenInfo, setTokenInfo] = useState(null);
+
+  useEffect(() => {
+    const loadTokenInfo = async () => {
+      if (vestData?.tokenMint) {
+        const mintString = vestData.tokenMint.toBase58();
+        const info = await fetchTokenInfo([mintString]);
+        setTokenInfo(info[mintString]);
+      }
+    };
+    loadTokenInfo();
+  }, [vestData, fetchTokenInfo]);
+
+  // Format timestamp to DD.MM.YY/HH:MM
+  const formatTimestamp = (timestamp) => {
+    if (!timestamp) return "N/A";
+    const date = new Date(typeof timestamp === 'number' ? timestamp * 1000 : timestamp);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2);
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${day}.${month}.${year}/${hours}:${minutes}`;
+  };
+
+  // Format address
+  const formatAddress = (address) => {
+    if (!address) return "N/A";
+    const addrString = typeof address === 'string' ? address : address.toBase58();
+    return `${addrString.slice(0, 6)}...${addrString.slice(-6)}`;
+  };
+
+  // Calculate time remaining or progress
+  const getVestingProgress = (startTime, duration) => {
+    if (!startTime || !duration) return "N/A";
+    const now = Date.now() / 1000;
+    const startTimestamp = typeof startTime === 'number' ? startTime : startTime.toNumber();
+    const durationSeconds = typeof duration === 'number' ? duration : duration.toNumber();
+    const endTimestamp = startTimestamp + durationSeconds;
+
+    if (now < startTimestamp) return "Not started";
+    if (now >= endTimestamp) return "Completed";
+
+    const elapsed = now - startTimestamp;
+    const progress = (elapsed / durationSeconds) * 100;
+    return `${progress.toFixed(1)}% vested`;
+  };
+
+  // Format amount with decimals
+  const formatAmount = (amount, decimals = 6) => {
+    if (!amount) return "0";
+    const amountNum = typeof amount === 'number' ? amount : amount.toNumber();
+    return (amountNum / Math.pow(10, decimals)).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 6
+    });
+  };
   const VestIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -79,14 +138,14 @@ function Vest() {
           />
           <div className="font-khand ml-4 font-normal lg:ml-2 xl:ml-8">
             <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl">
-              YOU'RE FIRED (FIRED)
+              {tokenInfo?.name || "Unknown Token"} ({tokenInfo?.symbol || "N/A"})
             </h1>
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
-              <p>Pool ID: 0x4v49...hssdas</p>
-              <p>Creator: Anonymouse</p>
-              <p>Token ID: 0x4v49...hssdas</p>
-              <p>Market cap: $4.3K</p>
+              <p>Vest ID: {formatAddress(vestAddress)}</p>
+              <p>Receiver: {formatAddress(vestData?.receiver)}</p>
+              <p>Token ID: {formatAddress(vestData?.tokenMint)}</p>
+              <p>Market cap: {tokenInfo?.mcap ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K` : "N/A"}</p>
             </div>
           </div>
         </div>
@@ -96,7 +155,7 @@ function Vest() {
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
-            21.04.25/12:24
+            {vestData?.startTimestamp ? formatTimestamp(vestData.startTimestamp) : "N/A"}
           </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
@@ -119,8 +178,8 @@ function Vest() {
                     : "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>LOCKED: 21.04.2025</div>
-              <div>ENDS: |2d.12h</div>
+              <div>START: {vestData?.startTimestamp ? formatTimestamp(vestData.startTimestamp) : "N/A"}</div>
+              <div>STATUS: {vestData ? getVestingProgress(vestData.startTimestamp, vestData.vestingDuration) : "N/A"}</div>
             </div>
 
             <div
@@ -132,19 +191,19 @@ function Vest() {
                     : "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>LOCKED: 21.04.2025</div>
-              <div>ENDS: |2d.12h</div>
+              <div>SCHEDULE: {vestData?.scheduleType || "N/A"}</div>
+              <div>DURATION: {vestData?.vestingDuration ? `${Math.floor(vestData.vestingDuration.toNumber() / (24 * 60 * 60))}d` : "N/A"}</div>
             </div>
           </div>
         </div>
 
         <div className="font-khand mt-14 mr-4 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-16 lg:text-3xl">
-          120M
+          {vestData?.totalAmount ? formatAmount(vestData.totalAmount, tokenInfo?.decimals || 6) : "0"}
         </div>
       </div>
 
       <div className="font-khand mr-12 text-end text-xl font-medium lg:text-2xl">
-        locked
+        vesting {tokenInfo?.symbol || ""}
       </div>
     </div>
   );

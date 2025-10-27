@@ -108,6 +108,35 @@ export default function StakingPoolForm({
         decimals,
       );
 
+      // Check wallet balance before proceeding
+      const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+        publicKey,
+        { mint: tokenMint }
+      );
+
+      console.log("Token mint:", tokenMint.toBase58());
+      console.log("Token accounts found:", tokenAccounts.value.length);
+      console.log("Token data:", token);
+
+      let userBalance = "0";
+      if (tokenAccounts.value.length > 0) {
+        userBalance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.amount;
+        console.log("User balance (raw):", userBalance);
+      } else {
+        console.warn("No token account found for this mint address");
+      }
+
+      if (BigInt(userBalance) < BigInt(amountInSmallestUnit.toString())) {
+        const balanceInTokens = Number(userBalance) / Math.pow(10, decimals);
+        const requiredAmount = formData.rewardAmount;
+
+        throw new Error(
+          `Insufficient balance. You have ${balanceInTokens.toFixed(Math.min(decimals, 6))} ${token.name || "tokens"} but need ${requiredAmount} ${token.name || "tokens"} for the reward pool. ${tokenAccounts.value.length === 0 ? "Note: No token account found for this token. You may need to receive some tokens first to create the account." : ""}`
+        );
+      }
+
+      console.log("Balance check passed!");
+
       // Convert activation datetime to Unix timestamp (in seconds)
       const startTimeStamp = Math.floor(
         new Date(formData.activationDateTime).getTime() / 1000,
@@ -137,10 +166,18 @@ export default function StakingPoolForm({
       // The pool state PDA is usually one of the writable accounts
       let poolAddressFromTx: string | null = null;
       if (tx.instructions && tx.instructions.length > 0) {
+        console.log("Extracting pool address from transaction with", tx.instructions.length, "instructions");
         const instruction = tx.instructions[0];
+        console.log("First instruction has", instruction.keys.length, "account keys");
+
         // The pool address is typically the first or second account in the instruction
         // We need to find the pool state account (usually a writable non-signer account)
         for (const accountMeta of instruction.keys) {
+          console.log("Account:", accountMeta.pubkey.toBase58(),
+                     "isWritable:", accountMeta.isWritable,
+                     "isSigner:", accountMeta.isSigner,
+                     "isUserWallet:", accountMeta.pubkey.equals(publicKey));
+
           // Pool state is writable but not a signer, and it's not the user's wallet
           if (
             accountMeta.isWritable &&
@@ -148,9 +185,14 @@ export default function StakingPoolForm({
             !accountMeta.pubkey.equals(publicKey)
           ) {
             poolAddressFromTx = accountMeta.pubkey.toBase58();
+            console.log("Found pool address:", poolAddressFromTx);
             break;
           }
         }
+      }
+
+      if (!poolAddressFromTx) {
+        console.warn("Could not extract pool address from transaction");
       }
 
       // Get latest blockhash and set fee payer
@@ -160,7 +202,11 @@ export default function StakingPoolForm({
 
       // Sign and send transaction
       const signedTx = await signTransaction(tx);
-      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      const txId = await connection.sendRawTransaction(signedTx.serialize(), {
+        skipPreflight: false,
+        preflightCommitment: 'confirmed',
+        maxRetries: 3
+      });
 
       console.log("Transaction sent: ", txId);
 
@@ -180,12 +226,35 @@ export default function StakingPoolForm({
           setIsClosing(false);
         }
       });
-    } catch (error) {
+    } catch (error: any) {
       setIsCreating(false);
       console.error("Error creating pool:", error);
+
+      // Check if it's a "transaction already processed" error - this means it actually succeeded
+      if (error?.message?.includes("already been processed")) {
+        console.log("Transaction was already processed - treating as success");
+        setShowPopup("success");
+        setIsClosing(false);
+        return;
+      }
+
+      // Check if it's a SendTransactionError with logs
+      let errorMessage = error?.message || "Unknown error occurred";
+
+      if (error?.logs) {
+        console.error("Transaction logs:", error.logs);
+
+        // Check for common errors in logs
+        if (error.logs.some((log: string) => log.includes("insufficient funds"))) {
+          errorMessage = "Insufficient token balance to create the staking pool. Please ensure you have enough tokens in your wallet.";
+        } else if (error.logs.some((log: string) => log.includes("custom program error"))) {
+          errorMessage = "Program execution failed. Please check your wallet balance and try again.";
+        }
+      }
+
       setShowPopup("failed");
       setIsClosing(false);
-      alert(`Error creating pool: ${error.message}`);
+      alert(`Error creating pool: ${errorMessage}`);
     }
   }, [publicKey, staking, formData, token, signTransaction, connection]);
 
@@ -442,7 +511,7 @@ export default function StakingPoolForm({
             className={isClosing ? "animate-scaleOut" : "animate-scaleIn"}
           >
             {showPopup === "success" && (
-              <Success poolAddress={createdPoolAddress || undefined} />
+              <Success type="stake" poolAddress={createdPoolAddress || undefined} />
             )}
             {showPopup === "failed" && <Failed />}
             {showPopup === "attention" && <Attention />}

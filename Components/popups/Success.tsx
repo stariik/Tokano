@@ -5,16 +5,20 @@ import { MdOutlineDone } from "react-icons/md";
 
 interface SuccessProps {
   poolAddress?: string;
+  type?: "stake" | "vest" | "lock";
 }
 
-function Success({ poolAddress }: SuccessProps) {
+function Success({ poolAddress, type = "stake" }: SuccessProps) {
   const router = useRouter();
 
   const handleViewClick = () => {
+    // Determine the route based on type
+    const baseRoute = type === "vest" ? "/card/vest" : type === "lock" ? "/card/lock" : "/card/stake";
+
     if (poolAddress) {
-      router.push(`/card/stake?pool=${poolAddress}`);
+      router.push(`${baseRoute}?pool=${poolAddress}`);
     } else {
-      router.push("/card/stake");
+      router.push(baseRoute);
     }
   };
 

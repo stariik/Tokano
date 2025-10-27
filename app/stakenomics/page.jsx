@@ -39,7 +39,10 @@ function page() {
         />
       </div>
       <div className="w-3xl gap-4">
-        <CryptoWallet />
+        <CryptoWallet
+          selectedTokenIndex={selectedWalletTokenIndex}
+          onTokenSelect={setSelectedWalletTokenIndex}
+        />
         <FundCards
           selectedToken={selectedToken}
           selectedTokenData={selectedTokenData}
