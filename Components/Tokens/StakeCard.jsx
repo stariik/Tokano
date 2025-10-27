@@ -17,6 +17,7 @@ function StakeCard({
   stakeTimestamp,
   stakersCount,
   poolEndTimestamp,
+  poolAddress,
 }) {
   const { resolvedTheme } = useTheme();
 
@@ -42,6 +43,13 @@ function StakeCard({
       return `${(count / 1000).toFixed(1)}K`;
     }
     return count.toString();
+  };
+
+  // Format address to short version (first 6 and last 3 chars)
+  const formatAddress = (address) => {
+    if (!address || address === "N/A") return "N/A";
+    if (address.length < 10) return address;
+    return `${address.slice(0, 6)}...${address.slice(-3)}`;
   };
   const StakeIcon = () => (
     <svg
@@ -75,7 +83,7 @@ function StakeCard({
 
   return (
     <Link
-      href={`/card/stake`}
+      href={poolAddress ? `/card/stake?pool=${poolAddress}` : `/card/stake`}
       className="font-khand text-primary block rounded-4xl font-semibold transition hover:opacity-90 dark:text-white"
       style={{
         background:
@@ -155,10 +163,10 @@ function StakeCard({
           </div>
           <div className="font-khand mt-1 pl-2 text-left text-xs font-normal md:mt-2 md:pl-4 xl:text-base">
             <p>
-              <span className="font-semibold">Pool ID: </span> {wallet}
+              <span className="font-semibold">Pool ID: </span> {formatAddress(wallet)}
             </p>
             <p>
-              <span className="font-semibold">Token ID: </span> {created}
+              <span className="font-semibold">Token ID: </span> {formatAddress(created)}
             </p>
             <p className="mt-1 md:mt-2">
               <span className="font-semibold">REWARDS: </span>

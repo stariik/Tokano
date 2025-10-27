@@ -385,6 +385,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                           created={selectedToken.mintAddress}
                           marketCap={`${rewards.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
                           wallet={stake.pool.poolAddress.toBase58()}
+                          poolAddress={stake.pool.poolAddress.toBase58()}
                           variant="portfolio"
                           stakeTimestamp={formatTimestamp(
                             stake.releaseTime.getTime() / 1000 -
@@ -417,6 +418,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                           created={selectedToken.mintAddress}
                           marketCap={`${totalRewards.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
                           wallet={pool.poolAddress.toBase58()}
+                          poolAddress={pool.poolAddress.toBase58()}
                           variant="portfolio"
                           stakeTimestamp={formatTimestamp(
                             pool.startTimestamp.getTime() / 1000,
@@ -459,6 +461,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                       created={selectedToken.mintAddress}
                       marketCap={`${totalRewards.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
                       wallet={pool.poolAddress.toBase58()}
+                      poolAddress={pool.poolAddress.toBase58()}
                       variant="portfolio"
                       stakeTimestamp={formatTimestamp(
                         pool.startTimestamp.getTime() / 1000,
@@ -495,6 +498,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                     created={selectedToken.mintAddress}
                     marketCap={`${rewards.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
                     wallet={stake.pool.poolAddress.toBase58()}
+                    poolAddress={stake.pool.poolAddress.toBase58()}
                     variant="portfolio"
                     stakeTimestamp={formatTimestamp(
                       stake.releaseTime.getTime() / 1000 -

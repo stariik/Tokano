@@ -44,16 +44,16 @@ function StakingCard({ pool }: StakingCardProps) {
     ? creator.slice(0, 4) + "..." + creator.slice(-4)
     : "N/A";
 
-  // Pool ID (first 6 and last 6 chars)
+  // Pool ID (first 6 and last 3 chars)
   const poolId = pool.poolAddress?.toBase58() || "";
   const poolIdShort = poolId
-    ? poolId.slice(0, 6) + "..." + poolId.slice(-6)
+    ? poolId.slice(0, 6) + "..." + poolId.slice(-3)
     : "N/A";
 
-  // Token mint (first 6 and last 6 chars)
+  // Token mint (first 6 and last 3 chars)
   const tokenMint = pool.tokenMint?.toBase58() || "";
   const tokenMintShort = tokenMint
-    ? tokenMint.slice(0, 6) + "..." + tokenMint.slice(-6)
+    ? tokenMint.slice(0, 6) + "..." + tokenMint.slice(-3)
     : "N/A";
 
   const StakeIcon = () => (

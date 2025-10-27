@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
@@ -8,7 +8,7 @@ import TokenGrid from "@/Components/Memes/TokenGrid";
 import Vest from "./Vest";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 
-function Page() {
+function VestPageContent() {
   const searchParams = useSearchParams();
   const vestAddress = searchParams.get("pool");
   const { connection } = useConnection();
@@ -55,6 +55,14 @@ function Page() {
       </div>
       <RightMenu />
     </div>
+  );
+}
+
+function Page() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center">Loading...</div>}>
+      <VestPageContent />
+    </Suspense>
   );
 }
 
