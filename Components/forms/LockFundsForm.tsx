@@ -137,15 +137,29 @@ export default function LockFundsForm({
       // Extract lock address from transaction
       let lockAddressFromTx: string | null = null;
       if (tx.instructions && tx.instructions.length > 0) {
-        console.log("Extracting lock address from transaction with", tx.instructions.length, "instructions");
+        console.log(
+          "Extracting lock address from transaction with",
+          tx.instructions.length,
+          "instructions",
+        );
         const instruction = tx.instructions[0];
-        console.log("First instruction has", instruction.keys.length, "account keys");
+        console.log(
+          "First instruction has",
+          instruction.keys.length,
+          "account keys",
+        );
 
         for (const accountMeta of instruction.keys) {
-          console.log("Account:", accountMeta.pubkey.toBase58(),
-                     "isWritable:", accountMeta.isWritable,
-                     "isSigner:", accountMeta.isSigner,
-                     "isUserWallet:", accountMeta.pubkey.equals(publicKey));
+          console.log(
+            "Account:",
+            accountMeta.pubkey.toBase58(),
+            "isWritable:",
+            accountMeta.isWritable,
+            "isSigner:",
+            accountMeta.isSigner,
+            "isUserWallet:",
+            accountMeta.pubkey.equals(publicKey),
+          );
 
           if (
             accountMeta.isWritable &&
@@ -172,8 +186,8 @@ export default function LockFundsForm({
       const signedTx = await signTransaction(tx);
       const txId = await connection.sendRawTransaction(signedTx.serialize(), {
         skipPreflight: false,
-        preflightCommitment: 'confirmed',
-        maxRetries: 3
+        preflightCommitment: "confirmed",
+        maxRetries: 3,
       });
 
       console.log("Transaction sent: ", txId);
@@ -213,10 +227,16 @@ export default function LockFundsForm({
         console.error("Transaction logs:", error.logs);
 
         // Check for common errors in logs
-        if (error.logs.some((log: string) => log.includes("insufficient funds"))) {
-          errorMessage = "Insufficient token balance to create the lock. Please ensure you have enough tokens in your wallet.";
-        } else if (error.logs.some((log: string) => log.includes("custom program error"))) {
-          errorMessage = "Program execution failed. Please check your wallet balance and try again.";
+        if (
+          error.logs.some((log: string) => log.includes("insufficient funds"))
+        ) {
+          errorMessage =
+            "Insufficient token balance to create the lock. Please ensure you have enough tokens in your wallet.";
+        } else if (
+          error.logs.some((log: string) => log.includes("custom program error"))
+        ) {
+          errorMessage =
+            "Program execution failed. Please check your wallet balance and try again.";
         }
       }
 
@@ -235,7 +255,7 @@ export default function LockFundsForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-8 pt-4 pb-4 shadow-2xl dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl lg:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -249,11 +269,11 @@ export default function LockFundsForm({
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white p-6 dark:bg-[#1B105C]">
+      <div className="mb-6 rounded-2xl bg-white p-4 lg:p-6 dark:bg-[#1B105C]">
         {/* Lock Date and Time */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
               </span>
@@ -265,7 +285,7 @@ export default function LockFundsForm({
               onChange={(e) =>
                 handleInputChange("lockDateTime", e.target.value)
               }
-              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] md:text-[13px] font-bold text-[#190E79] md:max-w-[280px] dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -294,7 +314,7 @@ export default function LockFundsForm({
         {/* Token Amount */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 2.
               </span>
@@ -305,10 +325,10 @@ export default function LockFundsForm({
               value={formData.tokenAmount || ""}
               onChange={(e) => handleInputChange("tokenAmount", e.target.value)}
               placeholder="0"
-              className="font-khand w-40 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-40 dark:bg-[#453DC8] dark:text-white"
               required
             />
-            <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               tokens
             </span>
           </div>
@@ -321,7 +341,7 @@ export default function LockFundsForm({
         {/* Release Date */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 3.
               </span>
@@ -331,7 +351,7 @@ export default function LockFundsForm({
               type="datetime-local"
               value={formData.releaseDate || ""}
               onChange={(e) => handleInputChange("releaseDate", e.target.value)}
-              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] md:text-[13px] font-bold text-[#190E79] md:max-w-[280px] dark:bg-[#453DC8] dark:text-white"
               required
             />
           </div>
@@ -344,7 +364,7 @@ export default function LockFundsForm({
         {/* Recipient Wallet */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 4.
               </span>
@@ -395,7 +415,7 @@ export default function LockFundsForm({
           </ul>
         </div>
         <div className="mt-6">
-          <h3 className="font-khand mb-4 text-2xl font-bold text-[#190E79] dark:text-white">
+          <h3 className="font-khand mb-4 text-xl font-bold text-[#190E79] md:text-2xl dark:text-white">
             PREVIEW YOUR LOCK:
           </h3>
           <LockFundsResult
@@ -454,7 +474,12 @@ export default function LockFundsForm({
             onClick={(e) => e.stopPropagation()}
             className={isClosing ? "animate-scaleOut" : "animate-scaleIn"}
           >
-            {showPopup === "success" && <Success type="lock" poolAddress={createdLockAddress || undefined} />}
+            {showPopup === "success" && (
+              <Success
+                type="lock"
+                poolAddress={createdLockAddress || undefined}
+              />
+            )}
             {showPopup === "failed" && <Failed />}
             {showPopup === "attention" && <Attention />}
           </div>

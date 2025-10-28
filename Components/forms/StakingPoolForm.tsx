@@ -111,7 +111,7 @@ export default function StakingPoolForm({
       // Check wallet balance before proceeding
       const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
         publicKey,
-        { mint: tokenMint }
+        { mint: tokenMint },
       );
 
       console.log("Token mint:", tokenMint.toBase58());
@@ -120,7 +120,8 @@ export default function StakingPoolForm({
 
       let userBalance = "0";
       if (tokenAccounts.value.length > 0) {
-        userBalance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.amount;
+        userBalance =
+          tokenAccounts.value[0].account.data.parsed.info.tokenAmount.amount;
         console.log("User balance (raw):", userBalance);
       } else {
         console.warn("No token account found for this mint address");
@@ -131,7 +132,7 @@ export default function StakingPoolForm({
         const requiredAmount = formData.rewardAmount;
 
         throw new Error(
-          `Insufficient balance. You have ${balanceInTokens.toFixed(Math.min(decimals, 6))} ${token.name || "tokens"} but need ${requiredAmount} ${token.name || "tokens"} for the reward pool. ${tokenAccounts.value.length === 0 ? "Note: No token account found for this token. You may need to receive some tokens first to create the account." : ""}`
+          `Insufficient balance. You have ${balanceInTokens.toFixed(Math.min(decimals, 6))} ${token.name || "tokens"} but need ${requiredAmount} ${token.name || "tokens"} for the reward pool. ${tokenAccounts.value.length === 0 ? "Note: No token account found for this token. You may need to receive some tokens first to create the account." : ""}`,
         );
       }
 
@@ -166,17 +167,31 @@ export default function StakingPoolForm({
       // The pool state PDA is usually one of the writable accounts
       let poolAddressFromTx: string | null = null;
       if (tx.instructions && tx.instructions.length > 0) {
-        console.log("Extracting pool address from transaction with", tx.instructions.length, "instructions");
+        console.log(
+          "Extracting pool address from transaction with",
+          tx.instructions.length,
+          "instructions",
+        );
         const instruction = tx.instructions[0];
-        console.log("First instruction has", instruction.keys.length, "account keys");
+        console.log(
+          "First instruction has",
+          instruction.keys.length,
+          "account keys",
+        );
 
         // The pool address is typically the first or second account in the instruction
         // We need to find the pool state account (usually a writable non-signer account)
         for (const accountMeta of instruction.keys) {
-          console.log("Account:", accountMeta.pubkey.toBase58(),
-                     "isWritable:", accountMeta.isWritable,
-                     "isSigner:", accountMeta.isSigner,
-                     "isUserWallet:", accountMeta.pubkey.equals(publicKey));
+          console.log(
+            "Account:",
+            accountMeta.pubkey.toBase58(),
+            "isWritable:",
+            accountMeta.isWritable,
+            "isSigner:",
+            accountMeta.isSigner,
+            "isUserWallet:",
+            accountMeta.pubkey.equals(publicKey),
+          );
 
           // Pool state is writable but not a signer, and it's not the user's wallet
           if (
@@ -204,8 +219,8 @@ export default function StakingPoolForm({
       const signedTx = await signTransaction(tx);
       const txId = await connection.sendRawTransaction(signedTx.serialize(), {
         skipPreflight: false,
-        preflightCommitment: 'confirmed',
-        maxRetries: 3
+        preflightCommitment: "confirmed",
+        maxRetries: 3,
       });
 
       console.log("Transaction sent: ", txId);
@@ -245,10 +260,16 @@ export default function StakingPoolForm({
         console.error("Transaction logs:", error.logs);
 
         // Check for common errors in logs
-        if (error.logs.some((log: string) => log.includes("insufficient funds"))) {
-          errorMessage = "Insufficient token balance to create the staking pool. Please ensure you have enough tokens in your wallet.";
-        } else if (error.logs.some((log: string) => log.includes("custom program error"))) {
-          errorMessage = "Program execution failed. Please check your wallet balance and try again.";
+        if (
+          error.logs.some((log: string) => log.includes("insufficient funds"))
+        ) {
+          errorMessage =
+            "Insufficient token balance to create the staking pool. Please ensure you have enough tokens in your wallet.";
+        } else if (
+          error.logs.some((log: string) => log.includes("custom program error"))
+        ) {
+          errorMessage =
+            "Program execution failed. Please check your wallet balance and try again.";
         }
       }
 
@@ -267,7 +288,7 @@ export default function StakingPoolForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-8 pt-4 pb-4 shadow-2xl dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-[3px] border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl lg:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -281,11 +302,11 @@ export default function StakingPoolForm({
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white p-6 dark:bg-[#1B105C]">
+      <div className="mb-6 rounded-2xl bg-white p-4 lg:p-6 dark:bg-[#1B105C]">
         {/* Pool Activation Date and Time */}
         <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+          <div className="mb-1.5 flex items-center gap-1 md:gap-3">
+            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
               </span>
@@ -297,7 +318,7 @@ export default function StakingPoolForm({
               onChange={(e) =>
                 handleInputChange("activationDateTime", e.target.value)
               }
-              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] md:text-[13px] font-bold text-[#190E79] md:max-w-[280px] dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -326,7 +347,7 @@ export default function StakingPoolForm({
         {/* Total Reward Token Amount */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 2.
               </span>
@@ -339,10 +360,10 @@ export default function StakingPoolForm({
                 handleInputChange("rewardAmount", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-40 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-40 dark:bg-[#453DC8] dark:text-white"
               required
             />
-            <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               tokens
             </span>
           </div>
@@ -355,7 +376,7 @@ export default function StakingPoolForm({
         {/* Distribution Length */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 3.
               </span>
@@ -368,10 +389,10 @@ export default function StakingPoolForm({
                 handleInputChange("distributionLength", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-40 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-40 dark:bg-[#453DC8] dark:text-white"
               required
             />
-            <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               days
             </span>
           </div>
@@ -383,8 +404,8 @@ export default function StakingPoolForm({
 
         {/* Unstaking Period */}
         <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+          <div className="mb-1.5 flex items-center gap-1 md:gap-3">
+            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 4.
               </span>
@@ -397,9 +418,9 @@ export default function StakingPoolForm({
                 handleInputChange("unstakingPeriodDays", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-16 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-20 dark:bg-[#453DC8] dark:text-white"
             />
-            <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               days
             </span>
             <input
@@ -409,9 +430,9 @@ export default function StakingPoolForm({
                 handleInputChange("unstakingPeriodHours", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-16 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-20 dark:bg-[#453DC8] dark:text-white"
             />
-            <span className="font-khand text-[13px] font-bold text-[#190E79] dark:text-white">
+            <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               hours
             </span>
           </div>
@@ -452,20 +473,21 @@ export default function StakingPoolForm({
           </ul>
         </div>
 
-        {/* Preview Section */}
         <div className="mt-6">
-          <h3 className="font-khand mb-4 text-2xl font-bold text-[#190E79] dark:text-white">
+          <h3 className="font-khand mb-4 text-xl font-bold text-[#190E79] md:text-2xl dark:text-white">
             PREVIEW YOUR POOL:
           </h3>
           <StakingPoolResult
             token={token}
             formData={formData}
           />
-
-          {/* CREATE POOL Button */}
         </div>
       </div>
-      <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
+
+      {/* Preview Section */}
+      <div className="mt-6">
+        {/* CREATE POOL Button */}
+        <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
         <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
           creation fee: <span className="ml-2"> 12345678 Limas</span>
         </div>
@@ -497,6 +519,7 @@ export default function StakingPoolForm({
           </button>
         </div>
       </div>
+      </div>
 
       {/* Popup overlay */}
       {showPopup && (
@@ -511,7 +534,10 @@ export default function StakingPoolForm({
             className={isClosing ? "animate-scaleOut" : "animate-scaleIn"}
           >
             {showPopup === "success" && (
-              <Success type="stake" poolAddress={createdPoolAddress || undefined} />
+              <Success
+                type="stake"
+                poolAddress={createdPoolAddress || undefined}
+              />
             )}
             {showPopup === "failed" && <Failed />}
             {showPopup === "attention" && <Attention />}

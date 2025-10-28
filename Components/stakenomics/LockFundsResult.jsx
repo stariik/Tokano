@@ -61,7 +61,8 @@ function LockFundsResult({ token, formData }) {
 
   return (
     <div
-      className="dark:border-secondary mx-4 rounded-3xl border-1 border-[#CDCDE9] pb-2 text-[#190E79] lg:mx-0 lg:pb-4 dark:text-white"
+      // className="dark:border-secondary mx-4 rounded-3xl border-1 border-[#CDCDE9] pb-2 text-[#190E79] lg:mx-0 lg:pb-4 dark:text-white"
+      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:pb-12 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -90,7 +91,7 @@ function LockFundsResult({ token, formData }) {
 
             <div className="mt-1 ml-6 pl-1 text-sm sm:text-lg md:ml-12 md:text-base lg:text-base 2xl:text-xl">
               <p>Lock ID: {formatWallet(formData?.recipientWallet)}</p>
-              <p>Token ID: {token?.id || "0x0000...0000"}</p>
+              <p>Token ID: {formatWallet(token?.id)}</p>
             </div>
           </div>
         </div>

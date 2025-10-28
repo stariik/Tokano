@@ -83,7 +83,7 @@ function VestFundsResult({ token, formData }) {
 
             <div className="mt-1 ml-12 pl-1 text-sm md:text-base lg:text-base 2xl:text-xl">
               <p>Vest ID: {formatWallet(formData?.recipientWallet)}</p>
-              <p>Token ID: {token?.id || "0x0000...0000"}</p>
+              <p>Token ID: {formatWallet(token?.id)}</p>
             </div>
           </div>
         </div>
