@@ -17,12 +17,26 @@ export default function VestingTestPage() {
   const { vesting } = useTokano();
   const { fetchTokenInfo } = useTokens();
 
+  const [allVestings, setAllVestings] = useState<VestingStateWithTokenInfo[]>(
+    [],
+  );
   const [vestedAccounts, setVestedAccounts] = useState<
     VestingStateWithTokenInfo[]
   >([]);
   const [userCreatedVestingAccounts, setUserCreatedVestingAccounts] = useState<
     VestingStateWithTokenInfo[]
   >([]);
+
+  const fetchAllVestings = useCallback(async () => {
+    const allVestings = await vesting.fetchAllVestings();
+    const mints = allVestings.map((acc) => acc.tokenMint.toBase58());
+    const tokenInfos = await fetchTokenInfo(mints);
+    const enrichedAccounts = allVestings.map((account) => ({
+      ...account,
+      tokenInfo: tokenInfos[account.tokenMint.toBase58()],
+    }));
+    setAllVestings(enrichedAccounts);
+  }, [fetchTokenInfo, vesting]);
 
   const fetchVestedAccounts = useCallback(async () => {
     if (!publicKey || !vesting) return;
@@ -49,6 +63,9 @@ export default function VestingTestPage() {
   }, [publicKey, vesting, fetchTokenInfo]);
 
   useEffect(() => {
+    if (vesting) {
+      fetchAllVestings();
+    }
     if (publicKey && vesting) {
       fetchVestedAccounts();
       fetchUserCreatedVestingAccounts();
@@ -58,6 +75,7 @@ export default function VestingTestPage() {
     vesting,
     fetchVestedAccounts,
     fetchUserCreatedVestingAccounts,
+    fetchAllVestings,
   ]);
 
   return (

@@ -17,6 +17,7 @@ export default function LockTestPage() {
   const { lock } = useTokano();
   const { fetchTokenInfo } = useTokens();
 
+  const [allLocks, setAllLocks] = useState<LockStateWithTokenInfo[]>([]);
   const [lockedAccounts, setLockedAccounts] = useState<
     LockStateWithTokenInfo[]
   >([]);
@@ -24,6 +25,17 @@ export default function LockTestPage() {
     LockStateWithTokenInfo[]
   >([]);
   const [currentTime, setCurrentTime] = useState(new Date());
+
+  const fetchAllLocks = useCallback(async () => {
+    const allLocks = await lock.fetchAllLocks();
+    const mints = allLocks.map((acc) => acc.tokenMint.toBase58());
+    const tokenInfos = await fetchTokenInfo(mints);
+    const enrichedAccounts = allLocks.map((account) => ({
+      ...account,
+      tokenInfo: tokenInfos[account.tokenMint.toBase58()],
+    }));
+    setAllLocks(enrichedAccounts);
+  }, [fetchTokenInfo, lock]);
 
   const fetchLockedAccounts = useCallback(async () => {
     if (!publicKey || !lock) return;
