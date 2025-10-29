@@ -7,8 +7,28 @@ import { StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 
-function VestCard({ id, title, created, marketCap, wallet }) {
+function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecimals }) {
   const { resolvedTheme } = useTheme();
+
+  const shortenAddress = (address) => {
+    if (!address || address.length < 12) return address;
+    return `${address.slice(0, 4)}...${address.slice(-4)}`;
+  };
+
+  // Format amount with proper decimals
+  const formatAmount = (amount, decimals = 9) => {
+    if (!amount) return "0";
+    const amountNum = typeof amount === 'number' ? amount : Number(amount);
+    const value = amountNum / Math.pow(10, decimals);
+
+    if (value >= 1000000) {
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else if (value >= 1000) {
+      return `${(value / 1000).toFixed(1)}K`;
+    }
+    return value.toFixed(2);
+  };
+
   const VestIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +62,7 @@ function VestCard({ id, title, created, marketCap, wallet }) {
 
   return (
     <Link
-      href={`/card/vest`}
+      href={wallet ? `/card/vest?vest=${wallet}` : `/card/vest`}
       className="font-khand text-primary block rounded-4xl font-semibold transition hover:opacity-90 dark:text-white"
       style={{
         background:
@@ -75,10 +95,10 @@ function VestCard({ id, title, created, marketCap, wallet }) {
           </div>
           <div className="font-khand mt-2 pr-4 text-right text-sm font-normal xl:text-base 2xl:text-lg">
             <p>
-              <span className="font-semibold">Pool ID: </span> {wallet}
+              <span className="font-semibold">Pool ID: </span> {shortenAddress(wallet)}
             </p>
             <p>
-              <span className="font-semibold">Token ID: </span> {created}
+              <span className="font-semibold">Token ID: </span> {shortenAddress(created)}
             </p>
           </div>
         </div>
@@ -119,7 +139,9 @@ function VestCard({ id, title, created, marketCap, wallet }) {
 
           {/*  */}
         </div>
-        <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">120M</p>
+        <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">
+          {vestData?.totalVestedAmount ? formatAmount(vestData.totalVestedAmount, tokenDecimals) : "0"}
+        </p>
       </div>
       <div className="flex items-center justify-end gap-2 pr-4 pb-2 xl:gap-6">
         <div

@@ -9,23 +9,37 @@ import { useTokens } from "@/contexts/tokens-context";
 
 function Live() {
   const { resolvedTheme } = useTheme();
-  const { staking } = useTokano();
+  const { staking, vesting, lock } = useTokano();
   const { fetchTokenInfo } = useTokens();
   const [stakePools, setStakePools] = useState([]);
+  const [vestings, setVestings] = useState([]);
+  const [locks, setLocks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchStakingPools = useCallback(async () => {
-    if (!staking) return;
+  const fetchAllData = useCallback(async () => {
+    if (!staking || !vesting || !lock) return;
 
     setLoading(true);
     try {
-      const pools = await staking.fetchStakePools();
+      // Fetch all data in parallel
+      const [pools, vestingData, lockData] = await Promise.all([
+        staking.fetchStakePools(),
+        vesting.fetchAllVestings(),
+        lock.fetchAllLocks(),
+      ]);
 
-      // Fetch token info for all pools
-      const mints = pools.map((p) => p.tokenMint.toBase58());
-      const tokenInfos = await fetchTokenInfo(mints);
+      // Collect all unique token mints
+      const allMints = [
+        ...pools.map((p) => p.tokenMint.toBase58()),
+        ...vestingData.map((v) => v.tokenMint.toBase58()),
+        ...lockData.map((l) => l.tokenMint.toBase58()),
+      ];
+      const uniqueMints = [...new Set(allMints)];
 
-      // Enrich pools with token info and sort by start timestamp (newest first)
+      // Fetch token info for all mints
+      const tokenInfos = await fetchTokenInfo(uniqueMints);
+
+      // Enrich and sort staking pools by start timestamp (newest first)
       const enrichedPools = pools
         .map((pool) => ({
           ...pool,
@@ -33,18 +47,39 @@ function Live() {
         }))
         .sort((a, b) => b.startTimestamp.getTime() - a.startTimestamp.getTime());
 
+      // Enrich and sort vestings by start time (newest first)
+      const enrichedVestings = vestingData
+        .map((vest) => ({
+          ...vest,
+          tokenInfo: tokenInfos[vest.tokenMint.toBase58()],
+        }))
+        .sort((a, b) => b.startTime.getTime() - a.startTime.getTime());
+
+      // Enrich and sort locks by unlock time (newest first)
+      const enrichedLocks = lockData
+        .map((lockItem) => ({
+          ...lockItem,
+          tokenInfo: tokenInfos[lockItem.tokenMint.toBase58()],
+        }))
+        .sort((a, b) => b.unlockTime.getTime() - a.unlockTime.getTime());
+
       setStakePools(enrichedPools);
+      setVestings(enrichedVestings);
+      setLocks(enrichedLocks);
+
       console.log("Fetched staking pools:", enrichedPools);
+      console.log("Fetched vestings:", enrichedVestings);
+      console.log("Fetched locks:", enrichedLocks);
     } catch (error) {
-      console.error("Error fetching staking pools:", error);
+      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
-  }, [staking, fetchTokenInfo]);
+  }, [staking, vesting, lock, fetchTokenInfo]);
 
   useEffect(() => {
-    fetchStakingPools();
-  }, [fetchStakingPools]);
+    fetchAllData();
+  }, [fetchAllData]);
 
   return (
     <div className="dark:border-secondary mx-auto flex max-h-352 lg:max-h-332 overflow-hidden border-2 border-[#CDCDE9] lg:mx-0 xl:max-h-359 2xl:max-h-378">
@@ -62,10 +97,14 @@ function Live() {
         </div>
         {loading ? (
           <div className="flex items-center justify-center p-8 text-center">
-            Loading live pools...
+            Loading live data...
           </div>
         ) : (
-          <ScrollingCards cards={cardData} stakePools={stakePools} />
+          <ScrollingCards
+            stakePools={stakePools}
+            vestings={vestings}
+            locks={locks}
+          />
         )}
       </div>
     </div>

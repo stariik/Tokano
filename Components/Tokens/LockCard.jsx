@@ -7,8 +7,28 @@ import { StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 
-function LockCard({ id, title, created, marketCap, wallet }) {
+function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecimals }) {
   const { resolvedTheme } = useTheme();
+
+  const shortenAddress = (address) => {
+    if (!address || address.length < 12) return address;
+    return `${address.slice(0, 4)}...${address.slice(-4)}`;
+  };
+
+  // Format amount with proper decimals
+  const formatAmount = (amount, decimals = 9) => {
+    if (!amount) return "0";
+    const amountNum = typeof amount === 'number' ? amount : Number(amount);
+    const value = amountNum / Math.pow(10, decimals);
+
+    if (value >= 1000000) {
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else if (value >= 1000) {
+      return `${(value / 1000).toFixed(1)}K`;
+    }
+    return value.toFixed(2);
+  };
+
   const StakeIcon = () => (
     <svg
       className="h-[47px] w-[47px] lg:h-[50px] lg:w-[50px] xl:h-[57px] xl:w-[57px]"
@@ -49,7 +69,7 @@ function LockCard({ id, title, created, marketCap, wallet }) {
 
   return (
     <Link
-      href={`/card/lock`}
+      href={wallet ? `/card/lock?lock=${wallet}` : `/card/lock`}
       className="font-khand text-primary block rounded-4xl font-semibold dark:text-white"
       style={{
         background:
@@ -82,10 +102,10 @@ function LockCard({ id, title, created, marketCap, wallet }) {
           </div>
           <div className="font-khand mt-2 pr-4 text-right font-normal">
             <p>
-              <span className="font-semibold">Pool ID: </span> {wallet}
+              <span className="font-semibold">Pool ID: </span> {shortenAddress(wallet)}
             </p>
             <p>
-              <span className="font-semibold">Token ID: </span> {created}
+              <span className="font-semibold">Token ID: </span> {shortenAddress(created)}
             </p>
           </div>
         </div>
@@ -126,7 +146,9 @@ function LockCard({ id, title, created, marketCap, wallet }) {
           </div>
           {/*  */}
         </div>
-        <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">120M</p>
+        <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">
+          {lockData?.lockAmount ? formatAmount(lockData.lockAmount, tokenDecimals) : "0"}
+        </p>
       </div>
       <div className="flex items-center justify-end gap-6 pr-4 pb-2">
         <p className="text-lg text-white">locked</p>

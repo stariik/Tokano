@@ -14,6 +14,14 @@ function Vest({ vestData, vestAddress }) {
   const { fetchTokenInfo } = useTokens();
   const [tokenInfo, setTokenInfo] = useState(null);
 
+  // Debug logging
+  useEffect(() => {
+    console.log("=== VEST DATA DEBUG ===");
+    console.log("vestData:", vestData);
+    console.log("vestData keys:", vestData ? Object.keys(vestData) : "null");
+    console.log("vestAddress:", vestAddress);
+  }, [vestData, vestAddress]);
+
   useEffect(() => {
     const loadTokenInfo = async () => {
       if (vestData?.tokenMint) {
@@ -28,7 +36,7 @@ function Vest({ vestData, vestAddress }) {
   // Format timestamp to DD.MM.YY/HH:MM
   const formatTimestamp = (timestamp) => {
     if (!timestamp) return "N/A";
-    const date = new Date(typeof timestamp === 'number' ? timestamp * 1000 : timestamp);
+    const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = String(date.getFullYear()).slice(-2);
@@ -45,25 +53,27 @@ function Vest({ vestData, vestAddress }) {
   };
 
   // Calculate time remaining or progress
-  const getVestingProgress = (startTime, duration) => {
-    if (!startTime || !duration) return "N/A";
-    const now = Date.now() / 1000;
-    const startTimestamp = typeof startTime === 'number' ? startTime : startTime.toNumber();
-    const durationSeconds = typeof duration === 'number' ? duration : duration.toNumber();
-    const endTimestamp = startTimestamp + durationSeconds;
+  const getVestingProgress = (startTime, endTime) => {
+    if (!startTime || !endTime) return "N/A";
+    const now = Date.now();
+    const startDate = startTime instanceof Date ? startTime : new Date(startTime);
+    const endDate = endTime instanceof Date ? endTime : new Date(endTime);
+    const startTimestamp = startDate.getTime();
+    const endTimestamp = endDate.getTime();
 
     if (now < startTimestamp) return "Not started";
     if (now >= endTimestamp) return "Completed";
 
     const elapsed = now - startTimestamp;
-    const progress = (elapsed / durationSeconds) * 100;
+    const duration = endTimestamp - startTimestamp;
+    const progress = (elapsed / duration) * 100;
     return `${progress.toFixed(1)}% vested`;
   };
 
   // Format amount with decimals
   const formatAmount = (amount, decimals = 6) => {
     if (!amount) return "0";
-    const amountNum = typeof amount === 'number' ? amount : amount.toNumber();
+    const amountNum = typeof amount === 'number' ? amount : Number(amount);
     return (amountNum / Math.pow(10, decimals)).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 6
@@ -143,7 +153,7 @@ function Vest({ vestData, vestAddress }) {
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
               <p>Vest ID: {formatAddress(vestAddress)}</p>
-              <p>Receiver: {formatAddress(vestData?.receiver)}</p>
+              <p>Receiver: {formatAddress(vestData?.receiverUser)}</p>
               <p>Token ID: {formatAddress(vestData?.tokenMint)}</p>
               <p>Market cap: {tokenInfo?.mcap ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K` : "N/A"}</p>
             </div>
@@ -155,7 +165,7 @@ function Vest({ vestData, vestAddress }) {
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
-            {vestData?.startTimestamp ? formatTimestamp(vestData.startTimestamp) : "N/A"}
+            {vestData?.startTime ? formatTimestamp(vestData.startTime) : "N/A"}
           </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
@@ -178,8 +188,8 @@ function Vest({ vestData, vestAddress }) {
                     : "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>START: {vestData?.startTimestamp ? formatTimestamp(vestData.startTimestamp) : "N/A"}</div>
-              <div>STATUS: {vestData ? getVestingProgress(vestData.startTimestamp, vestData.vestingDuration) : "N/A"}</div>
+              <div>START: {vestData?.startTime ? formatTimestamp(vestData.startTime) : "N/A"}</div>
+              <div>STATUS: {vestData ? getVestingProgress(vestData.startTime, vestData.endTime) : "N/A"}</div>
             </div>
 
             <div
@@ -192,13 +202,13 @@ function Vest({ vestData, vestAddress }) {
               }}
             >
               <div>SCHEDULE: {vestData?.scheduleType || "N/A"}</div>
-              <div>DURATION: {vestData?.vestingDuration ? `${Math.floor(vestData.vestingDuration.toNumber() / (24 * 60 * 60))}d` : "N/A"}</div>
+              <div>DURATION: {vestData?.startTime && vestData?.endTime ? `${Math.floor((new Date(vestData.endTime).getTime() - new Date(vestData.startTime).getTime()) / (24 * 60 * 60 * 1000))}d` : "N/A"}</div>
             </div>
           </div>
         </div>
 
         <div className="font-khand mt-14 mr-4 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-16 lg:text-3xl">
-          {vestData?.totalAmount ? formatAmount(vestData.totalAmount, tokenInfo?.decimals || 6) : "0"}
+          {vestData?.totalVestedAmount ? formatAmount(vestData.totalVestedAmount, tokenInfo?.decimals || 6) : "0"}
         </div>
       </div>
 

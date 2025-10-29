@@ -3,9 +3,8 @@ import "@/Components/Live/styles/scrollbar.css";
 import StakeCard from "../../Tokens/StakeCard";
 import VestCard from "@/Components/Tokens/VestCard";
 import LockCard from "@/Components/Tokens/LockCard";
-import SoonCard from "@/Components/Tokens/SoonCard";
 
-function ScrollingCards({ cards, stakePools = [] }) {
+function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
   // Format timestamp to DD.MM.YY/HH:MM
   const formatTimestamp = (timestamp) => {
     if (!timestamp) return "N/A";
@@ -20,7 +19,7 @@ function ScrollingCards({ cards, stakePools = [] }) {
 
   return (
     <div className="custom-scroll flex-1 min-h-0 space-y-2 overflow-y-auto px-2 xl:px-4">
-      {/* Real staking pool cards - moved to top */}
+      {/* Real staking pool cards */}
       {stakePools.map((pool, index) => {
         const tokenName = pool.tokenInfo?.name || "Unknown Token";
         const tokenSymbol = pool.tokenInfo?.symbol || "N/A";
@@ -48,23 +47,60 @@ function ScrollingCards({ cards, stakePools = [] }) {
         );
       })}
 
-      {/* Keep demo Vest and Lock cards - moved to bottom */}
-      {cards.map((item) => (
-        <React.Fragment key={`demo-${item.id}`}>
+      {/* Real vesting cards */}
+      {vestings.map((vest, index) => {
+        const tokenName = vest.tokenInfo?.name || "Unknown Token";
+        const tokenSymbol = vest.tokenInfo?.symbol || "N/A";
+        const title = `${tokenName} (${tokenSymbol})`;
+        const created = vest.address.toBase58();
+        const marketCap = vest.tokenInfo?.mcap
+          ? `$${(vest.tokenInfo.mcap / 1000).toFixed(1)}K`
+          : "N/A";
+        const wallet = vest.address.toBase58();
+        const tokenDecimals = vest.tokenInfo?.decimals || 9;
+
+        return (
           <VestCard
-            title={item.title}
-            created={item.created}
-            marketCap={item.marketCap}
-            wallet={item.wallet}
+            key={`vest-${vest.address.toBase58()}`}
+            title={title}
+            created={created}
+            marketCap={marketCap}
+            wallet={wallet}
+            variant="live"
+            vestTimestamp={formatTimestamp(vest.startTime)}
+            vestEndTimestamp={formatTimestamp(vest.endTime)}
+            vestData={vest}
+            tokenDecimals={tokenDecimals}
           />
+        );
+      })}
+
+      {/* Real lock cards */}
+      {locks.map((lockItem, index) => {
+        const tokenName = lockItem.tokenInfo?.name || "Unknown Token";
+        const tokenSymbol = lockItem.tokenInfo?.symbol || "N/A";
+        const title = `${tokenName} (${tokenSymbol})`;
+        const created = lockItem.address.toBase58();
+        const marketCap = lockItem.tokenInfo?.mcap
+          ? `$${(lockItem.tokenInfo.mcap / 1000).toFixed(1)}K`
+          : "N/A";
+        const wallet = lockItem.address.toBase58();
+        const tokenDecimals = lockItem.tokenInfo?.decimals || 9;
+
+        return (
           <LockCard
-            title={item.title}
-            created={item.created}
-            marketCap={item.marketCap}
-            wallet={item.wallet}
+            key={`lock-${lockItem.address.toBase58()}`}
+            title={title}
+            created={created}
+            marketCap={marketCap}
+            wallet={wallet}
+            variant="live"
+            lockTimestamp={formatTimestamp(lockItem.unlockTime)}
+            lockData={lockItem}
+            tokenDecimals={tokenDecimals}
           />
-        </React.Fragment>
-      ))}
+        );
+      })}
     </div>
   );
 }

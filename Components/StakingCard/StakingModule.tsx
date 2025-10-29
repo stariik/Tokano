@@ -15,6 +15,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
   const { connection } = useConnection();
   const { staking } = useTokano();
   const [userBalance, setUserBalance] = useState(0);
+  const [userStakedAmount, setUserStakedAmount] = useState(0);
   const [stakeAmount, setStakeAmount] = useState("");
   const [isStaking, setIsStaking] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,6 +24,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
   useEffect(() => {
     if (publicKey && pool) {
       fetchUserBalance();
+      fetchUserStakedAmount();
     }
   }, [publicKey, pool]);
 
@@ -46,6 +48,31 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
     } catch (error) {
       console.error("Error fetching user balance:", error);
       setUserBalance(0);
+    }
+  };
+
+  const fetchUserStakedAmount = async () => {
+    try {
+      if (!publicKey || !pool?.poolAddress || !staking) return;
+
+      // Ensure pool.poolAddress is a PublicKey
+      const poolAddress = pool.poolAddress instanceof PublicKey
+        ? pool.poolAddress
+        : new PublicKey(pool.poolAddress);
+
+      // Fetch user stake accounts for this specific pool using SDK method
+      const poolStakes = await staking.fetchUserStakeAccountsForPool(publicKey, poolAddress);
+
+      const decimals = pool.tokenInfo?.decimals || 9;
+      const totalStaked = poolStakes.reduce((sum: number, stake: any) => {
+        const amount = stake.stakedTokenBalance ? stake.stakedTokenBalance.toNumber() : 0;
+        return sum + amount;
+      }, 0);
+
+      setUserStakedAmount(totalStaked / Math.pow(10, decimals));
+    } catch (error) {
+      console.error("Error fetching user staked amount:", error);
+      setUserStakedAmount(0);
     }
   };
 
@@ -88,7 +115,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
         userStakeAccount: userStakeAccount,
       });
 
-      // Set recent blockhash and fee payer
+      // Set recent blockhash and fee payer (required by SDK)
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
@@ -123,6 +150,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
 
       // After successful stake, refresh balance and pool data
       await fetchUserBalance();
+      await fetchUserStakedAmount();
       setStakeAmount("");
 
       // Notify parent component to refresh pool data
@@ -271,7 +299,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       </div>
 
       <div className="font-khand dark:border-secondary flex items-center justify-end gap-8 border-t-2 border-[#CDCDE9] bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 pr-8 text-xs font-semibold text-white md:gap-16 md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
-        You are Staking: {pool?.userStakedAmount ? Number(pool.userStakedAmount).toLocaleString() : "0"}
+        You are Staking: {userStakedAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 
         <button
           onClick={handleStake}

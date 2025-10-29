@@ -14,6 +14,14 @@ function Lock({ lockData, lockAddress }) {
   const { fetchTokenInfo } = useTokens();
   const [tokenInfo, setTokenInfo] = useState(null);
 
+  // Debug logging
+  useEffect(() => {
+    console.log("=== LOCK DATA DEBUG ===");
+    console.log("lockData:", lockData);
+    console.log("lockData keys:", lockData ? Object.keys(lockData) : "null");
+    console.log("lockAddress:", lockAddress);
+  }, [lockData, lockAddress]);
+
   useEffect(() => {
     const loadTokenInfo = async () => {
       if (lockData?.tokenMint) {
@@ -28,7 +36,7 @@ function Lock({ lockData, lockAddress }) {
   // Format timestamp to DD.MM.YY/HH:MM
   const formatTimestamp = (timestamp) => {
     if (!timestamp) return "N/A";
-    const date = new Date(typeof timestamp === 'number' ? timestamp * 1000 : timestamp);
+    const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = String(date.getFullYear()).slice(-2);
@@ -47,9 +55,9 @@ function Lock({ lockData, lockAddress }) {
   // Calculate time remaining
   const getTimeRemaining = (unlockTime) => {
     if (!unlockTime) return "N/A";
-    const now = Date.now() / 1000;
-    const unlockTimestamp = typeof unlockTime === 'number' ? unlockTime : unlockTime.toNumber();
-    const diff = unlockTimestamp - now;
+    const now = Date.now();
+    const unlockDate = unlockTime instanceof Date ? unlockTime : new Date(unlockTime);
+    const diff = (unlockDate.getTime() - now) / 1000;
 
     if (diff <= 0) return "Unlocked";
 
@@ -61,7 +69,7 @@ function Lock({ lockData, lockAddress }) {
   // Format amount with decimals
   const formatAmount = (amount, decimals = 6) => {
     if (!amount) return "0";
-    const amountNum = typeof amount === 'number' ? amount : amount.toNumber();
+    const amountNum = typeof amount === 'number' ? amount : Number(amount);
     return (amountNum / Math.pow(10, decimals)).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 6
@@ -148,7 +156,7 @@ function Lock({ lockData, lockAddress }) {
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
               <p>Lock ID: {formatAddress(lockAddress)}</p>
-              <p>Receiver: {formatAddress(lockData?.receiver)}</p>
+              <p>Receiver: {formatAddress(lockData?.receiverUser)}</p>
               <p>Token ID: {formatAddress(lockData?.tokenMint)}</p>
               <p>Market cap: {tokenInfo?.mcap ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K` : "N/A"}</p>
             </div>
@@ -160,7 +168,7 @@ function Lock({ lockData, lockAddress }) {
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
-            {lockData?.releaseTime ? formatTimestamp(lockData.releaseTime) : "N/A"}
+            {lockData?.unlockTime ? formatTimestamp(lockData.unlockTime) : "N/A"}
           </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
@@ -182,14 +190,14 @@ function Lock({ lockData, lockAddress }) {
                     : "linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>LOCKED: {lockData?.createdAt ? formatTimestamp(lockData.createdAt) : "N/A"}</div>
-              <div>UNLOCKS: {lockData?.releaseTime ? getTimeRemaining(lockData.releaseTime) : "N/A"}</div>
+              <div>LOCKED: {lockData?.lastUpdateTime ? formatTimestamp(lockData.lastUpdateTime) : "N/A"}</div>
+              <div>UNLOCKS: {lockData?.unlockTime ? getTimeRemaining(lockData.unlockTime) : "N/A"}</div>
             </div>
           </div>
         </div>
 
         <div className="font-khand mt-9 mr-2 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-10 lg:text-3xl">
-          {lockData?.amount ? formatAmount(lockData.amount, tokenInfo?.decimals || 6) : "0"}
+          {lockData?.lockAmount ? formatAmount(lockData.lockAmount, tokenInfo?.decimals || 6) : "0"}
         </div>
       </div>
 

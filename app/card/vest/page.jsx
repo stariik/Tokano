@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import Vest from "./Vest";
@@ -10,7 +9,7 @@ import RightMenu from "@/Components/RightMenu/RightMenu";
 
 function VestPageContent() {
   const searchParams = useSearchParams();
-  const vestAddress = searchParams.get("pool");
+  const vestAddress = searchParams.get("vest");
   const { connection } = useConnection();
   const { publicKey } = useWallet();
   const { vesting } = useTokano();
@@ -23,8 +22,9 @@ function VestPageContent() {
 
     setLoading(true);
     try {
-      const vestPubkey = new PublicKey(vestAddress);
-      const data = await vesting.fetchVestingAccount(vestPubkey);
+      // Fetch all vestings and find the one matching the address
+      const allVestings = await vesting.fetchAllVestings();
+      const data = allVestings.find(v => v.address.toBase58() === vestAddress);
       setVestData(data);
       console.log("Vest data fetched:", data);
     } catch (error) {

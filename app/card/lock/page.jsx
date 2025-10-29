@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import Lock from "./Lock";
@@ -10,7 +9,7 @@ import RightMenu from "@/Components/RightMenu/RightMenu";
 
 function LockPageContent() {
   const searchParams = useSearchParams();
-  const lockAddress = searchParams.get("pool");
+  const lockAddress = searchParams.get("lock");
   const { connection } = useConnection();
   const { publicKey } = useWallet();
   const { lock } = useTokano();
@@ -23,8 +22,9 @@ function LockPageContent() {
 
     setLoading(true);
     try {
-      const lockPubkey = new PublicKey(lockAddress);
-      const data = await lock.fetchLockAccount(lockPubkey);
+      // Fetch all locks and find the one matching the address
+      const allLocks = await lock.fetchAllLocks();
+      const data = allLocks.find(l => l.address.toBase58() === lockAddress);
       setLockData(data);
       console.log("Lock data fetched:", data);
     } catch (error) {
