@@ -14,24 +14,31 @@ function page() {
   const [selectedWalletTokenIndex, setSelectedWalletTokenIndex] = useState(0);
 
   // Use real wallet tokens if available, otherwise use mock tokens
-  const useWalletTokens = loadState === BalanceLoadState.LOADED && walletTokens.length > 0;
+  const useWalletTokens =
+    loadState === BalanceLoadState.LOADED && walletTokens.length > 0;
 
   // Filter out SOL from available tokens for fund operations
-  const availableTokens = walletTokens.filter((token) => token.mintAddress !== SOL_MINT);
+  const availableTokens = walletTokens.filter(
+    (token) => token.mintAddress !== SOL_MINT,
+  );
 
-  const selectedTokenData = useWalletTokens && availableTokens.length > 0
-    ? {
-        ...availableTokens[selectedWalletTokenIndex],
-        id: availableTokens[selectedWalletTokenIndex].mintAddress,
-        name: availableTokens[selectedWalletTokenIndex].info?.name || "Unknown Token",
-        tokenId: availableTokens[selectedWalletTokenIndex].mintAddress,
-        ticker: availableTokens[selectedWalletTokenIndex].info?.symbol || "N/A",
-        balance: availableTokens[selectedWalletTokenIndex].amount,
-      }
-    : getTokenById(selectedToken);
+  const selectedTokenData =
+    useWalletTokens && availableTokens.length > 0
+      ? {
+          ...availableTokens[selectedWalletTokenIndex],
+          id: availableTokens[selectedWalletTokenIndex].mintAddress,
+          name:
+            availableTokens[selectedWalletTokenIndex].info?.name ||
+            "Unknown Token",
+          tokenId: availableTokens[selectedWalletTokenIndex].mintAddress,
+          ticker:
+            availableTokens[selectedWalletTokenIndex].info?.symbol || "N/A",
+          balance: availableTokens[selectedWalletTokenIndex].amount,
+        }
+      : getTokenById(selectedToken);
 
   return (
-    <div className="mx-auto flex justify-center lg:justify-between gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">
+    <div className="mx-auto flex justify-center gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:justify-between lg:py-6 2xl:gap-4 2xl:px-2">
       <div className="max-w-120">
         <TokenGrid
           gridCols="grid-cols-2"
@@ -48,7 +55,9 @@ function page() {
           selectedTokenData={selectedTokenData}
         />
       </div>
-      <RightMenu />
+      <div className="max-w-120 relative">
+        <RightMenu />
+      </div>
     </div>
   );
 }

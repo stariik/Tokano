@@ -23,11 +23,11 @@ function Success({ poolAddress, type = "stake" }: SuccessProps) {
   };
 
   return (
-    <div className="py relative flex max-w-md items-center justify-center rounded-full border-4 border-gray-200 bg-white px-8 shadow-lg">
+    <div className="py relative flex max-w-md items-center justify-center rounded-full border-4 border-gray-200 bg-white/80 backdrop-blur-sm px-8 shadow-lg">
       <h2 className="font-khand mr-4 text-xl font-bold text-black md:text-3xl">
         SUCCESS!
       </h2>
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/80">
         <MdOutlineDone
           size={60}
           color="green"

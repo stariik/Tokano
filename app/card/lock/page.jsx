@@ -24,7 +24,7 @@ function LockPageContent() {
     try {
       // Fetch all locks and find the one matching the address
       const allLocks = await lock.fetchAllLocks();
-      const data = allLocks.find(l => l.address.toBase58() === lockAddress);
+      const data = allLocks.find((l) => l.address.toBase58() === lockAddress);
       setLockData(data);
       console.log("Lock data fetched:", data);
     } catch (error) {
@@ -50,10 +50,15 @@ function LockPageContent() {
         {loading ? (
           <div className="p-8 text-center">Loading lock data...</div>
         ) : (
-          <Lock lockData={lockData} lockAddress={lockAddress} />
+          <Lock
+            lockData={lockData}
+            lockAddress={lockAddress}
+          />
         )}
       </div>
-      <RightMenu />
+      <div className="relative max-w-120">
+        <RightMenu />
+      </div>
     </div>
   );
 }

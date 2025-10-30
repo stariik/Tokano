@@ -24,7 +24,9 @@ function page() {
 
         <StakingScroll selectedTokenIndex={selectedTokenIndex} />
       </div>
-      <RightMenu />
+      <div className="max-w-120 relative">
+        <RightMenu />
+      </div>
     </div>
   );
 }

@@ -24,7 +24,9 @@ function VestPageContent() {
     try {
       // Fetch all vestings and find the one matching the address
       const allVestings = await vesting.fetchAllVestings();
-      const data = allVestings.find(v => v.address.toBase58() === vestAddress);
+      const data = allVestings.find(
+        (v) => v.address.toBase58() === vestAddress,
+      );
       setVestData(data);
       console.log("Vest data fetched:", data);
     } catch (error) {
@@ -50,10 +52,15 @@ function VestPageContent() {
         {loading ? (
           <div className="p-8 text-center">Loading vest data...</div>
         ) : (
-          <Vest vestData={vestData} vestAddress={vestAddress} />
+          <Vest
+            vestData={vestData}
+            vestAddress={vestAddress}
+          />
         )}
       </div>
-      <RightMenu />
+      <div className="relative max-w-120">
+        <RightMenu />
+      </div>
     </div>
   );
 }

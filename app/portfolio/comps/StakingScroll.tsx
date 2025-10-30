@@ -530,6 +530,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                   created={selectedToken.mintAddress}
                   marketCap={`${vestedAmount.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
                   wallet={vest.receiver?.toBase58() || "N/A"}
+                  vestData={vest}
+                  tokenDecimals={decimals}
                 />
               </div>
             );
@@ -553,6 +555,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                   created={selectedToken.mintAddress}
                   marketCap={`${lockedAmount.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
                   wallet={lockItem.receiver?.toBase58() || "N/A"}
+                  lockData={lockItem}
+                  tokenDecimals={decimals}
                 />
               </div>
             );

@@ -76,7 +76,9 @@ function StakePageContent() {
             Loading pool data...
           </div>
         </div>
-        <RightMenu />
+        <div className="relative max-w-120">
+          <RightMenu />
+        </div>
       </div>
     );
   }
@@ -96,7 +98,9 @@ function StakePageContent() {
             {error || "Pool not found. Please check the URL."}
           </div>
         </div>
-        <RightMenu />
+        <div className="relative max-w-120">
+          <RightMenu />
+        </div>
       </div>
     );
   }
@@ -124,7 +128,9 @@ function StakePageContent() {
           <Details />
         </div>
       </div>
-      <RightMenu />
+      <div className="relative max-w-120">
+        <RightMenu />
+      </div>
     </div>
   );
 }
@@ -145,7 +151,9 @@ export default function StakePage() {
               Loading...
             </div>
           </div>
-          <RightMenu />
+          <div className="relative max-w-120">
+            <RightMenu />
+          </div>
         </div>
       }
     >

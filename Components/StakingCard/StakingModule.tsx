@@ -262,7 +262,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
                   placeholder="0.00"
-                  className="font-khand mb-4 border-b-1 border-white/40 text-xs font-semibold md:text-lg 2xl:text-2xl bg-transparent text-center w-32 outline-none"
+                  className="font-khand mb-4 border-b-1 border-white/40 text-xs font-semibold md:text-lg 2xl:text-2xl bg-transparent text-center w-32 outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   disabled={isStaking || !publicKey}
                 />
                 {/* <div className="hidden md:block absolute bottom-5 right-0 h-[1px] bg-white/40 w-38" /> */}

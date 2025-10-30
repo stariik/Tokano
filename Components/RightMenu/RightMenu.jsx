@@ -21,7 +21,7 @@ function RightMenu() {
   }, [show]);
 
   return (
-    <div className="font-khand font-normal 2xl:flex 2xl:justify-end">
+    <div className="font-khand font-normal 2xl:flex 2xl:justify-end ">
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;

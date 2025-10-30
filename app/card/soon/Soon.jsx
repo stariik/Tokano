@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
+import { LuCopy } from "react-icons/lu";
 import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -10,6 +11,14 @@ import { CiPill } from "react-icons/ci";
 
 function Soon() {
   const { resolvedTheme } = useTheme();
+  const [copiedField, setCopiedField] = useState(null);
+
+  // Copy to clipboard function
+  const copyToClipboard = (text, fieldName) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(fieldName);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
   const StakeIcon = () => (
     <svg
       className="h-full w-[47px] lg:w-[70px]"
@@ -81,9 +90,39 @@ function Soon() {
             </h1>
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-lg xl:text-xl">
-              <p>Pool ID: 0x4v49...hssdas</p>
-              <p>Creator: Anonymouse</p>
-              <p>Token ID: 0x4v49...hssdas</p>
+              <p className="flex items-center gap-2">
+                Pool ID: 0x4v49...hssdas
+                <LuCopy
+                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
+                  onClick={() => copyToClipboard("0x4v49hssdas", "poolId")}
+                  title="Copy Pool ID"
+                />
+                {copiedField === "poolId" && (
+                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                )}
+              </p>
+              <p className="flex items-center gap-2">
+                Creator: Anonymouse
+                <LuCopy
+                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
+                  onClick={() => copyToClipboard("Anonymouse", "creator")}
+                  title="Copy Creator"
+                />
+                {copiedField === "creator" && (
+                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                )}
+              </p>
+              <p className="flex items-center gap-2">
+                Token ID: 0x4v49...hssdas
+                <LuCopy
+                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
+                  onClick={() => copyToClipboard("0x4v49hssdas", "tokenId")}
+                  title="Copy Token ID"
+                />
+                {copiedField === "tokenId" && (
+                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                )}
+              </p>
               <p>Market cap: $4.3K</p>
             </div>
           </div>

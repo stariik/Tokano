@@ -189,24 +189,20 @@ function Navbar() {
   };
 
   const cycleTheme = () => {
-    const themes = ["system", "light", "dark"];
-    const currentIndex = themes.indexOf(theme);
-    const nextIndex = (currentIndex + 1) % themes.length;
-    const nextTheme = themes[nextIndex];
-    console.log("Changing theme from", theme, "to", nextTheme);
+    // Only toggle between light and dark (no system option for user)
+    const nextTheme = resolvedTheme === "dark" ? "light" : "dark";
+    console.log("Changing theme from", resolvedTheme, "to", nextTheme);
     setTheme(nextTheme);
   };
 
   const getThemeIcon = () => {
-    switch (theme) {
-      case "light":
-        return "☀️";
-      case "dark":
-        return "🌙";
-      case "system":
-      default:
-        return "💻";
-    }
+    // Show icon based on resolved theme (what's actually displayed)
+    return resolvedTheme === "dark" ? "🌙" : "☀️";
+  };
+
+  const getThemeLabel = () => {
+    // Show label based on resolved theme
+    return resolvedTheme === "dark" ? "Dark" : "Light";
   };
 
   const shortKey = publicKey
@@ -279,10 +275,10 @@ function Navbar() {
             <button
               onClick={cycleTheme}
               className="flex cursor-pointer items-center gap-1 rounded-lg border border-gray-400 px-2 py-1 text-xs transition hover:opacity-70 dark:border-gray-500"
-              title={`Current: ${theme} mode. Click to change`}
+              title={`Current: ${getThemeLabel()} mode. Click to toggle`}
             >
               <span className="text-base">{getThemeIcon()}</span>
-              <span className="capitalize">{theme}</span>
+              <span>{getThemeLabel()}</span>
             </button>
             <button
               onClick={handleWalletButtonClick}
@@ -372,10 +368,10 @@ function Navbar() {
           <button
             onClick={cycleTheme}
             className="dark:border-secondary ml-12 flex cursor-pointer items-center gap-2 rounded-lg border border-[#CDCDE9] px-3 py-2 text-sm transition hover:opacity-70"
-            title={`Current: ${theme} mode. Click to change`}
+            title={`Current: ${getThemeLabel()} mode. Click to toggle`}
           >
             <span className="text-xl">{getThemeIcon()}</span>
-            <span className="capitalize">{theme}</span>
+            <span>{getThemeLabel()}</span>
           </button>
         </div>
       </div>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
+import { LuCopy } from "react-icons/lu";
 import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
 import { useTokens } from "@/contexts/tokens-context";
@@ -13,6 +14,14 @@ function Lock({ lockData, lockAddress }) {
   const { resolvedTheme } = useTheme();
   const { fetchTokenInfo } = useTokens();
   const [tokenInfo, setTokenInfo] = useState(null);
+  const [copiedField, setCopiedField] = useState(null);
+
+  // Copy to clipboard function
+  const copyToClipboard = (text, fieldName) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(fieldName);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
 
   // Debug logging
   useEffect(() => {
@@ -155,9 +164,39 @@ function Lock({ lockData, lockAddress }) {
             </h1>
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
-              <p>Lock ID: {formatAddress(lockAddress)}</p>
-              <p>Receiver: {formatAddress(lockData?.receiverUser)}</p>
-              <p>Token ID: {formatAddress(lockData?.tokenMint)}</p>
+              <p className="flex items-center gap-2">
+                Lock ID: {formatAddress(lockAddress)}
+                <LuCopy
+                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
+                  onClick={() => copyToClipboard(typeof lockAddress === 'string' ? lockAddress : lockAddress?.toBase58(), "lockId")}
+                  title="Copy Lock ID"
+                />
+                {copiedField === "lockId" && (
+                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                )}
+              </p>
+              <p className="flex items-center gap-2">
+                Receiver: {formatAddress(lockData?.receiverUser)}
+                <LuCopy
+                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
+                  onClick={() => copyToClipboard(typeof lockData?.receiverUser === 'string' ? lockData?.receiverUser : lockData?.receiverUser?.toBase58(), "receiver")}
+                  title="Copy Receiver"
+                />
+                {copiedField === "receiver" && (
+                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                )}
+              </p>
+              <p className="flex items-center gap-2">
+                Token ID: {formatAddress(lockData?.tokenMint)}
+                <LuCopy
+                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
+                  onClick={() => copyToClipboard(typeof lockData?.tokenMint === 'string' ? lockData?.tokenMint : lockData?.tokenMint?.toBase58(), "tokenId")}
+                  title="Copy Token ID"
+                />
+                {copiedField === "tokenId" && (
+                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                )}
+              </p>
               <p>Market cap: {tokenInfo?.mcap ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K` : "N/A"}</p>
             </div>
           </div>
