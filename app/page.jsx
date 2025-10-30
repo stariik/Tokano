@@ -37,7 +37,7 @@ export default function Home() {
           <div className="lg:w-1/3">
             <LaunchingSoon />
           </div>
-          <div className="md:w-1/2 lg:w-1/3 2xl:max-w-2xl">
+          <div className="md:w-1/2 lg:w-1/3 2xl:max-w-2xl ">
             <Live />
           </div>
           <div className="md:w-1/2 lg:w-1/3">

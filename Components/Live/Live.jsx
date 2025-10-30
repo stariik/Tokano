@@ -43,29 +43,45 @@ function Live() {
       const enrichedPools = pools
         .map((pool) => ({
           ...pool,
+          type: 'pool',
+          timestamp: pool.startTimestamp.getTime(),
           tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
         }))
-        .sort((a, b) => b.startTimestamp.getTime() - a.startTimestamp.getTime());
+        .sort((a, b) => b.timestamp - a.timestamp);
 
       // Enrich and sort vestings by start time (newest first)
       const enrichedVestings = vestingData
         .map((vest) => ({
           ...vest,
+          type: 'vest',
+          timestamp: vest.startTime.getTime(),
           tokenInfo: tokenInfos[vest.tokenMint.toBase58()],
         }))
-        .sort((a, b) => b.startTime.getTime() - a.startTime.getTime());
+        .sort((a, b) => b.timestamp - a.timestamp);
 
       // Enrich and sort locks by unlock time (newest first)
       const enrichedLocks = lockData
         .map((lockItem) => ({
           ...lockItem,
+          type: 'lock',
+          timestamp: lockItem.unlockTime.getTime(),
           tokenInfo: tokenInfos[lockItem.tokenMint.toBase58()],
         }))
-        .sort((a, b) => b.unlockTime.getTime() - a.unlockTime.getTime());
+        .sort((a, b) => b.timestamp - a.timestamp);
 
-      setStakePools(enrichedPools);
-      setVestings(enrichedVestings);
-      setLocks(enrichedLocks);
+      // Combine all items, sort by timestamp (newest first), and limit to 20 total
+      const allItems = [...enrichedPools, ...enrichedVestings, ...enrichedLocks]
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .slice(0, 20);
+
+      // Separate back into their types
+      const limitedPools = allItems.filter(item => item.type === 'pool');
+      const limitedVestings = allItems.filter(item => item.type === 'vest');
+      const limitedLocks = allItems.filter(item => item.type === 'lock');
+
+      setStakePools(limitedPools);
+      setVestings(limitedVestings);
+      setLocks(limitedLocks);
 
       console.log("Fetched staking pools:", enrichedPools);
       console.log("Fetched vestings:", enrichedVestings);
@@ -82,7 +98,7 @@ function Live() {
   }, [fetchAllData]);
 
   return (
-    <div className="dark:border-secondary mx-auto flex max-h-352 lg:max-h-332 overflow-hidden border-2 border-[#CDCDE9] lg:mx-0 xl:max-h-359 2xl:max-h-378">
+    <div className="dark:border-secondary mx-auto flex max-h-352 lg:max-h-332 border-2 border-[#CDCDE9] lg:mx-0 xl:max-h-359 2xl:max-h-378 rounded-tr-4xl overflow-hidden">
       <div className="flex  w-full flex-col lg:rounded-tr-4xl">
         <div
           className={`dark:border-secondary font-khand relative flex justify-center border-b-2 border-[#CDCDE9] py-2 text-2xl font-semibold shadow-lg shadow-black/30 lg:py-4 ${

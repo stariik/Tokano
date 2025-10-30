@@ -12,22 +12,31 @@ interface CryptoWalletProps {
 }
 
 // CryptoWallet Component
-function CryptoWallet({ selectedTokenIndex: controlledIndex, onTokenSelect }: CryptoWalletProps = {}) {
+function CryptoWallet({
+  selectedTokenIndex: controlledIndex,
+  onTokenSelect,
+}: CryptoWalletProps = {}) {
   const { publicKey } = useWallet();
   const { tokens, loadState } = useBalances();
   const [internalSelectedIndex, setInternalSelectedIndex] = React.useState(0);
 
   // Use controlled or uncontrolled mode
-  const selectedTokenIndex = controlledIndex !== undefined ? controlledIndex : internalSelectedIndex;
+  const selectedTokenIndex =
+    controlledIndex !== undefined ? controlledIndex : internalSelectedIndex;
   const setSelectedTokenIndex = onTokenSelect || setInternalSelectedIndex;
 
   // Find SOL balance from tokens array
   const solToken = tokens.find((token) => token.mintAddress === SOL_MINT);
-  const walletAddress = publicKey?.toBase58().slice(0, 4) + "..." + publicKey?.toBase58().slice(-6);
-  const solanaBalance = solToken ? `${parseFloat(solToken.amount).toFixed(3)} SOL` : "0 SOL";
+  const walletAddress =
+    publicKey?.toBase58().slice(0, 4) + "..." + publicKey?.toBase58().slice(-6);
+  const solanaBalance = solToken
+    ? `${parseFloat(solToken.amount).toFixed(3)} SOL`
+    : "0 SOL";
 
   // Filter out SOL from the main token list (we show it separately at bottom)
-  const displayTokens = tokens.filter((token) => token.mintAddress !== SOL_MINT);
+  const displayTokens = tokens.filter(
+    (token) => token.mintAddress !== SOL_MINT,
+  );
 
   const selectedTokenData = displayTokens[selectedTokenIndex];
 
@@ -38,7 +47,7 @@ function CryptoWallet({ selectedTokenIndex: controlledIndex, onTokenSelect }: Cr
       viewBox="0 0 71 70"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="md:w-[40px] md:h-[40px] lg:w-[45px] lg:h-[45px]"
+      className="md:h-[40px] md:w-[40px] lg:h-[45px] lg:w-[45px]"
     >
       <path
         d="M35.0703 69.4863C54.4389 69.4863 70.1406 53.9313 70.1406 34.7432C70.1406 15.555 54.4389 0 35.0703 0C15.7015 0 0 15.555 0 34.7432C0 53.9313 15.7015 69.4863 35.0703 69.4863Z"
@@ -89,7 +98,7 @@ function CryptoWallet({ selectedTokenIndex: controlledIndex, onTokenSelect }: Cr
   return (
     <div className="max-w-4xl overflow-hidden rounded-3xl bg-[#C7C1F5] font-sans shadow-2xl lg:mx-auto dark:bg-[#231570]">
       {/* Header */}
-      <div className="dark:border-secondary flex items-center justify-between border-b border-[#CDCDE9] bg-[#C7C1F5] px-6 py-2 md:py-3 dark:bg-[#231570]">
+      <div className="dark:border-secondary flex items-center justify-between border-b-2 border-[#F1F1F1] bg-[#C7C1F5] px-6 py-2 md:py-3 dark:bg-[#231570]">
         <h1 className="font-khand text-base font-bold tracking-wide text-[#190E79] lg:text-2xl dark:text-white">
           YOUR WALLET
         </h1>
@@ -102,7 +111,7 @@ function CryptoWallet({ selectedTokenIndex: controlledIndex, onTokenSelect }: Cr
       <div className="px-1 md:px-2 lg:px-4">
         <div className="grid grid-cols-2 gap-1 md:gap-4">
           {/* Token List - Left Side */}
-          <div className="border-opacity-40 dark:border-secondary border-x border-[#CDCDE9] px-0 pb-1 md:px-2">
+          <div className="dark:border-secondary border-x-2 border-[#F1F1F1] px-0 pb-1 md:px-2">
             <div className="dark:[&::-webkit-scrollbar-thumb]:bg-opacity-30 max-h-[140px] space-y-1 overflow-y-auto sm:max-h-[160px] sm:space-y-1.5 md:max-h-[180px] lg:max-h-[200px] xl:max-h-[270px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#190E79] dark:[&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-track]:bg-transparent">
               {loadState === BalanceLoadState.LOADING ? (
                 <div className="p-4 text-center text-sm text-[#190E79] dark:text-white">
@@ -140,12 +149,18 @@ function CryptoWallet({ selectedTokenIndex: controlledIndex, onTokenSelect }: Cr
                         }}
                       />
                     ) : null}
-                    <span className="mr-1.5 text-lg md:mr-2 lg:text-xl" style={{ display: token.info?.icon ? "none" : "inline" }}>
+                    <span
+                      className="mr-1.5 text-lg md:mr-2 lg:text-xl"
+                      style={{ display: token.info?.icon ? "none" : "inline" }}
+                    >
                       💎
                     </span>
                     <div className="flex-1">
                       <span className="font-khand text-xs font-bold text-[#190E79] md:text-sm lg:text-base dark:text-white">
-                        {index + 1}. {token.info?.name || token.info?.symbol || token.mintAddress.slice(0, 8) + "..."}
+                        {index + 1}.{" "}
+                        {token.info?.name ||
+                          token.info?.symbol ||
+                          token.mintAddress.slice(0, 8) + "..."}
                       </span>
                     </div>
                   </div>
@@ -157,12 +172,13 @@ function CryptoWallet({ selectedTokenIndex: controlledIndex, onTokenSelect }: Cr
           {/* Token Details - Right Side */}
           <div className="">
             {/* Balance Display */}
-            <div className="border-opacity-40 dark:border-secondary flex items-center justify-end border-x border-[#CDCDE9] p-2 md:p-3">
+            <div className="dark:border-secondary flex items-center justify-end border-x-2 border-[#F1F1F1] p-2 md:p-3">
               <div className="text-right">
                 <div className="font-khand text-base font-bold text-[#190E79] md:text-sm lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
                   {selectedTokenData ? (
                     <>
-                      {parseFloat(selectedTokenData.amount).toFixed(6)} {selectedTokenData.info?.symbol || ""}
+                      {parseFloat(selectedTokenData.amount).toFixed(6)}{" "}
+                      {selectedTokenData.info?.symbol || ""}
                     </>
                   ) : (
                     "Select a token"
@@ -172,14 +188,14 @@ function CryptoWallet({ selectedTokenIndex: controlledIndex, onTokenSelect }: Cr
             </div>
 
             {/* Token Information */}
-            <div className="border-opacity-40 dark:border-secondary h-full flex-1 border-x border-t border-[#CDCDE9] p-2 md:p-4">
+            <div className=" dark:border-secondary h-full flex-1 border-x-2 border-t-2 border-[#F1F1F1] p-2 md:p-4">
               {selectedTokenData ? (
                 <div className="space-y-2">
                   <div>
                     <span className="font-khand text-sm font-semibold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
                       token ID:{" "}
                     </span>
-                    <span className="font-khand text-xs text-[#190E79] md:text-sm xl:text-base 2xl:text-lg dark:text-white break-all">
+                    <span className="font-khand text-xs break-all text-[#190E79] md:text-sm xl:text-base 2xl:text-lg dark:text-white">
                       {selectedTokenData.mintAddress}
                     </span>
                   </div>
@@ -219,10 +235,10 @@ function CryptoWallet({ selectedTokenIndex: controlledIndex, onTokenSelect }: Cr
 
         {/* Solana Balance - Bottom */}
       </div>
-      <div className="border-opacity-40 dark:border-secondary relative z-10 border-t border-[#CDCDE9] bg-[#ddd9f9] px-6 py-1 xl:py-2 dark:bg-[#231570]">
+      <div className="dark:border-secondary relative z-10 border-t-2 border-[#F1F1F1] bg-[#ddd9f9] px-6 py-1 xl:py-2 dark:bg-[#231570]">
         <div className="flex items-center">
           <SolanaIcon />
-          <div className="flex-1 ml-4">
+          <div className="ml-4 flex-1">
             <span className="font-khand text-xl font-bold text-[#190E79] dark:text-white">
               Solana balance:
             </span>

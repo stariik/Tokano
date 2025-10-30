@@ -213,9 +213,9 @@ function Details() {
         </div>
 
         {/* History Button */}
-        <div className="dark:border-secondary relative z-50 mb-2 border-y-1 border-[#CDCDE9] bg-[#4244C4] px-4 py-1 text-center dark:bg-[#2A1C78]">
+        {/* <div className="dark:border-secondary relative z-50 mb-2 border-y-1 border-[#CDCDE9] bg-[#4244C4] px-4 py-1 text-center dark:bg-[#2A1C78]">
           <button className="font-semibold text-white">▼ History</button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

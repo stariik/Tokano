@@ -6,11 +6,14 @@ import { useTheme } from "@/hooks/useTheme";
 function LaunchingSoon({ isMobile = false }) {
   const { resolvedTheme } = useTheme();
 
+  // Limit to maximum 20 items
+  const limitedCardData = cardData.slice(0, 20);
+
   if (isMobile) {
     return (
       <div className="dark:border-secondary border-[#CDCDE9]">
         <div className="space-y-2 px-2">
-          {cardData.map((item) => (
+          {limitedCardData.map((item) => (
             <div key={item.id}>
               <SoonCard />
             </div>
@@ -31,7 +34,7 @@ function LaunchingSoon({ isMobile = false }) {
       >
         <h1>| Launching Soon |</h1>
       </div>
-      <ScrollingSoonCards cards={cardData} />
+      <ScrollingSoonCards cards={limitedCardData} />
     </div>
   );
 }

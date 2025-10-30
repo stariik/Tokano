@@ -244,7 +244,7 @@ function TokenGrid({
 
       {/* Desktop view - always visible based on visibilityClass */}
       <div
-        className={`h-full rounded-2xl border border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] ${visibilityClass}`}
+        className={`h-full rounded-tr-4xl border-2 border-[#CDCDE9] dark:border-secondary bg-white dark:bg-[#13153A] ${visibilityClass}`}
       >
         {tokenContentDesktop}
       </div>

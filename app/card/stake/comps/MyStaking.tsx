@@ -246,11 +246,11 @@ function MyStaking({ pool }: MyStakingProps) {
         )}
 
         {/* History Button */}
-        <div className="dark:border-secondary relative z-10 mb-2 border-y-1 border-[#CDCDE9] bg-[#f5f3fb] px-4 py-1 text-center dark:bg-[#2A1C78]">
+        {/* <div className="dark:border-secondary relative z-10 mb-2 border-y-1 border-[#CDCDE9] bg-[#f5f3fb] px-4 py-1 text-center dark:bg-[#2A1C78]">
           <button className="font-semibold text-[#190E79] dark:text-white">
             ▼ History
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

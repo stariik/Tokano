@@ -47,8 +47,8 @@ function StakingCard({ pool }: StakingCardProps) {
   const tokenSymbol = pool.tokenInfo?.symbol || "N/A";
   const tokenIcon = pool.tokenInfo?.icon || "/fired.png";
 
-  // Pool creator (first 4 and last 4 chars)
-  const creator = pool.creator?.toBase58() || "";
+  // Pool creator/initializer (first 4 and last 4 chars)
+  const creator = pool.initializer?.toBase58() || "";
   const creatorShort = creator
     ? creator.slice(0, 4) + "..." + creator.slice(-4)
     : "N/A";
