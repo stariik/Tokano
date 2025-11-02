@@ -43,6 +43,7 @@ function page() {
         <TokenGrid
           gridCols="grid-cols-2"
           filterVariant="portfolio"
+          filterTokenMint={selectedTokenData?.tokenId || null}
         />
       </div>
       <div className="w-3xl gap-4">

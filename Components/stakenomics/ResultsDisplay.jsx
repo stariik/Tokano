@@ -78,6 +78,22 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
     }, 300);
   };
 
+  // Calculate creation fee (1% of token amount)
+  const calculateCreationFee = () => {
+    const { fundType, formData, token } = filledData;
+    let amount = 0;
+
+    if (fundType === "STAKING POOL" && formData.rewardAmount) {
+      amount = parseFloat(formData.rewardAmount);
+    } else if ((fundType === "LOCK FUNDS" || fundType === "VEST FUNDS") && formData.tokenAmount) {
+      amount = parseFloat(formData.tokenAmount);
+    }
+
+    const fee = amount * 0.01;
+    const tokenName = token?.name || 'tokens';
+    return fee > 0 ? `${fee.toFixed(2)} ${tokenName}` : '0';
+  };
+
   return (
     <div className="relative p-6">
       <h3 className="mb-4 text-2xl font-bold text-[#190E79] dark:text-white">
@@ -89,7 +105,7 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
       {/* button */}
       <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
         <div className="ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
-          creation fee: <span className="ml-2"> 12345678 Limas</span>
+          creation fee: <span className="ml-2"> {calculateCreationFee()}</span>
         </div>
         <div className="flex items-center text-xs text-[#190E79] md:text-base dark:text-white">
           <button

@@ -47,10 +47,10 @@ export default function Home() {
       </div>
       <Banner src={"banner1.png"} />
 
-      <div className="mt-4 w-full">
+      <div className="mt-4 w-full flex justify-center mx-auto max-w-lg md:max-w-full">
         <TokenGrid
           hideOnMobile={false}
-          gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7"
+          gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-9"
         />
       </div>
 

@@ -6,9 +6,21 @@ import "@/Components/Live/styles/scrollcard.css";
 import { StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
+import { useFavorites } from "@/hooks/useFavorites";
 
 function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecimals }) {
   const { resolvedTheme } = useTheme();
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  const isFav = isFavorite('lock', wallet);
+
+  const handleStarClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (wallet) {
+      toggleFavorite('lock', wallet);
+    }
+  };
 
   const shortenAddress = (address) => {
     if (!address || address.length < 12) return address;
@@ -87,8 +99,11 @@ function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecima
               : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
         }}
       >
-        <div className="absolute top-6 right-4">
-          <StarIcon />
+        <div
+          className="absolute top-6 right-4 cursor-pointer hover:scale-110 transition-transform z-10"
+          onClick={handleStarClick}
+        >
+          <StarIcon filled={isFav} />
         </div>
         <div className="flex w-full flex-col">
           <div className="flex w-full items-center justify-between pr-2 md:pr-4">

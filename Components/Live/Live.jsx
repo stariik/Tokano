@@ -39,7 +39,9 @@ function Live() {
       // Fetch token info for all mints
       const tokenInfos = await fetchTokenInfo(uniqueMints);
 
-      // Enrich and sort staking pools by start timestamp (newest first)
+      const currentTime = Date.now();
+
+      // Enrich and filter staking pools - only show LIVE pools (startTimestamp <= now AND endTimestamp > now)
       const enrichedPools = pools
         .map((pool) => ({
           ...pool,
@@ -47,9 +49,10 @@ function Live() {
           timestamp: pool.startTimestamp.getTime(),
           tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
         }))
+        .filter((pool) => pool.timestamp <= currentTime && pool.endTimestamp.getTime() > currentTime)
         .sort((a, b) => b.timestamp - a.timestamp);
 
-      // Enrich and sort vestings by start time (newest first)
+      // Enrich and filter vestings - only show LIVE vestings (startTime <= now AND endTime > now)
       const enrichedVestings = vestingData
         .map((vest) => ({
           ...vest,
@@ -57,9 +60,10 @@ function Live() {
           timestamp: vest.startTime.getTime(),
           tokenInfo: tokenInfos[vest.tokenMint.toBase58()],
         }))
+        .filter((vest) => vest.timestamp <= currentTime && vest.endTime.getTime() > currentTime)
         .sort((a, b) => b.timestamp - a.timestamp);
 
-      // Enrich and sort locks by unlock time (newest first)
+      // Enrich and filter locks - only show LIVE locks (not yet unlocked: unlockTime > now)
       const enrichedLocks = lockData
         .map((lockItem) => ({
           ...lockItem,
@@ -67,9 +71,10 @@ function Live() {
           timestamp: lockItem.unlockTime.getTime(),
           tokenInfo: tokenInfos[lockItem.tokenMint.toBase58()],
         }))
+        .filter((lockItem) => lockItem.unlockTime.getTime() > currentTime)
         .sort((a, b) => b.timestamp - a.timestamp);
 
-      // Combine all items, sort by timestamp (newest first), and limit to 20 total
+      // Combine all LIVE items, sort by timestamp (newest first), and limit to 20 total
       const allItems = [...enrichedPools, ...enrichedVestings, ...enrichedLocks]
         .sort((a, b) => b.timestamp - a.timestamp)
         .slice(0, 20);

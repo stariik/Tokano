@@ -43,6 +43,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
             stakeTimestamp={formatTimestamp(pool.startTimestamp)}
             stakersCount={0}
             poolEndTimestamp={pool.endTimestamp.getTime() / 1000}
+            poolData={pool}
           />
         );
       })}

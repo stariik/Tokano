@@ -6,6 +6,7 @@ import "@/Components/Live/styles/scrollcard.css";
 import { FIcon, SIcon, StakeIcon, StarIcon } from "../icons";
 import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
+import { useFavorites } from "@/hooks/useFavorites";
 
 function StakeCard({
   id,
@@ -18,8 +19,20 @@ function StakeCard({
   stakersCount,
   poolEndTimestamp,
   poolAddress,
+  poolData, // Add poolData prop for accessing reward info
 }) {
   const { resolvedTheme } = useTheme();
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  const isFav = isFavorite('stake', poolAddress);
+
+  const handleStarClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (poolAddress) {
+      toggleFavorite('stake', poolAddress);
+    }
+  };
 
   // Calculate time remaining until pool ends
   const calculateTimeLeft = () => {
@@ -34,6 +47,23 @@ function StakeCard({
     const hours = Math.floor((secondsLeft % 86400) / 3600);
 
     return `${days}d.${hours}h`;
+  };
+
+  // Calculate percentage of rewards left
+  const calculateRewardsLeft = () => {
+    if (!poolData || !poolData.rewardRate || !poolData.rewardDistributed) {
+      return "0";
+    }
+
+    const totalRewards = parseFloat(poolData.rewardRate.toString());
+    const distributed = parseFloat(poolData.rewardDistributed.toString());
+
+    if (totalRewards === 0) return "0";
+
+    const rewardsLeft = totalRewards - distributed;
+    const percentage = (rewardsLeft / totalRewards) * 100;
+
+    return Math.max(0, Math.min(100, percentage)).toFixed(0);
   };
 
   // Format stakers count (e.g., 1234 -> "1.2K")
@@ -112,8 +142,11 @@ function StakeCard({
         <div className="font-khand absolute top-12 right-0 rounded-l-2xl bg-[#2B923E] pl-2 text-xs font-normal text-white md:top-16 xl:text-sm dark:bg-[#2B923E]">
           {stakeTimestamp || "N/A"}
         </div>
-        <div className="absolute top-2/3 right-4 -translate-y-1/2 transform md:right-6">
-          <StarIcon />
+        <div
+          className="absolute top-2/3 right-4 -translate-y-1/2 transform md:right-6 cursor-pointer hover:scale-110 transition-transform z-10"
+          onClick={handleStarClick}
+        >
+          <StarIcon filled={isFav} />
         </div>
 
         <div className="relative ml-2 flex flex-col justify-start md:ml-0 lg:ml-2">
@@ -149,7 +182,7 @@ function StakeCard({
                         : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
                   }}
                 >
-                  LEFT: |56%
+                  LEFT: |{calculateRewardsLeft()}%
                 </div>
               </div>
             </div>

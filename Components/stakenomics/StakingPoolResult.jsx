@@ -18,6 +18,33 @@ function StakingPoolResult({ token, formData }) {
     return number.toLocaleString();
   };
 
+  // Calculate launching countdown
+  const getLaunchingCountdown = () => {
+    if (!formData?.activationDateTime || formData.activationDateTime === "IMMEDIATELY") {
+      return "LIVE NOW";
+    }
+
+    const activationTime = new Date(formData.activationDateTime).getTime();
+    const now = Date.now();
+    const diff = activationTime - now;
+
+    if (diff <= 0) {
+      return "LIVE NOW";
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (days > 0) {
+      return `${days} days ${hours} hours`;
+    } else if (hours > 0) {
+      return `${hours} hours ${minutes} minutes`;
+    } else {
+      return `${minutes} minutes`;
+    }
+  };
+
   const StakeIcon = () => (
     <svg
       className="absolute -mr-1 h-full w-[47px] lg:w-[80px]"
@@ -79,7 +106,7 @@ function StakingPoolResult({ token, formData }) {
 
             <div className="mt-1 pl-1 text-xs md:text-sm lg:text-base 2xl:text-base">
               <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
-              <p>Creator: {formData?.creator || "Anonymous"}</p>
+              <p>Creator: {formData?.creator ? `${formData.creator.slice(0, 4)}...${formData.creator.slice(-4)}` : "Anonymous"}</p>
               <p>Token ID: {token?.id ? (token.id.length > 12 ? `${token.id.slice(0, 6)}...${token.id.slice(-4)}` : token.id) : "0x0000...0000"}</p>
             </div>
           </div>
@@ -115,7 +142,7 @@ function StakingPoolResult({ token, formData }) {
                 : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
           }}
         >
-          LAUNCHING IN: {formData?.distributionLength || "0"} days
+          {getLaunchingCountdown() === "LIVE NOW" ? "LIVE NOW" : `LAUNCHING IN: ${getLaunchingCountdown()}`}
         </div>
 
         <div className="font-khand relative text-end text-xl font-medium lg:text-2xl">

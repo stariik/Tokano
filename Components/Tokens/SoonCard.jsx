@@ -5,8 +5,7 @@ import Link from "next/link";
 import { CiPill } from "react-icons/ci";
 import { StarIcon } from "../icons";
 import { useTheme } from "@/hooks/useTheme";
-
-import { MdStar } from "react-icons/md";
+import { useFavorites } from "@/hooks/useFavorites";
 
 const StakeIcon = () => (
   <svg
@@ -38,8 +37,46 @@ const StakeIcon = () => (
   </svg>
 );
 
-function SoonCard({ id }) {
+function SoonCard({
+  id,
+  title = "YOU'RE FIRED (FIRED)",
+  poolId = "0xdl3…ezx41",
+  tokenId = "0xfc9…ed1d",
+  launchTimestamp,
+  tokenImage = "/image.png",
+  poolType = "STAKE", // Can be "STAKE", "VEST", or "LOCK"
+  fullAddress = "" // Full address for favorites (not shortened)
+}) {
   const { resolvedTheme } = useTheme();
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  // Determine the type for favorites
+  const favoriteType = poolType.toLowerCase(); // 'stake' or 'vest'
+  const addressForFavorite = fullAddress || poolId;
+  const isFav = isFavorite(favoriteType, addressForFavorite);
+
+  // Handle star click
+  const handleStarClick = (e) => {
+    e.preventDefault(); // Prevent navigation
+    e.stopPropagation(); // Stop event bubbling
+    toggleFavorite(favoriteType, addressForFavorite);
+  };
+
+  // Calculate countdown from launchTimestamp
+  const getCountdown = () => {
+    if (!launchTimestamp) return "23d 45h 12m";
+
+    const now = Date.now();
+    const diff = launchTimestamp - now;
+
+    if (diff <= 0) return "LIVE NOW";
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${days}d ${hours}h ${minutes}m`;
+  };
 
   return (
     <Link
@@ -63,8 +100,8 @@ function SoonCard({ id }) {
       >
         <div>
           <img
-            src="/image.png"
-            alt=""
+            src={tokenImage}
+            alt={title}
             className="mt-2 ml-4 w-24 rounded-4xl md:mt-4 md:ml-8 lg:ml-4 lg:w-28 xl:ml-4 xl:w-36"
           />
         </div>
@@ -78,7 +115,7 @@ function SoonCard({ id }) {
           </div>
           <div className="flex-col items-center justify-center text-center">
             <p className="text-md font-khand mt-2 font-semibold md:text-lg lg:text-base xl:text-xl 2xl:text-2xl">
-              YOU'RE FIRED (FIRED)
+              {title}
             </p>
             <h1 className="font-khand text-xl font-bold md:text-2xl lg:mt-4 lg:text-2xl 2xl:text-4xl">
               LAUNCHING SOON
@@ -92,21 +129,20 @@ function SoonCard({ id }) {
                     : "linear-gradient(90deg,rgba(255,212,42,1) 0%,rgba(249,44,157,1) 55%,rgba(237,221,83,1) 100%)",
               }}
             >
-              LAUNCHING IN : 23d 45h 12m
+              LAUNCHING IN : {getCountdown()}
             </p>
-            <div className="absolute top-1/2 right-0.5 xl:right-2 2xl:right-4">
-              {/* <StarIcon />  */}
-              <MdStar
-                color={resolvedTheme === "dark" ? "white" : "#F92C9D"}
-                className="xl:h-6 xl:w-6"
-              />
+            <div
+              className="absolute top-1/2 right-0.5 xl:right-2 2xl:right-4 cursor-pointer hover:scale-110 transition-transform"
+              onClick={handleStarClick}
+            >
+              <StarIcon filled={isFav} />
             </div>
           </div>
         </div>
         <div className="relative mx-auto my-6">
           <div className="absolute -top-[20px] -left-[35px] flex gap-2 lg:-left-[40px] xl:-left-[50px]">
             <div className="font-khand mt-4 font-semibold lg:text-xl xl:text-2xl 2xl:text-3xl">
-              STAKE
+              {poolType}
             </div>
             <div className="z-10 mt-2 rounded-full bg-[#f5f3fb] p-1 pr-0 pl-2 lg:mt-1 xl:mt-0 dark:bg-[#2A1C7B]">
               <StakeIcon />
@@ -115,10 +151,10 @@ function SoonCard({ id }) {
           <div className="absolute top-[20px] left-[80px] h-[3px] rounded-full bg-gradient-to-r from-[#002382] from-25% to-[#8B0000] xl:w-[100px] 2xl:w-[280px] dark:from-[#190E79]"></div>
         </div>
         <div className="font-khand mt-4 pl-1 text-xs lg:pl-2 xl:pl-4 2xl:text-base">
-          Pool ID: 0xdl3…ezx41
+          Pool ID: {poolId}
         </div>
         <div className="font-khand mt-4 text-xs 2xl:text-base">
-          Token ID: 0xfc9…ed1d
+          Token ID: {tokenId}
         </div>
       </div>
     </Link>

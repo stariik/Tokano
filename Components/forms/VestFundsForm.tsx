@@ -9,6 +9,41 @@ import { PublicKey } from "@solana/web3.js";
 import { VestingSchedule } from "tokano-sdk";
 import { toSmallestUnit, transactionListener } from "@/lib/balances";
 
+const Warning = () => (
+  <svg
+    width="12"
+    height="70"
+    viewBox="0 0 12 70"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="[&_path]:fill-red-500 dark:[&_path]:fill-[url(#paint0_linear_1683_1078)]"
+  >
+    <path
+      d="M5.99219 57.0003C9.30101 57.0003 11.9834 59.6906 11.9834 63.0092V63.5099C11.9832 66.8283 9.30088 69.5188 5.99219 69.5188C2.68349 69.5188 0.00119192 66.8283 0.000984837 63.5099V63.0092C0.000984837 59.6906 2.68337 57.0003 5.99219 57.0003ZM5.99219 -4.18304e-05C9.30101 -4.18304e-05 11.9834 2.69025 11.9834 6.00884V45.5088C11.9831 48.8272 9.30083 51.5177 5.99219 51.5177C2.68355 51.5177 0.00128107 48.8272 0.000984837 45.5088V6.00884C0.000984837 2.69025 2.68337 -4.18304e-05 5.99219 -4.18304e-05Z"
+      fill="url(#paint0_linear_1683_1078)"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_1683_1078"
+        x1="10.9323"
+        y1="16.8038"
+        x2="47.0507"
+        y2="59.1154"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop
+          offset="0.129021"
+          stopColor="white"
+        />
+        <stop
+          offset="0.840552"
+          stopColor="#DBD4EA"
+        />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
 interface Token {
   id?: string;
   tokenId?: string;
@@ -307,7 +342,7 @@ export default function VestFundsForm({
               onChange={(e) =>
                 handleInputChange("activationDateTime", e.target.value)
               }
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] md:text-[13px] font-bold text-[#190E79] md:max-w-[280px] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] font-bold text-[#190E79] md:max-w-[280px] md:text-[13px] dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -440,30 +475,37 @@ export default function VestFundsForm({
         </div>
 
         {/* Warning Box */}
-        <div className="mt-2 rounded-xl border-2 border-red-400 bg-[#e8e4f8] p-4 dark:border-[#6b4d9f] dark:bg-[#453DC8]">
-          <div className="font-khand mb-3 flex items-center justify-center gap-2 text-xs font-bold text-red-500">
-            <span className="text-sm">⚠️</span>
-            <span>ATTENTION</span>
-            <span className="text-sm">⚠️</span>
+        <div className="mt-2 overflow-hidden rounded-xl border-2 border-red-400 bg-white p-4 pt-0 dark:bg-white/0">
+          <div className="font-khand -mt-5 mb-3 flex w-full items-center justify-between gap-2 text-xs font-bold text-red-500 dark:text-white">
+            <div className="flex items-center gap-4">
+              <Warning />
+              <p>ATTENTION</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <p>ATTENTION</p>
+              <Warning />
+            </div>
           </div>
           <ul className="list-none">
-            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
               <span className="absolute left-0 font-bold">1.</span>
-              <span className="font-bold">Reward Claim Frequency:</span> Users
-              can claim their vested tokens once every 24 hours as they become
-              available.
+              <span className="font-bold">Reward Claim Frequency:</span> Stakers
+              can claim their rewards once every 24 hours.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
               <span className="absolute left-0 font-bold">2.</span>
-              <span className="font-bold">Cliff Period:</span> No tokens will be
-              released until the cliff period expires, after which vesting
-              begins according to the release model.
+              <span className="font-bold">Unclaimed Rewards:</span> Rewards not
+              claimed within 365 days will be converted to Tokano native tokens.
+              After conversion, users must contact support to retrieve them.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
               <span className="absolute left-0 font-bold">3.</span>
-              <span className="font-bold">Release Schedule:</span> Tokens are
-              released according to the chosen model (daily, weekly, or monthly)
-              after the cliff period.
+              <span className="font-bold">Undistributed Tokens:</span> Any
+              undistributed tokens remaining in the pool will be available for
+              retraction to the creator's wallet for 365 days after the pool's
+              distribution period ends. After this period, tokens will be
+              converted to Tokano native tokens, and the creator must contact
+              support to recover them.
             </li>
           </ul>
         </div>
@@ -483,7 +525,7 @@ export default function VestFundsForm({
         {/* CREATE VESTING Button */}
         <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
           <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
-            creation fee: <span className="ml-2"> 12345678 Limas</span>
+            creation fee: <span className="ml-2"> {formData.tokenAmount ? (parseFloat(formData.tokenAmount) * 0.01).toFixed(2) : '0'} {token.name || 'tokens'}</span>
           </div>
           <div className="flex items-center text-xs text-[#190E79] md:text-base">
             <button

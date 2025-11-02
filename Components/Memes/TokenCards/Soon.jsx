@@ -1,15 +1,65 @@
 import React from "react";
 import Image from "next/image";
 import { SiVerizon } from "react-icons/si";
+import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
 import { useRouter } from "next/navigation";
+import { useFavorites } from "@/hooks/useFavorites";
 
-function Soon({ token }) {
+function Soon({ data, token }) {
   const { resolvedTheme } = useTheme();
   const router = useRouter();
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  // Support both old (token prop) and new (data prop) usage
+  const poolData = data || {};
+  const tokenData = data ? {
+    name: data.tokenInfo?.name || data.tokenInfo?.symbol || "Unknown Token",
+    image: data.tokenInfo?.image || "/image.png",
+  } : token;
+
+  const poolAddress = poolData.poolAddress?.toBase58() || poolData.address?.toBase58() || "";
+  const poolType = poolData.poolAddress ? 'stake' : 'vest'; // Determine if it's a pool or vest
+  const isFav = isFavorite(poolType, poolAddress);
+
+  // Calculate countdown
+  const getCountdown = () => {
+    if (!poolData.timestamp) return "23d-45h-12m";
+
+    const now = Date.now();
+    const diff = poolData.timestamp - now;
+
+    if (diff <= 0) return "LIVE NOW";
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${days}d-${hours}h-${minutes}m`;
+  };
+
+  const handleClick = () => {
+    if (poolAddress) {
+      if (poolType === 'stake') {
+        router.push(`/card/soon?pool=${poolAddress}`);
+      } else {
+        router.push(`/card/soon?vest=${poolAddress}`);
+      }
+    } else {
+      router.push("/card/soon");
+    }
+  };
+
+  const handleStarClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (poolAddress) {
+      toggleFavorite(poolType, poolAddress);
+    }
+  };
   const StakeIcon = () => (
     <svg
-      className="h-full w-[35px] md:w-[37px] xl:w-[47px]"
+      className="h-full w-[35px] md:w-[37px] xl:w-[45px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +89,7 @@ function Soon({ token }) {
 
   return (
     <div
-      onClick={() => router.push("/card/soon")}
+      onClick={handleClick}
       className="relative flex w-full flex-col overflow-hidden rounded bg-[#f5f3fb] pb-1 shadow-lg cursor-pointer dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
@@ -53,8 +103,8 @@ function Soon({ token }) {
       {/* Token Image */}
       <div className="relative aspect-[1.6/1] w-full bg-black">
         <Image
-          src="/image.png"
-          alt={token.name}
+          src={tokenData.image}
+          alt={tokenData.name}
           fill
           className="static! object-cover"
           sizes="220px"
@@ -68,9 +118,14 @@ function Soon({ token }) {
             className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px] lg:text-[10px] xl:text-[14px]"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
-            {token.name}
+            {tokenData.name}
           </span>
-          <span className="ml-2 text-xl text-[#FF00A8]">★</span>
+          <span
+            className="ml-2 cursor-pointer hover:scale-110 transition-transform"
+            onClick={handleStarClick}
+          >
+            <StarIcon filled={isFav} />
+          </span>
         </div>
         <div
           className="font-khand -ml-4 max-w-24 rounded-r-xl pl-4 text-sm font-semibold text-[#311880] lg:pl-2 lg:text-xs xl:pl-4 xl:text-sm"
@@ -81,10 +136,10 @@ function Soon({ token }) {
                 : "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)",
           }}
         >
-          23d-45h-12m
+          {getCountdown()}
         </div>
         {/* Stats Row */}
-        <div className="font-khand flex items-center justify-end gap-4 font-semibold">
+        <div className="font-khand flex items-center justify-end gap-4 font-semibold mt-1">
           <div className="rounded-full lg:mt-1 xl:mt-0">
             <StakeIcon />
           </div>

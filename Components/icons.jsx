@@ -72,7 +72,7 @@ export const SIcon = () => (
   </svg>
 );
 
-export const StarIcon = () => (
+export const StarIcon = ({ filled = false }) => (
   <svg
     width="22"
     height="22"
@@ -82,7 +82,9 @@ export const StarIcon = () => (
   >
     <path
       d="M14.0685 0.621094L17.3402 10.5094H27.9276L19.3622 16.6207L22.6339 26.5089L14.0685 20.3977L5.50305 26.5089L8.77475 16.6207L0.209317 10.5094H10.7968L14.0685 0.621094Z"
-      fill="white"
+      fill={filled ? "#FFD700" : "white"}
+      stroke={filled ? "#FFD700" : "white"}
+      strokeWidth={filled ? "1" : "0"}
     />
   </svg>
 );

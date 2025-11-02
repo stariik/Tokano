@@ -111,6 +111,7 @@ function StakePageContent() {
         <TokenGrid
           gridCols="grid-cols-2 lg:grid-cols-1 xl:grid-cols-2"
           filterVariant="portfolio"
+          filterTokenMint={pool?.tokenMint?.toBase58() || null}
         />
       </div>
       <div className="w-3xl gap-4">

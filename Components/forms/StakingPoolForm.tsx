@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import StakingPoolResult from "@/Components/stakenomics/StakingPoolResult";
 import Success from "@/Components/popups/Success";
 import Failed from "@/Components/popups/Failed";
@@ -7,6 +7,41 @@ import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { toSmallestUnit, transactionListener } from "@/lib/balances";
+
+const Warning = () => (
+  <svg
+    width="12"
+    height="70"
+    viewBox="0 0 12 70"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="[&_path]:fill-red-500 dark:[&_path]:fill-[url(#paint0_linear_1683_1078)]"
+  >
+    <path
+      d="M5.99219 57.0003C9.30101 57.0003 11.9834 59.6906 11.9834 63.0092V63.5099C11.9832 66.8283 9.30088 69.5188 5.99219 69.5188C2.68349 69.5188 0.00119192 66.8283 0.000984837 63.5099V63.0092C0.000984837 59.6906 2.68337 57.0003 5.99219 57.0003ZM5.99219 -4.18304e-05C9.30101 -4.18304e-05 11.9834 2.69025 11.9834 6.00884V45.5088C11.9831 48.8272 9.30083 51.5177 5.99219 51.5177C2.68355 51.5177 0.00128107 48.8272 0.000984837 45.5088V6.00884C0.000984837 2.69025 2.68337 -4.18304e-05 5.99219 -4.18304e-05Z"
+      fill="url(#paint0_linear_1683_1078)"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_1683_1078"
+        x1="10.9323"
+        y1="16.8038"
+        x2="47.0507"
+        y2="59.1154"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop
+          offset="0.129021"
+          stopColor="white"
+        />
+        <stop
+          offset="0.840552"
+          stopColor="#DBD4EA"
+        />
+      </linearGradient>
+    </defs>
+  </svg>
+);
 
 interface Token {
   id?: string;
@@ -37,6 +72,7 @@ export default function StakingPoolForm({
     distributionLength: "",
     unstakingPeriodDays: "",
     unstakingPeriodHours: "",
+    creator: publicKey?.toBase58() || "",
   });
   const [showPopup, setShowPopup] = useState<
     "success" | "failed" | "attention" | null
@@ -46,6 +82,18 @@ export default function StakingPoolForm({
   const [createdPoolAddress, setCreatedPoolAddress] = useState<string | null>(
     null,
   );
+
+  // Update creator address when wallet connects/changes
+  useEffect(() => {
+    if (publicKey) {
+      const updatedData = {
+        ...formData,
+        creator: publicKey.toBase58(),
+      };
+      setFormData(updatedData);
+      onDataChange?.(updatedData);
+    }
+  }, [publicKey]);
 
   if (!token) {
     return (
@@ -318,7 +366,7 @@ export default function StakingPoolForm({
               onChange={(e) =>
                 handleInputChange("activationDateTime", e.target.value)
               }
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] md:text-[13px] font-bold text-[#190E79] md:max-w-[280px] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] font-bold text-[#190E79] md:max-w-[280px] md:text-[13px] dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -443,32 +491,40 @@ export default function StakingPoolForm({
         </div>
 
         {/* Warning Box */}
-        <div className="mt-2 rounded-xl border-2 border-red-400 bg-[#e8e4f8] p-4 dark:border-[#6b4d9f] dark:bg-[#453DC8]">
-          <div className="font-khand mb-3 flex items-center justify-center gap-2 text-xs font-bold text-red-500">
-            <span className="text-sm">⚠️</span>
+        <div className="mt-2 overflow-hidden rounded-xl border-2 border-red-400 bg-white p-4 pt-0 dark:bg-white/0">
+          <div className="font-khand -mt-5 mb-3 flex w-full items-center justify-between gap-2 text-xs font-bold text-red-500 dark:text-white">
+            <div className="flex items-center gap-4">
+              <Warning />
+              <p>ATTENTION</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <p>ATTENTION</p>
+              <Warning />
+            </div>
+            {/* <span className="text-sm">⚠️</span>
             <span>ATTENTION</span>
-            <span className="text-sm">⚠️</span>
+            <span className="text-sm">⚠️</span> */}
           </div>
           <ul className="list-none">
-            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
               <span className="absolute left-0 font-bold">1.</span>
               <span className="font-bold">Reward Claim Frequency:</span> Stakers
               can claim their rewards once every 24 hours.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
               <span className="absolute left-0 font-bold">2.</span>
               <span className="font-bold">Unclaimed Rewards:</span> Rewards not
-              claimed within 365 days will be converted to Takana native tokens.
+              claimed within 365 days will be converted to Tokano native tokens.
               After conversion, users must contact support to retrieve them.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-[10px] leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
               <span className="absolute left-0 font-bold">3.</span>
               <span className="font-bold">Undistributed Tokens:</span> Any
               undistributed tokens remaining in the pool will be available for
-              extraction to the creator's wallet for 365 days after the pool's
+              retraction to the creator's wallet for 365 days after the pool's
               distribution period ends. After this period, tokens will be
-              converted to Takana native tokens, and the creator must contact
-              support to retrieve them.
+              converted to Tokano native tokens, and the creator must contact
+              support to recover them.
             </li>
           </ul>
         </div>
@@ -488,37 +544,37 @@ export default function StakingPoolForm({
       <div className="mt-6">
         {/* CREATE POOL Button */}
         <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
-        <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
-          creation fee: <span className="ml-2"> 12345678 Limas</span>
-        </div>
-        <div className="flex items-center text-xs text-[#190E79] md:text-base">
-          <button
-            onClick={handleCreatePool}
-            disabled={isCreating || !publicKey}
-            className="relative flex cursor-pointer rounded-full bg-[#0E1379] px-2 py-1 transition-colors hover:bg-[#1a1f9e] disabled:cursor-not-allowed disabled:bg-gray-500 md:px-4 md:py-2"
-          >
-            <div className="mr-2 rounded-full border-2 border-white px-3 py-1">
-              <svg
-                width="8"
-                height="20"
-                viewBox="0 0 8 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.780434 16.9388L0.780434 16.8883C1.9649 15.5593 2.54068 14.3817 2.50778 13.3555C2.50778 13.0696 2.46665 12.7836 2.3844 12.4976C2.30214 12.2116 2.17054 11.8667 1.98958 11.463C1.80862 11.0592 1.55363 10.5377 1.22461 9.89848C0.961394 9.36016 0.772208 8.88071 0.657052 8.46014C0.541896 8.03958 0.467866 7.59377 0.434965 7.12274C0.418514 6.43301 0.550121 5.72646 0.829786 5.00308C1.1259 4.26288 1.5454 3.58156 2.08828 2.95912L3.02598 2.95912L3.02598 0.385254L4.50656 0.385254L4.50656 2.95912L6.70276 2.95912L6.70276 3.00959C6.09408 3.69932 5.65813 4.32176 5.39491 4.87691C5.1317 5.41524 5.00009 5.97039 5.00009 6.54236C5.00009 6.96292 5.07412 7.37508 5.22218 7.77882C5.37024 8.18257 5.60878 8.70407 5.93779 9.34333C6.38197 10.1676 6.68631 10.8406 6.85082 11.3621C7.01533 11.8667 7.10581 12.3882 7.12226 12.9266C7.13871 13.6499 7.02355 14.3313 6.77679 14.9705C6.54648 15.593 6.16811 16.249 5.64168 16.9388L4.50656 16.9388L4.50656 19.4117L3.02598 19.4117L3.02598 16.9388L0.780434 16.9388Z"
-                  fill="#EEEDED"
-                />
-              </svg>
-            </div>
+          <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
+            creation fee: <span className="ml-2"> {formData.rewardAmount ? (parseFloat(formData.rewardAmount) * 0.01).toFixed(2) : '0'} {token.name || 'tokens'}</span>
+          </div>
+          <div className="flex items-center text-xs text-[#190E79] md:text-base">
+            <button
+              onClick={handleCreatePool}
+              disabled={isCreating || !publicKey}
+              className="relative flex cursor-pointer rounded-full bg-[#0E1379] px-2 py-1 transition-colors hover:bg-[#1a1f9e] disabled:cursor-not-allowed disabled:bg-gray-500 md:px-4 md:py-2"
+            >
+              <div className="mr-2 rounded-full border-2 border-white px-3 py-1">
+                <svg
+                  width="8"
+                  height="20"
+                  viewBox="0 0 8 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.780434 16.9388L0.780434 16.8883C1.9649 15.5593 2.54068 14.3817 2.50778 13.3555C2.50778 13.0696 2.46665 12.7836 2.3844 12.4976C2.30214 12.2116 2.17054 11.8667 1.98958 11.463C1.80862 11.0592 1.55363 10.5377 1.22461 9.89848C0.961394 9.36016 0.772208 8.88071 0.657052 8.46014C0.541896 8.03958 0.467866 7.59377 0.434965 7.12274C0.418514 6.43301 0.550121 5.72646 0.829786 5.00308C1.1259 4.26288 1.5454 3.58156 2.08828 2.95912L3.02598 2.95912L3.02598 0.385254L4.50656 0.385254L4.50656 2.95912L6.70276 2.95912L6.70276 3.00959C6.09408 3.69932 5.65813 4.32176 5.39491 4.87691C5.1317 5.41524 5.00009 5.97039 5.00009 6.54236C5.00009 6.96292 5.07412 7.37508 5.22218 7.77882C5.37024 8.18257 5.60878 8.70407 5.93779 9.34333C6.38197 10.1676 6.68631 10.8406 6.85082 11.3621C7.01533 11.8667 7.10581 12.3882 7.12226 12.9266C7.13871 13.6499 7.02355 14.3313 6.77679 14.9705C6.54648 15.593 6.16811 16.249 5.64168 16.9388L4.50656 16.9388L4.50656 19.4117L3.02598 19.4117L3.02598 16.9388L0.780434 16.9388Z"
+                    fill="#EEEDED"
+                  />
+                </svg>
+              </div>
 
-            <span className="font-khand relative inline-block text-sm text-white md:text-base">
-              {isCreating ? "CREATING..." : "CREATE POOL"}
-              <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
-            </span>
-          </button>
+              <span className="font-khand relative inline-block text-sm text-white md:text-base">
+                {isCreating ? "CREATING..." : "CREATE POOL"}
+                <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
       </div>
 
       {/* Popup overlay */}

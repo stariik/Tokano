@@ -1,20 +1,115 @@
 "use client";
-import React, { useState, useEffect } from "react";
-// import TokenCard from "./TokenCard";
+import React, { useState, useEffect, useCallback } from "react";
 import Lock from "./TokenCards/Lock";
 import GridFilter from "./GridFilter";
-import { tokens } from "@/data/data";
 import Vest from "./TokenCards/Vest";
 import Soon from "./TokenCards/Soon";
 import Stake from "./TokenCards/Stake";
+import { useTokano } from "@/contexts/tokano-sdk-context";
+import { useTokens } from "@/contexts/tokens-context";
 
 function TokenGrid({
   hideOnMobile = true,
   filterVariant = "default",
   gridCols,
+  filterTokenMint = null, // For filtering by specific token (stakenomics/pool pages)
+  showAll = false, // For home page - show everything
 }) {
   const [show, setShow] = useState(false);
+  const [stakePools, setStakePools] = useState([]);
+  const [vestings, setVestings] = useState([]);
+  const [locks, setLocks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const { staking, vesting, lock } = useTokano();
+  const { fetchTokenInfo } = useTokens();
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
+
+  // Fetch all blockchain data
+  const fetchAllData = useCallback(async () => {
+    if (!staking || !vesting || !lock) return;
+
+    setLoading(true);
+    try {
+      // Fetch all data in parallel
+      const [pools, vestingData, lockData] = await Promise.all([
+        staking.fetchStakePools(),
+        vesting.fetchAllVestings(),
+        lock.fetchAllLocks(),
+      ]);
+
+      // Collect all unique token mints
+      const allMints = [
+        ...pools.map((p) => p.tokenMint.toBase58()),
+        ...vestingData.map((v) => v.tokenMint.toBase58()),
+        ...lockData.map((l) => l.tokenMint.toBase58()),
+      ];
+      const uniqueMints = [...new Set(allMints)];
+
+      // Fetch token info for all mints
+      const tokenInfos = await fetchTokenInfo(uniqueMints);
+
+      const currentTime = Date.now();
+
+      // Process staking pools - filter out ended pools
+      let processedPools = pools
+        .filter((pool) => pool.endTimestamp.getTime() > currentTime) // Remove ended pools
+        .map((pool) => ({
+          ...pool,
+          type: pool.startTimestamp.getTime() > currentTime ? 'soon' : 'stake',
+          timestamp: pool.startTimestamp.getTime(),
+          tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
+        }));
+
+      // Process vestings - filter out ended vestings
+      let processedVestings = vestingData
+        .filter((vest) => vest.endTime.getTime() > currentTime) // Remove ended vestings
+        .map((vest) => ({
+          ...vest,
+          type: vest.startTime.getTime() > currentTime ? 'soon' : 'vest',
+          timestamp: vest.startTime.getTime(),
+          tokenInfo: tokenInfos[vest.tokenMint.toBase58()],
+        }));
+
+      // Process locks - filter out unlocked locks
+      let processedLocks = lockData
+        .filter((lockItem) => lockItem.unlockTime.getTime() > currentTime) // Remove unlocked locks
+        .map((lockItem) => ({
+          ...lockItem,
+          type: 'lock',
+          timestamp: lockItem.unlockTime.getTime(),
+          tokenInfo: tokenInfos[lockItem.tokenMint.toBase58()],
+        }));
+
+      // Filter by token mint if specified (for stakenomics/pool pages)
+      if (filterTokenMint) {
+        processedPools = processedPools.filter(p => p.tokenMint.toBase58() === filterTokenMint);
+        processedVestings = processedVestings.filter(v => v.tokenMint.toBase58() === filterTokenMint);
+        processedLocks = processedLocks.filter(l => l.tokenMint.toBase58() === filterTokenMint);
+      }
+
+      // Sort by timestamp (newest first)
+      processedPools.sort((a, b) => b.timestamp - a.timestamp);
+      processedVestings.sort((a, b) => b.timestamp - a.timestamp);
+      processedLocks.sort((a, b) => b.timestamp - a.timestamp);
+
+      setStakePools(processedPools);
+      setVestings(processedVestings);
+      setLocks(processedLocks);
+
+      console.log("TokenGrid: Fetched pools:", processedPools.length);
+      console.log("TokenGrid: Fetched vestings:", processedVestings.length);
+      console.log("TokenGrid: Fetched locks:", processedLocks.length);
+    } catch (error) {
+      console.error("Error fetching TokenGrid data:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [staking, vesting, lock, fetchTokenInfo, filterTokenMint]);
+
+  useEffect(() => {
+    fetchAllData();
+  }, [fetchAllData]);
 
   // Prevent body scroll when menu is open on mobile
   useEffect(() => {
@@ -28,77 +123,50 @@ function TokenGrid({
     };
   }, [show, hideOnMobile]);
 
+  // Combine all items for rendering
+  const allItems = [
+    ...stakePools.map(p => ({ ...p, cardType: p.type })),
+    ...vestings.map(v => ({ ...v, cardType: v.type })),
+    ...locks.map(l => ({ ...l, cardType: l.type }))
+  ].sort((a, b) => b.timestamp - a.timestamp);
+
   const tokenContentDesktop = (
     <>
       <GridFilter variant={filterVariant} />
       <div
-        className="custom-scrollbar m-2 max-h-300 overflow-y-auto text-[#190E79] sm:m-3 lg:m-2 xl:m-3 xl:max-h-325 2xl:max-h-335 dark:text-white"
+        className="custom-scrollbar m-2 max-h-200 overflow-y-auto text-[#190E79] sm:m-3 lg:m-2 xl:m-3 xl:max-h-200 2xl:max-h-220 dark:text-white"
         style={{ minHeight: "400px" }}
       >
-        <div
-          className={`grid gap-2 sm:gap-3 lg:gap-1 xl:gap-2 ${gridCols || "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7"}`}
-        >
-          {tokens.map((token, idx) => (
-            <React.Fragment key={idx}>
-              <Stake
-                token={{
-                  image: token.image,
-                  name: token.name,
-                  mcap: token.mcap,
-                  staked: token.staked,
-                  stakedPercent: token.stakedPercent,
-                  frozen: token.frozen,
-                  frozenPercent: token.frozenPercent,
-                  stakers: token.stakers,
-                  timeLeft: token.timeLeft,
-                  percent: token.percent,
-                }}
-              />
-              <Soon
-                token={{
-                  image: token.image,
-                  name: token.name,
-                  mcap: token.mcap,
-                  staked: token.staked,
-                  stakedPercent: token.stakedPercent,
-                  frozen: token.frozen,
-                  frozenPercent: token.frozenPercent,
-                  stakers: token.stakers,
-                  timeLeft: token.timeLeft,
-                  percent: token.percent,
-                }}
-              />
-              <Lock
-                token={{
-                  image: token.image,
-                  name: token.name,
-                  mcap: token.mcap,
-                  staked: token.staked,
-                  stakedPercent: token.stakedPercent,
-                  frozen: token.frozen,
-                  frozenPercent: token.frozenPercent,
-                  stakers: token.stakers,
-                  timeLeft: token.timeLeft,
-                  percent: token.percent,
-                }}
-              />
-              <Vest
-                token={{
-                  image: token.image,
-                  name: token.name,
-                  mcap: token.mcap,
-                  staked: token.staked,
-                  stakedPercent: token.stakedPercent,
-                  frozen: token.frozen,
-                  frozenPercent: token.frozenPercent,
-                  stakers: token.stakers,
-                  timeLeft: token.timeLeft,
-                  percent: token.percent,
-                }}
-              />
-            </React.Fragment>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-center p-12 text-center">
+            Loading tokens...
+          </div>
+        ) : allItems.length === 0 ? (
+          <div className="flex items-center justify-center p-12 text-center">
+            No tokens found
+          </div>
+        ) : (
+          <div
+            className={`grid gap-2 sm:gap-1 lg:gap-1 xl:gap-2 ${gridCols || "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9"}`}
+          >
+            {allItems.map((item, idx) => {
+              const key = item.cardType === 'lock' || item.cardType === 'vest'
+                ? item.address?.toBase58()
+                : item.poolAddress?.toBase58();
+
+              if (item.cardType === 'stake') {
+                return <Stake key={`stake-${key || idx}`} data={item} />;
+              } else if (item.cardType === 'soon') {
+                return <Soon key={`soon-${key || idx}`} data={item} />;
+              } else if (item.cardType === 'vest') {
+                return <Vest key={`vest-${key || idx}`} data={item} />;
+              } else if (item.cardType === 'lock') {
+                return <Lock key={`lock-${key || idx}`} data={item} />;
+              }
+              return null;
+            })}
+          </div>
+        )}
       </div>
     </>
   );
@@ -107,66 +175,32 @@ function TokenGrid({
     <div
       className={`grid gap-2 p-2 ${gridCols || "grid-cols-1 sm:grid-cols-2"}`}
     >
-      {tokens.map((token, idx) => (
-        <React.Fragment key={idx}>
-          <Stake
-            token={{
-              image: token.image,
-              name: token.name,
-              mcap: token.mcap,
-              staked: token.staked,
-              stakedPercent: token.stakedPercent,
-              frozen: token.frozen,
-              frozenPercent: token.frozenPercent,
-              stakers: token.stakers,
-              timeLeft: token.timeLeft,
-              percent: token.percent,
-            }}
-          />
-          <Soon
-            token={{
-              image: token.image,
-              name: token.name,
-              mcap: token.mcap,
-              staked: token.staked,
-              stakedPercent: token.stakedPercent,
-              frozen: token.frozen,
-              frozenPercent: token.frozenPercent,
-              stakers: token.stakers,
-              timeLeft: token.timeLeft,
-              percent: token.percent,
-            }}
-          />
-          <Lock
-            token={{
-              image: token.image,
-              name: token.name,
-              mcap: token.mcap,
-              staked: token.staked,
-              stakedPercent: token.stakedPercent,
-              frozen: token.frozen,
-              frozenPercent: token.frozenPercent,
-              stakers: token.stakers,
-              timeLeft: token.timeLeft,
-              percent: token.percent,
-            }}
-          />
-          <Vest
-            token={{
-              image: token.image,
-              name: token.name,
-              mcap: token.mcap,
-              staked: token.staked,
-              stakedPercent: token.stakedPercent,
-              frozen: token.frozen,
-              frozenPercent: token.frozenPercent,
-              stakers: token.stakers,
-              timeLeft: token.timeLeft,
-              percent: token.percent,
-            }}
-          />
-        </React.Fragment>
-      ))}
+      {loading ? (
+        <div className="col-span-full flex items-center justify-center p-12 text-center">
+          Loading tokens...
+        </div>
+      ) : allItems.length === 0 ? (
+        <div className="col-span-full flex items-center justify-center p-12 text-center">
+          No tokens found
+        </div>
+      ) : (
+        allItems.map((item, idx) => {
+          const key = item.cardType === 'lock' || item.cardType === 'vest'
+            ? item.address?.toBase58()
+            : item.poolAddress?.toBase58();
+
+          if (item.cardType === 'stake') {
+            return <Stake key={`stake-${key || idx}`} data={item} />;
+          } else if (item.cardType === 'soon') {
+            return <Soon key={`soon-${key || idx}`} data={item} />;
+          } else if (item.cardType === 'vest') {
+            return <Vest key={`vest-${key || idx}`} data={item} />;
+          } else if (item.cardType === 'lock') {
+            return <Lock key={`lock-${key || idx}`} data={item} />;
+          }
+          return null;
+        })
+      )}
     </div>
   );
 

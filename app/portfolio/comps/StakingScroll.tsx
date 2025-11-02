@@ -395,6 +395,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                           poolEndTimestamp={
                             stake.pool.endTimestamp.getTime() / 1000
                           }
+                          poolData={stake.pool}
                         />
                       </div>
                     );
@@ -425,6 +426,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                           )}
                           stakersCount={0}
                           poolEndTimestamp={pool.endTimestamp.getTime() / 1000}
+                          poolData={pool}
                         />
                       </div>
                     );
@@ -468,6 +470,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                       )}
                       stakersCount={0}
                       poolEndTimestamp={pool.endTimestamp.getTime() / 1000}
+                      poolData={pool}
                     />
                   </div>
                 );
@@ -506,6 +509,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                     )}
                     stakersCount={stake.totalStakers || 0}
                     poolEndTimestamp={stake.pool.endTimestamp.getTime() / 1000}
+                    poolData={stake.pool}
                   />
                 </div>
               );
