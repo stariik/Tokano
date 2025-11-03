@@ -156,13 +156,13 @@ function StakeCard({
           />
           <div className="mt-8 lg:mt-6 xl:mt-8">
             <div className="absolute left-0 z-5 flex w-80">
-              <div className="mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
+              <div className="mx-2 md:mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
                 STAKE
               </div>
               <StakeIcon />
               <div className="mt-2 flex flex-col text-xs text-white xl:text-sm">
                 <div
-                  className={`${variant === "portfolio" ? "pr-6" : "pr-12 xl:pr-14 2xl:pr-18"} -z-1 -ml-6 rounded-full pl-8`}
+                  className={`${variant === "portfolio" ? "pr-6" : "pr-6 sm:pr-12 xl:pr-14 2xl:pr-18"} -z-1 -ml-6 rounded-full pl-8`}
                   style={{
                     background:
                       resolvedTheme === "dark"

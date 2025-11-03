@@ -7,6 +7,7 @@ import Soon from "./TokenCards/Soon";
 import Stake from "./TokenCards/Stake";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useTokens } from "@/contexts/tokens-context";
+import { useFavorites } from "@/hooks/useFavorites";
 
 function TokenGrid({
   hideOnMobile = true,
@@ -21,8 +22,15 @@ function TokenGrid({
   const [locks, setLocks] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Filter states
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("time"); // time, a-z, size, price
+  const [showType, setShowType] = useState("all"); // all, locks, pools, soon, vests
+  const [showFavorites, setShowFavorites] = useState(false);
+
   const { staking, vesting, lock } = useTokano();
   const { fetchTokenInfo } = useTokens();
+  const { isFavorite } = useFavorites();
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
 
   // Fetch all blockchain data
@@ -123,16 +131,95 @@ function TokenGrid({
     };
   }, [show, hideOnMobile]);
 
+
   // Combine all items for rendering
-  const allItems = [
+  let allItems = [
     ...stakePools.map(p => ({ ...p, cardType: p.type })),
     ...vestings.map(v => ({ ...v, cardType: v.type })),
     ...locks.map(l => ({ ...l, cardType: l.type }))
-  ].sort((a, b) => b.timestamp - a.timestamp);
+  ];
+
+  // Apply search filter
+  if (searchQuery.trim()) {
+    const query = searchQuery.toLowerCase();
+    allItems = allItems.filter(item => {
+      const tokenName = item.tokenInfo?.name?.toLowerCase() || '';
+      const tokenSymbol = item.tokenInfo?.symbol?.toLowerCase() || '';
+      const tokenMint = item.tokenMint?.toBase58().toLowerCase() || '';
+      return tokenName.includes(query) || tokenSymbol.includes(query) || tokenMint.includes(query);
+    });
+  }
+
+  // Apply show type filter
+  if (showType !== 'all') {
+    allItems = allItems.filter(item => {
+      if (showType === 'stake') return item.cardType === 'stake';
+      if (showType === 'vests') return item.cardType === 'vest';
+      if (showType === 'locks') return item.cardType === 'lock';
+      if (showType === 'soon') return item.cardType === 'soon';
+      return item.cardType === showType;
+    });
+  }
+
+  // Apply favorites filter
+  if (showFavorites) {
+    allItems = allItems.filter(item => {
+      // Get the address based on card type
+      let address = '';
+      let type = '';
+
+      if (item.cardType === 'lock') {
+        address = item.address?.toBase58() || '';
+        type = 'lock';
+      } else if (item.cardType === 'vest') {
+        address = item.address?.toBase58() || '';
+        type = 'vest';
+      } else if (item.cardType === 'stake' || item.cardType === 'soon') {
+        address = item.poolAddress?.toBase58() || '';
+        type = 'stake';
+      }
+
+      return address && isFavorite(type, address);
+    });
+  }
+
+  // Apply sorting
+  allItems.sort((a, b) => {
+    switch (sortBy) {
+      case 'time':
+        return b.timestamp - a.timestamp;
+      case 'a-z':
+        const nameA = a.tokenInfo?.name?.toLowerCase() || '';
+        const nameB = b.tokenInfo?.name?.toLowerCase() || '';
+        return nameA.localeCompare(nameB);
+      case 'size':
+        // Sort by total staked/locked amount (if available)
+        const sizeA = a.totalStaked?.toNumber() || a.amount?.toNumber() || 0;
+        const sizeB = b.totalStaked?.toNumber() || b.amount?.toNumber() || 0;
+        return sizeB - sizeA;
+      case 'price':
+        // Sort by token price (if available in tokenInfo)
+        const priceA = a.tokenInfo?.price || 0;
+        const priceB = b.tokenInfo?.price || 0;
+        return priceB - priceA;
+      default:
+        return b.timestamp - a.timestamp;
+    }
+  });
 
   const tokenContentDesktop = (
     <>
-      <GridFilter variant={filterVariant} />
+      <GridFilter
+        variant={filterVariant}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        showType={showType}
+        setShowType={setShowType}
+        showFavorites={showFavorites}
+        setShowFavorites={setShowFavorites}
+      />
       <div
         className="custom-scrollbar m-2 max-h-200 overflow-y-auto text-[#190E79] sm:m-3 lg:m-2 xl:m-3 xl:max-h-200 2xl:max-h-220 dark:text-white"
         style={{ minHeight: "400px" }}
@@ -268,7 +355,17 @@ function TokenGrid({
                 ×
               </button>
             </div>
-            <GridFilter variant={filterVariant} />
+            <GridFilter
+              variant={filterVariant}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              showType={showType}
+              setShowType={setShowType}
+              showFavorites={showFavorites}
+              setShowFavorites={setShowFavorites}
+            />
             <div className="custom-scrollbar flex-1 overflow-y-auto text-[#190E79] dark:text-white">
               {tokenContentMobile}
             </div>
@@ -278,7 +375,7 @@ function TokenGrid({
 
       {/* Desktop view - always visible based on visibilityClass */}
       <div
-        className={`h-full rounded-tr-4xl border-2 border-[#CDCDE9] dark:border-secondary bg-white dark:bg-[#13153A] ${visibilityClass}`}
+        className={`h-full mx-2 rounded-tr-4xl border-2 border-[#CDCDE9] dark:border-secondary bg-white dark:bg-[#13153A] ${visibilityClass}`}
       >
         {tokenContentDesktop}
       </div>

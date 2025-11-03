@@ -147,7 +147,7 @@ function StakingPoolResult({ token, formData }) {
 
         <div className="font-khand relative text-end text-xl font-medium lg:text-2xl">
           <div className="absolute -bottom-4 lg:-bottom-8 xl:-bottom-11 z-5 mt-2 flex w-full">
-            <div className="font-khand 2xl:mx-4 flex max-w-20 items-center text-xl font-semibold lg:text-xl text-left">
+            <div className="font-khand 2xl:mx-4 flex max-w-20 items-center text-sm md:text-xl font-semibold lg:text-xl text-left">
               <div className="leading-tight">
                 <div>STAKING</div>
                 <div>POOL</div>
@@ -157,7 +157,7 @@ function StakingPoolResult({ token, formData }) {
               <StakeIcon />
 
               <div
-                className="font-khand -z-1 ml-8 w-3/4 rounded-full py-0.5 lg:py-1 pr-2 pl-4 font-medium text-white md:pl-10"
+                className="font-khand -z-1 ml-6 sm:ml-8 w-3/4 rounded-full sm:py-0.5 lg:py-1 pr-2 pl-4 font-medium text-white md:pl-10"
                 style={{
                   background:
                     resolvedTheme === "dark"
@@ -174,7 +174,7 @@ function StakingPoolResult({ token, formData }) {
                 </div>
               </div>
               <div
-                className="font-khand -z-1 ml-8 w-2/3 rounded-full py-0.5 lg:py-1 pr-2 pl-4 font-medium text-black md:pl-10"
+                className="font-khand -z-1 ml-6 sm:ml-8 w-2/3 rounded-full sm:py-0.5 lg:py-1 pr-2 pl-4 font-medium text-black md:pl-10"
                 style={{
                   background:
                     resolvedTheme === "dark"

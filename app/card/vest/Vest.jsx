@@ -58,7 +58,7 @@ function Vest({ vestData, vestAddress }) {
   const formatAddress = (address) => {
     if (!address) return "N/A";
     const addrString = typeof address === 'string' ? address : address.toBase58();
-    return `${addrString.slice(0, 6)}...${addrString.slice(-6)}`;
+    return `${addrString.slice(0, 4)}...${addrString.slice(-3)}`;
   };
 
   // Calculate time remaining or progress
@@ -121,7 +121,7 @@ function Vest({ vestData, vestAddress }) {
 
   return (
     <div
-      className="dark:border-secondary mx-4 rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:mx-0 lg:pb-2 dark:text-white"
+      className="dark:border-secondary sm:mx-4 rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:mx-0 lg:pb-2 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -217,9 +217,9 @@ function Vest({ vestData, vestAddress }) {
           </div>
           <VestIcon />
 
-          <div className="font-khand my-auto flex w-5/5 flex-col text-xs font-normal xl:text-sm">
+          <div className="font-khand my-auto flex w-5/5 flex-col text-[10px] sm:text-xs font-normal xl:text-sm">
             <div
-              className="font-khand -z-1 -ml-4 flex w-auto justify-between rounded-full py-1 pr-1 pl-4 font-normal text-white md:w-2/3 lg:w-4/5 2xl:pr-5 2xl:pl-6"
+              className="font-khand -z-1 -ml-4 flex w-auto justify-between rounded-full py-1 pr-1 pl-4 font-normal text-white md:w-4/4 lg:w-4/5 2xl:pr-5 2xl:pl-6"
               style={{
                 background:
                   resolvedTheme === "dark"

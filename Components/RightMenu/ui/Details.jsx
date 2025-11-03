@@ -308,7 +308,7 @@ function Details() {
         </div>
 
         {/* History Button */}
-        <div className="dark:border-secondary flex justify-center relative z-50 mb-2 border-y-1 border-[#CDCDE9] bg-[#f5f3fb] px-4 py-1 text-center dark:bg-[#140b2a]">
+        <div className="dark:border-secondary flex justify-center relative mb-2 border-y-1 border-[#CDCDE9] bg-[#f5f3fb] px-4 py-1 text-center dark:bg-[#140b2a]">
           {/* <button className="font-semibold text-white">▼ History</button> */}
           <TokanoHeader />
         </div>

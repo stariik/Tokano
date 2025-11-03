@@ -212,7 +212,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
     <div className="dark:border-secondary font-khand overflow-hidden rounded-4xl border-2 border-[#CDCDE9] mt-4">
       <div className="grid grid-cols-2 bg-gradient-to-r from-[#8D85FB] to-[#4B317C] text-white dark:from-[#574DDD] dark:to-[#330E79] dark:text-[#190E79]">
         {/* Left side */}
-        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] px-4 py-2 text-xl font-semibold lg:p-2 lg:text-xs xl:p-4 xl:text-base 2xl:text-4xl dark:text-white">
+        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] px-4 py-2 text-base md:text-xl font-semibold lg:p-2 lg:text-xs xl:p-4 xl:text-base 2xl:text-4xl dark:text-white">
           <div className="flex flex-col items-center justify-center leading-none">
             <span>Staking</span>
             <span>Module</span>
@@ -262,7 +262,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
                   placeholder="0.00"
-                  className="font-khand mb-4 border-b-1 border-white/40 text-xs font-semibold md:text-lg 2xl:text-2xl bg-transparent text-center w-32 outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="font-khand mb-4 border-b-1 border-white/40 text-xs font-semibold md:text-lg 2xl:text-2xl bg-transparent text-center w-16 sm:w-32 outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   disabled={isStaking || !publicKey}
                 />
                 {/* <div className="hidden md:block absolute bottom-5 right-0 h-[1px] bg-white/40 w-38" /> */}

@@ -58,7 +58,7 @@ function Lock({ lockData, lockAddress }) {
   const formatAddress = (address) => {
     if (!address) return "N/A";
     const addrString = typeof address === 'string' ? address : address.toBase58();
-    return `${addrString.slice(0, 6)}...${addrString.slice(-6)}`;
+    return `${addrString.slice(0, 4)}...${addrString.slice(-3)}`;
   };
 
   // Calculate time remaining
@@ -219,7 +219,7 @@ function Lock({ lockData, lockAddress }) {
             LOCK
           </div>
           <StakeIcon />
-          <div className="font-khand my-auto flex w-5/5 flex-col text-xs font-normal xl:text-sm">
+          <div className="font-khand my-auto flex w-5/5 flex-col text-[10px] sm:text-xs font-normal xl:text-sm">
             <div
               className="font-khand -z-1 -ml-4 flex justify-between rounded-full py-1 pr-5 pl-6 font-medium text-white"
               style={{

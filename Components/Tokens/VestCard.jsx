@@ -124,11 +124,11 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
           />
 
           <div className="absolute -bottom-6 left-4 z-2 flex w-7/10">
-            <div className="mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
+            <div className="mx-2 md:mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
               VEST
             </div>
             <VestIcon />
-            <div className="my-auto flex w-full flex-col text-xs xl:text-sm">
+            <div className="my-auto flex w-full flex-col text-[10px] sm:text-xs xl:text-sm">
               <div
                 className="-z-1 -ml-2 flex justify-end rounded-full bg-[#e3f2fd] pr-1 pl-1 text-white dark:bg-transparent"
                 style={{
@@ -160,7 +160,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
       </div>
       <div className="flex items-center justify-end gap-2 pr-4 pb-2 xl:gap-6">
         <div
-          className="font-khand mt-2 flex rounded-xl bg-[#e3f2fd] px-2 py-0 text-xs font-normal text-white xl:text-sm dark:bg-transparent"
+          className="font-khand mt-2 flex rounded-xl bg-[#e3f2fd] px-2 py-0 text-[10px] sm:text-xs font-normal text-white xl:text-sm dark:bg-transparent"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}

@@ -137,9 +137,9 @@ function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecima
               LOCK
             </div>
             <StakeIcon />
-            <div className=":text-sm my-auto flex w-full flex-col text-xs">
+            <div className=" my-auto flex w-full flex-col text-[10px] sm:text-xs">
               <div
-                className="-z-1 -ml-2 flex w-full justify-between rounded-full bg-[#e3f2fd] pr-4 pl-4 text-white dark:bg-transparent"
+                className="-z-1 -ml-2 flex w-full justify-between rounded-full pr-4 pl-4 text-white dark:bg-transparent"
                 style={{
                   background: "var(--gradient-lock)",
                 }}
