@@ -207,7 +207,7 @@ function StakingCard({ pool }: StakingCardProps) {
             <StakeIcon />
 
             <div
-              className="font-khand -z-1 ml-6 sm:ml-8 w-3/4 rounded-r-full py-0.5 sm:py-1 pl-6 sm:pl-10 font-medium text-white"
+              className="font-khand -z-1 ml-6 w-3/4 rounded-r-full py-0.5 pl-6 font-medium text-white sm:ml-8 sm:py-1 sm:pl-10"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -218,7 +218,7 @@ function StakingCard({ pool }: StakingCardProps) {
               <div>LOCKED: {formatDate(pool.endTimestamp)}</div>
             </div>
             <div
-              className="font-khand -z-1 ml-7 w-2/3 rounded-r-full py-0.5 sm:py-1 pl-4 font-medium text-black md:pl-10"
+              className="font-khand -z-1 ml-7 w-2/3 rounded-r-full py-0.5 pl-4 font-medium text-black sm:py-1 md:pl-10"
               style={{
                 background:
                   resolvedTheme === "dark"
