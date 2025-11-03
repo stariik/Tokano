@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { PLATFORM_WALLET } from "@/lib/constants";
 
 interface TokanoSdkContext {
   staking: TokanoStaking | undefined;
@@ -29,9 +30,9 @@ export default function TokanoSdkProvider({
 
   useEffect(() => {
     if (connection) {
-      const stakingSdk = new TokanoStaking(connection);
-      const vestingSdk = new TokanoVesting(connection);
-      const lockSdk = new TokanoLock(connection);
+      const stakingSdk = new TokanoStaking(connection, PLATFORM_WALLET);
+      const vestingSdk = new TokanoVesting(connection, PLATFORM_WALLET);
+      const lockSdk = new TokanoLock(connection, PLATFORM_WALLET);
 
       setStaking(stakingSdk);
       setVesting(vestingSdk);
