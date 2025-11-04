@@ -160,7 +160,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
       </div>
       <div className="flex items-center justify-end gap-2 pr-4 pb-2 xl:gap-6">
         <div
-          className="font-khand mt-2 flex rounded-xl bg-[#e3f2fd] px-2 py-0 text-[10px] sm:text-xs font-normal text-white xl:text-sm dark:bg-transparent"
+          className="font-khand flex rounded-xl px-2 py-0 text-[10px] sm:text-xs font-normal text-white xl:text-sm dark:bg-transparent"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}
