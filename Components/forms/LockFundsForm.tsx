@@ -288,6 +288,7 @@ export default function LockFundsForm({
       setIsClosing(false);
     }, 300);
   };
+  
 
   return (
     <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl xl:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
