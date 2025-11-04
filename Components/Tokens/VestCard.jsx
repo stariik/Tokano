@@ -99,7 +99,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
           <StarIcon filled={isFav} />
         </div>
         <div className="flex w-full flex-col">
-          <div className="flex w-full items-center justify-between pr-4">
+          <div className="flex w-full items-center justify-between pr-2 sm:pr-4">
             <CiPill
               color="#5ecb89"
               size={24}
@@ -120,11 +120,11 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
         <div className="flex flex-col justify-start">
           <img
             src="/vest.png"
-            className="mr-26 mb-4 w-20 rounded-2xl lg:rounded-3xl xl:w-24 2xl:w-28"
+            className="mr-16 sm:mr-26 lg:mr-24 mb-4 w-14 sm:w-20  lg:w-18 rounded-2xl lg:rounded-2xl xl:rounded-3xl xl:w-24 2xl:w-28"
           />
 
-          <div className="absolute -bottom-6 left-4 z-2 flex w-7/10">
-            <div className="mx-2 md:mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
+          <div className="absolute -bottom-7 sm:-bottom-6 left-1 sm:left-4 z-2 flex w-7/10">
+            <div className="mx-2 md:mx-1 flex items-center text-xl xl:mx-4 xl:text-3xl">
               VEST
             </div>
             <VestIcon />
@@ -158,9 +158,9 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
           {vestData?.totalVestedAmount ? formatAmount(vestData.totalVestedAmount, tokenDecimals) : "0"}
         </p>
       </div>
-      <div className="flex items-center justify-end gap-2 pr-4 pb-2 xl:gap-6">
+      <div className="flex items-center justify-end gap-1 sm:gap-2 pr-4 pb-2 xl:gap-6">
         <div
-          className="font-khand flex rounded-xl px-2 py-0 text-[10px] sm:text-xs font-normal text-white xl:text-sm dark:bg-transparent"
+          className="font-khand mt-2 sm:mt-0 flex rounded-xl px-2 py-0 text-[10px] sm:text-xs font-normal text-white xl:text-sm dark:bg-transparent"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}

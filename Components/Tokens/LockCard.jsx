@@ -8,17 +8,25 @@ import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 import { useFavorites } from "@/hooks/useFavorites";
 
-function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecimals }) {
+function LockCard({
+  id,
+  title,
+  created,
+  marketCap,
+  wallet,
+  lockData,
+  tokenDecimals,
+}) {
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
 
-  const isFav = isFavorite('lock', wallet);
+  const isFav = isFavorite("lock", wallet);
 
   const handleStarClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (wallet) {
-      toggleFavorite('lock', wallet);
+      toggleFavorite("lock", wallet);
     }
   };
 
@@ -30,7 +38,7 @@ function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecima
   // Format amount with proper decimals
   const formatAmount = (amount, decimals = 9) => {
     if (!amount) return "0";
-    const amountNum = typeof amount === 'number' ? amount : Number(amount);
+    const amountNum = typeof amount === "number" ? amount : Number(amount);
     const value = amountNum / Math.pow(10, decimals);
 
     if (value >= 1000000) {
@@ -100,13 +108,13 @@ function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecima
         }}
       >
         <div
-          className="absolute top-6 right-4 cursor-pointer hover:scale-110 transition-transform z-10"
+          className="absolute top-6 right-4 z-10 cursor-pointer transition-transform hover:scale-110"
           onClick={handleStarClick}
         >
           <StarIcon filled={isFav} />
         </div>
         <div className="flex w-full flex-col">
-          <div className="flex w-full items-center justify-between pr-2 md:pr-4">
+          <div className="flex w-full items-center justify-between pr-2 sm:pr-4">
             <CiPill
               color="#5ecb89"
               size={24}
@@ -115,29 +123,31 @@ function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecima
               {title}
             </h1>
           </div>
-          <div className="font-khand mt-2 pr-4 text-right font-normal">
+          <div className="font-khand mt-2 pr-4 text-right text-sm font-normal xl:text-base 2xl:text-lg">
             <p>
-              <span className="font-semibold">Pool ID: </span> {shortenAddress(wallet)}
+              <span className="font-semibold">Pool ID: </span>{" "}
+              {shortenAddress(wallet)}
             </p>
             <p>
-              <span className="font-semibold">Token ID: </span> {shortenAddress(created)}
+              <span className="font-semibold">Token ID: </span>{" "}
+              {shortenAddress(created)}
             </p>
           </div>
         </div>
         <div className="flex flex-col justify-start">
           <img
             src="/vest.png"
-            className="mr-26 mb-4 w-20 rounded-2xl lg:rounded-3xl xl:w-24 2xl:w-28"
+            className="mr-16 mb-4 w-14 rounded-2xl sm:mr-26 sm:w-20 lg:mr-24 lg:w-18 lg:rounded-2xl xl:w-24 xl:rounded-3xl 2xl:w-28"
           />
 
           {/*  */}
 
-          <div className="absolute -bottom-6 left-0 z-5 flex w-11/13">
-            <div className="mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
+          <div className="absolute -bottom-6 left-0 z-5 flex w-11/13 md:w-13/16">
+            <div className="mx-2 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
               LOCK
             </div>
             <StakeIcon />
-            <div className=" my-auto flex w-full flex-col text-[10px] sm:text-xs">
+            <div className="my-auto flex w-full flex-col text-[10px] sm:text-xs">
               <div
                 className="-z-1 -ml-2 flex w-full justify-between rounded-full pr-4 pl-4 text-white dark:bg-transparent"
                 style={{
@@ -148,9 +158,8 @@ function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecima
                   div {
                     --gradient-lock: linear-gradient(
                       90deg,
-                      rgba(7, 75, 163, 1) 0%,
-                      rgba(4, 88, 124, 1) 36%,
-                      rgba(12, 224, 207, 1) 100%
+                      rgb(204 0 255) 25%,
+                      rgb(0 142 243) 70%
                     );
                   }
                 `}</style>
@@ -162,7 +171,9 @@ function LockCard({ id, title, created, marketCap, wallet, lockData, tokenDecima
           {/*  */}
         </div>
         <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">
-          {lockData?.lockAmount ? formatAmount(lockData.lockAmount, tokenDecimals) : "0"}
+          {lockData?.lockAmount
+            ? formatAmount(lockData.lockAmount, tokenDecimals)
+            : "0"}
         </p>
       </div>
       <div className="flex items-center justify-end gap-6 pr-4 pb-2">
