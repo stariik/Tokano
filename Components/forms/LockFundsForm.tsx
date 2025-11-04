@@ -294,7 +294,7 @@ export default function LockFundsForm({
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
-          <div className="font-khand flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-white text-base font-bold text-[#6b4d9f]">
+          <div className="font-khand flex h-7 w-7 items-center justify-center rounded-full bg-white text-base font-bold text-[#6b4d9f]">
             🔒
           </div>
           <div className="font-khand text-sm font-semibold text-[#190E79] dark:text-white">
