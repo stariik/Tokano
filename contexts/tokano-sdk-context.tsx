@@ -30,9 +30,9 @@ export default function TokanoSdkProvider({
 
   useEffect(() => {
     if (connection) {
-      const stakingSdk = new TokanoStaking(connection, PLATFORM_WALLET);
-      const vestingSdk = new TokanoVesting(connection, PLATFORM_WALLET);
-      const lockSdk = new TokanoLock(connection, PLATFORM_WALLET);
+      const stakingSdk = new TokanoStaking(connection);
+      const vestingSdk = new TokanoVesting(connection);
+      const lockSdk = new TokanoLock(connection);
 
       setStaking(stakingSdk);
       setVesting(vestingSdk);

@@ -1,9 +1,9 @@
 "use client";
 import { React, useState } from "react";
-import TokenGrid from "@/Components/Memes/TokenGrid";
+import PortfolioTokenGrid from "@/Components/Memes/PortfolioTokenGrid";
 import CryptoWallet from "@/Components/stakenomics/CryptoWallet";
 import StakingScroll from "./comps/StakingScroll";
-import RightMenu from "@/Components/RightMenu/RightMenu";
+import PortfolioRightMenu from "@/Components/RightMenu/PortfolioRightMenu";
 
 function page() {
   const [selectedTokenIndex, setSelectedTokenIndex] = useState(0);
@@ -11,9 +11,8 @@ function page() {
   return (
     <div className="mx-auto flex justify-between gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">
       <div className="max-w-120">
-        <TokenGrid
+        <PortfolioTokenGrid
           gridCols="grid-cols-2"
-          filterVariant="portfolio"
         />
       </div>
       <div className="w-3xl gap-4">
@@ -25,7 +24,7 @@ function page() {
         <StakingScroll selectedTokenIndex={selectedTokenIndex} />
       </div>
       <div className="max-w-120 relative">
-        <RightMenu />
+        <PortfolioRightMenu />
       </div>
     </div>
   );

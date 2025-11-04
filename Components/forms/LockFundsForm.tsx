@@ -290,7 +290,7 @@ export default function LockFundsForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl lg:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl xl:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -472,7 +472,14 @@ export default function LockFundsForm({
         {/* CREATE LOCK Button */}
         <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
           <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
-            creation fee: <span className="ml-2"> {formData.tokenAmount ? (parseFloat(formData.tokenAmount) * 0.01).toFixed(2) : '0'} {token.name || 'tokens'}</span>
+            creation fee:{" "}
+            <span className="ml-2">
+              {" "}
+              {formData.tokenAmount
+                ? (parseFloat(formData.tokenAmount) * 0.01).toFixed(2)
+                : "0"}{" "}
+              {token.name || "tokens"}
+            </span>
           </div>
           <div className="flex items-center text-xs text-[#190E79] md:text-base">
             <button

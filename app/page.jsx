@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import Live from "@/Components/Live/Live";
 import LaunchingSoon from "@/Components/LaunchingSoon/LaunchingSoon";
 import TokenTable from "@/Components/PlatformStats/ui/TokenTable";
-import RightMenu from "@/Components/RightMenu/RightMenu";
+import HomeRightMenu from "@/Components/RightMenu/HomeRightMenu";
 import PlatformStats from "@/Components/PlatformStats/PlatformStats";
-import TokenGrid from "@/Components/Memes/TokenGrid";
+import HomeTokenGrid from "@/Components/Memes/HomeTokenGrid";
 import { useBalances } from "@/contexts/balances-context";
 import Banner from "@/Components/Banner";
 
@@ -41,15 +41,14 @@ export default function Home() {
             <Live />
           </div>
           <div className="md:w-1/2 lg:w-1/3">
-            <RightMenu />
+            <HomeRightMenu />
           </div>
         </div>
       </div>
       <Banner src={"banner1.png"} />
 
       <div className="mt-4 w-full min-[385px]:flex min-[385px]:justify-center mx-auto max-w-lg md:max-w-full">
-        <TokenGrid
-          hideOnMobile={false}
+        <HomeTokenGrid
           gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-9"
         />
       </div>

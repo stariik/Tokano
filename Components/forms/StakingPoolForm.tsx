@@ -336,7 +336,7 @@ export default function StakingPoolForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl lg:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl xl:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -350,7 +350,7 @@ export default function StakingPoolForm({
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white p-4 lg:p-6 dark:bg-[#1B105C]">
+      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C]">
         {/* Pool Activation Date and Time */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-1 md:gap-3">
@@ -545,7 +545,14 @@ export default function StakingPoolForm({
         {/* CREATE POOL Button */}
         <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
           <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
-            creation fee: <span className="ml-2"> {formData.rewardAmount ? (parseFloat(formData.rewardAmount) * 0.01).toFixed(2) : '0'} {token.name || 'tokens'}</span>
+            creation fee:{" "}
+            <span className="ml-2">
+              {" "}
+              {formData.rewardAmount
+                ? (parseFloat(formData.rewardAmount) * 0.01).toFixed(2)
+                : "0"}{" "}
+              {token.name || "tokens"}
+            </span>
           </div>
           <div className="flex items-center text-xs text-[#190E79] md:text-base">
             <button

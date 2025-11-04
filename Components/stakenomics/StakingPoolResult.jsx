@@ -20,7 +20,10 @@ function StakingPoolResult({ token, formData }) {
 
   // Calculate launching countdown
   const getLaunchingCountdown = () => {
-    if (!formData?.activationDateTime || formData.activationDateTime === "IMMEDIATELY") {
+    if (
+      !formData?.activationDateTime ||
+      formData.activationDateTime === "IMMEDIATELY"
+    ) {
       return "LIVE NOW";
     }
 
@@ -86,7 +89,7 @@ function StakingPoolResult({ token, formData }) {
       }}
     >
       <div
-        className="relative rounded-3xl p-4 pb-0 md:p-6 md:pb-2"
+        className="relative rounded-3xl p-4 pb-0 md:p-6 md:pb-2 lg:p-4"
         style={{
           background:
             resolvedTheme === "dark"
@@ -97,17 +100,29 @@ function StakingPoolResult({ token, formData }) {
         <div className="grid grid-cols-3 items-center">
           <img
             src="/vest.png"
-            className="mb-4 w-16 rounded-2xl  xl:ml-4 2xl:ml-10 md:w-18 lg:w-16 xl:w-22 lg:rounded-3xl "
+            className="mb-4 w-16 rounded-2xl md:w-18 lg:w-16 xl:ml-4 xl:w-22 xl:rounded-3xl 2xl:ml-10"
           />
-          <div className="font-khand font-normal col-span-2">
+          <div className="font-khand col-span-2 font-normal">
             <h1 className="font-khand text-base font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl">
               {token?.name || "TOKEN NAME"}
             </h1>
 
             <div className="mt-1 pl-1 text-xs md:text-sm lg:text-base 2xl:text-base">
+              <p>
+                Token ID:{" "}
+                {token?.id
+                  ? token.id.length > 12
+                    ? `${token.id.slice(0, 5)}...${token.id.slice(-3)}`
+                    : token.id
+                  : "0x0000...0000"}
+              </p>
+              <p>
+                Creator:{" "}
+                {formData?.creator
+                  ? `${formData.creator.slice(0, 4)}...${formData.creator.slice(-4)}`
+                  : "Anonymous"}
+              </p>
               <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
-              <p>Creator: {formData?.creator ? `${formData.creator.slice(0, 4)}...${formData.creator.slice(-4)}` : "Anonymous"}</p>
-              <p>Token ID: {token?.id ? (token.id.length > 12 ? `${token.id.slice(0, 6)}...${token.id.slice(-4)}` : token.id) : "0x0000...0000"}</p>
             </div>
           </div>
         </div>
@@ -134,7 +149,7 @@ function StakingPoolResult({ token, formData }) {
         </div>
 
         <div
-          className="font-khand mx-auto w-fit mt-2 mb-10 rounded-2xl px-4 text-center text-sm font-semibold text-[#311880] md:text-sm lg:text-lg 2xl:text-2xl"
+          className="font-khand mx-auto mt-2 mb-10 w-fit rounded-2xl px-4 text-center text-sm font-semibold text-[#311880] md:text-sm lg:text-lg 2xl:text-2xl"
           style={{
             background:
               resolvedTheme === "dark"
@@ -142,12 +157,14 @@ function StakingPoolResult({ token, formData }) {
                 : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
           }}
         >
-          {getLaunchingCountdown() === "LIVE NOW" ? "LIVE NOW" : `LAUNCHING IN: ${getLaunchingCountdown()}`}
+          {getLaunchingCountdown() === "LIVE NOW"
+            ? "LIVE NOW"
+            : `LAUNCHING IN: ${getLaunchingCountdown()}`}
         </div>
 
         <div className="font-khand relative text-end text-xl font-medium lg:text-2xl">
-          <div className="absolute -bottom-4 lg:-bottom-8 xl:-bottom-11 z-5 mt-2 flex w-full">
-            <div className="font-khand 2xl:mx-4 flex max-w-20 items-center text-sm md:text-xl font-semibold lg:text-xl text-left">
+          <div className="absolute -bottom-4 z-5 mt-2 flex w-full lg:-bottom-8 xl:-bottom-11">
+            <div className="font-khand flex max-w-20 items-center text-left text-sm font-semibold md:text-xl lg:text-xl 2xl:mx-4">
               <div className="leading-tight">
                 <div>STAKING</div>
                 <div>POOL</div>
@@ -157,7 +174,7 @@ function StakingPoolResult({ token, formData }) {
               <StakeIcon />
 
               <div
-                className="font-khand -z-1 ml-6 sm:ml-8 w-3/4 rounded-full sm:py-0.5 lg:py-1 pr-2 pl-4 font-medium text-white md:pl-10"
+                className="font-khand -z-1 ml-6 w-3/4 rounded-full pr-2 pl-4 font-medium text-white sm:ml-8 sm:py-0.5 md:pl-10 lg:py-1"
                 style={{
                   background:
                     resolvedTheme === "dark"
@@ -174,7 +191,7 @@ function StakingPoolResult({ token, formData }) {
                 </div>
               </div>
               <div
-                className="font-khand -z-1 ml-6 sm:ml-8 w-2/3 rounded-full sm:py-0.5 lg:py-1 pr-2 pl-4 font-medium text-black md:pl-10"
+                className="font-khand -z-1 ml-6 w-2/3 rounded-full pr-2 pl-4 font-medium text-black sm:ml-8 sm:py-0.5 md:pl-10 lg:py-1"
                 style={{
                   background:
                     resolvedTheme === "dark"

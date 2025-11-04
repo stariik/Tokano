@@ -1,5 +1,17 @@
 import React from "react";
 
+interface GridFilterProps {
+  variant?: "default" | "portfolio";
+  searchQuery?: string;
+  setSearchQuery?: (value: string) => void;
+  sortBy?: string;
+  setSortBy?: (value: string) => void;
+  showType?: string;
+  setShowType?: (value: string) => void;
+  showFavorites?: boolean;
+  setShowFavorites?: (value: boolean) => void;
+}
+
 function GridFilter({
   variant = "default",
   searchQuery = "",
@@ -10,7 +22,7 @@ function GridFilter({
   setShowType = () => {},
   showFavorites = false,
   setShowFavorites = () => {},
-}) {
+}: GridFilterProps) {
   if (variant === "portfolio") {
     return (
       <div className="mb-2 flex w-full flex-col border-b border-[#292B8C] text-sm font-medium text-[#B0B3D6]">
