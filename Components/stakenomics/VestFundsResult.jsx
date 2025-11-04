@@ -63,6 +63,7 @@ function VestFundsResult({ token, formData, creatorWallet }) {
             : "linear-gradient(90deg, #EFEFEF 0%, #9C3B8A 100%)",
       }}
     >
+      
       <div
         className="relative rounded-3xl px-4 pt-4 md:px-8 lg:px-4 xl:px-8"
         style={{
