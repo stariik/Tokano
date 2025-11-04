@@ -13,6 +13,10 @@ import TokanoSdkProvider from "@/contexts/tokano-sdk-context";
 import BalancesProvider from "@/contexts/balances-context";
 import { WalletConnectWalletAdapter } from "@walletconnect/solana-adapter";
 import { TokensProvider } from "@/contexts/tokens-context";
+import {
+  PhantomWalletAdapter,
+  TrustWalletAdapter,
+} from "@solana/wallet-adapter-wallets";
 
 export default function LayoutProviders({
   children,
@@ -22,12 +26,14 @@ export default function LayoutProviders({
   const wallets = useMemo<Adapter[]>(
     () => [
       new LedgerWalletAdapter(),
+      new PhantomWalletAdapter(),
+      new TrustWalletAdapter(),
       new WalletConnectWalletAdapter({
         network: WalletAdapterNetwork.Mainnet,
         options: {
           relayUrl: "wss://relay.walletconnect.com",
           // example WC app project ID
-          projectId: "e899c82be21d4acca2c8aec45e893598",
+          projectId: "2d8e068fda3f4a1ec85a645ff29a4168",
           metadata: {
             name: "Tokano App",
             description: "Tokano App",
@@ -44,7 +50,7 @@ export default function LayoutProviders({
     <ConnectionProvider endpoint={RPC_ENDPOINT}>
       <WalletProvider
         wallets={wallets}
-        autoConnect={true}
+        autoConnect={false}
       >
         <TokensProvider>
           <BalancesProvider>
