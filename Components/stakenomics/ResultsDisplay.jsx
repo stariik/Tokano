@@ -24,6 +24,7 @@ function ResultCard({ data }) {
       <LockFundsResult
         token={token}
         formData={formData}
+        creatorWallet={formData?.creator}
       />
     );
   }
@@ -33,6 +34,7 @@ function ResultCard({ data }) {
       <VestFundsResult
         token={token}
         formData={formData}
+        creatorWallet={formData?.creator}
       />
     );
   }

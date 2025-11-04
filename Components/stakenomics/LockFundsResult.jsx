@@ -3,7 +3,7 @@ import { StarIcon } from "@/Components/icons";
 import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 
-function LockFundsResult({ token, formData }) {
+function LockFundsResult({ token, formData, creatorWallet }) {
   const { resolvedTheme } = useTheme();
   // Helper function to format numbers
   const formatNumber = (num) => {
@@ -18,13 +18,13 @@ function LockFundsResult({ token, formData }) {
   // Helper function to format wallet address
   const formatWallet = (wallet) => {
     if (!wallet || typeof wallet !== "string" || wallet.length <= 12)
-      return wallet || "0x0000...0000";
-    return `${wallet.slice(0, 6)}...${wallet.slice(-3)}`;
+      return wallet || "0x00...000";
+    return `${wallet.slice(0, 4)}...${wallet.slice(-3)}`;
   };
 
   const LockIcon = () => (
     <svg
-      className="h-[47px] w-[47px] lg:h-[57px] lg:w-[80px]"
+      className="w-[47px] h-full lg:w-[60px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ function LockFundsResult({ token, formData }) {
       }}
     >
       <div
-        className="relative rounded-3xl px-4 pt-4 md:px-8"
+        className="relative rounded-3xl px-4 pt-4 md:px-4"
         style={{
           background:
             resolvedTheme === "dark"
@@ -80,36 +80,38 @@ function LockFundsResult({ token, formData }) {
               : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
         }}
       >
-        <div className="flex flex-row-reverse">
-          <img
-            src="/vest.png"
-            className="ml-4 h-full w-18 rounded-2xl md:w-20 lg:w-22 lg:rounded-2xl xl:rounded-3xl xl:mr-8 xl:w-24 2xl:mr-12"
-          />
-          <div className="font-khand ml-4 font-normal lg:ml-8">
-            <h1 className="font-khand mr-18 text-lg font-semibold sm:mr-64 sm:text-2xl md:text-xl lg:mr-36 lg:text-2xl xl:mr-18 xl:text-4xl">
-              {token?.name || "TOKEN NAME"}
-            </h1>
+        <div className="flex justify-end">
+          <div className="font-khand font-normal">
+            <div className="flex w-full justify-start">
+              <h1 className="font-khand lg:text-2xlxl:text-4xl text-lg font-semibold sm:text-2xl md:text-xl -ml-6">
+                {token?.name || "TOKEN NAME"}
+              </h1>
+            </div>
 
-            <div className="mt-1 ml-6 pl-1 text-sm sm:text-lg md:ml-12 md:text-base lg:text-base 2xl:text-xl">
-              <p>Lock ID: {formatWallet(formData?.recipientWallet)}</p>
+            <div className="mt-1 flex w-full flex-col justify-end pl-1 text-sm sm:text-lg md:text-base lg:text-base 2xl:text-xl">
+              <p>Lock ID: {formatWallet(creatorWallet)}</p>
               <p>Token ID: {formatWallet(token?.id)}</p>
             </div>
           </div>
+          <img
+            src="/vest.png"
+            className="mr-6 ml-4 h-full w-18 rounded-2xl md:mr-8 md:w-20 lg:mr-4 lg:w-18 lg:rounded-2xl xl:mr-8 xl:w-24 xl:rounded-3xl 2xl:mr-12"
+          />
         </div>
-        <div className="absolute top-10 left-0">
+        <div className="absolute top-0 left-0">
           <div className="mt-6 ml-4 lg:mr-12">
             <CiPill size={28} />
           </div>
         </div>
 
-        <div className="absolute left-0 z-5 flex w-12/13 md:w-11/13">
-          <div className="font-khand mx-2 flex items-center text-xl font-semibold md:mx-4 lg:text-3xl">
+        <div className="absolute left-0 z-5 flex w-11/13">
+          <div className="font-khand mx-2 flex items-center text-xl font-semibold md:mx-4 lg:mx-1 lg:text-2xl xl:mx-2 2xl:mx-4">
             LOCK
           </div>
           <LockIcon />
-          <div className="font-khand my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
+          <div className="font-khand my-auto flex w-full flex-col text-xs font-normal lg:text-[13px]">
             <div
-              className="font-khand -z-1 -ml-4 flex justify-between rounded-full bg-[#f0ebfa] py-1 pr-1 pl-4 font-medium text-white md:pr-5 2xl:pl-6 dark:bg-transparent"
+              className="font-khand -z-1 -ml-4 flex justify-between rounded-full bg-[#f0ebfa] py-1 pr-1 pl-4 font-medium text-white md:pr-2 2xl:pl-6 dark:bg-transparent"
               style={{
                 background: "var(--gradient-lock-result)",
               }}
@@ -147,12 +149,12 @@ function LockFundsResult({ token, formData }) {
           </div>
         </div>
 
-        <div className="font-khand mt-8 mr-1 text-end text-2xl font-semibold text-[#FFB01C] lg:text-3xl">
+        <div className="font-khand mr-1 text-end text-2xl font-semibold text-[#FFB01C] lg:text-3xl">
           {formatNumber(formData?.tokenAmount)}
         </div>
       </div>
 
-      <div className="font-khand mr-12 text-end text-xl font-medium lg:text-2xl">
+      <div className="font-khand mr-6 text-end text-xl font-medium lg:text-2xl">
         locked
       </div>
     </div>

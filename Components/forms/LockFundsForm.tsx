@@ -464,6 +464,7 @@ export default function LockFundsForm({
           <LockFundsResult
             token={token}
             formData={formData}
+            creatorWallet={publicKey?.toBase58()}
           />
         </div>
       </div>
