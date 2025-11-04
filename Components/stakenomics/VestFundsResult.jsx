@@ -17,7 +17,7 @@ function VestFundsResult({ token, formData }) {
 
   // Helper function to format wallet address
   const formatWallet = (wallet) => {
-    if (!wallet || wallet.length <= 16) return wallet || "0x0000...0000";
+    if (!wallet || typeof wallet !== 'string' || wallet.length <= 16) return wallet || "0x0000...0000";
     return `${wallet.slice(0, 8)}...${wallet.slice(-3)}`;
   };
 
@@ -143,7 +143,7 @@ function VestFundsResult({ token, formData }) {
               <div>MODEL: {formData?.releaseModel || "monthly"}</div>
               <div>
                 RECIPIENT:{" "}
-                {formData?.recipientWallet
+                {formData?.recipientWallet && typeof formData.recipientWallet === 'string'
                   ? `${formData.recipientWallet.slice(
                       0,
                       6,

@@ -17,7 +17,8 @@ function LockFundsResult({ token, formData }) {
 
   // Helper function to format wallet address
   const formatWallet = (wallet) => {
-    if (!wallet || wallet.length <= 12) return wallet || "0x0000...0000";
+    if (!wallet || typeof wallet !== "string" || wallet.length <= 12)
+      return wallet || "0x0000...0000";
     return `${wallet.slice(0, 6)}...${wallet.slice(-3)}`;
   };
 
@@ -62,7 +63,7 @@ function LockFundsResult({ token, formData }) {
   return (
     <div
       // className="dark:border-secondary mx-4 rounded-3xl border-1 border-[#CDCDE9] pb-2 text-[#190E79] lg:mx-0 lg:pb-4 dark:text-white"
-      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:pb-12 dark:text-white"
+      className="dark:border-secondary rounded-3xl border-[#CDCDE9] pb-4 text-[#190E79] dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -82,7 +83,7 @@ function LockFundsResult({ token, formData }) {
         <div className="flex flex-row-reverse">
           <img
             src="/vest.png"
-            className="ml-4 h-full w-20 rounded-2xl md:w-24 lg:w-28 lg:rounded-3xl xl:ml-8"
+            className="ml-4 h-full w-18 rounded-2xl md:w-20 lg:w-22 lg:rounded-2xl xl:rounded-3xl xl:mr-8 xl:w-24 2xl:mr-12"
           />
           <div className="font-khand ml-4 font-normal lg:ml-8">
             <h1 className="font-khand mr-18 text-lg font-semibold sm:mr-64 sm:text-2xl md:text-xl lg:mr-36 lg:text-2xl xl:mr-18 xl:text-4xl">

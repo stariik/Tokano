@@ -38,7 +38,7 @@ function page() {
       : getTokenById(selectedToken);
 
   return (
-    <div className="flex justify-center gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:justify-between lg:py-6 2xl:gap-4 2xl:px-2">
+    <div className="flex justify-center gap-4 mx-auto sm:max-w-lg md:max-w-full md:px-2 lg:justify-between lg:py-6 2xl:gap-4 2xl:px-2">
       <div className="lg:w-full lg:max-w-xs xl:max-w-sm 2xl:max-w-md">
         <PortfolioTokenGrid
           gridCols="grid-cols-2"

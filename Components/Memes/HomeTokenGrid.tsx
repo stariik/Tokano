@@ -225,7 +225,7 @@ function HomeTokenGrid({
       `}</style>
 
       {/* Simple visible container for home page */}
-      <div className="h-full mx-2 rounded-tr-4xl border-2 border-[#CDCDE9] dark:border-secondary bg-white dark:bg-[#13153A]">
+      <div className="h-full mx-2 w-full rounded-tr-4xl border-2 border-[#CDCDE9] dark:border-secondary bg-white dark:bg-[#13153A]">
         <GridFilter
           variant="default"
           searchQuery={searchQuery}

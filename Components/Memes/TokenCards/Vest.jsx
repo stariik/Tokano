@@ -5,20 +5,39 @@ import { StarIcon } from "@/Components/icons";
 import { useRouter } from "next/navigation";
 import { useFavorites } from "@/hooks/useFavorites";
 
+const VestIcon = () => (
+  <svg
+    width="13"
+    height="9"
+    viewBox="0 0 13 9"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M1 1H4.81606V4.33602H8.52087V7.58978H11.983"
+      stroke="white"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+  </svg>
+);
+
 function Lock({ data, token }) {
   const router = useRouter();
   const { isFavorite, toggleFavorite } = useFavorites();
 
   // Support both old (token prop) and new (data prop) usage
   const vestData = data || {};
-  const tokenData = data ? {
-    name: data.tokenInfo?.name || data.tokenInfo?.symbol || "Unknown Token",
-    image: data.tokenInfo?.image || "/image.png",
-  } : token;
+  const tokenData = data
+    ? {
+        name: data.tokenInfo?.name || data.tokenInfo?.symbol || "Unknown Token",
+        image: data.tokenInfo?.image || "/image.png",
+      }
+    : token;
 
   const vestAddress = vestData.address?.toBase58() || "";
   const lockersCount = 0; // We don't have count in SDK yet
-  const isFav = isFavorite('vest', vestAddress);
+  const isFav = isFavorite("vest", vestAddress);
 
   const handleClick = () => {
     if (vestAddress) {
@@ -32,7 +51,7 @@ function Lock({ data, token }) {
     e.preventDefault();
     e.stopPropagation();
     if (vestAddress) {
-      toggleFavorite('vest', vestAddress);
+      toggleFavorite("vest", vestAddress);
     }
   };
 
@@ -65,20 +84,20 @@ function Lock({ data, token }) {
             {tokenData.name}
           </span>
           <span
-            className="ml-2 cursor-pointer hover:scale-110 transition-transform"
+            className="ml-2 cursor-pointer transition-transform hover:scale-110"
             onClick={handleStarClick}
           >
             <StarIcon filled={isFav} />
           </span>
         </div>
         {/* Stats Row */}
-        <div className="font-khand mb-1 flex items-center justify-between font-semibold">
+        <div className="font-khand xl:mb-1 flex items-center justify-between font-semibold">
           <div className="flex text-xl text-white lg:text-lg xl:text-2xl">
             Vest
           </div>
           <div className="rounded-3xl bg-white">
-            <div className="m-1.5 rounded-2xl bg-[#190E79] p-1.5 lg:m-2 lg:p-2">
-              <FaStairs className="h-[10px] w-[10px] text-white xl:h-[14px] xl:w-[14px]" />
+            <div className="m-1.5 rounded-2xl bg-[#190E79] p-1.5 px-1 lg:m-2 lg:p-2 lg:px-1.5">
+              <VestIcon />
             </div>
           </div>
           <div className="flex flex-col items-center">

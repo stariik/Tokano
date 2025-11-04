@@ -326,7 +326,7 @@ export default function VestFundsForm({
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white p-4 lg:p-6 dark:bg-[#1B105C]">
+      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C]">
         {/* Activation Date and Time */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">

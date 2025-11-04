@@ -110,7 +110,7 @@ function StakingPoolResult({ token, formData }) {
             <div className="mt-1 pl-1 text-xs md:text-sm lg:text-base 2xl:text-base">
               <p>
                 Token ID:{" "}
-                {token?.id
+                {token?.id && typeof token.id === 'string'
                   ? token.id.length > 12
                     ? `${token.id.slice(0, 5)}...${token.id.slice(-3)}`
                     : token.id
@@ -118,7 +118,7 @@ function StakingPoolResult({ token, formData }) {
               </p>
               <p>
                 Creator:{" "}
-                {formData?.creator
+                {formData?.creator && typeof formData.creator === 'string'
                   ? `${formData.creator.slice(0, 4)}...${formData.creator.slice(-4)}`
                   : "Anonymous"}
               </p>

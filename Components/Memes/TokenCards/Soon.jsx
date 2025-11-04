@@ -59,7 +59,7 @@ function Soon({ data, token }) {
   };
   const StakeIcon = () => (
     <svg
-      className="h-full w-[35px] md:w-[37px] xl:w-[45px]"
+      className="h-full w-[35px] md:w-[37px] xl:w-[40px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@ function Soon({ data, token }) {
           <div className="rounded-full lg:mt-1 xl:mt-0">
             <StakeIcon />
           </div>
-          <div className="flex text-2xl text-white xl:text-3xl 2xl:text-4xl">
+          <div className="flex text-2xl text-white xl:text-3xl">
             Soon
           </div>
         </div>

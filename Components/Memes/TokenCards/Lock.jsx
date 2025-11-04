@@ -57,7 +57,7 @@ function Lock({ data, token }) {
   return (
     <div
       onClick={handleClick}
-      className="relative flex w-full flex-col overflow-hidden rounded bg-[#e3f2fd] shadow-lg cursor-pointer dark:bg-transparent"
+      className="relative flex w-full flex-col overflow-hidden rounded shadow-lg cursor-pointer dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}
@@ -116,7 +116,7 @@ function Lock({ data, token }) {
       </div>
       {/* Bottom Bar */}
       <div
-        className="font-khand mx-auto w-30 rounded-xl text-center text-sm font-medium md:text-sm lg:text-xs xl:py-1 xl:text-sm"
+        className="font-khand mx-auto w-30 rounded-xl text-center text-sm font-medium md:text-sm lg:text-xs xl:py-0.5 xl:text-sm"
         style={{
           background:
             resolvedTheme === "dark"
