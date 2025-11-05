@@ -6,7 +6,7 @@ import { StarIcon } from "@/Components/icons";
 import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 
-function StakingPoolResult({ token, formData }) {
+function StakingPoolResult({ token, formData, tokenImage }) {
   const { resolvedTheme } = useTheme();
   // Helper function to format numbers
   const formatNumber = (num) => {
@@ -99,8 +99,8 @@ function StakingPoolResult({ token, formData }) {
       >
         <div className="grid grid-cols-3 items-center">
           <img
-            src="/vest.png"
-            className="mb-4 w-16 rounded-2xl md:w-18 lg:w-16 xl:ml-4 xl:w-22 xl:rounded-3xl 2xl:ml-10"
+            src={tokenImage || "/vest.png"}
+            className="mb-4 w-16 h-16 md:w-18 md:h-18 lg:w-16 lg:h-16 xl:ml-4 xl:w-22 xl:h-22 2xl:ml-10 rounded-2xl xl:rounded-3xl object-cover"
           />
           <div className="font-khand col-span-2 font-normal">
             <h1 className="font-khand text-base font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl">

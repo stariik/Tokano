@@ -18,6 +18,7 @@ function LockCard({
   tokenDecimals,
   isPreview = false,
   previewData = null,
+  tokenImage = null,
 }) {
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -49,6 +50,15 @@ function LockCard({
       return `${(value / 1000).toFixed(1)}K`;
     }
     return value.toFixed(2);
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
   };
 
   const StakeIcon = () => (
@@ -145,8 +155,8 @@ function LockCard({
         </div>
         <div className="flex flex-col justify-start">
           <img
-            src="/vest.png"
-            className="mr-16 mb-4 w-14 rounded-2xl sm:mr-26 sm:w-20 lg:mr-24 lg:w-18 lg:rounded-2xl xl:w-24 xl:rounded-3xl 2xl:w-28"
+            src={tokenImage || "/vest.png"}
+            className="mr-16 mb-4 w-14 h-14 sm:w-20 sm:h-20 lg:w-18 lg:h-18 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28 rounded-2xl lg:rounded-2xl xl:rounded-3xl object-cover"
           />
 
           {/*  */}
@@ -172,8 +182,8 @@ function LockCard({
                     );
                   }
                 `}</style>
-                <div>LOCKED: {isPreview && previewData?.lockDateTime ? new Date(previewData.lockDateTime).toLocaleDateString() : '21.04.2025'}</div>
-                <div>ENDS: {isPreview && previewData?.releaseDate ? new Date(previewData.releaseDate).toLocaleDateString() : '|2d.12h'}</div>
+                <div>LOCKED: {isPreview && previewData?.lockDateTime ? formatDate(previewData.lockDateTime) : '21.04.2025'}</div>
+                <div>ENDS: {isPreview && previewData?.releaseDate ? formatDate(previewData.releaseDate) : '|2d.12h'}</div>
               </div>
             </div>
           </div>

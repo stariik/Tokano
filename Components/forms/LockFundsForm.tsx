@@ -49,6 +49,12 @@ interface Token {
   mintAddress?: string;
   name: string;
   decimals?: number;
+  image?: string;
+  info?: {
+    icon?: string;
+    name?: string;
+    symbol?: string;
+  };
 }
 
 interface LockFundsFormProps {
@@ -486,6 +492,7 @@ export default function LockFundsForm({
               tokenDecimals={token.decimals || 9}
               isPreview={true}
               previewData={formData}
+              tokenImage={token.info?.icon || token.image}
             />
           </div>
         </div>

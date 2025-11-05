@@ -20,6 +20,8 @@ function StakeCard({
   poolEndTimestamp,
   poolAddress,
   poolData, // Add poolData prop for accessing reward info
+  tokenImage = null,
+  isPreview = false,
 }) {
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -151,8 +153,8 @@ function StakeCard({
 
         <div className="relative ml-2 flex flex-col justify-start md:ml-0 lg:ml-2">
           <img
-            src="/fired.png"
-            className="mr-4 w-20 rounded-2xl md:mr-4 md:w-24 md:rounded-3xl lg:mr-2 lg:w-32 lg:rounded-4xl"
+            src={tokenImage || "/fired.png"}
+            className="mr-4 w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-2xl md:rounded-3xl lg:rounded-4xl object-cover"
           />
           <div className="mt-8 lg:mt-6 xl:mt-8">
             <div className="absolute left-0 z-5 flex w-80">

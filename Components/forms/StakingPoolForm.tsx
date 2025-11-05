@@ -49,6 +49,12 @@ interface Token {
   mintAddress?: string;
   name: string;
   decimals?: number;
+  image?: string;
+  info?: {
+    icon?: string;
+    name?: string;
+    symbol?: string;
+  };
 }
 
 interface StakingPoolFormProps {
@@ -546,6 +552,7 @@ export default function StakingPoolForm({
           <StakingPoolResult
             token={token}
             formData={formData}
+            tokenImage={token.info?.icon || token.image}
           />
         </div>
       </div>
