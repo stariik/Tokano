@@ -8,7 +8,7 @@ import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 import { useFavorites } from "@/hooks/useFavorites";
 
-function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecimals }) {
+function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecimals, isPreview = false, previewData = null }) {
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
 
@@ -72,9 +72,14 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
     </svg>
   );
 
+  const CardWrapper = isPreview ? 'div' : Link;
+  const wrapperProps = isPreview ? {} : {
+    href: wallet ? `/card/vest?vest=${wallet}` : `/card/vest`
+  };
+
   return (
-    <Link
-      href={wallet ? `/card/vest?vest=${wallet}` : `/card/vest`}
+    <CardWrapper
+      {...wrapperProps}
       className="font-khand text-primary block rounded-4xl font-semibold transition hover:opacity-90 dark:text-white"
       style={{
         background:
@@ -92,12 +97,14 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
               : "linear-gradient(45deg, #EFEFEF 30%, #9F4EA3 100%)",
         }}
       >
-        <div
-          className="absolute top-6 right-4 cursor-pointer hover:scale-110 transition-transform z-10"
-          onClick={handleStarClick}
-        >
-          <StarIcon filled={isFav} />
-        </div>
+        {!isPreview && (
+          <div
+            className="absolute top-6 right-4 cursor-pointer hover:scale-110 transition-transform z-10"
+            onClick={handleStarClick}
+          >
+            <StarIcon filled={isFav} />
+          </div>
+        )}
         <div className="flex w-full flex-col">
           <div className="flex w-full items-center justify-between pr-2 sm:pr-4">
             <CiPill
@@ -145,8 +152,8 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
                   }
                 `}</style>
                 <div className="font-khand font-normal lg:pr-1 xl:pr-0">
-                  TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" /> CLIFF:
-                  |5d
+                  TYPE: {isPreview && previewData?.releaseModel ? previewData.releaseModel.toUpperCase() : 'LIN/MONTHLY'} <span className="ml-0.5 md:ml-1" /> CLIFF:
+                  {isPreview && previewData?.cliffPeriod ? ` ${previewData.cliffPeriod}d` : ' |5d'}
                 </div>
               </div>
             </div>
@@ -174,11 +181,13 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
               );
             }
           `}</style>
-          PARTS: 123K LEFT: 56% ENDS: |2d.12h
+          {isPreview && previewData?.activationDateTime
+            ? `START: ${new Date(previewData.activationDateTime).toLocaleDateString()}`
+            : 'PARTS: 123K LEFT: 56% ENDS: |2d.12h'}
         </div>
-        <p className="text-lg text-white">locked</p>
+        <p className="text-lg text-white">{isPreview ? 'vesting' : 'locked'}</p>
       </div>
-    </Link>
+    </CardWrapper>
   );
 }
 

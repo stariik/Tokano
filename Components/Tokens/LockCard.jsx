@@ -16,6 +16,8 @@ function LockCard({
   wallet,
   lockData,
   tokenDecimals,
+  isPreview = false,
+  previewData = null,
 }) {
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -87,9 +89,14 @@ function LockCard({
     </svg>
   );
 
+  const CardWrapper = isPreview ? 'div' : Link;
+  const wrapperProps = isPreview ? {} : {
+    href: wallet ? `/card/lock?lock=${wallet}` : `/card/lock`
+  };
+
   return (
-    <Link
-      href={wallet ? `/card/lock?lock=${wallet}` : `/card/lock`}
+    <CardWrapper
+      {...wrapperProps}
       className="font-khand text-primary block rounded-4xl font-semibold dark:text-white"
       style={{
         background:
@@ -107,12 +114,14 @@ function LockCard({
               : "linear-gradient(45deg, #EFEFEF 30%, #2B6EC5 100%)",
         }}
       >
-        <div
-          className="absolute top-6 right-4 z-10 cursor-pointer transition-transform hover:scale-110"
-          onClick={handleStarClick}
-        >
-          <StarIcon filled={isFav} />
-        </div>
+        {!isPreview && (
+          <div
+            className="absolute top-6 right-4 z-10 cursor-pointer transition-transform hover:scale-110"
+            onClick={handleStarClick}
+          >
+            <StarIcon filled={isFav} />
+          </div>
+        )}
         <div className="flex w-full flex-col">
           <div className="flex w-full items-center justify-between pr-2 sm:pr-4">
             <CiPill
@@ -163,8 +172,8 @@ function LockCard({
                     );
                   }
                 `}</style>
-                <div>LOCKED: 21.04.2025</div>
-                <div>ENDS: |2d.12h</div>
+                <div>LOCKED: {isPreview && previewData?.lockDateTime ? new Date(previewData.lockDateTime).toLocaleDateString() : '21.04.2025'}</div>
+                <div>ENDS: {isPreview && previewData?.releaseDate ? new Date(previewData.releaseDate).toLocaleDateString() : '|2d.12h'}</div>
               </div>
             </div>
           </div>
@@ -179,7 +188,7 @@ function LockCard({
       <div className="flex items-center justify-end gap-6 pr-4 pb-2">
         <p className="text-lg text-white">locked</p>
       </div>
-    </Link>
+    </CardWrapper>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import LockFundsResult from "@/Components/stakenomics/LockFundsResult";
+import LockCard from "@/Components/Tokens/LockCard";
 import Success from "@/Components/popups/Success";
 import Failed from "@/Components/popups/Failed";
 import Attention from "@/Components/popups/Attention";
@@ -471,11 +471,23 @@ export default function LockFundsForm({
           <h3 className="font-khand mb-4 text-xl font-bold text-[#190E79] md:text-2xl dark:text-white">
             PREVIEW YOUR LOCK:
           </h3>
-          <LockFundsResult
-            token={token}
-            formData={formData}
-            creatorWallet={publicKey?.toBase58()}
-          />
+          <div className="pointer-events-none">
+            <LockCard
+              id={token.id || token.tokenId || token.mintAddress || ""}
+              title={token.name}
+              created={token.mintAddress || token.tokenId || token.id || ""}
+              marketCap="0"
+              wallet={publicKey?.toBase58() || ""}
+              lockData={{
+                lockAmount: formData.tokenAmount
+                  ? parseFloat(formData.tokenAmount) * Math.pow(10, token.decimals || 9)
+                  : 0
+              }}
+              tokenDecimals={token.decimals || 9}
+              isPreview={true}
+              previewData={formData}
+            />
+          </div>
         </div>
       </div>
 
