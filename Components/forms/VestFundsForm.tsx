@@ -51,6 +51,11 @@ interface Token {
   name: string;
   decimals?: number;
   image?: string;
+  info?: {
+    icon?: string;
+    name?: string;
+    symbol?: string;
+  };
 }
 
 interface VestFundsFormProps {
@@ -571,7 +576,7 @@ export default function VestFundsForm({
               tokenDecimals={token.decimals || 9}
               isPreview={true}
               previewData={formData}
-              tokenImage={token.image}
+              tokenImage={token.info?.icon || token.image}
             />
           </div>
         </div>
