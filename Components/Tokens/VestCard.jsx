@@ -75,6 +75,31 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
     }
   };
 
+  // Get release model from SDK scheduleType
+  const getScheduleTypeShort = (scheduleType) => {
+    // VestingSchedule enum: Daily = 3, Weekly = 4, Monthly = 5
+    if (scheduleType === 3) return "DA";
+    if (scheduleType === 4) return "WE";
+    if (scheduleType === 5) return "MO";
+    return "MO";
+  };
+
+  // Calculate duration in appropriate units from start/end time
+  const calculateDuration = (startTime, endTime) => {
+    if (!startTime || !endTime) return { value: 0, unit: "months" };
+    const durationMs = endTime.getTime() - startTime.getTime();
+    const durationDays = Math.floor(durationMs / (1000 * 60 * 60 * 24));
+
+    // Convert to appropriate unit
+    if (durationDays >= 30) {
+      return { value: Math.floor(durationDays / 30), unit: "months" };
+    } else if (durationDays >= 7) {
+      return { value: Math.floor(durationDays / 7), unit: "weeks" };
+    } else {
+      return { value: durationDays, unit: "days" };
+    }
+  };
+
   const VestIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +186,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
         <div className="flex flex-col justify-start">
           <img
             src={tokenImage || "/vest.png"}
-            className="mr-16 sm:mr-26 lg:mr-24 mb-4 w-14 sm:w-20  lg:w-18 rounded-2xl lg:rounded-2xl xl:rounded-3xl xl:w-24 2xl:w-28"
+            className="mr-16 sm:mr-26 lg:mr-24 mb-4 w-14 h-14 sm:w-20 sm:h-20 lg:w-18 lg:h-18 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28 rounded-2xl lg:rounded-2xl xl:rounded-3xl object-cover"
           />
 
           <div className="absolute -bottom-7 sm:-bottom-6 left-1 sm:left-4 z-2 flex w-7/10">
@@ -189,6 +214,10 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
                   {isPreview ? (
                     <>
                       TYPE: {shortenReleaseModel(previewData?.releaseModel || 'monthly')} <span className="ml-0.5 md:ml-1" /> CLIFF: {previewData?.cliffPeriod || '0'}d START: {formatDate(previewData?.activationDateTime) || '---'}
+                    </>
+                  ) : vestData ? (
+                    <>
+                      TYPE: {getScheduleTypeShort(vestData.scheduleType)} START: {formatDate(vestData.startTime)}
                     </>
                   ) : (
                     <>
@@ -222,9 +251,18 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
               );
             }
           `}</style>
-          {isPreview
-            ? `PARTS: ${previewData?.duration || '0'} LEFT: ${formatTokenAmountSimple(previewData?.tokenAmount || '0')}`
-            : 'LEFT: 56% ENDS: |2d.12h'}
+          {isPreview ? (
+            `PARTS: ${previewData?.duration || '0'} LEFT: ${formatTokenAmountSimple(previewData?.tokenAmount || '0')}`
+          ) : vestData ? (
+            (() => {
+              const duration = calculateDuration(vestData.startTime, vestData.endTime);
+              const leftAmount = vestData.totalVestedAmount ?
+                formatAmount(vestData.totalVestedAmount.toString(), tokenDecimals) : '0';
+              return `PARTS: ${duration.value} LEFT: ${leftAmount}`;
+            })()
+          ) : (
+            'LEFT: 56% ENDS: |2d.12h'
+          )}
         </div>
         <p className="text-lg text-white">{isPreview ? 'vesting' : 'locked'}</p>
       </div>
