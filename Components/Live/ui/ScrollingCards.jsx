@@ -29,6 +29,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
           ? `$${(pool.tokenInfo.mcap / 1000).toFixed(1)}K`
           : "N/A";
         const wallet = pool.poolAddress.toBase58();
+        const tokenImage = pool.tokenInfo?.icon || null;
 
         return (
           <StakeCard
@@ -44,6 +45,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
             stakersCount={0}
             poolEndTimestamp={pool.endTimestamp.getTime() / 1000}
             poolData={pool}
+            tokenImage={tokenImage}
           />
         );
       })}
@@ -59,6 +61,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
           : "N/A";
         const wallet = vest.address.toBase58();
         const tokenDecimals = vest.tokenInfo?.decimals || 9;
+        const tokenImage = vest.tokenInfo?.icon || null;
 
         return (
           <VestCard
@@ -72,6 +75,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
             vestEndTimestamp={formatTimestamp(vest.endTime)}
             vestData={vest}
             tokenDecimals={tokenDecimals}
+            tokenImage={tokenImage}
           />
         );
       })}
@@ -87,6 +91,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
           : "N/A";
         const wallet = lockItem.address.toBase58();
         const tokenDecimals = lockItem.tokenInfo?.decimals || 9;
+        const tokenImage = lockItem.tokenInfo?.icon || null;
 
         return (
           <LockCard
@@ -99,6 +104,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
             lockTimestamp={formatTimestamp(lockItem.unlockTime)}
             lockData={lockItem}
             tokenDecimals={tokenDecimals}
+            tokenImage={tokenImage}
           />
         );
       })}

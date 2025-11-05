@@ -185,8 +185,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
                 <div className="flex justify-between">
                   <span>ENDS: </span>
                   <span>
-                    {formData?.unstakingPeriodDays || "0"} days{" "}
-                    {formData?.unstakingPeriodHours || "0"} hours
+                    {formData?.distributionLength || "0"} days
                   </span>
                 </div>
               </div>

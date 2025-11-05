@@ -38,7 +38,7 @@ function ScrollingSoonCards({ stakePools = [], vestings = [], locks = [], isMobi
             poolId={poolId}
             tokenId={tokenId}
             launchTimestamp={pool.timestamp}
-            tokenImage={pool.tokenInfo?.image || "/image.png"}
+            tokenImage={pool.tokenInfo?.icon || "/image.png"}
             poolType="STAKE"
             fullAddress={pool.poolAddress.toBase58()}
           />
@@ -61,7 +61,7 @@ function ScrollingSoonCards({ stakePools = [], vestings = [], locks = [], isMobi
             poolId={poolId}
             tokenId={tokenId}
             launchTimestamp={vest.timestamp}
-            tokenImage={vest.tokenInfo?.image || "/image.png"}
+            tokenImage={vest.tokenInfo?.icon || "/image.png"}
             poolType="VEST"
             fullAddress={vest.address.toBase58()}
           />
