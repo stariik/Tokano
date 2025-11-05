@@ -183,7 +183,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
           `}</style>
           {isPreview && previewData?.activationDateTime
             ? `START: ${new Date(previewData.activationDateTime).toLocaleDateString()}`
-            : 'PARTS: 123K LEFT: 56% ENDS: |2d.12h'}
+            : 'LEFT: 56% ENDS: |2d.12h'}
         </div>
         <p className="text-lg text-white">{isPreview ? 'vesting' : 'locked'}</p>
       </div>
