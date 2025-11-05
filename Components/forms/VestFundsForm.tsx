@@ -50,6 +50,7 @@ interface Token {
   mintAddress?: string;
   name: string;
   decimals?: number;
+  image?: string;
 }
 
 interface VestFundsFormProps {
@@ -570,6 +571,7 @@ export default function VestFundsForm({
               tokenDecimals={token.decimals || 9}
               isPreview={true}
               previewData={formData}
+              tokenImage={token.image}
             />
           </div>
         </div>

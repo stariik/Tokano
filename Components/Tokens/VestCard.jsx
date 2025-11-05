@@ -8,7 +8,7 @@ import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 import { useFavorites } from "@/hooks/useFavorites";
 
-function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecimals, isPreview = false, previewData = null }) {
+function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecimals, isPreview = false, previewData = null, tokenImage = null }) {
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
 
@@ -160,7 +160,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
         </div>
         <div className="flex flex-col justify-start">
           <img
-            src="/vest.png"
+            src={tokenImage || "/vest.png"}
             className="mr-16 sm:mr-26 lg:mr-24 mb-4 w-14 sm:w-20  lg:w-18 rounded-2xl lg:rounded-2xl xl:rounded-3xl xl:w-24 2xl:w-28"
           />
 
