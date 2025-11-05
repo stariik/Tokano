@@ -122,7 +122,17 @@ export default function LockFundsForm({
         throw new Error("Token mint address is missing");
       }
 
-      const tokenMint = new PublicKey(tokenMintString);
+      // Validate that tokenMintString is a valid base58 string
+      if (typeof tokenMintString !== 'string' || tokenMintString.trim() === '') {
+        throw new Error("Invalid token mint address format");
+      }
+
+      let tokenMint: PublicKey;
+      try {
+        tokenMint = new PublicKey(tokenMintString);
+      } catch (e) {
+        throw new Error(`Invalid token mint address: ${tokenMintString}. Please ensure the token has a valid Solana address.`);
+      }
 
       // Fetch token decimals from blockchain if not provided
       let decimals = token.decimals;
