@@ -71,6 +71,7 @@ export default function VestFundsForm({
     activationDateTime: "",
     tokenAmount: "",
     cliffPeriod: "",
+    duration: "",
     releaseModel: "monthly",
     recipientWallet: "",
   });
@@ -110,6 +111,7 @@ export default function VestFundsForm({
       !formData.activationDateTime ||
       !formData.tokenAmount ||
       !formData.cliffPeriod ||
+      !formData.duration ||
       !formData.releaseModel ||
       !formData.recipientWallet
     ) {
@@ -180,6 +182,23 @@ export default function VestFundsForm({
       const cliffPeriodInSeconds =
         parseInt(formData.cliffPeriod) * 24 * 60 * 60;
 
+      // Calculate vesting duration based on duration and release model
+      const duration = parseInt(formData.duration);
+      let vestingDurationInSeconds: number;
+      switch (formData.releaseModel.toLowerCase()) {
+        case "daily":
+          vestingDurationInSeconds = duration * 24 * 60 * 60; // days to seconds
+          break;
+        case "weekly":
+          vestingDurationInSeconds = duration * 7 * 24 * 60 * 60; // weeks to seconds
+          break;
+        case "monthly":
+          vestingDurationInSeconds = duration * 30 * 24 * 60 * 60; // months to seconds (approximation)
+          break;
+        default:
+          vestingDurationInSeconds = duration * 30 * 24 * 60 * 60;
+      }
+
       // Recipient wallet public key - validate it's a valid base58 address
       let receiverPk: PublicKey;
       try {
@@ -197,7 +216,7 @@ export default function VestFundsForm({
         tokenMint: tokenMint,
         totalVestingAmount: amountInSmallestUnit,
         startTimestamp: startTimestamp + cliffPeriodInSeconds, // Start after cliff
-        vestingDuration: 365 * 24 * 60 * 60, // 1 year duration (you can make this configurable)
+        vestingDuration: vestingDurationInSeconds,
         scheduleType: scheduleType,
       });
 
@@ -352,7 +371,7 @@ export default function VestFundsForm({
               onChange={(e) =>
                 handleInputChange("activationDateTime", e.target.value)
               }
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] font-bold text-[#190E79] md:max-w-[280px] md:text-[13px] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[10px] font-bold text-[#190E79] md:max-w-[280px] md:text-[13px] dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -431,30 +450,43 @@ export default function VestFundsForm({
           </div>
         </div>
 
-        {/* Release Model */}
+        {/* Vesting Steps Model */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
             <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 4.
               </span>
-              Release model:
+              Vesting steps model:
             </label>
             <select
               value={formData.releaseModel || "monthly"}
               onChange={(e) =>
                 handleInputChange("releaseModel", e.target.value)
               }
-              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] md:w-40 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] md:w-32 dark:bg-[#453DC8] dark:text-white"
             >
-              <option value="monthly">monthly</option>
-              <option value="weekly">weekly</option>
               <option value="daily">daily</option>
+              <option value="weekly">weekly</option>
+              <option value="monthly">monthly</option>
             </select>
+            <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
+              duration:
+            </span>
+            <input
+              type="number"
+              value={formData.duration || ""}
+              onChange={(e) => handleInputChange("duration", e.target.value)}
+              placeholder="0"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-28 dark:bg-[#453DC8] dark:text-white"
+              required
+            />
+            <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
+              {formData.releaseModel === "monthly" ? "months" : formData.releaseModel === "weekly" ? "weeks" : "days"}
+            </span>
           </div>
           <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 dark:text-white">
-            Choose how frequently tokens are released: monthly, weekly, or
-            daily.
+            Defines the interval between each token release.
           </div>
         </div>
 
@@ -474,7 +506,7 @@ export default function VestFundsForm({
                 handleInputChange("recipientWallet", e.target.value)
               }
               placeholder="e.g. 5Yf8M2Z3...7FqK4Bc (Solana address)"
-              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
               required
             />
           </div>

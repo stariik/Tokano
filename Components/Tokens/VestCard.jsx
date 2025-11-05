@@ -41,6 +41,40 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
     return value.toFixed(2);
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+
+  const formatTokenAmountSimple = (amount) => {
+    if (!amount) return "0";
+    const value = parseFloat(amount);
+    if (value >= 1000000) {
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else if (value >= 1000) {
+      return `${(value / 1000).toFixed(1)}K`;
+    }
+    return value.toString();
+  };
+
+  const shortenReleaseModel = (model) => {
+    if (!model) return "MO";
+    switch(model.toLowerCase()) {
+      case "daily":
+        return "DA";
+      case "weekly":
+        return "WE";
+      case "monthly":
+        return "MO";
+      default:
+        return "MO";
+    }
+  };
+
   const VestIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -152,8 +186,15 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
                   }
                 `}</style>
                 <div className="font-khand font-normal lg:pr-1 xl:pr-0">
-                  TYPE: {isPreview && previewData?.releaseModel ? previewData.releaseModel.toUpperCase() : 'LIN/MONTHLY'} <span className="ml-0.5 md:ml-1" /> CLIFF:
-                  {isPreview && previewData?.cliffPeriod ? ` ${previewData.cliffPeriod}d` : ' |5d'}
+                  {isPreview ? (
+                    <>
+                      TYPE: {shortenReleaseModel(previewData?.releaseModel || 'monthly')} <span className="ml-0.5 md:ml-1" /> CLIFF: {previewData?.cliffPeriod || '0'}d START: {formatDate(previewData?.activationDateTime) || '---'}
+                    </>
+                  ) : (
+                    <>
+                      TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" /> CLIFF: |5d
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -181,8 +222,8 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
               );
             }
           `}</style>
-          {isPreview && previewData?.activationDateTime
-            ? `START: ${new Date(previewData.activationDateTime).toLocaleDateString()}`
+          {isPreview
+            ? `PARTS: ${previewData?.duration || '0'} LEFT: ${formatTokenAmountSimple(previewData?.tokenAmount || '0')}`
             : 'LEFT: 56% ENDS: |2d.12h'}
         </div>
         <p className="text-lg text-white">{isPreview ? 'vesting' : 'locked'}</p>
