@@ -182,15 +182,36 @@ function Soon() {
         }}
       >
         <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-16 lg:gap-4">
-          <div className="rounded-full bg-[#e3f2fd] p-1 dark:bg-[#0088cc]">
-            <FaTelegramPlane />
-          </div>
-          <div className="rounded-full bg-black p-1">
-            <FaXTwitter />
-          </div>
-          <div className="">
-            <TbWorld size={25} />
-          </div>
+          {tokenInfo?.telegram && (
+            <a
+              href={tokenInfo.telegram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-[#e3f2fd] p-1 transition-opacity hover:opacity-80 dark:bg-[#0088cc]"
+            >
+              <FaTelegramPlane />
+            </a>
+          )}
+          {tokenInfo?.twitter && (
+            <a
+              href={tokenInfo.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-black p-1 transition-opacity hover:opacity-80"
+            >
+              <FaXTwitter />
+            </a>
+          )}
+          {tokenInfo?.website && (
+            <a
+              href={tokenInfo.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-opacity hover:opacity-80"
+            >
+              <TbWorld size={25} />
+            </a>
+          )}
         </div>
 
         <div className="flex">

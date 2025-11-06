@@ -25,9 +25,11 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
         const tokenSymbol = pool.tokenInfo?.symbol || "N/A";
         const title = `${tokenName} (${tokenSymbol})`;
         const created = pool.tokenMint.toBase58();
-        const marketCap = pool.tokenInfo?.mcap
-          ? `$${(pool.tokenInfo.mcap / 1000).toFixed(1)}K`
-          : "N/A";
+        const decimals = pool.tokenInfo?.decimals || 9;
+        const rewardAmount = pool.rewardRate
+          ? (pool.rewardRate.toNumber() / Math.pow(10, decimals)).toFixed(2)
+          : "0";
+        const rewards = `${rewardAmount} ${tokenSymbol}`;
         const wallet = pool.poolAddress.toBase58();
         const tokenImage = pool.tokenInfo?.icon || null;
 
@@ -37,7 +39,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
             id={index + 1}
             title={title}
             created={created}
-            marketCap={marketCap}
+            marketCap={rewards}
             wallet={wallet}
             poolAddress={pool.poolAddress.toBase58()}
             variant="live"

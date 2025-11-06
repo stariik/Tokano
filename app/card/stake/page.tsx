@@ -16,6 +16,7 @@ import PortfolioRightMenu from "@/Components/RightMenu/PortfolioRightMenu";
 
 interface PoolWithTokenInfo extends PoolState {
   tokenInfo?: any;
+  stakersCount?: number;
 }
 
 function StakePageContent() {
@@ -49,6 +50,7 @@ function StakePageContent() {
       setPool({
         ...poolData,
         tokenInfo: tokenInfo[poolData.tokenMint.toBase58()],
+        stakersCount: 0, // TODO: Need SDK method to fetch all user stakes
       });
     } catch (err) {
       console.error("Error fetching pool:", err);

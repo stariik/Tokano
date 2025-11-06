@@ -26,13 +26,13 @@ function StakeCard({
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
 
-  const isFav = isFavorite('stake', poolAddress);
+  const isFav = isFavorite("stake", poolAddress);
 
   const handleStarClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (poolAddress) {
-      toggleFavorite('stake', poolAddress);
+      toggleFavorite("stake", poolAddress);
     }
   };
 
@@ -145,20 +145,22 @@ function StakeCard({
           {stakeTimestamp || "N/A"}
         </div>
         <div
-          className="absolute top-2/3 right-4 -translate-y-1/2 transform md:right-6 cursor-pointer hover:scale-110 transition-transform z-10"
+          className="absolute top-2/3 right-4 z-10 -translate-y-1/2 transform cursor-pointer transition-transform hover:scale-110 md:right-6"
           onClick={handleStarClick}
         >
           <StarIcon filled={isFav} />
         </div>
 
         <div className="relative ml-2 flex flex-col justify-start md:ml-0 lg:ml-2">
-          <img
-            src={tokenImage || "/fired.png"}
-            className="mr-4 w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-2xl md:rounded-3xl lg:rounded-4xl object-cover"
-          />
+          <div className="h-20 w-20 md:h-24 md:w-24">
+            <img
+              src={tokenImage || "/fired.png"}
+              className="mr-4 w-full h-full rounded-2xl object-cover md:rounded-3xl lg:rounded-4xl"
+            />
+          </div>
           <div className="mt-8 lg:mt-6 xl:mt-8">
             <div className="absolute left-0 z-5 flex w-80">
-              <div className="mx-2 md:mx-4 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
+              <div className="mx-2 flex items-center text-xl md:mx-4 lg:mx-1 xl:mx-4 xl:text-3xl">
                 STAKE
               </div>
               <StakeIcon />
@@ -198,10 +200,12 @@ function StakeCard({
           </div>
           <div className="font-khand mt-1 pl-2 text-left text-xs font-normal md:mt-2 md:pl-4 xl:text-base">
             <p>
-              <span className="font-semibold">Pool ID: </span> {formatAddress(wallet)}
+              <span className="font-semibold">Pool ID: </span>{" "}
+              {formatAddress(wallet)}
             </p>
             <p>
-              <span className="font-semibold">Token ID: </span> {formatAddress(created)}
+              <span className="font-semibold">Token ID: </span>{" "}
+              {formatAddress(created)}
             </p>
             <p className="mt-1 md:mt-2">
               <span className="font-semibold">REWARDS: </span>

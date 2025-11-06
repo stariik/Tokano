@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import RightMenu from "@/Components/RightMenu/RightMenu";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import Soon from "./Soon";
@@ -14,7 +14,9 @@ function page() {
         />
       </div>
       <div className="grow gap-4 md:max-w-3xl">
-        <Soon />
+        <Suspense fallback={<div className="flex items-center justify-center p-8">Loading...</div>}>
+          <Soon />
+        </Suspense>
       </div>
       <div className="lg:w-full lg:max-w-xs xl:max-w-sm 2xl:max-w-md">
         <PortfolioRightMenu />

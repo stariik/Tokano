@@ -34,18 +34,40 @@ function StakingCard({ pool }: StakingCardProps) {
     return `${day}.${month}.${year}/${hours}:${minutes}`;
   };
 
-  // Calculate decimals
-  const decimals = pool.tokenInfo?.decimals || 9;
-
-  // Format token amounts
-  const totalRewardAmount =
-    pool.rewardRate.toNumber() / Math.pow(10, decimals);
-  const totalStaked = pool.totalTokenStaked.toNumber() / Math.pow(10, decimals);
+  // Get stakers count
+  const stakersCount = (pool as any).stakersCount || 0;
 
   // Get token metadata
   const tokenName = pool.tokenInfo?.name || "Unknown Token";
   const tokenSymbol = pool.tokenInfo?.symbol || "N/A";
   const tokenIcon = pool.tokenInfo?.icon || "/fired.png";
+  const decimals = pool.tokenInfo?.decimals || 9;
+
+  // Calculate reward percentage (APR/APY)
+  // Formula: (rewardRate / totalStaked) * 100 if there's staking, otherwise show the rate
+  const totalStaked = pool.totalTokenStaked.toNumber() / Math.pow(10, decimals);
+  const totalRewardAmount = pool.rewardRate.toNumber() / Math.pow(10, decimals);
+
+  const rewardPercentage =
+    totalStaked > 0
+      ? ((totalRewardAmount / totalStaked) * 100).toFixed(2)
+      : "0.00";
+  const rewardsDisplay = `${rewardPercentage}%`;
+
+  // Format market cap with M for millions
+  const formatMarketCap = (mcap: number) => {
+    if (mcap >= 1000000) {
+      return `$${(mcap / 1000000).toFixed(1)}M`;
+    } else if (mcap >= 1000) {
+      return `$${(mcap / 1000).toFixed(1)}K`;
+    } else {
+      return `$${mcap.toFixed(2)}`;
+    }
+  };
+
+  const marketCap = pool.tokenInfo?.mcap
+    ? formatMarketCap(pool.tokenInfo.mcap)
+    : "N/A";
 
   // Pool creator/initializer (first 4 and last 4 chars)
   const creator = pool.initializer?.toBase58() || "";
@@ -115,15 +137,36 @@ function StakingCard({ pool }: StakingCardProps) {
         }}
       >
         <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-6 lg:left-2 lg:gap-2 xl:top-12 xl:left-4 xl:gap-4">
-          <div className="rounded-full bg-[#0088cc] p-1 text-base text-white lg:text-xs xl:text-base">
-            <FaTelegramPlane />
-          </div>
-          <div className="rounded-full bg-black p-1 text-base text-white lg:text-xs xl:text-base">
-            <FaXTwitter />
-          </div>
-          <div className="text-base lg:text-xs xl:text-base">
-            <TbWorld className="h-6 w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6" />
-          </div>
+          {pool.tokenInfo?.telegram && (
+            <a
+              href={pool.tokenInfo.telegram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-[#0088cc] p-1 text-base text-white transition-opacity hover:opacity-80 lg:text-xs xl:text-base"
+            >
+              <FaTelegramPlane />
+            </a>
+          )}
+          {pool.tokenInfo?.twitter && (
+            <a
+              href={pool.tokenInfo.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-black p-1 text-base text-white transition-opacity hover:opacity-80 lg:text-xs xl:text-base"
+            >
+              <FaXTwitter />
+            </a>
+          )}
+          {pool.tokenInfo?.website && (
+            <a
+              href={pool.tokenInfo.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-base transition-opacity hover:opacity-80 lg:text-xs xl:text-base"
+            >
+              <TbWorld className="h-6 w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6" />
+            </a>
+          )}
         </div>
 
         <div className="flex">
@@ -180,9 +223,7 @@ function StakingCard({ pool }: StakingCardProps) {
                   </span>
                 )}
               </p>
-              <p>
-                Total Rewards: {totalRewardAmount.toFixed(2)} {tokenSymbol}
-              </p>
+              <p>Market cap: {marketCap}</p>
             </div>
           </div>
         </div>
@@ -215,7 +256,7 @@ function StakingCard({ pool }: StakingCardProps) {
                     : "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
               }}
             >
-              <div>LOCKED: {formatDate(pool.endTimestamp)}</div>
+              <div>ENDS: {formatDate(pool.endTimestamp)}</div>
             </div>
             <div
               className="font-khand -z-1 ml-9 w-2/3 rounded-r-full py-0.5 pl-4 font-medium text-black md:pl-10"
@@ -226,21 +267,18 @@ function StakingCard({ pool }: StakingCardProps) {
                     : "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
               }}
             >
-              <div>START: {formatDate(pool.startTimestamp)}</div>
+              <div>REWARDS: {rewardsDisplay}</div>
             </div>
           </div>
         </div>
 
         <div className="font-khand mr-4 text-end text-2xl font-semibold text-[#FFB01C] xl:text-3xl">
-          {totalStaked.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}
+          {stakersCount}
         </div>
       </div>
 
       <div className="font-khand mr-12 text-end text-xl font-medium lg:mr-8 lg:text-2xl xl:mr-12">
-        total staked
+        total stakers
       </div>
     </div>
   );

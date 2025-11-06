@@ -139,15 +139,36 @@ function Vest({ vestData, vestAddress }) {
         }}
       >
         <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-6 lg:left-2 lg:gap-2 xl:top-12 xl:left-4 xl:gap-4">
-          <div className="rounded-full bg-[#0088cc] p-1 text-base text-white lg:text-xs xl:text-base">
-            <FaTelegramPlane />
-          </div>
-          <div className="rounded-full bg-black p-1 text-base text-white lg:text-xs xl:text-base">
-            <FaXTwitter />
-          </div>
-          <div className="text-base lg:text-xs xl:text-base">
-            <TbWorld className="h-6 w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6" />
-          </div>
+          {tokenInfo?.telegram && (
+            <a
+              href={tokenInfo.telegram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-[#0088cc] p-1 text-base text-white transition-opacity hover:opacity-80 lg:text-xs xl:text-base"
+            >
+              <FaTelegramPlane />
+            </a>
+          )}
+          {tokenInfo?.twitter && (
+            <a
+              href={tokenInfo.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-black p-1 text-base text-white transition-opacity hover:opacity-80 lg:text-xs xl:text-base"
+            >
+              <FaXTwitter />
+            </a>
+          )}
+          {tokenInfo?.website && (
+            <a
+              href={tokenInfo.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-base transition-opacity hover:opacity-80 lg:text-xs xl:text-base"
+            >
+              <TbWorld className="h-6 w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6" />
+            </a>
+          )}
         </div>
 
         <div className="flex">
