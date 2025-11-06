@@ -16,8 +16,8 @@ const VestIcon = () => (
     <path
       d="M1 1H4.81606V4.33602H8.52087V7.58978H11.983"
       stroke="white"
-      stroke-width="2"
-      stroke-linecap="round"
+      strokeWidth="2"
+      strokeLinecap="round"
     />
   </svg>
 );
@@ -91,7 +91,7 @@ function Lock({ data, token }) {
           </span>
         </div>
         {/* Stats Row */}
-        <div className="font-khand xl:mb-1 flex items-center justify-between font-semibold">
+        <div className="font-khand flex items-center justify-between font-semibold xl:mb-1">
           <div className="flex text-xl text-white lg:text-lg xl:text-2xl">
             Vest
           </div>

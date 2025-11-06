@@ -1,17 +1,72 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
 import { LuCopy } from "react-icons/lu";
 import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
-
+import { useTokano } from "@/contexts/tokano-sdk-context";
+import { useTokens } from "@/contexts/tokens-context";
 import { CiPill } from "react-icons/ci";
 
 function Soon() {
   const { resolvedTheme } = useTheme();
+  const { staking, vesting, lock } = useTokano();
+  const { fetchTokenInfo } = useTokens();
+  const searchParams = useSearchParams();
+
   const [copiedField, setCopiedField] = useState(null);
+  const [poolData, setPoolData] = useState(null);
+  const [tokenInfo, setTokenInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const type = searchParams.get("type"); // 'stake', 'vest', or 'lock'
+  const poolAddress = searchParams.get("pool");
+  const vestAddress = searchParams.get("vest");
+  const lockAddress = searchParams.get("lock");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!staking || !vesting || !lock) return;
+
+      setLoading(true);
+      try {
+        let data = null;
+
+        if (type === "stake" && poolAddress) {
+          data = await staking.fetchStakePool(poolAddress);
+          data.type = "stake";
+        } else if (type === "vest" && vestAddress) {
+          const allVestings = await vesting.fetchAllVestings();
+          data = allVestings.find(v => v.address.toBase58() === vestAddress);
+          if (data) data.type = "vest";
+        } else if (type === "lock" && lockAddress) {
+          const allLocks = await lock.fetchAllLocks();
+          data = allLocks.find(l => l.address.toBase58() === lockAddress);
+          if (data) data.type = "lock";
+        }
+
+        if (data) {
+          setPoolData(data);
+
+          // Fetch token info
+          const mintString = data.tokenMint.toBase58();
+          console.log("Fetching token info for mint:", mintString);
+          const info = await fetchTokenInfo([mintString]);
+          console.log("Token info fetched:", info[mintString]);
+          setTokenInfo(info[mintString]);
+        }
+      } catch (error) {
+        console.error("Error fetching soon pool data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [type, poolAddress, vestAddress, lockAddress, staking, vesting, lock, fetchTokenInfo]);
 
   // Copy to clipboard function
   const copyToClipboard = (text, fieldName) => {
@@ -19,6 +74,42 @@ function Soon() {
     setCopiedField(fieldName);
     setTimeout(() => setCopiedField(null), 2000);
   };
+
+  // Format timestamp to DD.MM.YY/HH:MM
+  const formatTimestamp = (timestamp) => {
+    if (!timestamp) return "N/A";
+    const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2);
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${day}.${month}.${year}/${hours}:${minutes}`;
+  };
+
+  // Format address
+  const formatAddress = (address) => {
+    if (!address) return "N/A";
+    const addrString = typeof address === 'string' ? address : address.toBase58();
+    return `${addrString.slice(0, 4)}...${addrString.slice(-3)}`;
+  };
+
+  // Calculate countdown
+  const getCountdown = (launchTime) => {
+    if (!launchTime) return "N/A";
+    const now = Date.now();
+    const launchDate = launchTime instanceof Date ? launchTime : new Date(launchTime);
+    const diff = launchDate.getTime() - now;
+
+    if (diff <= 0) return "LIVE NOW";
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${days}d ${hours}h ${minutes}m`;
+  };
+
   const StakeIcon = () => (
     <svg
       className="h-full w-[47px] lg:w-[70px]"
@@ -48,6 +139,29 @@ function Soon() {
       />
     </svg>
   );
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-8 text-center">
+        Loading upcoming pool data...
+      </div>
+    );
+  }
+
+  if (!poolData) {
+    return (
+      <div className="flex items-center justify-center p-8 text-center">
+        No pool data found
+      </div>
+    );
+  }
+
+  const tokenName = tokenInfo?.name || "Unknown Token";
+  const tokenSymbol = tokenInfo?.symbol || "N/A";
+  const tokenIcon = tokenInfo?.icon || "/vest.png";
+  const address = poolData.poolAddress || poolData.address;
+  const launchTime = poolData.startTimestamp || poolData.startTime;
+
   return (
     <div
       className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:mx-0 lg:pb-8 dark:text-white"
@@ -81,20 +195,23 @@ function Soon() {
 
         <div className="flex">
           <img
-            src="/vest.png"
+            src={tokenIcon}
             className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:w-38 lg:rounded-3xl xl:ml-8"
+            onError={(e) => {
+              e.target.src = "/vest.png";
+            }}
           />
           <div className="font-khand ml-4 font-normal lg:ml-8">
             <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-2xl xl:text-4xl">
-              YOU'RE FIRED (FIRED)
+              {tokenName} ({tokenSymbol})
             </h1>
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-lg xl:text-xl">
               <p className="flex items-center gap-2">
-                Pool ID: 0x4v49...hssdas
+                {type === "stake" ? "Pool" : type === "vest" ? "Vest" : "Lock"} ID: {formatAddress(address)}
                 <LuCopy
                   className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard("0x4v49hssdas", "poolId")}
+                  onClick={() => copyToClipboard(typeof address === 'string' ? address : address?.toBase58(), "poolId")}
                   title="Copy Pool ID"
                 />
                 {copiedField === "poolId" && (
@@ -102,10 +219,10 @@ function Soon() {
                 )}
               </p>
               <p className="flex items-center gap-2">
-                Creator: Anonymouse
+                Creator: {formatAddress(poolData.initializer || poolData.receiverUser)}
                 <LuCopy
                   className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard("Anonymouse", "creator")}
+                  onClick={() => copyToClipboard(typeof (poolData.initializer || poolData.receiverUser) === 'string' ? (poolData.initializer || poolData.receiverUser) : (poolData.initializer || poolData.receiverUser)?.toBase58(), "creator")}
                   title="Copy Creator"
                 />
                 {copiedField === "creator" && (
@@ -113,17 +230,17 @@ function Soon() {
                 )}
               </p>
               <p className="flex items-center gap-2">
-                Token ID: 0x4v49...hssdas
+                Token ID: {formatAddress(poolData.tokenMint)}
                 <LuCopy
                   className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard("0x4v49hssdas", "tokenId")}
+                  onClick={() => copyToClipboard(typeof poolData.tokenMint === 'string' ? poolData.tokenMint : poolData.tokenMint?.toBase58(), "tokenId")}
                   title="Copy Token ID"
                 />
                 {copiedField === "tokenId" && (
                   <span className="text-xs md:text-base text-green-500">Copied!</span>
                 )}
               </p>
-              <p>Market cap: $4.3K</p>
+              <p>Market cap: {tokenInfo?.mcap ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K` : "N/A"}</p>
             </div>
           </div>
         </div>
@@ -133,7 +250,7 @@ function Soon() {
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
-            21.04.25/12:24
+            {formatTimestamp(launchTime)}
           </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
@@ -142,7 +259,7 @@ function Soon() {
 
         <div className="absolute left-0 z-5 mt-4 flex w-11/13">
           <div className="font-khand ml-3 flex max-w-20 items-center text-xl font-semibold md:mx-4 lg:text-2xl">
-            STAKING POOL
+            {type === "stake" ? "STAKING POOL" : type === "vest" ? "VEST" : "LOCK"}
           </div>
           <div className="mr-4">
             <StakeIcon />
@@ -166,19 +283,18 @@ function Soon() {
                     : "linear-gradient(90deg, rgba(255, 220, 160, 1) 20%, rgba(255, 180, 225, 1) 50%,  rgba(255, 220, 160, 1) 90%)",
               }}
             >
-              <div>LOCKED: 21.04.2025</div>
-              <div>ENDS: |2d.12h</div>
+              <div>LAUNCHING IN: {getCountdown(launchTime)}</div>
             </div>
           </div>
         </div>
 
         <div className="font-khand mt-12 pt-12 text-2xl font-semibold lg:mt-16 lg:text-3xl">
-          {/* 120M */}
+          {/* Empty space for layout */}
         </div>
       </div>
 
       <div className="font-khand mt-8 text-end text-xl font-medium lg:text-2xl">
-        {/* locked */}
+        {/* Empty space for layout */}
       </div>
     </div>
   );

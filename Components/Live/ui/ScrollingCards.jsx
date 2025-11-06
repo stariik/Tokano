@@ -24,7 +24,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
         const tokenName = pool.tokenInfo?.name || "Unknown Token";
         const tokenSymbol = pool.tokenInfo?.symbol || "N/A";
         const title = `${tokenName} (${tokenSymbol})`;
-        const created = pool.poolAddress.toBase58();
+        const created = pool.tokenMint.toBase58();
         const marketCap = pool.tokenInfo?.mcap
           ? `$${(pool.tokenInfo.mcap / 1000).toFixed(1)}K`
           : "N/A";
@@ -42,7 +42,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
             poolAddress={pool.poolAddress.toBase58()}
             variant="live"
             stakeTimestamp={formatTimestamp(pool.startTimestamp)}
-            stakersCount={0}
+            stakersCount={pool.stakersCount || 0}
             poolEndTimestamp={pool.endTimestamp.getTime() / 1000}
             poolData={pool}
             tokenImage={tokenImage}
@@ -55,7 +55,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
         const tokenName = vest.tokenInfo?.name || "Unknown Token";
         const tokenSymbol = vest.tokenInfo?.symbol || "N/A";
         const title = `${tokenName} (${tokenSymbol})`;
-        const created = vest.address.toBase58();
+        const created = vest.tokenMint.toBase58();
         const marketCap = vest.tokenInfo?.mcap
           ? `$${(vest.tokenInfo.mcap / 1000).toFixed(1)}K`
           : "N/A";
@@ -85,7 +85,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
         const tokenName = lockItem.tokenInfo?.name || "Unknown Token";
         const tokenSymbol = lockItem.tokenInfo?.symbol || "N/A";
         const title = `${tokenName} (${tokenSymbol})`;
-        const created = lockItem.address.toBase58();
+        const created = lockItem.tokenMint.toBase58();
         const marketCap = lockItem.tokenInfo?.mcap
           ? `$${(lockItem.tokenInfo.mcap / 1000).toFixed(1)}K`
           : "N/A";

@@ -39,7 +39,7 @@ function StakingCard({ pool }: StakingCardProps) {
 
   // Format token amounts
   const totalRewardAmount =
-    pool.rewardDistributed.toNumber() / Math.pow(10, decimals);
+    pool.rewardRate.toNumber() / Math.pow(10, decimals);
   const totalStaked = pool.totalTokenStaked.toNumber() / Math.pow(10, decimals);
 
   // Get token metadata

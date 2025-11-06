@@ -55,6 +55,20 @@ function SoonCard({
   const addressForFavorite = fullAddress || poolId;
   const isFav = isFavorite(favoriteType, addressForFavorite);
 
+  // Generate the soon page URL with real data
+  const getSoonUrl = () => {
+    if (!fullAddress) return "/card/soon";
+
+    if (poolType === "STAKE") {
+      return `/card/soon?type=stake&pool=${fullAddress}`;
+    } else if (poolType === "VEST") {
+      return `/card/soon?type=vest&vest=${fullAddress}`;
+    } else if (poolType === "LOCK") {
+      return `/card/soon?type=lock&lock=${fullAddress}`;
+    }
+    return "/card/soon";
+  };
+
   // Handle star click
   const handleStarClick = (e) => {
     e.preventDefault(); // Prevent navigation
@@ -80,7 +94,7 @@ function SoonCard({
 
   return (
     <Link
-      href={`/card/soon`}
+      href={getSoonUrl()}
       className="text-primary block rounded-4xl pb-4 transition hover:opacity-90 lg:pb-4 xl:pb-8 dark:text-white"
       style={{
         background:

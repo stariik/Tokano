@@ -146,7 +146,7 @@ function WalletSelectionPopup({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="animate-scaleIn w-full max-w-[280px] rounded-2xl border-2 border-[#949DFF] bg-gradient-to-b from-[#f5f3fb] to-[#ede8f5] sm:max-w-[320px] md:max-w-[360px] dark:from-[#2A1C78] dark:to-[#1a1154]"
+        className="animate-scaleIn w-full max-w-[280px] rounded-2xl border-2 border-[#949DFF] bg-gradient-to-b from-[#f5f3fb] to-[#ede8f5] sm:max-w-[320px] md:max-w-[360px]"
       >
         <div className="my-4 flex w-full justify-center">
           <Tokano />
@@ -170,7 +170,7 @@ function WalletSelectionPopup({
                   onClick={() => handleWalletClick(wallet)}
                   className="flex w-full cursor-pointer items-center justify-end gap-3 rounded-lg p-2 pr-4 transition-colors hover:bg-[#f0f0ff] active:bg-[#f0f0ff] sm:gap-4 sm:p-2.5 sm:pr-6 dark:hover:bg-[#1a1f9e] dark:active:bg-[#252ba0]"
                 >
-                  <span className="text-base font-medium text-[#190E79] sm:text-lg md:text-xl dark:text-white">
+                  <span className="text-base font-medium text-[#190E79] sm:text-lg md:text-xl ">
                     {wallet.adapter.name}
                   </span>
                   <div

@@ -152,8 +152,11 @@ function Vest({ vestData, vestAddress }) {
 
         <div className="flex">
           <img
-            src="/vest.png"
+            src={tokenInfo?.icon || "/vest.png"}
             className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:rounded-3xl xl:ml-8 xl:w-32 2xl:w-38"
+            onError={(e) => {
+              e.target.src = "/vest.png";
+            }}
           />
           <div className="font-khand ml-4 font-normal lg:ml-2 xl:ml-8">
             <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl">
