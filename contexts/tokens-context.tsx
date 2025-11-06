@@ -11,6 +11,7 @@ export interface TokenInfo {
   id: string;
   name: string;
   symbol: string;
+  decimals: number;
   mcap: number;
   icon: string;
   launchpad?: string;
@@ -41,7 +42,6 @@ export const TokensProvider = ({ children }: { children: ReactNode }) => {
       mints: string[],
       forceRefetch = false,
     ): Promise<Record<string, TokenInfo>> => {
-      console.log("FetchTokenInfo");
       const mintsToFetch = forceRefetch
         ? mints
         : mints.filter((mint) => !tokensRef.current[mint]);
@@ -55,8 +55,6 @@ export const TokensProvider = ({ children }: { children: ReactNode }) => {
           }
         });
       }
-
-      console.log("mintsToFetch", mintsToFetch);
 
       if (mintsToFetch.length === 0) {
         return resultingTokens;
@@ -83,6 +81,7 @@ export const TokensProvider = ({ children }: { children: ReactNode }) => {
                   id: tokenData.id,
                   name: tokenData.name,
                   symbol: tokenData.symbol,
+                  decimals: tokenData.decimals,
                   mcap: tokenData.mcap,
                   icon: tokenData.icon,
                   launchpad: tokenData.launchpad,
