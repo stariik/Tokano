@@ -218,7 +218,7 @@ function StakeCard({
         </p>
       </div>
       <div className="flex items-center justify-end gap-6 pr-4 pb-2">
-        <p className="pr-1 text-lg lg:text-2xl">stakers</p>
+        <p className="pr-1 text-lg lg:text-xl xl:text-2xl">stakers</p>
       </div>
     </Link>
   );

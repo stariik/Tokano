@@ -27,7 +27,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
         const created = pool.tokenMint.toBase58();
         const decimals = pool.tokenInfo?.decimals || 9;
         const rewardAmount = pool.rewardRate
-          ? (pool.rewardRate.toNumber() / Math.pow(10, decimals)).toFixed(2)
+          ? (pool.rewardRate.toNumber() / Math.pow(10, decimals)).toFixed(6)
           : "0";
         const rewards = `${rewardAmount} ${tokenSymbol}`;
         const wallet = pool.poolAddress.toBase58();

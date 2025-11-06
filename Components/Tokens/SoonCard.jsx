@@ -116,7 +116,7 @@ function SoonCard({
           <img
             src={tokenImage}
             alt={title}
-            className="mt-2 ml-4 w-24 h-24 md:mt-4 md:ml-8 lg:ml-4 lg:w-28 lg:h-28 xl:ml-4 xl:w-36 xl:h-36 rounded-4xl object-cover"
+            className="mt-2 ml-4 w-24 h-24 md:mt-4 md:ml-8 lg:ml-4 lg:w-28 lg:h-28 xl:ml-4 xl:w-32 xl:h-32 rounded-4xl object-cover"
           />
         </div>
 
