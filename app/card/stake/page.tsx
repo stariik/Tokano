@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useTokens } from "@/contexts/tokens-context";
 import { PoolState } from "tokano-sdk";
@@ -23,7 +22,6 @@ function StakePageContent() {
   const searchParams = useSearchParams();
   const poolAddress = searchParams.get("pool");
   const { staking } = useTokano();
-  const { publicKey } = useWallet();
   const { fetchTokenInfo } = useTokens();
 
   const [pool, setPool] = useState<PoolWithTokenInfo | null>(null);
@@ -41,8 +39,19 @@ function StakePageContent() {
       setLoading(true);
       setError(null);
 
-      // Fetch the specific pool
-      const poolData = await staking.fetchStakePool(poolAddress);
+      // Fetch the specific pool and all user stakes
+      const [poolData, allUserStakes] = await Promise.all([
+        staking.fetchStakePool(poolAddress),
+        (staking as any).program.account.userState.all(),
+      ]);
+
+      // Count unique stakers for this specific pool
+      const uniqueStakers = new Set();
+      allUserStakes.forEach((userStake: any) => {
+        if (userStake.account.poolAddress.toBase58() === poolAddress) {
+          uniqueStakers.add(userStake.account.stakerUser.toBase58());
+        }
+      });
 
       // Fetch token info
       const tokenInfo = await fetchTokenInfo([poolData.tokenMint.toBase58()]);
@@ -50,7 +59,7 @@ function StakePageContent() {
       setPool({
         ...poolData,
         tokenInfo: tokenInfo[poolData.tokenMint.toBase58()],
-        stakersCount: 0, // TODO: Need SDK method to fetch all user stakes
+        stakersCount: uniqueStakers.size,
       });
     } catch (err) {
       console.error("Error fetching pool:", err);

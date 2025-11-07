@@ -55,7 +55,7 @@ function page() {
           selectedTokenData={selectedTokenData}
         />
       </div>
-      <div className="lg:w-full lg:max-w-xs xl:max-w-sm 2xl:max-w-md">
+      <div className="max-w-sm 2xl:max-w-md">
         <PortfolioRightMenu />
       </div>
     </div>

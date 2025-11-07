@@ -108,7 +108,7 @@ function PortfolioRightMenu() {
       {/* Toggle button - mobile only */}
       <button
         onClick={() => setShow(true)}
-        className={`border-secondary fixed right-0 bottom-22 z-70 flex flex-col items-center justify-center rounded-l-lg border-x-1 border-l-1 bg-white px-1 pl-1 text-sm font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl md:hidden dark:text-white ${
+        className={`border-secondary fixed right-0 bottom-22 z-70 flex flex-col items-center justify-center rounded-l-lg bg-white px-1 pl-1 text-sm font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl md:hidden dark:text-white ${
           show ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
         id="right-menu-button"

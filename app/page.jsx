@@ -41,7 +41,7 @@ export default function Home() {
           <div className="md:w-1/2 lg:w-1/3 2xl:max-w-2xl ">
             <Live />
           </div>
-          <div className="md:w-1/2 lg:w-1/3">
+          <div className="md:max-w-[360px] lg:max-w-full lg:w-1/3">
             <HomeRightMenu />
           </div>
         </div>

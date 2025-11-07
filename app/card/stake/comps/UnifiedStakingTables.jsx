@@ -2,7 +2,39 @@
 
 import React from "react";
 
-function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
+function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs, onUnstake, onClaim, processing }) {
+  const handleUnstakeClick = (position) => {
+    if (position.isLocked) {
+      // Show locked popup
+      setPopup({
+        show: true,
+        type: "locked",
+        positionId: position.id,
+        isLocked: true,
+        remainingTime: position.remainingTime,
+      });
+    } else {
+      // Show unstake confirmation
+      setPopup({
+        show: true,
+        type: "unstake",
+        positionId: position.id,
+        isLocked: false,
+        remainingTime: "",
+      });
+    }
+  };
+
+  const handleClaimClick = (position) => {
+    setPopup({
+      show: true,
+      type: "claim",
+      positionId: position.id,
+      isLocked: false,
+      remainingTime: "",
+    });
+  };
+
   return (
     <div>
       {/* Headers Row */}
@@ -97,13 +129,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                 >
                   <div
                     className="flex cursor-pointer"
-                    onClick={() =>
-                      setPopup({
-                        show: true,
-                        type: "unstake",
-                        positionId: position.id,
-                      })
-                    }
+                    onClick={() => handleUnstakeClick(position)}
                   >
                     <div className="dark:border-secondary mx-auto flex min-w-[30px] items-center justify-center border-r border-[#CDCDE9] lg:min-w-[20px] xl:min-w-[30px]">
                       <span className="font-khand text-sm font-medium text-[#190E79] lg:font-semibold dark:text-white">
@@ -119,6 +145,38 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                   </div>
                   <div className="relative text-center">
                     {/* Empty second column - popup area */}
+                    {/* Popup for locked position */}
+                    {popup.show &&
+                      popup.positionId === position.id &&
+                      popup.type === "locked" && (
+                        <div className="absolute top-1/2 left-3/5 z-70 flex -translate-x-1/2 -translate-y-1/2 transform">
+                          <div className="absolute top-1/2 right-full h-px w-16 -translate-y-1/2 transform bg-purple-400"></div>
+                          <div className="dark:border-secondary min-w-[120px] rounded-lg border-2 border-[#CDCDE9] bg-[#eeeded] p-2 text-center shadow-xl lg:p-4 dark:bg-[#0C0D1C]">
+                            <div className="mb-3">
+                              <div className="text-xs font-semibold text-[#190E79] lg:text-sm dark:text-white">
+                                STILL LOCKED
+                              </div>
+                              <div className="mt-2 text-xs text-yellow-600 dark:text-yellow-400">
+                                Wait {popup.remainingTime}
+                              </div>
+                            </div>
+                            <button
+                              className="rounded-full bg-gray-600 px-6 py-1 text-sm font-bold text-white hover:bg-gray-700 lg:py-2"
+                              onClick={() =>
+                                setPopup({
+                                  show: false,
+                                  type: "",
+                                  positionId: null,
+                                  isLocked: false,
+                                  remainingTime: "",
+                                })
+                              }
+                            >
+                              OK
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     {/* Popup for unstake */}
                     {popup.show &&
                       popup.positionId === position.id &&
@@ -133,27 +191,24 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                             </div>
                             <div className="flex flex-col space-y-2">
                               <button
-                                className="rounded-full bg-red-500 px-6 py-1 text-sm font-bold text-white hover:bg-red-600 lg:py-2"
+                                className="rounded-full bg-red-500 px-6 py-1 text-sm font-bold text-white hover:bg-red-600 lg:py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={processing}
                                 onClick={() => {
-                                  console.log(
-                                    `unstake YES for position ${popup.positionId}`,
-                                  );
-                                  setPopup({
-                                    show: false,
-                                    type: "",
-                                    positionId: null,
-                                  });
+                                  onUnstake(popup.positionId);
                                 }}
                               >
-                                YES
+                                {processing ? "..." : "YES"}
                               </button>
                               <button
                                 className="rounded-full bg-gray-600 px-6 py-1 text-sm font-bold text-white hover:bg-gray-700 lg:py-2"
+                                disabled={processing}
                                 onClick={() =>
                                   setPopup({
                                     show: false,
                                     type: "",
                                     positionId: null,
+                                    isLocked: false,
+                                    remainingTime: "",
                                   })
                                 }
                               >
@@ -176,13 +231,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                 >
                   <div
                     className="dark:border-secondary cursor-pointer border-l-1 border-[#CDCDE9] p-2 text-center hover:bg-[#f5f3fb] md:text-lg dark:hover:bg-[#2A1C78]"
-                    onClick={() =>
-                      setPopup({
-                        show: true,
-                        type: "claim",
-                        positionId: position.id,
-                      })
-                    }
+                    onClick={() => handleClaimClick(position)}
                   >
                     <div className="font-khand">{position.rewards}</div>
                     <div className="text-xs text-purple-300 md:text-sm">
@@ -206,27 +255,24 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs }) {
                             </div>
                             <div className="flex flex-col space-y-2">
                               <button
-                                className="rounded-full bg-green-500 px-6 py-1 text-sm font-bold text-white hover:bg-green-600 lg:py-2"
+                                className="rounded-full bg-green-500 px-6 py-1 text-sm font-bold text-white hover:bg-green-600 lg:py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={processing}
                                 onClick={() => {
-                                  console.log(
-                                    `claim YES for position ${popup.positionId}`,
-                                  );
-                                  setPopup({
-                                    show: false,
-                                    type: "",
-                                    positionId: null,
-                                  });
+                                  onClaim(popup.positionId);
                                 }}
                               >
-                                YES
+                                {processing ? "..." : "YES"}
                               </button>
                               <button
                                 className="rounded-full bg-gray-600 px-6 py-1 text-sm font-bold text-white hover:bg-gray-700 lg:py-2"
+                                disabled={processing}
                                 onClick={() =>
                                   setPopup({
                                     show: false,
                                     type: "",
                                     positionId: null,
+                                    isLocked: false,
+                                    remainingTime: "",
                                   })
                                 }
                               >

@@ -10,7 +10,7 @@ interface MyStakingProps {
 }
 
 function MyStaking({ pool }: MyStakingProps) {
-  const { publicKey } = useWallet();
+  const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const { staking } = useTokano();
   const [stakingPositions, setStakingPositions] = useState<any[]>([]);
@@ -21,7 +21,12 @@ function MyStaking({ pool }: MyStakingProps) {
     show: false,
     type: "",
     positionId: null,
+    isLocked: false,
+    remainingTime: "",
   });
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -78,6 +83,89 @@ function MyStaking({ pool }: MyStakingProps) {
     }
   };
 
+  const handleUnstake = async (positionId: string) => {
+    try {
+      if (!publicKey || !staking || !connection) return;
+
+      const position = transformedPositions.find((p) => p.id === positionId);
+      if (!position || !position.rawStake) return;
+
+      setProcessing(true);
+      setError(null);
+
+      // Use SDK withdraw method to unstake all
+      const tx = await staking.withdraw({
+        walletPk: publicKey,
+        poolAddress: position.rawStake.poolAddress,
+        accountAddress: position.rawStake.accountAddress,
+        amount: position.rawStake.amountStaked.toString(),
+      });
+
+      // Set recent blockhash and fee payer
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      // Sign and send transaction
+      const signature = await sendTransaction(tx, connection);
+
+      await connection.confirmTransaction(signature, "confirmed");
+
+      setSuccess("Successfully unstaked tokens!");
+      await fetchUserStakingPositions();
+
+      setTimeout(() => setSuccess(null), 5000);
+    } catch (error: any) {
+      console.error("Error unstaking:", error);
+      setError(error?.message || "Failed to unstake tokens");
+      setTimeout(() => setError(null), 5000);
+    } finally {
+      setProcessing(false);
+      setPopup({ show: false, type: "", positionId: null, isLocked: false, remainingTime: "" });
+    }
+  };
+
+  const handleClaim = async (positionId: string) => {
+    try {
+      if (!publicKey || !staking || !connection) return;
+
+      const position = transformedPositions.find((p) => p.id === positionId);
+      if (!position || !position.rawStake) return;
+
+      setProcessing(true);
+      setError(null);
+
+      // Use SDK getReward method
+      const tx = await staking.getReward({
+        walletPk: publicKey,
+        poolAddress: position.rawStake.poolAddress,
+        accountAddress: position.rawStake.accountAddress,
+      });
+
+      // Set recent blockhash and fee payer
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      // Sign and send transaction
+      const signature = await sendTransaction(tx, connection);
+
+      await connection.confirmTransaction(signature, "confirmed");
+
+      setSuccess("Successfully claimed rewards!");
+      await fetchUserStakingPositions();
+
+      setTimeout(() => setSuccess(null), 5000);
+    } catch (error: any) {
+      console.error("Error claiming rewards:", error);
+      setError(error?.message || "Failed to claim rewards");
+      setTimeout(() => setError(null), 5000);
+    } finally {
+      setProcessing(false);
+      setPopup({ show: false, type: "", positionId: null, isLocked: false, remainingTime: "" });
+    }
+  };
+
   const handleScrollSnap = () => {
     if (!scrollContainerRef.current) return;
 
@@ -118,6 +206,21 @@ function MyStaking({ pool }: MyStakingProps) {
     };
   }, []);
 
+  // Format numbers with K and M
+  const formatNumber = (num: number) => {
+    if (num === 0) return "0";
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(1)}M`;
+    } else if (num >= 1000) {
+      return `${(num / 1000).toFixed(1)}K`;
+    } else if (num < 1 && num > 0) {
+      // For small decimal numbers, use toFixed to avoid scientific notation
+      return num.toFixed(6).replace(/\.?0+$/, '');
+    } else {
+      return num.toString();
+    }
+  };
+
   // Transform stake data to match UnifiedStakingTables format
   const transformedPositions = stakingPositions.map((stake, index) => {
     const decimals = pool?.tokenInfo?.decimals || 9;
@@ -136,28 +239,46 @@ function MyStaking({ pool }: MyStakingProps) {
     const timeUntilRelease = releaseTime
       ? Math.max(0, releaseTime.getTime() - now.getTime())
       : 0;
+
+    // Calculate time units
+    const monthsUntilRelease = Math.floor(
+      timeUntilRelease / (1000 * 60 * 60 * 24 * 30),
+    );
     const daysUntilRelease = Math.floor(
-      timeUntilRelease / (1000 * 60 * 60 * 24),
+      (timeUntilRelease % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24),
     );
     const hoursUntilRelease = Math.floor(
       (timeUntilRelease % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
     );
+    const minutesUntilRelease = Math.floor(
+      (timeUntilRelease % (1000 * 60 * 60)) / (1000 * 60),
+    );
+
+    // Build period string based on available time
+    let periodString = "";
+    if (timeUntilRelease > 0) {
+      const parts = [];
+      if (monthsUntilRelease > 0) parts.push(`${monthsUntilRelease}mo`);
+      if (daysUntilRelease > 0) parts.push(`${daysUntilRelease}d`);
+      if (hoursUntilRelease > 0) parts.push(`${hoursUntilRelease}h`);
+      if (minutesUntilRelease > 0 && monthsUntilRelease === 0) parts.push(`${minutesUntilRelease}m`);
+
+      periodString = parts.length > 0
+        ? `Locked for ${parts.slice(0, 2).join(' ')}`
+        : "Locked";
+    } else {
+      periodString = "Unlocked";
+    }
 
     return {
       id: stake.accountAddress?.toBase58() || `stake-${index}`,
-      staked: stakedAmount.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
-      period:
-        daysUntilRelease > 0
-          ? `${daysUntilRelease}d ${hoursUntilRelease}h`
-          : "Unlocked",
-      rewards: rewardAmount.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+      staked: formatNumber(stakedAmount),
+      period: periodString,
+      rewards: formatNumber(rewardAmount),
+      rewardsSub: "", // Skip for now as requested
       unlockTime: releaseTime,
+      isLocked: timeUntilRelease > 0,
+      remainingTime: periodString,
       rawStake: stake, // Keep raw stake data for operations
     };
   });
@@ -210,6 +331,22 @@ function MyStaking({ pool }: MyStakingProps) {
         </div>
       </div>
 
+      {/* Success/Error Messages */}
+      {(success || error) && (
+        <div className="px-4 py-2">
+          {success && (
+            <p className="text-center text-sm font-semibold text-green-600 dark:text-green-400">
+              ✓ {success}
+            </p>
+          )}
+          {error && (
+            <p className="text-center text-sm font-semibold text-red-600 dark:text-red-400">
+              ✗ {error}
+            </p>
+          )}
+        </div>
+      )}
+
       {/* Two Side-by-Side Tables */}
       <div className="relative">
         {rpcLimitError ? (
@@ -242,6 +379,9 @@ function MyStaking({ pool }: MyStakingProps) {
             setPopup={setPopup}
             scrollRef={scrollContainerRef}
             itemRefs={itemRefs}
+            onUnstake={handleUnstake}
+            onClaim={handleClaim}
+            processing={processing}
           />
         )}
 

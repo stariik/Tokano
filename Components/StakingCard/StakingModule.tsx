@@ -170,6 +170,21 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
     }
   };
 
+  // Format numbers with K and M
+  const formatNumber = (num: number) => {
+    if (num === 0) return "0";
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(1)}M`;
+    } else if (num >= 1000) {
+      return `${(num / 1000).toFixed(1)}K`;
+    } else if (num < 1 && num > 0) {
+      // For small decimal numbers, use toFixed to avoid scientific notation
+      return num.toFixed(6).replace(/\.?0+$/, '');
+    } else {
+      return num.toString();
+    }
+  };
+
   // Calculate stats from pool data
   const decimals = pool?.tokenInfo?.decimals || 9;
   const totalStaked = pool?.totalTokenStaked
@@ -178,34 +193,55 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
   const rewardsDistributed = pool?.rewardDistributed
     ? pool.rewardDistributed.toNumber() / Math.pow(10, decimals)
     : 0;
+  const totalRewardAmount = pool?.rewardAmount
+    ? pool.rewardAmount.toNumber() / Math.pow(10, decimals)
+    : 0;
+  const rewardsLeft = Math.max(0, totalRewardAmount - rewardsDistributed);
+
+  const stakersCount = (pool as any)?.stakersCount || 0;
 
   const stats = [
-    { label: "Wallets Staking:", value: "0" }, // TODO: Get from blockchain
+    { label: "Wallets Staking:", value: stakersCount.toString() },
     {
       label: "Tokens Staked:",
-      value: totalStaked.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+      value: formatNumber(totalStaked),
     },
     {
       label: "Rwrds Earned:",
-      value: rewardsDistributed.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+      value: formatNumber(rewardsDistributed),
     },
     {
       label: "Rwrds Left:",
-      value: "0.00", // TODO: Calculate rewards remaining
+      value: formatNumber(rewardsLeft),
     },
   ];
 
   // Calculate unlock time
   const calculateUnlockTime = () => {
-    if (!pool?.poolLockPeriod) return "0 days";
-    const days = Math.floor(pool.poolLockPeriod.toNumber() / 86400);
-    return `${days} days`;
+    if (!pool?.poolLockPeriod) return "0";
+    try {
+      const lockPeriodSeconds = typeof pool.poolLockPeriod.toNumber === 'function'
+        ? pool.poolLockPeriod.toNumber()
+        : Number(pool.poolLockPeriod);
+
+      // Calculate time units
+      const months = Math.floor(lockPeriodSeconds / (86400 * 30));
+      const days = Math.floor((lockPeriodSeconds % (86400 * 30)) / 86400);
+      const hours = Math.floor((lockPeriodSeconds % 86400) / 3600);
+      const minutes = Math.floor((lockPeriodSeconds % 3600) / 60);
+
+      // Build time string based on available units
+      const parts = [];
+      if (months > 0) parts.push(`${months}mo`);
+      if (days > 0) parts.push(`${days}d`);
+      if (hours > 0) parts.push(`${hours}h`);
+      if (minutes > 0 && months === 0) parts.push(`${minutes}m`);
+
+      return parts.length > 0 ? parts.slice(0, 2).join(' ') : "0";
+    } catch (error) {
+      console.error("Error calculating unlock time:", error);
+      return "N/A";
+    }
   };
 
   return (
@@ -299,7 +335,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       </div>
 
       <div className="font-khand dark:border-secondary flex items-center justify-end gap-8 border-t-2 border-[#CDCDE9] bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 pr-8 text-xs font-semibold text-white md:gap-16 md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
-        You are Staking: {userStakedAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        You are Staking: {formatNumber(userStakedAmount)}
 
         <button
           onClick={handleStake}

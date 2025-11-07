@@ -470,7 +470,7 @@ export default function VestFundsForm({
               onChange={(e) =>
                 handleInputChange("releaseModel", e.target.value)
               }
-              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] md:w-32 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 sm:w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] md:w-32 dark:bg-[#453DC8] dark:text-white"
             >
               <option value="daily">daily</option>
               <option value="weekly">weekly</option>
@@ -484,7 +484,7 @@ export default function VestFundsForm({
               value={formData.duration || ""}
               onChange={(e) => handleInputChange("duration", e.target.value)}
               placeholder="0"
-              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-28 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-12 sm:w-20 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-12 lg:w-20 dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
