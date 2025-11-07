@@ -121,7 +121,13 @@ function MyStaking({ pool }: MyStakingProps) {
       setTimeout(() => setError(null), 5000);
     } finally {
       setProcessing(false);
-      setPopup({ show: false, type: "", positionId: null, isLocked: false, remainingTime: "" });
+      setPopup({
+        show: false,
+        type: "",
+        positionId: null,
+        isLocked: false,
+        remainingTime: "",
+      });
     }
   };
 
@@ -162,7 +168,13 @@ function MyStaking({ pool }: MyStakingProps) {
       setTimeout(() => setError(null), 5000);
     } finally {
       setProcessing(false);
-      setPopup({ show: false, type: "", positionId: null, isLocked: false, remainingTime: "" });
+      setPopup({
+        show: false,
+        type: "",
+        positionId: null,
+        isLocked: false,
+        remainingTime: "",
+      });
     }
   };
 
@@ -215,7 +227,7 @@ function MyStaking({ pool }: MyStakingProps) {
       return `${(num / 1000).toFixed(1)}K`;
     } else if (num < 1 && num > 0) {
       // For small decimal numbers, use toFixed to avoid scientific notation
-      return num.toFixed(6).replace(/\.?0+$/, '');
+      return num.toFixed(6).replace(/\.?0+$/, "");
     } else {
       return num.toString();
     }
@@ -261,11 +273,13 @@ function MyStaking({ pool }: MyStakingProps) {
       if (monthsUntilRelease > 0) parts.push(`${monthsUntilRelease}mo`);
       if (daysUntilRelease > 0) parts.push(`${daysUntilRelease}d`);
       if (hoursUntilRelease > 0) parts.push(`${hoursUntilRelease}h`);
-      if (minutesUntilRelease > 0 && monthsUntilRelease === 0) parts.push(`${minutesUntilRelease}m`);
+      if (minutesUntilRelease > 0 && monthsUntilRelease === 0)
+        parts.push(`${minutesUntilRelease}m`);
 
-      periodString = parts.length > 0
-        ? `Locked for ${parts.slice(0, 2).join(' ')}`
-        : "Locked";
+      periodString =
+        parts.length > 0
+          ? `Locked for ${parts.slice(0, 2).join(" ")}`
+          : "Locked";
     } else {
       periodString = "Unlocked";
     }
