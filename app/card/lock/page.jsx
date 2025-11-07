@@ -6,6 +6,7 @@ import { useTokano } from "@/contexts/tokano-sdk-context";
 import TokenGrid from "@/Components/Memes/TokenGrid";
 import Lock from "./Lock";
 import RightMenu from "@/Components/RightMenu/RightMenu";
+import PortfolioRightMenu from "@/Components/RightMenu/PortfolioRightMenu";
 
 function LockPageContent() {
   const searchParams = useSearchParams();
@@ -57,7 +58,7 @@ function LockPageContent() {
         )}
       </div>
       <div className="lg:w-full lg:max-w-xs xl:max-w-sm 2xl:max-w-md">
-        <RightMenu />
+        <PortfolioRightMenu />
       </div>
     </div>
   );

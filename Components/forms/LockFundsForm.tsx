@@ -311,10 +311,10 @@ export default function LockFundsForm({
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
-          <div className="font-khand flex h-7 w-7 items-center justify-center rounded-full bg-white text-base font-bold text-[#6b4d9f]">
+          <div className="font-khand flex h-6 w-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#6b4d9f] lg:h-7 lg:w-7 lg:text-base">
             🔒
           </div>
-          <div className="font-khand text-sm font-semibold text-[#190E79] dark:text-white">
+          <div className="font-khand text-xs font-semibold text-[#190E79] lg:text-sm dark:text-white">
             Fill the form to lock funds for: {token.name}
           </div>
         </div>
@@ -325,7 +325,7 @@ export default function LockFundsForm({
         {/* Lock Date and Time */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
+            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
               </span>
@@ -337,7 +337,7 @@ export default function LockFundsForm({
               onChange={(e) =>
                 handleInputChange("lockDateTime", e.target.value)
               }
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[10px] font-bold text-[#190E79] md:max-w-[280px] md:text-[13px] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -351,13 +351,13 @@ export default function LockFundsForm({
                   .slice(0, 16);
                 handleInputChange("lockDateTime", localDateTime);
               }}
-              className="font-khand rounded-lg bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] md:text-base"
+              className="font-khand rounded-lg bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] lg:text-sm"
               title="Set to current time"
             >
               now
             </button>
           </div>
-          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 dark:text-white">
+          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 lg:text-xs dark:text-white">
             Set the exact date and time when tokens will be locked and become
             inaccessible until the release date.
           </div>
@@ -366,7 +366,7 @@ export default function LockFundsForm({
         {/* Token Amount */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
+            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 2.
               </span>
@@ -377,14 +377,14 @@ export default function LockFundsForm({
               value={formData.tokenAmount || ""}
               onChange={(e) => handleInputChange("tokenAmount", e.target.value)}
               placeholder="0"
-              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-40 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-40 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
-            <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
+            <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               tokens
             </span>
           </div>
-          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 dark:text-white">
+          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 lg:text-xs dark:text-white">
             Enter the number of tokens you want to lock. These tokens will be
             inaccessible until the release date.
           </div>
@@ -393,7 +393,7 @@ export default function LockFundsForm({
         {/* Release Date */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
+            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 3.
               </span>
@@ -403,11 +403,11 @@ export default function LockFundsForm({
               type="datetime-local"
               value={formData.releaseDate || ""}
               onChange={(e) => handleInputChange("releaseDate", e.target.value)}
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[10px] font-bold text-[#190E79] md:max-w-[280px] md:text-[13px] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
           </div>
-          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 dark:text-white">
+          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 lg:text-xs dark:text-white">
             Set the exact date and time when the locked tokens can be claimed by
             the recipient.
           </div>
@@ -416,7 +416,7 @@ export default function LockFundsForm({
         {/* Recipient Wallet */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
+            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 4.
               </span>
@@ -429,10 +429,10 @@ export default function LockFundsForm({
                 handleInputChange("recipientWallet", e.target.value)
               }
               placeholder="e.g. 5Yf8M2Z3...7FqK4Bc (optional, Solana address)"
-              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] placeholder-gray-400 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
             />
           </div>
-          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 dark:text-white">
+          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 lg:text-xs dark:text-white">
             In case left empty, tokens go back to wallet of origin when claimed
             after unlock date.
           </div>
@@ -440,7 +440,7 @@ export default function LockFundsForm({
 
         {/* Warning Box */}
         <div className="mt-2 overflow-hidden rounded-xl border-2 border-red-400 bg-white p-4 pt-0 dark:bg-white/0">
-          <div className="font-khand -mt-5 mb-3 flex w-full items-center justify-between gap-2 text-xs font-bold text-red-500 dark:text-white">
+          <div className="font-khand -mt-5 mb-3 flex w-full items-center justify-between gap-2 text-xs font-bold text-red-500 lg:text-sm dark:text-white">
             <div className="flex items-center gap-4">
               <Warning />
               <p>ATTENTION</p>
@@ -451,18 +451,18 @@ export default function LockFundsForm({
             </div>
           </div>
           <ul className="list-none">
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
               <span className="absolute left-0 font-bold">1.</span>
               <span className="font-bold">Reward Claim Frequency:</span> Stakers
               can claim their rewards once every 24 hours.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
               <span className="absolute left-0 font-bold">2.</span>
               <span className="font-bold">Unclaimed Rewards:</span> Rewards not
               claimed within 365 days will be converted to Tokano native tokens.
               After conversion, users must contact support to retrieve them.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
               <span className="absolute left-0 font-bold">3.</span>
               <span className="font-bold">Undistributed Tokens:</span> Any
               undistributed tokens remaining in the pool will be available for
@@ -474,7 +474,7 @@ export default function LockFundsForm({
           </ul>
         </div>
         <div className="mt-6">
-          <h3 className="font-khand mb-4 text-xl font-bold text-[#190E79] md:text-2xl dark:text-white">
+          <h3 className="font-khand mb-4 text-lg font-bold text-[#190E79] lg:text-2xl dark:text-white">
             PREVIEW YOUR LOCK:
           </h3>
           <div className="pointer-events-none">
@@ -502,7 +502,7 @@ export default function LockFundsForm({
       <div className="mt-6">
         {/* CREATE LOCK Button */}
         <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
-          <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] md:ml-6 md:text-base dark:text-white">
+          <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] lg:ml-6 lg:text-base dark:text-white">
             creation fee:{" "}
             <span className="ml-2">
               {" "}
@@ -512,7 +512,7 @@ export default function LockFundsForm({
               {token.name || "tokens"}
             </span>
           </div>
-          <div className="flex items-center text-xs text-[#190E79] md:text-base">
+          <div className="flex items-center text-xs text-[#190E79] lg:text-base">
             <button
               onClick={handleCreateLock}
               disabled={isCreating || !publicKey}
@@ -533,7 +533,7 @@ export default function LockFundsForm({
                 </svg>
               </div>
 
-              <span className="font-khand relative inline-block text-sm text-white md:text-base">
+              <span className="font-khand relative inline-block text-sm text-white lg:text-base">
                 {isCreating ? "CREATING..." : "CREATE LOCK"}
                 <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
               </span>

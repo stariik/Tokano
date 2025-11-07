@@ -105,12 +105,12 @@ export default function CreateStake({
 
   return (
     <div className="mb-8 rounded-lg border p-4">
-      <h2 className="mb-4 text-xl font-semibold">Stake in a Pool</h2>
+      <h2 className="mb-4 text-base font-semibold lg:text-xl">Stake in a Pool</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <select
           value={selectedPoolAddress}
           onChange={(e) => setSelectedPoolAddress(e.target.value)}
-          className="rounded border p-2 disabled:bg-gray-700 disabled:text-white"
+          className="rounded border p-2 text-xs disabled:bg-gray-700 disabled:text-white lg:text-sm"
           disabled={!stakePools}
         >
           {!stakePools ? (
@@ -139,11 +139,11 @@ export default function CreateStake({
             allowNegative={false}
             thousandSeparator=","
             decimalScale={availableToken?.decimals}
-            className="w-full rounded border p-2"
+            className="w-full rounded border p-2 text-xs lg:text-sm"
             disabled={!selectedPool}
           />
           {availableToken && (
-            <span className="ml-2 text-sm whitespace-nowrap text-gray-500">
+            <span className="ml-2 text-[10px] whitespace-nowrap text-gray-500 lg:text-sm">
               Max: {availableToken.amount}
             </span>
           )}
@@ -152,7 +152,7 @@ export default function CreateStake({
       <button
         onClick={handleStake}
         disabled={!publicKey || !selectedPool || !amount}
-        className="mt-4 rounded bg-blue-500 px-4 py-2 text-white disabled:bg-gray-400"
+        className="mt-4 rounded bg-blue-500 px-4 py-2 text-xs text-white disabled:bg-gray-400 lg:text-sm"
       >
         {userHasStakeInPool ? "Add Stake" : "Stake"}
       </button>

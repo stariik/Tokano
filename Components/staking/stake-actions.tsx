@@ -144,7 +144,7 @@ export default function StakeActions({
       <button
         onClick={handleGetReward}
         disabled={!selectedUserStakedAccount || !publicKey}
-        className="rounded bg-blue-500 px-4 py-2 text-white disabled:bg-gray-400"
+        className="rounded bg-blue-500 px-4 py-2 text-xs text-white disabled:bg-gray-400 lg:text-sm"
       >
         Get Reward
       </button>
@@ -154,7 +154,7 @@ export default function StakeActions({
           placeholder="Amount to Unstake"
           value={unstakeAmount}
           onChange={(e) => setUnstakeAmount(e.target.value)}
-          className="rounded border p-2"
+          className="rounded border p-2 text-xs lg:text-sm"
           disabled={!selectedUserStakedAccount}
         />
         <button
@@ -165,7 +165,7 @@ export default function StakeActions({
             !unstakeAmount ||
             parseFloat(unstakeAmount) <= 0
           }
-          className="rounded bg-red-500 px-4 py-2 text-white disabled:bg-gray-400"
+          className="rounded bg-red-500 px-4 py-2 text-xs text-white disabled:bg-gray-400 lg:text-sm"
         >
           Unstake
         </button>
@@ -173,7 +173,7 @@ export default function StakeActions({
       <button
         onClick={handleCloseAccount}
         disabled={!selectedUserStakedAccount || !publicKey}
-        className="rounded bg-red-700 px-4 py-2 text-white disabled:bg-gray-400"
+        className="rounded bg-red-700 px-4 py-2 text-xs text-white disabled:bg-gray-400 lg:text-sm"
       >
         Close Account
       </button>
