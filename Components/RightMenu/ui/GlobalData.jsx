@@ -9,8 +9,8 @@ const Icon = () => {
 
   return (
     <svg
-      width="33"
-      height="33"
+      width="27"
+      height="27"
       viewBox="0 0 33 33"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@ function GlobalData() {
     <div className="px-2 xl:px-4 2xl:px-6">
       <TokanoToken TableName={"Global Data"}>
         <div className="font-khand dark:bg[#231570] dark:border-secondary grid grid-cols-4 border-x-2 border-[#CDCDE9] bg-[#BEB3FF] py-0.5 pr-6 pl-4 text-xs xl:text-sm 2xl:text-base dark:bg-[#231570]">
-          <div className="ml-4"><Icon /></div>
+          <div className="ml-4 my-1"><Icon /></div>
         </div>
         <div className="dark:border-secondary flex flex-col border-2 border-[#CDCDE9] bg-[#beb3ffae] dark:bg-[#231570]">
           {/* TOKENS - 3 sections */}
