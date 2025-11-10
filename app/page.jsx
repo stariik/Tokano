@@ -19,7 +19,7 @@ export default function Home() {
   }, [tokens]);
 
   return (
-    <main className="dark:bg-dark relative bg-white px-2 py-8 lg:px-2 lg:py-6">
+    <main className="dark:bg-dark relative bg-[#f5f5f5] px-2 py-8 lg:px-2 lg:py-6">
       <div className="lg:mb-4">
         {/* <div className="grid md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-2 xl:gap-4">
           <div className="gap-2 md:col-span-1 lg:col-span-2 lg:grid lg:grid-cols-2 xl:gap-4">

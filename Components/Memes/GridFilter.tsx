@@ -25,9 +25,9 @@ function GridFilter({
 }: GridFilterProps) {
   if (variant === "portfolio") {
     return (
-      <div className="mb-2 flex w-full flex-col border-b border-[#292B8C] text-sm font-medium text-[#B0B3D6]">
+      <div className="mb-2 flex w-full flex-col border-b border-[#C6C1F5] dark:border-[#6D6FDF] text-sm font-medium text-[#B0B3D6]">
         {/* Container 1: REVEAL BY and favorites */}
-        <div className="flex items-center justify-between border-b border-[#292B8C] px-4 py-3">
+        <div className="flex items-center justify-between border-b border-[#C6C1F5] dark:border-[#6D6FDF] px-4 py-3">
           <div className="font-bold whitespace-nowrap text-[#190E79] dark:text-white">
             REVEAL BY:
           </div>
@@ -46,7 +46,7 @@ function GridFilter({
         </div>
 
         {/* Container 2: any/creator/token and all/vests/locks/pools */}
-        <div className="flex items-center justify-between border-b border-[#292B8C] px-4 py-3">
+        <div className="flex items-center justify-between border-b border-[#C6C1F5] dark:border-[#6D6FDF] px-4 py-3">
           <div className="whitespace-nowrap">
             <span className="cursor-pointer hover:text-[#190E79] dark:text-white">
               any
@@ -114,7 +114,7 @@ function GridFilter({
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-none border-none bg-[#e0dff5] px-3 py-3 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50"
+            className={`w-full rounded-none border-none bg-[#e0dff5] px-3 py-3 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? 'text-left' : 'text-center'}`}
           />
         </div>
       </div>
@@ -125,9 +125,9 @@ function GridFilter({
   return (
     <>
       {/* Mobile/Tablet: Vertical layout */}
-      <div className="mb-2 flex w-full flex-col border-b border-[#292B8C] text-sm font-medium text-[#B0B3D6] lg:hidden">
+      <div className="mb-2 flex w-full flex-col border-b border-[#C6C1F5] dark:border-[#6D6FDF] text-sm font-medium text-[#B0B3D6] lg:hidden">
         {/* Row 1: TOKENS BY PLATFORM and favorites */}
-        <div className="flex items-center justify-between border-b border-[#292B8C] px-4 py-3">
+        <div className="flex items-center justify-between border-b border-[#C6C1F5] dark:border-[#6D6FDF] px-4 py-3">
           <div className="text-xs font-bold whitespace-nowrap text-[#190E79] dark:text-white">
             TOKENS BY PLATFORM
           </div>
@@ -146,7 +146,7 @@ function GridFilter({
         </div>
 
         {/* Row 2: Sort and Show - Two lines below 385px */}
-        <div className="max-[384px]:flex-col flex items-center justify-between border-b border-[#292B8C] px-1 py-3 text-xs md:px-4 max-[384px]:items-start max-[384px]:gap-2">
+        <div className="max-[384px]:flex-col flex items-center justify-between border-b border-[#C6C1F5] dark:border-[#6D6FDF] px-1 py-3 text-xs md:px-4 max-[384px]:items-start max-[384px]:gap-2">
           <div className="whitespace-nowrap">
             <span className="mr-2">sort:</span>
             <span
@@ -259,31 +259,31 @@ function GridFilter({
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-none border-none bg-[#e0dff5] px-3 py-3 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50"
+            className={`w-full rounded-none border-none bg-[#e0dff5] px-3 py-3 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? 'text-left' : 'text-center'}`}
           />
         </div>
       </div>
 
       {/* Desktop: Horizontal layout */}
-      <div className="mb-2 hidden w-full items-center justify-between border-b border-[#292B8C] text-sm font-medium text-[#B0B3D6] lg:flex">
+      <div className="mb-2 hidden w-full items-center gap-4 border-b-2 border-[#C6C1F5] dark:border-[#6D6FDF] text-sm font-medium text-[#B0B3D6] lg:flex">
         {/* 1. Text: TOKENS BY PLATFORM */}
-        <div className="flex items-center justify-center border-r border-[#292B8C] px-4 py-3 whitespace-nowrap text-[#190E79] dark:text-white">
+        <div className="flex items-center justify-center px-4 py-3 whitespace-nowrap text-[#190E79] dark:text-white">
           TOKENS BY PLATFORM
         </div>
 
         {/* 2. Search */}
-        <div className="flex flex-1 items-center justify-center border-r border-[#292B8C]">
+        <div className="flex flex-1 items-center justify-center">
           <input
             type="text"
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-none border border-[#292B8C] bg-[#e0dff5] px-3 py-5 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50"
+            className={`w-2/3 rounded-none border-none bg-[#e0dff5] px-3 py-3.5 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? 'text-left' : 'text-center'}`}
           />
         </div>
 
         {/* 3. Favorites */}
-        <div className="flex items-center justify-center border-r border-[#292B8C] px-4 py-3 whitespace-nowrap">
+        <div className="flex items-center justify-center px-4 py-3 whitespace-nowrap">
           <span
             className={`cursor-pointer transition-colors ${
               showFavorites
@@ -297,7 +297,7 @@ function GridFilter({
         </div>
 
         {/* 4. Sort */}
-        <div className="flex items-center justify-center border-r border-[#292B8C] px-4 py-3 whitespace-nowrap">
+        <div className="flex items-center justify-center px-4 py-3 whitespace-nowrap">
           <span className="mr-2">sort:</span>
           <span
             className={`cursor-pointer transition-colors ${

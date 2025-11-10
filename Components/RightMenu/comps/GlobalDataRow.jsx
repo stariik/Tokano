@@ -1,12 +1,12 @@
 import React from "react";
 import { useTheme } from "@/hooks/useTheme";
 
-function GlobalDataRow() {
+function GlobalDataRow({ label, data }) {
   const { resolvedTheme } = useTheme();
 
   return (
     <div
-      className="font-khand dark:border-secondary -m-0.5 grid grid-cols-10 border-2 border-[#CDCDE9] text-base font-normal text-[#190E79] dark:text-white"
+      className="font-khand dark:border-secondary -m-0.5 flex h-16 border-2 border-[#CDCDE9] text-base font-normal text-[#190E79] dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -15,26 +15,33 @@ function GlobalDataRow() {
       }}
     >
       {/* Left label */}
-      <div className="dark:border-secondary col-span-2 flex flex-col items-center justify-center border-r-2 border-[#CDCDE9] py-1 text-lg">
-        VESTED
+      <div className="dark:border-secondary flex w-[20%] flex-col items-center justify-center border-r-2 border-[#CDCDE9] py-1 text-lg">
+        {label}
       </div>
-      {/* Supply and holders */}
-      <div className="dark:border-secondary col-span-3 flex flex-col justify-center border-r-2 border-[#CDCDE9] px-2 py-1 text-xs md:text-sm lg:px-1 lg:text-xs xl:px-2 xl:text-base 2xl:text-lg">
-        <div>
-          supply: <span className="ml-2">1.073B</span>
-        </div>
-        <div>
-          holders: <span className="ml-2">3111</span>
-        </div>
-      </div>
-      {/* m-cap and price */}
-      <div className="col-span-5 flex flex-col justify-center px-2 py-1 text-xs md:text-sm lg:px-1 lg:text-xs xl:px-2 xl:text-base 2xl:text-lg">
-        <div>
-          m-cap: <span className="ml-2">$12m / 1244 SOL</span>
-        </div>
-        <div>
-          price: <span className="ml-2">$0.003 / 0.e7_233 SOL</span>
-        </div>
+
+      {/* Data sections - flexible width based on content */}
+      <div className="flex flex-1">
+        {data.map((section, index) => {
+          const entries = Object.entries(section);
+          const isLastSection = index === data.length - 1;
+
+          return (
+            <div
+              key={index}
+              className={`dark:border-secondary flex flex-col justify-center px-2 py-1 text-xs md:text-sm lg:px-1 lg:text-xs xl:px-2 xl:text-sm 2xl:text-base ${
+                !isLastSection ? "border-r-2 border-[#CDCDE9]" : ""
+              }`}
+              style={{ flex: '1 1 auto', minWidth: '0' }}
+            >
+              {entries.map(([key, value], entryIndex) => (
+                <div key={entryIndex} className="flex justify-between whitespace-nowrap">
+                  <span>{key}:</span>
+                  <span className="ml-2">{value}</span>
+                </div>
+              ))}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

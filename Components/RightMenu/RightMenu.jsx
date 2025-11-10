@@ -7,8 +7,8 @@ import GlobalData from "./ui/GlobalData";
 
 const TokanoHeader = () => (
   <svg
-    width="179"
-    height="35"
+    width="170"
+    height="30"
     viewBox="0 0 179 35"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

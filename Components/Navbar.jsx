@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "@/hooks/useTheme";
 import WalletSelectionPopup from "./shared/wallet-selection-popup";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { FaLightbulb, FaRegLightbulb } from "react-icons/fa";
 
 function Navbar() {
   const pathname = usePathname();
@@ -202,7 +203,7 @@ function Navbar() {
 
   const getThemeIcon = () => {
     // Show icon based on resolved theme (what's actually displayed)
-    return resolvedTheme === "dark" ? "🌙" : "☀️";
+    return resolvedTheme === "dark" ? <FaLightbulb /> : <FaRegLightbulb />;
   };
 
   const getThemeLabel = () => {
@@ -279,11 +280,10 @@ function Navbar() {
           <div className="flex items-center gap-3">
             <button
               onClick={cycleTheme}
-              className="flex cursor-pointer items-center gap-1 rounded-lg border border-gray-400 px-2 py-1 text-xs transition hover:opacity-70 dark:border-gray-500"
+              className="cursor-pointer text-base transition hover:opacity-70"
               title={`Current: ${getThemeLabel()} mode. Click to toggle`}
             >
-              <span className="text-base">{getThemeIcon()}</span>
-              <span>{getThemeLabel()}</span>
+              {getThemeIcon()}
             </button>
             <button
               onClick={handleWalletButtonClick}
@@ -372,11 +372,10 @@ function Navbar() {
           </button>
           <button
             onClick={cycleTheme}
-            className="dark:border-secondary ml-12 flex cursor-pointer items-center gap-2 rounded-lg border border-[#CDCDE9] px-3 py-2 text-sm transition hover:opacity-70"
+            className="ml-4 cursor-pointer text-xl transition hover:opacity-70"
             title={`Current: ${getThemeLabel()} mode. Click to toggle`}
           >
-            <span className="text-xl">{getThemeIcon()}</span>
-            <span>{getThemeLabel()}</span>
+            {getThemeIcon()}
           </button>
         </div>
       </div>

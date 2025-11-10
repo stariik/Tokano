@@ -55,8 +55,8 @@ function LockCard({
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}.${month}.${year}`;
   };
@@ -99,10 +99,12 @@ function LockCard({
     </svg>
   );
 
-  const CardWrapper = isPreview ? 'div' : Link;
-  const wrapperProps = isPreview ? {} : {
-    href: wallet ? `/card/lock?lock=${wallet}` : `/card/lock`
-  };
+  const CardWrapper = isPreview ? "div" : Link;
+  const wrapperProps = isPreview
+    ? {}
+    : {
+        href: wallet ? `/card/lock?lock=${wallet}` : `/card/lock`,
+      };
 
   return (
     <CardWrapper
@@ -156,7 +158,7 @@ function LockCard({
         <div className="flex flex-col justify-start">
           <img
             src={tokenImage || "/vest.png"}
-            className="mr-16 mb-4 w-14 h-14 sm:w-20 sm:h-20 lg:w-18 lg:h-18 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28 rounded-2xl lg:rounded-2xl xl:rounded-3xl object-cover"
+            className="mr-16 mb-4 h-14 w-14 rounded-2xl object-cover sm:mr-26 sm:h-20 sm:w-20 lg:mr-24 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
           />
 
           {/*  */}
@@ -182,8 +184,18 @@ function LockCard({
                     );
                   }
                 `}</style>
-                <div>LOCKED: {isPreview && previewData?.lockDateTime ? formatDate(previewData.lockDateTime) : '21.04.2025'}</div>
-                <div>ENDS: {isPreview && previewData?.releaseDate ? formatDate(previewData.releaseDate) : '|2d.12h'}</div>
+                <div>
+                  LOCKED:{" "}
+                  {isPreview && previewData?.lockDateTime
+                    ? formatDate(previewData.lockDateTime)
+                    : "21.04.2025"}
+                </div>
+                <div>
+                  ENDS:{" "}
+                  {isPreview && previewData?.releaseDate
+                    ? formatDate(previewData.releaseDate)
+                    : "|2d.12h"}
+                </div>
               </div>
             </div>
           </div>
