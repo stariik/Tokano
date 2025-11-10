@@ -203,7 +203,7 @@ function Navbar() {
 
   const getThemeIcon = () => {
     // Show icon based on resolved theme (what's actually displayed)
-    return resolvedTheme === "dark" ? <FaLightbulb /> : <FaRegLightbulb />;
+    return resolvedTheme === "dark" ? <FaLightbulb /> : <FaLightbulb color="black" />;
   };
 
   const getThemeLabel = () => {
