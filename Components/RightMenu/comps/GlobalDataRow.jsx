@@ -14,10 +14,12 @@ function GlobalDataRow({ label, data }) {
             : "linear-gradient(90deg, rgba(229, 227, 245, 1) 0%, rgba(255, 255, 255, 1) 58%)",
       }}
     >
-      {/* Left label */}
-      <div className="dark:border-secondary flex w-[20%] flex-col items-center justify-center border-r-2 border-[#CDCDE9] py-1 text-lg">
-        {label}
-      </div>
+      {/* Left label - only show if label exists */}
+      {label && (
+        <div className="dark:border-secondary flex w-[20%] flex-col items-center justify-center border-r-2 border-[#CDCDE9] py-1 text-lg">
+          {label}
+        </div>
+      )}
 
       {/* Data sections - flexible width based on content */}
       <div className="flex flex-1">
