@@ -135,7 +135,10 @@ export default function VestFundsForm({
       }
 
       // Validate that tokenMintString is a valid base58 string
-      if (typeof tokenMintString !== 'string' || tokenMintString.trim() === '') {
+      if (
+        typeof tokenMintString !== "string" ||
+        tokenMintString.trim() === ""
+      ) {
         throw new Error("Invalid token mint address format");
       }
 
@@ -143,7 +146,9 @@ export default function VestFundsForm({
       try {
         tokenMint = new PublicKey(tokenMintString);
       } catch (e) {
-        throw new Error(`Invalid token mint address: ${tokenMintString}. Please ensure the token has a valid Solana address.`);
+        throw new Error(
+          `Invalid token mint address: ${tokenMintString}. Please ensure the token has a valid Solana address.`,
+        );
       }
 
       // Fetch token decimals from blockchain if not provided
@@ -347,11 +352,11 @@ export default function VestFundsForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl lg:p-4 xl:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-3 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
-          <div className="font-khand flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-[#6b4d9f] lg:h-7 lg:w-7 lg:text-base">
+          <div className="font-khand flex h-6 w-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#6b4d9f] lg:h-7 lg:w-7 lg:text-base">
             ⏰
           </div>
           <div className="font-khand text-xs font-semibold text-[#190E79] lg:text-sm dark:text-white">
@@ -361,7 +366,7 @@ export default function VestFundsForm({
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C]">
+      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C] p-4">
         {/* Activation Date and Time */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
@@ -377,7 +382,7 @@ export default function VestFundsForm({
               onChange={(e) =>
                 handleInputChange("activationDateTime", e.target.value)
               }
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -391,7 +396,7 @@ export default function VestFundsForm({
                   .slice(0, 16);
                 handleInputChange("activationDateTime", localDateTime);
               }}
-              className="font-khand rounded-lg bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] lg:text-sm"
+              className="font-khand rounded-2xl bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] lg:text-sm"
               title="Set to current time"
             >
               now
@@ -416,7 +421,7 @@ export default function VestFundsForm({
               value={formData.tokenAmount || ""}
               onChange={(e) => handleInputChange("tokenAmount", e.target.value)}
               placeholder="0"
-              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-40 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-40 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
@@ -443,7 +448,7 @@ export default function VestFundsForm({
               value={formData.cliffPeriod || ""}
               onChange={(e) => handleInputChange("cliffPeriod", e.target.value)}
               placeholder="0"
-              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-40 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-40 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
@@ -470,7 +475,7 @@ export default function VestFundsForm({
               onChange={(e) =>
                 handleInputChange("releaseModel", e.target.value)
               }
-              className="font-khand w-20 sm:w-24 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] lg:w-32 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] sm:w-24 lg:w-32 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
             >
               <option value="daily">daily</option>
               <option value="weekly">weekly</option>
@@ -484,11 +489,15 @@ export default function VestFundsForm({
               value={formData.duration || ""}
               onChange={(e) => handleInputChange("duration", e.target.value)}
               placeholder="0"
-              className="font-khand w-12 sm:w-16 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-20 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-12 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 sm:w-16 lg:w-20 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
-              {formData.releaseModel === "monthly" ? "months" : formData.releaseModel === "weekly" ? "weeks" : "days"}
+              {formData.releaseModel === "monthly"
+                ? "months"
+                : formData.releaseModel === "weekly"
+                  ? "weeks"
+                  : "days"}
             </span>
           </div>
           <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 lg:text-xs dark:text-white">
@@ -512,7 +521,7 @@ export default function VestFundsForm({
                 handleInputChange("recipientWallet", e.target.value)
               }
               placeholder="e.g. 5Yf8M2Z3...7FqK4Bc (Solana address)"
-              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] placeholder-gray-400 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
           </div>
@@ -525,28 +534,28 @@ export default function VestFundsForm({
         {/* Warning Box */}
         <div className="mt-2 overflow-hidden rounded-xl border-2 border-red-400 bg-white p-4 pt-0 dark:bg-white/0">
           <div className="font-khand -mt-5 mb-3 flex w-full items-center justify-between gap-2 text-xs font-bold text-red-500 lg:text-sm dark:text-white">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 text-black dark:text-white">
               <Warning />
               <p>ATTENTION</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 text-black dark:text-white">
               <p>ATTENTION</p>
               <Warning />
             </div>
           </div>
           <ul className="list-none">
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm dark:text-white">
               <span className="absolute left-0 font-bold">1.</span>
               <span className="font-bold">Reward Claim Frequency:</span> Stakers
               can claim their rewards once every 24 hours.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm dark:text-white">
               <span className="absolute left-0 font-bold">2.</span>
               <span className="font-bold">Unclaimed Rewards:</span> Rewards not
               claimed within 365 days will be converted to Tokano native tokens.
               After conversion, users must contact support to retrieve them.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm dark:text-white">
               <span className="absolute left-0 font-bold">3.</span>
               <span className="font-bold">Undistributed Tokens:</span> Any
               undistributed tokens remaining in the pool will be available for
@@ -570,8 +579,9 @@ export default function VestFundsForm({
               wallet={publicKey?.toBase58() || ""}
               vestData={{
                 totalVestedAmount: formData.tokenAmount
-                  ? parseFloat(formData.tokenAmount) * Math.pow(10, token.decimals || 9)
-                  : 0
+                  ? parseFloat(formData.tokenAmount) *
+                    Math.pow(10, token.decimals || 9)
+                  : 0,
               }}
               tokenDecimals={token.decimals || 9}
               isPreview={true}
@@ -587,7 +597,14 @@ export default function VestFundsForm({
         {/* CREATE VESTING Button */}
         <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
           <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] lg:ml-6 lg:text-base dark:text-white">
-            creation fee: <span className="ml-2"> {formData.tokenAmount ? (parseFloat(formData.tokenAmount) * 0.01).toFixed(2) : '0'} {token.name || 'tokens'}</span>
+            creation fee:{" "}
+            <span className="ml-2">
+              {" "}
+              {formData.tokenAmount
+                ? (parseFloat(formData.tokenAmount) * 0.01).toFixed(2)
+                : "0"}{" "}
+              {token.name || "tokens"}
+            </span>
           </div>
           <div className="flex items-center text-xs text-[#190E79] lg:text-base">
             <button
@@ -644,6 +661,15 @@ export default function VestFundsForm({
       )}
 
       <style jsx>{`
+        input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+          direction: rtl;
+        }
+
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+          margin-left: 0;
+          margin-right: auto;
+        }
+
         @keyframes fadeIn {
           from {
             opacity: 0;

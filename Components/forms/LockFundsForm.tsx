@@ -307,7 +307,7 @@ export default function LockFundsForm({
   
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl xl:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -321,7 +321,7 @@ export default function LockFundsForm({
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C]">
+      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C] p-4">
         {/* Lock Date and Time */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-3">
@@ -337,7 +337,7 @@ export default function LockFundsForm({
               onChange={(e) =>
                 handleInputChange("lockDateTime", e.target.value)
               }
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -351,7 +351,7 @@ export default function LockFundsForm({
                   .slice(0, 16);
                 handleInputChange("lockDateTime", localDateTime);
               }}
-              className="font-khand rounded-lg bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] lg:text-sm"
+              className="font-khand rounded-2xl bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] lg:text-sm"
               title="Set to current time"
             >
               now
@@ -377,7 +377,7 @@ export default function LockFundsForm({
               value={formData.tokenAmount || ""}
               onChange={(e) => handleInputChange("tokenAmount", e.target.value)}
               placeholder="0"
-              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-40 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-40 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
@@ -403,7 +403,7 @@ export default function LockFundsForm({
               type="datetime-local"
               value={formData.releaseDate || ""}
               onChange={(e) => handleInputChange("releaseDate", e.target.value)}
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
           </div>
@@ -429,7 +429,7 @@ export default function LockFundsForm({
                 handleInputChange("recipientWallet", e.target.value)
               }
               placeholder="e.g. 5Yf8M2Z3...7FqK4Bc (optional, Solana address)"
-              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-center text-xs font-bold text-[#190E79] placeholder-gray-400 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
             />
           </div>
           <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 lg:text-xs dark:text-white">
@@ -441,28 +441,28 @@ export default function LockFundsForm({
         {/* Warning Box */}
         <div className="mt-2 overflow-hidden rounded-xl border-2 border-red-400 bg-white p-4 pt-0 dark:bg-white/0">
           <div className="font-khand -mt-5 mb-3 flex w-full items-center justify-between gap-2 text-xs font-bold text-red-500 lg:text-sm dark:text-white">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 text-black dark:text-white">
               <Warning />
               <p>ATTENTION</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 text-black dark:text-white">
               <p>ATTENTION</p>
               <Warning />
             </div>
           </div>
           <ul className="list-none">
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium dark:text-white text-red-500 lg:text-sm">
               <span className="absolute left-0 font-bold">1.</span>
               <span className="font-bold">Reward Claim Frequency:</span> Stakers
               can claim their rewards once every 24 hours.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium dark:text-white text-red-500 lg:text-sm">
               <span className="absolute left-0 font-bold">2.</span>
               <span className="font-bold">Unclaimed Rewards:</span> Rewards not
               claimed within 365 days will be converted to Tokano native tokens.
               After conversion, users must contact support to retrieve them.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium dark:text-white text-red-500 lg:text-sm">
               <span className="absolute left-0 font-bold">3.</span>
               <span className="font-bold">Undistributed Tokens:</span> Any
               undistributed tokens remaining in the pool will be available for
@@ -567,6 +567,15 @@ export default function LockFundsForm({
       )}
 
       <style jsx>{`
+        input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+          direction: rtl;
+        }
+
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+          margin-left: 0;
+          margin-right: auto;
+        }
+
         @keyframes fadeIn {
           from {
             opacity: 0;

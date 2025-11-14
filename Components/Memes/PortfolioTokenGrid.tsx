@@ -395,7 +395,7 @@ function PortfolioTokenGrid({
       {/* Mobile Menu Button */}
       <button
         onClick={() => setShow(true)}
-        className={`font-khand dark:border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x border-r border-[#CDCDE9] bg-white px-2 py-1 font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl lg:hidden ${
+        className={`font-khand dark:border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x border-r border-[#CDCDE9] bg-white px-2 py-1 font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl xl:hidden ${
           show ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
         id="tokengrid-menu-button"
@@ -407,7 +407,7 @@ function PortfolioTokenGrid({
       {/* Mobile Menu Overlay */}
       {show && (
         <div
-          className="menu-overlay-active fixed inset-0 z-999 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="menu-overlay-active fixed inset-0 z-999 bg-black/60 backdrop-blur-sm xl:hidden"
           onClick={() => setShow(false)}
         >
           <div
@@ -445,7 +445,7 @@ function PortfolioTokenGrid({
       )}
 
       {/* Desktop view - always visible on lg+ screens */}
-      <div className="dark:border-secondary hidden h-full rounded-tr-4xl border-2 border-[#CDCDE9] bg-white lg:block dark:bg-[#12002a]">
+      <div className="dark:border-secondary hidden h-full rounded-tr-4xl border-2 border-[#CDCDE9] bg-white xl:block dark:bg-[#12002a]">
         {tokenContentDesktop}
       </div>
     </>

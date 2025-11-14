@@ -144,7 +144,10 @@ export default function StakingPoolForm({
       }
 
       // Validate that tokenMintString is a valid base58 string
-      if (typeof tokenMintString !== 'string' || tokenMintString.trim() === '') {
+      if (
+        typeof tokenMintString !== "string" ||
+        tokenMintString.trim() === ""
+      ) {
         throw new Error("Invalid token mint address format");
       }
 
@@ -152,7 +155,9 @@ export default function StakingPoolForm({
       try {
         tokenMint = new PublicKey(tokenMintString);
       } catch (e) {
-        throw new Error(`Invalid token mint address: ${tokenMintString}. Please ensure the token has a valid Solana address.`);
+        throw new Error(
+          `Invalid token mint address: ${tokenMintString}. Please ensure the token has a valid Solana address.`,
+        );
       }
 
       // Fetch token decimals from blockchain if not provided
@@ -352,7 +357,7 @@ export default function StakingPoolForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 pt-4 pb-4 shadow-2xl xl:p-8 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -366,7 +371,7 @@ export default function StakingPoolForm({
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C]">
+      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C] p-4">
         {/* Pool Activation Date and Time */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-1 md:gap-3">
@@ -382,7 +387,7 @@ export default function StakingPoolForm({
               onChange={(e) =>
                 handleInputChange("activationDateTime", e.target.value)
               }
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-[10px] font-bold text-[#190E79] md:max-w-[280px] md:text-[13px] dark:bg-[#453DC8] dark:text-white"
+              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-right text-[10px] font-bold text-[#190E79] md:max-w-[280px] md:text-[13px] dark:bg-[#453DC8] dark:text-white"
               required
             />
             <button
@@ -396,7 +401,7 @@ export default function StakingPoolForm({
                   .slice(0, 16);
                 handleInputChange("activationDateTime", localDateTime);
               }}
-              className="font-khand rounded-lg bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] md:text-base"
+              className="font-khand rounded-2xl bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] lg:text-sm"
               title="Set to current time"
             >
               now
@@ -424,7 +429,7 @@ export default function StakingPoolForm({
                 handleInputChange("rewardAmount", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-40 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-right text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-40 dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
@@ -453,7 +458,7 @@ export default function StakingPoolForm({
                 handleInputChange("distributionLength", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-40 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-24 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-right text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-40 dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
@@ -482,7 +487,7 @@ export default function StakingPoolForm({
                 handleInputChange("unstakingPeriodDays", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-16 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-20 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-16 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-right text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-20 dark:bg-[#453DC8] dark:text-white"
             />
             <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               days
@@ -494,7 +499,7 @@ export default function StakingPoolForm({
                 handleInputChange("unstakingPeriodHours", e.target.value)
               }
               placeholder="0"
-              className="font-khand w-16 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-center text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-20 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-16 rounded-2xl border-none bg-[#e8e4f8] px-3 py-1.5 text-right text-[13px] font-bold text-[#190E79] placeholder-gray-400 md:w-20 dark:bg-[#453DC8] dark:text-white"
             />
             <span className="font-khand text-[10px] font-bold text-[#190E79] md:text-[13px] dark:text-white">
               hours
@@ -508,32 +513,29 @@ export default function StakingPoolForm({
 
         {/* Warning Box */}
         <div className="mt-2 overflow-hidden rounded-xl border-2 border-red-400 bg-white p-4 pt-0 dark:bg-white/0">
-          <div className="font-khand -mt-5 mb-3 flex w-full items-center justify-between gap-2 text-xs font-bold text-red-500 dark:text-white">
-            <div className="flex items-center gap-4">
+          <div className="font-khand -mt-5 mb-3 flex w-full items-center justify-between gap-2 text-xs font-bold text-red-500 lg:text-sm dark:text-white">
+            <div className="flex items-center gap-4 text-black dark:text-white">
               <Warning />
               <p>ATTENTION</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 text-black dark:text-white">
               <p>ATTENTION</p>
               <Warning />
             </div>
-            {/* <span className="text-sm">⚠️</span>
-            <span>ATTENTION</span>
-            <span className="text-sm">⚠️</span> */}
           </div>
           <ul className="list-none">
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm dark:text-white">
               <span className="absolute left-0 font-bold">1.</span>
               <span className="font-bold">Reward Claim Frequency:</span> Stakers
               can claim their rewards once every 24 hours.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm dark:text-white">
               <span className="absolute left-0 font-bold">2.</span>
               <span className="font-bold">Unclaimed Rewards:</span> Rewards not
               claimed within 365 days will be converted to Tokano native tokens.
               After conversion, users must contact support to retrieve them.
             </li>
-            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500">
+            <li className="font-khand relative mb-2.5 pl-3 text-xs leading-relaxed font-medium text-red-500 lg:text-sm dark:text-white">
               <span className="absolute left-0 font-bold">3.</span>
               <span className="font-bold">Undistributed Tokens:</span> Any
               undistributed tokens remaining in the pool will be available for
@@ -626,6 +628,15 @@ export default function StakingPoolForm({
       )}
 
       <style jsx>{`
+        input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+          direction: rtl;
+        }
+
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+          margin-left: 0;
+          margin-right: auto;
+        }
+
         @keyframes fadeIn {
           from {
             opacity: 0;

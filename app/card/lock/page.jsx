@@ -3,9 +3,8 @@ import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useTokano } from "@/contexts/tokano-sdk-context";
-import TokenGrid from "@/Components/Memes/TokenGrid";
+import PortfolioTokenGrid from "@/Components/Memes/PortfolioTokenGrid";
 import Lock from "./Lock";
-import RightMenu from "@/Components/RightMenu/RightMenu";
 import PortfolioRightMenu from "@/Components/RightMenu/PortfolioRightMenu";
 
 function LockPageContent() {
@@ -40,16 +39,18 @@ function LockPageContent() {
   }, [fetchLockData]);
 
   return (
-    <div className="mx-auto flex justify-center gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:justify-between lg:py-6 2xl:gap-4 2xl:px-2">
-      <div className="lg:w-full lg:max-w-xs xl:max-w-sm 2xl:max-w-md">
-        <TokenGrid
-          gridCols="grid-cols-2 lg:grid-cols-1 xl:grid-cols-2"
-          filterVariant="portfolio"
+    <div className="mx-auto flex justify-center gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:justify-between xl:justify-between xl:py-6 2xl:gap-4 2xl:px-2">
+      <div className="xl:w-full xl:max-w-sm 2xl:max-w-md">
+        <PortfolioTokenGrid
+          gridCols="grid-cols-2"
+          filterTokenMint={lockData?.tokenMint.toBase58() || null}
         />
       </div>
-      <div className="grow gap-4 md:max-w-3xl">
+      <div className="grow gap-4 md:max-w-3xl lg:max-w-2xl">
         {loading ? (
-          <div className="p-8 text-center">Loading lock data...</div>
+          <div className="flex items-center justify-center p-12 text-[#190E79] dark:text-white">
+            Loading lock data...
+          </div>
         ) : (
           <Lock
             lockData={lockData}
@@ -57,7 +58,7 @@ function LockPageContent() {
           />
         )}
       </div>
-      <div className="lg:w-full lg:max-w-xs xl:max-w-sm 2xl:max-w-md">
+      <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">
         <PortfolioRightMenu />
       </div>
     </div>
@@ -66,7 +67,26 @@ function LockPageContent() {
 
 function Page() {
   return (
-    <Suspense fallback={<div className="p-8 text-center">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="mx-auto flex justify-center gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:justify-between xl:justify-between xl:py-6 2xl:gap-4 2xl:px-2">
+          <div className="xl:w-full xl:max-w-sm 2xl:max-w-md">
+            <PortfolioTokenGrid
+              gridCols="grid-cols-2"
+              filterTokenMint={null}
+            />
+          </div>
+          <div className="grow gap-4 md:max-w-3xl lg:max-w-2xl">
+            <div className="flex items-center justify-center p-12 text-[#190E79] dark:text-white">
+              Loading...
+            </div>
+          </div>
+          <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">
+            <PortfolioRightMenu />
+          </div>
+        </div>
+      }
+    >
       <LockPageContent />
     </Suspense>
   );

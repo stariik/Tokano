@@ -7,8 +7,8 @@ const Icon = () => {
 
   return (
     <svg
-      width="27"
-      height="27"
+      width="25"
+      height="25"
       viewBox="0 0 33 33"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
