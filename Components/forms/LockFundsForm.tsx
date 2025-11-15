@@ -110,10 +110,7 @@ export default function LockFundsForm({
     }
 
     // Validate required fields
-    if (
-      !formData.tokenAmount ||
-      !formData.releaseDate
-    ) {
+    if (!formData.tokenAmount || !formData.releaseDate) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -283,7 +280,9 @@ export default function LockFundsForm({
 
         // Check for common errors in logs
         if (
-          error.logs.some((log: string) => log.includes("insufficient lamports"))
+          error.logs.some((log: string) =>
+            log.includes("insufficient lamports"),
+          )
         ) {
           errorMessage =
             "Insufficient SOL balance to create the lock. You need approximately 0.002 SOL to cover the rent-exempt minimum and transaction fees. Please add more SOL to your wallet.";
@@ -315,11 +314,11 @@ export default function LockFundsForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-2 shadow-2xl md:p-4 xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
-          <div className="font-khand flex h-6 w-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#6b4d9f] lg:h-7 lg:w-7 lg:text-base">
+          <div className="font-khand flex h-6 w-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#6b4d9f] lg:h-7 lg:w-7 lg:text-sm xl:text-base">
             🔒
           </div>
           <div className="font-khand text-xs font-semibold text-[#190E79] lg:text-sm dark:text-white">
@@ -330,15 +329,14 @@ export default function LockFundsForm({
 
       {/* Form Container */}
       <div className="mb-6 rounded-2xl bg-white p-2 md:p-4 dark:bg-[#1B105C]">
-
         {/* Token Amount */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] xl:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
               </span>
-              Token amount to lock:
+              Amount of tokens to lock:
             </label>
             <input
               type="number"
@@ -348,7 +346,7 @@ export default function LockFundsForm({
               className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 lg:w-40 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
-            <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
+            <span className="font-khand text-xs font-bold text-[#190E79] dark:text-white">
               tokens
             </span>
           </div>
@@ -361,11 +359,11 @@ export default function LockFundsForm({
         {/* Release Date */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] xl:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 2.
               </span>
-              Release date and time (UTC):
+              Unlock date and time (UTC):
             </label>
             <input
               type="datetime-local"
@@ -384,11 +382,11 @@ export default function LockFundsForm({
         {/* Recipient Wallet */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] xl:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 3.
               </span>
-              Recipient wallet address (optional):
+              Recipient / Claim Authority Wallet
             </label>
             <input
               type="text"
@@ -396,7 +394,7 @@ export default function LockFundsForm({
               onChange={(e) =>
                 handleInputChange("recipientWallet", e.target.value)
               }
-              placeholder="e.g. 5Yf8M2Z3...7FqK4Bc (optional, Solana address)"
+              placeholder="e.g. 5Yf8...K4Bc (optional, Solana address)"
               className="font-khand max-w-[280px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
             />
           </div>
@@ -471,7 +469,7 @@ export default function LockFundsForm({
       <div className="mt-6">
         {/* CREATE LOCK Button */}
         <div className="mt-6 flex justify-between rounded-full border-2 border-[#949DFF] bg-[#e8e4f8] dark:bg-[#453DC8]">
-          <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] lg:ml-6 lg:text-base dark:text-white">
+          <div className="font-khand ml-4 flex items-center text-xs text-[#190E79] lg:ml-6 lg:text-sm xl:text-base dark:text-white">
             creation fee:{" "}
             <span className="ml-2">
               {" "}
@@ -481,7 +479,7 @@ export default function LockFundsForm({
               {token.name || "tokens"}
             </span>
           </div>
-          <div className="flex items-center text-xs text-[#190E79] lg:text-base">
+          <div className="flex items-center text-xs text-[#190E79] lg:text-sm xl:text-base">
             <button
               onClick={handleCreateLock}
               disabled={isCreating || !publicKey}
@@ -502,7 +500,7 @@ export default function LockFundsForm({
                 </svg>
               </div>
 
-              <span className="font-khand relative inline-block text-sm text-white lg:text-base">
+              <span className="font-khand relative inline-block text-sm text-white lg:text-sm xl:text-base">
                 {isCreating ? "CREATING..." : "CREATE LOCK"}
                 <span className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
               </span>

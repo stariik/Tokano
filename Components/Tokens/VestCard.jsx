@@ -104,7 +104,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 80 80"
-      className="h-[57px] w-[57px] xl:h-[80px] xl:w-[80px]"
+      className=" w-[57px] xl:w-[80px]"
       fill="none"
     >
       <circle
@@ -176,10 +176,10 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
           </div>
           <div className="font-khand mt-2 pr-4 text-right text-sm font-normal xl:text-base 2xl:text-lg">
             <p>
-              <span className="font-semibold">Pool ID: </span> {shortenAddress(wallet)}
+              <span className="">Pool ID: </span> {shortenAddress(wallet)}
             </p>
             <p>
-              <span className="font-semibold">Token ID: </span> {shortenAddress(created)}
+              <span className="">Token ID: </span> {shortenAddress(created)}
             </p>
           </div>
         </div>
@@ -189,7 +189,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
             className="mr-16 sm:mr-26 lg:mr-24 mb-4 w-14 h-14 sm:w-20 sm:h-20 lg:w-18 lg:h-18 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28 rounded-2xl lg:rounded-2xl xl:rounded-3xl object-cover"
           />
 
-          <div className="absolute -bottom-7 sm:-bottom-6 left-1 sm:left-4 z-2 flex w-7/10">
+          <div className="absolute -bottom-7 sm:-bottom-4 left-1 sm:left-4 z-2 flex w-7/10">
             <div className="mx-2 md:mx-1 flex items-center text-xl xl:mx-4 xl:text-3xl">
               VEST
             </div>
@@ -237,7 +237,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
       </div>
       <div className="flex items-center justify-end gap-1 sm:gap-2 pr-4 pb-2 xl:gap-6">
         <div
-          className="font-khand mt-2 sm:mt-0 flex rounded-xl px-2 py-0 text-[10px] sm:text-xs font-normal text-white xl:text-sm dark:bg-transparent"
+          className="font-khand mt-4 sm:-mt-2 flex rounded-xl px-2 py-0 text-[10px] sm:text-xs font-normal text-white xl:text-sm dark:bg-transparent"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}
@@ -264,7 +264,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
             'LEFT: 56% ENDS: |2d.12h'
           )}
         </div>
-        <p className="text-lg text-white">{isPreview ? 'vesting' : 'locked'}</p>
+        <p className="text-lg text-white">locked</p>
       </div>
     </CardWrapper>
   );

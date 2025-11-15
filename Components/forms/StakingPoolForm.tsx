@@ -357,7 +357,7 @@ export default function StakingPoolForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-2 shadow-2xl md:p-4 xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] shadow-2xl p-4 xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
@@ -371,15 +371,15 @@ export default function StakingPoolForm({
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white p-4 dark:bg-[#1B105C]">
+      <div className="mb-6 rounded-2xl bg-white p-2 md:p-4 dark:bg-[#1B105C]">
         {/* Pool Activation Date and Time */}
         <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-1 md:gap-3">
-            <label className="font-khand text-sm font-bold text-[#190E79] md:text-base dark:text-white">
+          <div className="mb-1.5 flex items-center gap-1 lg:gap-3">
+            <label className="font-khand text-sm font-bold text-[#190E79] xl:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
               </span>
-              Pool activation date and time (UTC):
+              Pool activation date (UTC):
             </label>
             <input
               type="datetime-local"
@@ -416,11 +416,11 @@ export default function StakingPoolForm({
         {/* Total Reward Token Amount */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-sm font-bold text-[#190E79] md:text-base dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] xl:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 2.
               </span>
-              Total reward token amount:
+              Total amount of rewards:
             </label>
             <input
               type="number"
@@ -445,11 +445,11 @@ export default function StakingPoolForm({
         {/* Distribution Length */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-sm font-bold text-[#190E79] md:text-base dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] xl:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 3.
               </span>
-              Duration of total reward distribution:
+              Duration of reward pool:
             </label>
             <input
               type="number"
@@ -473,12 +473,12 @@ export default function StakingPoolForm({
 
         {/* Unstaking Period */}
         <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-1 md:gap-3">
-            <label className="font-khand text-sm font-bold text-[#190E79] md:text-base dark:text-white">
+          <div className="mb-1.5 flex items-center gap-1 lg:gap-3">
+            <label className="font-khand text-sm font-bold text-[#190E79] xl:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 4.
               </span>
-              Unstaking becomes available in:
+              Tokens lock period:
             </label>
             <input
               type="number"

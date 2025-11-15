@@ -63,7 +63,7 @@ function LockCard({
 
   const StakeIcon = () => (
     <svg
-      className="h-[47px] w-[47px] lg:h-[50px] lg:w-[50px] xl:h-[57px] xl:w-[57px]"
+      className="w-[60px] lg:w-[70px] xl:w-[80px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -146,11 +146,11 @@ function LockCard({
           </div>
           <div className="font-khand mt-2 pr-4 text-right text-sm font-normal xl:text-base 2xl:text-lg">
             <p>
-              <span className="font-semibold">Pool ID: </span>{" "}
+              <span className="">Pool ID: </span>{" "}
               {shortenAddress(wallet)}
             </p>
             <p>
-              <span className="font-semibold">Token ID: </span>{" "}
+              <span className="">Token ID: </span>{" "}
               {shortenAddress(created)}
             </p>
           </div>
