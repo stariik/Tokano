@@ -103,9 +103,14 @@ function WalletSelectionPopup({
   onClose: () => void;
 }) {
   const { wallets, select, connect } = useWallet();
+  const [agreedToTerms, setAgreedToTerms] = React.useState(false);
 
   const handleWalletClick = useCallback(
     async (wallet: Wallet) => {
+      if (!agreedToTerms) {
+        return;
+      }
+
       try {
         console.log("Wallet click:", wallet.adapter.name, "State:", wallet.readyState);
 
@@ -134,7 +139,7 @@ function WalletSelectionPopup({
         console.error("Error connecting wallet:", error);
       }
     },
-    [onClose, select, connect],
+    [onClose, select, connect, agreedToTerms],
   );
 
   if (!isOpen) return null;
@@ -161,14 +166,19 @@ function WalletSelectionPopup({
           </h2>
         </div>
 
-        <div className="space-y-2 sm:space-y-3">
+        <div className="space-y-2 px-12 sm:space-y-3">
           {wallets.length > 0 && (
             <>
               {wallets.map((wallet) => (
                 <button
                   key={wallet.adapter.name}
                   onClick={() => handleWalletClick(wallet)}
-                  className="flex w-full cursor-pointer items-center justify-end gap-3 rounded-lg p-2 pr-4 transition-colors hover:bg-[#f0f0ff] active:bg-[#f0f0ff] sm:gap-4 sm:p-2.5 sm:pr-6 dark:hover:bg-[#1a1f9e] dark:active:bg-[#252ba0]"
+                  disabled={!agreedToTerms}
+                  className={`flex w-full items-center justify-end gap-3 rounded-lg p-2 pr-4 transition-colors sm:gap-4 sm:p-2.5 sm:pr-6 ${
+                    agreedToTerms
+                      ? "cursor-pointer hover:bg-[#f0f0ff] active:bg-[#f0f0ff] dark:hover:bg-[#1a1f9e] dark:active:bg-[#252ba0]"
+                      : "cursor-not-allowed opacity-50"
+                  }`}
                 >
                   <span className="text-base font-medium text-[#190E79] sm:text-lg md:text-xl ">
                     {wallet.adapter.name}
@@ -194,6 +204,27 @@ function WalletSelectionPopup({
               No wallet providers found
             </div>
           )}
+        </div>
+
+        <div className="mt-4 mb-6 flex items-center justify-center gap-3 px-6">
+          <label
+            htmlFor="terms-checkbox"
+            className="flex cursor-pointer items-center gap-3"
+          >
+            <input
+              type="checkbox"
+              id="terms-checkbox"
+              checked={agreedToTerms}
+              onChange={(e) => setAgreedToTerms(e.target.checked)}
+              className="peer sr-only"
+            />
+            <div className="relative flex h-5 w-5 items-center justify-center rounded-full border-[3.5px] border-[#8F97FE] bg-white transition-all peer-checked:border-[#8F97FE] sm:h-6 sm:w-6">
+              <div className={`h-2 w-2 rounded-full transition-all sm:h-2.5 sm:w-2.5 ${agreedToTerms ? 'bg-[#FF1F7D] scale-100' : 'bg-transparent scale-0'}`}></div>
+            </div>
+            <span className="select-none text-sm text-[#190E79] sm:text-base">
+              I agree to the Terms and Conditions
+            </span>
+          </label>
         </div>
       </div>
 

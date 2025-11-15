@@ -198,17 +198,17 @@ function StakeCard({
               {title}
             </h1>
           </div>
-          <div className="font-khand mt-1 pl-2 text-left text-xs font-normal md:mt-2 md:pl-4 xl:text-base">
+          <div className="font-khand mt-1 pl-2 text-left text-xs font-normal leading-tight md:mt-2 md:pl-4 xl:text-base">
             <p>
-              <span className="font-semibold">Pool ID: </span>{" "}
+              <span className="">Pool ID: </span>{" "}
               {formatAddress(wallet)}
             </p>
             <p>
-              <span className="font-semibold">Token ID: </span>{" "}
+              <span className="">Token ID: </span>{" "}
               {formatAddress(created)}
             </p>
-            <p className="mt-1 md:mt-2">
-              <span className="font-semibold">REWARDS: </span>
+            <p className="">
+              <span className="">REWARDS: </span>
               {marketCap}
             </p>
           </div>

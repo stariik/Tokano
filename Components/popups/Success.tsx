@@ -12,11 +12,12 @@ function Success({ poolAddress, type = "stake" }: SuccessProps) {
   const router = useRouter();
 
   const handleViewClick = () => {
-    // Determine the route based on type
+    // Determine the route and query parameter based on type
     const baseRoute = type === "vest" ? "/card/vest" : type === "lock" ? "/card/lock" : "/card/stake";
+    const queryParam = type === "vest" ? "vest" : type === "lock" ? "lock" : "pool";
 
     if (poolAddress) {
-      router.push(`${baseRoute}?pool=${poolAddress}`);
+      router.push(`${baseRoute}?${queryParam}=${poolAddress}`);
     } else {
       router.push(baseRoute);
     }

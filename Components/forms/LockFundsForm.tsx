@@ -111,7 +111,6 @@ export default function LockFundsForm({
 
     // Validate required fields
     if (
-      !formData.lockDateTime ||
       !formData.tokenAmount ||
       !formData.releaseDate
     ) {
@@ -284,6 +283,11 @@ export default function LockFundsForm({
 
         // Check for common errors in logs
         if (
+          error.logs.some((log: string) => log.includes("insufficient lamports"))
+        ) {
+          errorMessage =
+            "Insufficient SOL balance to create the lock. You need approximately 0.002 SOL to cover the rent-exempt minimum and transaction fees. Please add more SOL to your wallet.";
+        } else if (
           error.logs.some((log: string) => log.includes("insufficient funds"))
         ) {
           errorMessage =
@@ -330,7 +334,7 @@ export default function LockFundsForm({
         {/* Token Amount */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
               </span>
@@ -357,7 +361,7 @@ export default function LockFundsForm({
         {/* Release Date */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 2.
               </span>
@@ -380,11 +384,11 @@ export default function LockFundsForm({
         {/* Recipient Wallet */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 3.
               </span>
-              Recipient wallet address:
+              Recipient wallet address (optional):
             </label>
             <input
               type="text"

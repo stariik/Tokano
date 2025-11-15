@@ -243,8 +243,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
   // Render empty states
   if (!publicKey) {
     return (
-      <div className="font-khand dark:border-secondary mt-6 rounded-3xl border-2 border-[#CDCDE9] text-[#190E79] dark:text-white">
-        <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-6 text-xl">
+      <div className="font-khand dark:border-secondary mt-6 rounded-3xl border-2 border-[#CDCDE9] font-bold text-[#190E79] dark:text-white">
+        <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-10 text-xl">
           YOU ARE STAKING
         </div>
         <div className="flex items-center justify-center p-12 text-center text-base">
@@ -256,8 +256,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
   if (loadState === BalanceLoadState.LOADING || loading) {
     return (
-      <div className="font-khand dark:border-secondary mt-6 rounded-3xl border-2 border-[#CDCDE9] text-[#190E79] dark:text-white">
-        <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-6 text-xl">
+      <div className="font-khand dark:border-secondary mt-6 rounded-3xl border-2 border-[#CDCDE9] font-bold text-[#190E79] dark:text-white">
+        <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-10 text-xl">
           YOU ARE STAKING
         </div>
         <div className="flex items-center justify-center p-12 text-center text-base">
@@ -269,8 +269,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
   if (!selectedToken) {
     return (
-      <div className="font-khand dark:border-secondary mt-6 rounded-3xl border-2 border-[#CDCDE9] text-[#190E79] dark:text-white">
-        <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-6 text-xl">
+      <div className="font-khand dark:border-secondary mt-6 rounded-3xl border-2 border-[#CDCDE9] font-bold text-[#190E79] dark:text-white">
+        <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-10 text-xl">
           YOU ARE STAKING
         </div>
         <div className="flex items-center justify-center p-12 text-center text-base">
@@ -304,8 +304,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
           scrollbar-color: #8b5cf6 transparent;
         }
       `}</style>
-      <div className="font-khand dark:border-secondary mt-6 rounded-3xl border-2 border-[#CDCDE9] text-[#190E79] dark:text-white">
-        <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-6 text-xl">
+      <div className="font-khand dark:border-secondary mt-6 rounded-3xl border-2 border-[#CDCDE9] font-bold text-[#190E79] dark:text-white">
+        <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-10 text-xl">
           YOU ARE STAKING
         </div>
         <div className="flex justify-between bg-[#fafafa] py-2 pr-8 pl-16 text-lg dark:bg-[#231570]">

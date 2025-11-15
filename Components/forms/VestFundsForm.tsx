@@ -371,7 +371,7 @@ export default function VestFundsForm({
         {/* Token Amount */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
               </span>
@@ -398,7 +398,7 @@ export default function VestFundsForm({
         {/* Cliff Period */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 2.
               </span>
@@ -425,7 +425,7 @@ export default function VestFundsForm({
         {/* Vesting Steps Model */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 3.
               </span>
@@ -436,11 +436,11 @@ export default function VestFundsForm({
               onChange={(e) =>
                 handleInputChange("releaseModel", e.target.value)
               }
-              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] sm:w-24 lg:w-32 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-sm font-bold text-[#190E79] sm:w-24 lg:w-32 lg:px-3 lg:py-1.5 lg:text-base dark:bg-[#453DC8] dark:text-white"
             >
-              <option value="daily">daily</option>
-              <option value="weekly">weekly</option>
-              <option value="monthly">monthly</option>
+              <option value="daily" className="text-sm lg:text-base">daily</option>
+              <option value="weekly" className="text-sm lg:text-base">weekly</option>
+              <option value="monthly" className="text-sm lg:text-base">monthly</option>
             </select>
             <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               duration:
@@ -469,7 +469,7 @@ export default function VestFundsForm({
         {/* Recipient Wallet */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] lg:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 4.
               </span>

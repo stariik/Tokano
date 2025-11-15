@@ -375,7 +375,7 @@ export default function StakingPoolForm({
         {/* Pool Activation Date and Time */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-1 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] md:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] md:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
               </span>
@@ -416,7 +416,7 @@ export default function StakingPoolForm({
         {/* Total Reward Token Amount */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] md:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] md:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 2.
               </span>
@@ -445,7 +445,7 @@ export default function StakingPoolForm({
         {/* Distribution Length */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-2 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] md:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] md:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 3.
               </span>
@@ -474,7 +474,7 @@ export default function StakingPoolForm({
         {/* Unstaking Period */}
         <div className="mb-5">
           <div className="mb-1.5 flex items-center gap-1 md:gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] md:text-sm dark:text-white">
+            <label className="font-khand text-sm font-bold text-[#190E79] md:text-base dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 4.
               </span>

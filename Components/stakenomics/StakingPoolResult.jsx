@@ -40,17 +40,17 @@ function StakingPoolResult({ token, formData, tokenImage }) {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
     if (days > 0) {
-      return `${days} days ${hours} hours`;
+      return `${days}d ${hours}h ${minutes}m`;
     } else if (hours > 0) {
-      return `${hours} hours ${minutes} minutes`;
+      return `${hours}h ${minutes}m`;
     } else {
-      return `${minutes} minutes`;
+      return `${minutes}m`;
     }
   };
 
   const StakeIcon = () => (
     <svg
-      className="absolute -mr-1 h-full w-[47px] lg:w-[80px]"
+      className="absolute top-1/2 -translate-y-1/2 -mr-1 w-[47px] lg:w-[70px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
 
   return (
     <div
-      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:pb-12 dark:text-white"
+      className="dark:border-secondary rounded-4xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:pb-12 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -89,7 +89,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
       }}
     >
       <div
-        className="relative rounded-3xl p-4 pb-0 md:p-6 md:pb-2 lg:p-4"
+        className="relative rounded-4xl p-4 pb-0 md:p-6 md:pb-2 lg:p-4"
         style={{
           background:
             resolvedTheme === "dark"
@@ -97,20 +97,26 @@ function StakingPoolResult({ token, formData, tokenImage }) {
               : "linear-gradient(45deg, rgb(255 255 255) 0%, rgb(232, 228, 248) 100%)",
         }}
       >
-        <div className="grid grid-cols-3 items-center">
-          <img
-            src={tokenImage || "/vest.png"}
-            className="mb-4 w-16 h-16 md:w-18 md:h-18 lg:w-16 lg:h-16 xl:ml-4 xl:w-22 xl:h-22 2xl:ml-10 rounded-2xl xl:rounded-3xl object-cover"
-          />
+        <div className="mt-2 grid grid-cols-3 items-start">
+          <div className="flex w-full items-start justify-center">
+            <img
+              src={tokenImage || "/vest.png"}
+              className="h-16 w-16 rounded-2xl object-cover md:h-18 md:w-18 lg:h-16 lg:w-16 xl:h-22 xl:w-22 xl:rounded-3xl"
+            />
+          </div>
           <div className="font-khand col-span-2 font-normal">
-            <h1 className="font-khand text-base font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl">
-              {token?.name || "TOKEN NAME"}
-            </h1>
-
-            <div className="mt-1 pl-1 text-xs md:text-sm lg:text-base 2xl:text-base">
+            <div className="flex max-w-xs justify-between">
+              <h1 className="font-khand text-base font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-5xl">
+                {token?.name || "TOKEN NAME"}
+              </h1>
+              <div className="">
+                <CiPill size={36} />
+              </div>
+            </div>
+            <div className="mt-1 pl-1 text-xs leading-[1.1] md:text-sm lg:text-base 2xl:text-base">
               <p>
                 Token ID:{" "}
-                {token?.id && typeof token.id === 'string'
+                {token?.id && typeof token.id === "string"
                   ? token.id.length > 12
                     ? `${token.id.slice(0, 5)}...${token.id.slice(-3)}`
                     : token.id
@@ -118,19 +124,28 @@ function StakingPoolResult({ token, formData, tokenImage }) {
               </p>
               <p>
                 Creator:{" "}
-                {formData?.creator && typeof formData.creator === 'string'
+                {formData?.creator && typeof formData.creator === "string"
                   ? `${formData.creator.slice(0, 4)}...${formData.creator.slice(-4)}`
                   : "Anonymous"}
               </p>
-              <p>Pool ID: {formData?.poolId || "0x0000...0000"}</p>
+              <div
+                className="font-khand mt-8 mb-10 -ml-2 w-fit rounded-2xl px-6 text-center text-sm font-semibold text-[#311880] md:text-sm lg:text-lg 2xl:text-2xl"
+                style={{
+                  background:
+                    resolvedTheme === "dark"
+                      ? "linear-gradient(90deg, rgba(255, 199, 51, 1) 0%, rgba(249, 44, 157, 1) 42%, rgba(255, 212, 42, 1) 100%)"
+                      : "linear-gradient(90deg, rgba(255, 199, 51, 1) 0%, rgba(249, 44, 157, 1) 42%, rgba(255, 212, 42, 1) 100%)",
+                }}
+              >
+                {" "}
+                {getLaunchingCountdown() === "LIVE NOW"
+                  ? "LIVE NOW"
+                  : `LAUNCHING IN: ${getLaunchingCountdown()}`}{" "}
+              </div>
             </div>
           </div>
         </div>
-        <div className="absolute top-10 right-0">
-          <div className="mr-2 flex justify-end lg:mr-12">
-            <CiPill size={36} />
-          </div>
-
+        <div className="absolute top-15 right-0">
           <div className="font-khand mt-2 rounded-l-2xl bg-[#2B923E] pr-2 pl-2 text-[10px] font-normal text-white md:mt-6 lg:text-sm lg:text-xs xl:text-sm dark:bg-[#2B923E]">
             {formData?.activationDateTime === "IMMEDIATELY"
               ? "IMMEDIATELY"
@@ -148,21 +163,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
           </div>
         </div>
 
-        <div
-          className="font-khand mx-auto mt-2 mb-10 w-fit rounded-2xl px-4 text-center text-sm font-semibold text-[#311880] md:text-sm lg:text-lg 2xl:text-2xl"
-          style={{
-            background:
-              resolvedTheme === "dark"
-                ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
-                : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
-          }}
-        >
-          {getLaunchingCountdown() === "LIVE NOW"
-            ? "LIVE NOW"
-            : `LAUNCHING IN: ${getLaunchingCountdown()}`}
-        </div>
-
-        <div className="font-khand relative text-end text-xl font-medium lg:text-2xl">
+        <div className="font-khand relative mx-auto max-w-md text-end text-xl font-medium lg:text-2xl">
           <div className="absolute -bottom-4 z-5 mt-2 flex w-full lg:-bottom-8 xl:-bottom-11">
             <div className="font-khand flex max-w-20 items-center text-left text-sm font-semibold md:text-xl lg:text-xl 2xl:mx-4">
               <div className="leading-tight">
@@ -172,23 +173,20 @@ function StakingPoolResult({ token, formData, tokenImage }) {
             </div>
             <div className="font-khand relative my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
               <StakeIcon />
-
-              <div
-                className="font-khand -z-1 ml-6 w-3/4 rounded-full pr-2 pl-4 font-medium text-white sm:ml-8 sm:py-0.5 md:pl-10 lg:py-1"
-                style={{
-                  background:
-                    resolvedTheme === "dark"
-                      ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
-                      : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
-                }}
-              >
-                <div className="flex justify-between">
-                  <span>ENDS: </span>
-                  <span>
-                    {formData?.distributionLength || "0"} days
-                  </span>
+                <div
+                  className="font-khand -z-1 ml-6 w-3/4 rounded-full pr-2 pl-4 font-medium text-white sm:ml-8 sm:py-0.5 md:pl-10 lg:py-1"
+                  style={{
+                    background:
+                      resolvedTheme === "dark"
+                        ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
+                        : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
+                  }}
+                >
+                  <div className="h-full flex justify-between">
+                    <span>ENDS: </span>
+                    <span>{formData?.distributionLength || "0"} days</span>
+                  </div>
                 </div>
-              </div>
               <div
                 className="font-khand -z-1 ml-6 w-2/3 rounded-full pr-2 pl-4 font-medium text-black sm:ml-8 sm:py-0.5 md:pl-10 lg:py-1"
                 style={{

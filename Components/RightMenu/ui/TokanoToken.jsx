@@ -23,11 +23,11 @@ const Icon = () => {
   );
 };
 
-function TokanoToken({ children, TableName, className = "" }) {
+function TokanoToken({ children, TableName, className = "", showIcon = false }) {
   return (
     <div className="font-khand">
       <div
-        className={`dark:border-secondary -mt-0.5 flex justify-start border-2 border-[#CDCDE9] bg-[#d5d2ec] pl-8 md:text-2xl lg:text-lg xl:text-xl 2xl:text-2xl dark:bg-transparent ${className}`}
+        className={`dark:border-secondary -mt-0.5 flex items-center justify-start border-2 border-[#CDCDE9] bg-[#d5d2ec] pl-8 md:text-2xl lg:text-lg xl:text-xl 2xl:text-2xl dark:bg-transparent ${className}`}
         style={{
           background: "var(--gradient-tokano-top)",
         }}
@@ -48,8 +48,8 @@ function TokanoToken({ children, TableName, className = "" }) {
             );
           }
         `}</style>
-        <Icon />
-        <h1 className="ml-4">{TableName}</h1>
+        {showIcon && <Icon />}
+        <h1 className={showIcon ? "ml-4" : ""}>{TableName}</h1>
       </div>
       {children}
       <div
