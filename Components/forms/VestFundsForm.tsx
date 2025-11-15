@@ -360,59 +360,20 @@ export default function VestFundsForm({
             ⏰
           </div>
           <div className="font-khand text-xs font-semibold text-[#190E79] lg:text-sm dark:text-white">
-            Fill the form to create linear vesting for: {token.name}
+            Fill the form to lock funds 
           </div>
         </div>
       </div>
 
       {/* Form Container */}
-      <div className="mb-6 rounded-2xl bg-white dark:bg-[#1B105C] p-4">
+      <div className="mb-6 rounded-2xl bg-white p-2 md:p-4 dark:bg-[#1B105C]">
         {/* Activation Date and Time */}
+        {/* Token Amount */}
         <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-3">
+          <div className="mb-1.5 flex items-center gap-2 md:gap-3">
             <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
                 1.
-              </span>
-              Vesting activation date and time (UTC):
-            </label>
-            <input
-              type="datetime-local"
-              value={formData.activationDateTime || ""}
-              onChange={(e) =>
-                handleInputChange("activationDateTime", e.target.value)
-              }
-              className="font-khand max-w-[120px] flex-1 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] lg:max-w-[280px] lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => {
-                const now = new Date();
-                const localDateTime = new Date(
-                  now.getTime() - now.getTimezoneOffset() * 60000,
-                )
-                  .toISOString()
-                  .slice(0, 16);
-                handleInputChange("activationDateTime", localDateTime);
-              }}
-              className="font-khand rounded-2xl bg-[#29a13f] p-1 text-xs font-bold text-white transition-colors hover:bg-[#238033] lg:text-sm"
-              title="Set to current time"
-            >
-              now
-            </button>
-          </div>
-          <div className="font-khand mt-1.5 text-[10px] leading-tight font-medium text-[#190E79] opacity-80 lg:text-xs dark:text-white">
-            Set the exact date and time when the vesting schedule begins.
-          </div>
-        </div>
-
-        {/* Token Amount */}
-        <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-3">
-            <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
-              <span className="mr-1 font-bold text-[#190E79] dark:text-white">
-                2.
               </span>
               Total token amount to vest:
             </label>
@@ -436,10 +397,10 @@ export default function VestFundsForm({
 
         {/* Cliff Period */}
         <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-3">
+          <div className="mb-1.5 flex items-center gap-2 md:gap-3">
             <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
-                3.
+                2.
               </span>
               Cliff period:
             </label>
@@ -463,10 +424,10 @@ export default function VestFundsForm({
 
         {/* Vesting Steps Model */}
         <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-3">
+          <div className="mb-1.5 flex items-center gap-2 md:gap-3">
             <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
-                4.
+                3.
               </span>
               Vesting steps model:
             </label>
@@ -489,7 +450,7 @@ export default function VestFundsForm({
               value={formData.duration || ""}
               onChange={(e) => handleInputChange("duration", e.target.value)}
               placeholder="0"
-              className="font-khand w-12 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 sm:w-16 lg:w-20 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-8 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 sm:w-16 md:w-12 lg:w-20 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
@@ -507,10 +468,10 @@ export default function VestFundsForm({
 
         {/* Recipient Wallet */}
         <div className="mb-5">
-          <div className="mb-1.5 flex items-center gap-3">
+          <div className="mb-1.5 flex items-center gap-2 md:gap-3">
             <label className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               <span className="mr-1 font-bold text-[#190E79] dark:text-white">
-                5.
+                4.
               </span>
               Recipient wallet address:
             </label>

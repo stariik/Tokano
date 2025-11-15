@@ -87,7 +87,7 @@ function StakePageContent() {
             Loading pool data...
           </div>
         </div>
-      <div className="max-w-xs lg:max-w-sm lg:w-full 2xl:max-w-md">
+        <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">
           <PortfolioRightMenu />
         </div>
       </div>
@@ -139,7 +139,7 @@ function StakePageContent() {
           <Details />
         </div>
       </div>
-      <div className="max-w-xs lg:max-w-sm lg:w-full 2xl:max-w-md">
+      <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">
         <PortfolioRightMenu />
       </div>
     </div>
@@ -162,7 +162,7 @@ export default function StakePage() {
               Loading...
             </div>
           </div>
-      <div className="max-w-xs lg:max-w-sm lg:w-full 2xl:max-w-md">
+          <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">
             <PortfolioRightMenu />
           </div>
         </div>
