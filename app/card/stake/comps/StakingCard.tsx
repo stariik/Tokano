@@ -89,7 +89,7 @@ function StakingCard({ pool }: StakingCardProps) {
 
   const StakeIcon = () => (
     <svg
-      className="absolute -mr-1 h-full w-[47px] lg:w-[80px]"
+      className="absolute top-1/2 -mr-1 w-[47px] -translate-y-1/2 lg:w-[70px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +119,7 @@ function StakingCard({ pool }: StakingCardProps) {
 
   return (
     <div
-      className="dark:border-secondary rounded-4xl border-1 border-[#CDCDE9] pb-2 text-[#190E79] xl:pb-4 dark:text-white"
+      className="dark:border-secondary rounded-4xl border-1 border-[#CDCDE9] pb-2 text-[#190E79] xl:pb-2 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -128,7 +128,7 @@ function StakingCard({ pool }: StakingCardProps) {
       }}
     >
       <div
-        className="relative rounded-4xl p-8 pb-0 lg:p-4 lg:pb-0 xl:p-8 xl:pb-0"
+        className="relative rounded-4xl p-6 pb-0 md:p-8 lg:p-4 lg:pb-0 xl:p-8 xl:pb-0"
         style={{
           background:
             resolvedTheme === "dark"
@@ -136,7 +136,7 @@ function StakingCard({ pool }: StakingCardProps) {
               : "linear-gradient(45deg, rgb(255 255 255) 0%, rgb(232, 228, 248) 100%)",
         }}
       >
-        <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-6 lg:left-2 lg:gap-2 xl:top-12 xl:left-4 xl:gap-4">
+        <div className="absolute top-8 left-2 flex flex-col gap-2 md:left-4 lg:top-6 lg:left-2 lg:gap-2 xl:top-12 xl:left-4 xl:gap-4">
           {pool.tokenInfo?.telegram && (
             <a
               href={pool.tokenInfo.telegram}
@@ -179,11 +179,11 @@ function StakingCard({ pool }: StakingCardProps) {
             }}
           />
           <div className="font-khand ml-4 font-normal lg:ml-2 xl:ml-8">
-            <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl">
+            <h1 className="font-khand text-lg font-semibold md:text-xl xl:text-3xl 2xl:text-5xl">
               {tokenName} ({tokenSymbol})
             </h1>
 
-            <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
+            <div className="mt-1 pl-1 text-xs md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
               <p className="flex items-center gap-2">
                 Pool ID: {poolIdShort}
                 <LuCopy
@@ -223,7 +223,6 @@ function StakingCard({ pool }: StakingCardProps) {
                   </span>
                 )}
               </p>
-              <p>Market cap: {marketCap}</p>
             </div>
           </div>
         </div>
@@ -241,10 +240,10 @@ function StakingCard({ pool }: StakingCardProps) {
         </div>
 
         <div className="relative bottom-0 left-0 z-5 mt-6 flex w-full">
-          <div className="font-khand mx-4 flex max-w-20 items-center text-xl font-semibold lg:mx-2 xl:mx-4 xl:text-3xl">
+          <div className="font-khand mr-2 flex max-w-20 items-center text-xl font-semibold md:mx-4 lg:mx-2 xl:mx-4 xl:text-3xl">
             STAKING POOL
           </div>
-          <div className="font-khand relative my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
+          <div className="font-khand my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
             <StakeIcon />
 
             <div
@@ -272,13 +271,13 @@ function StakingCard({ pool }: StakingCardProps) {
           </div>
         </div>
 
-        <div className="font-khand mr-4 text-end text-2xl font-semibold text-[#FFB01C] xl:text-3xl">
+        <div className="font-khand mr-4 text-end text-4xl font-semibold text-[#FFB01C] xl:text-5xl 2xl:text-6xl">
           {stakersCount}
         </div>
       </div>
 
-      <div className="font-khand mr-12 text-end text-xl font-medium lg:mr-8 lg:text-2xl xl:mr-12">
-        total stakers
+      <div className="font-khand mr-12 text-end text-xl font-bold lg:mr-8 lg:text-3xl xl:mr-12">
+        stakes
       </div>
     </div>
   );

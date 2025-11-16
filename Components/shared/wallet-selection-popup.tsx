@@ -176,7 +176,7 @@ function WalletSelectionPopup({
                   disabled={!agreedToTerms}
                   className={`flex w-full items-center justify-end gap-3 rounded-lg p-2 pr-4 transition-colors sm:gap-4 sm:p-2.5 sm:pr-6 ${
                     agreedToTerms
-                      ? "cursor-pointer hover:bg-[#f0f0ff] active:bg-[#f0f0ff] dark:hover:bg-[#1a1f9e] dark:active:bg-[#252ba0]"
+                      ? "cursor-pointer"
                       : "cursor-not-allowed opacity-50"
                   }`}
                 >
