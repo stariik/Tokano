@@ -44,6 +44,37 @@ const Warning = () => (
   </svg>
 );
 
+const FormIcon = () => (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 35 35"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M18.0087 33.7286C8.70208 34.0534 0.898671 26.8979 0.579277 17.7465C0.259883 8.59498 7.54545 0.912924 16.852 0.588116C26.1586 0.263309 33.962 7.41874 34.2814 16.5702C34.6008 25.7217 27.3153 33.4038 18.0087 33.7286Z"
+      fill="white"
+    />
+    <path
+      d="M17.5241 29.7377C10.6248 29.9785 4.83653 24.5806 4.59574 17.6813C4.35495 10.7819 9.75278 4.99368 16.6521 4.75289C23.5515 4.5121 29.3397 9.90993 29.5805 16.8093C29.8213 23.7086 24.4235 29.4969 17.5241 29.7377Z"
+      fill="#0E1C79"
+    />
+    <path
+      d="M17.1348 9.71045C17.8294 9.71048 18.6707 9.79992 19.418 10.1763C20.1718 10.5559 20.821 11.2238 21.1279 12.3589C21.1618 12.4843 21.2425 12.9611 21.2754 13.4878C21.2919 13.7525 21.2968 14.0346 21.2764 14.2954C21.2619 14.4798 21.2326 14.6597 21.1846 14.8179C21.4473 14.8695 21.6046 14.907 21.6279 14.9126C21.8888 14.9748 22.1023 15.1644 22.1934 15.4175H22.1924C22.2214 15.4978 22.8018 17.1316 22.8018 19.3384C22.8017 21.5267 22.2234 23.1758 22.1943 23.2563C22.1152 23.479 21.9415 23.6531 21.7236 23.7349L21.6279 23.7642C21.5384 23.7855 19.5205 24.2602 17.1348 24.2603C14.7483 24.2603 12.7284 23.7853 12.6396 23.7642C12.4117 23.7097 12.2205 23.5575 12.1152 23.3511L12.0752 23.2593C12.0475 23.1827 11.4668 21.5484 11.4668 19.3384C11.4668 17.1471 12.0465 15.4961 12.0742 15.4194C12.1646 15.1652 12.3785 14.9738 12.6406 14.9116C12.6647 14.9058 12.7976 14.8774 13.0166 14.8335C12.9741 14.5312 12.9521 14.2071 12.9521 13.8569C12.9522 12.4906 13.2877 11.4461 13.9951 10.7446C14.7026 10.0433 15.7567 9.71045 17.1348 9.71045ZM17.1338 16.0112C15.5682 16.0112 14.1472 16.2396 13.4531 16.3726C13.3006 16.9422 13.0625 18.0388 13.0625 19.3384C13.0625 20.654 13.2999 21.7382 13.4521 22.3013C14.146 22.4338 15.5684 22.6646 17.1338 22.6646C18.699 22.6645 20.1192 22.4343 20.8135 22.3013C20.966 21.7312 21.2051 20.6359 21.2051 19.3374C21.2051 18.0215 20.9667 16.9365 20.8145 16.3735C20.1203 16.241 18.6985 16.0112 17.1338 16.0112ZM17.1338 11.3062C16.2712 11.3062 15.6354 11.4182 15.2119 11.7739C14.7948 12.1244 14.5469 12.7445 14.5469 13.8569C14.5469 14.1191 14.563 14.3611 14.5918 14.5806C15.32 14.4905 16.1993 14.4155 17.1338 14.4155C18.0572 14.4155 18.9256 14.4872 19.6484 14.5757C19.6516 14.5457 19.6553 14.5151 19.6592 14.4858C19.6817 14.3156 19.7148 14.0982 19.6992 13.8677C19.6755 13.5186 19.6599 13.2662 19.6436 13.0747C19.6272 12.8825 19.6105 12.7628 19.5869 12.6763V12.6753C19.4725 12.2513 19.2943 11.9195 18.9443 11.688C18.5884 11.4526 18.0332 11.3062 17.1338 11.3062Z"
+      fill="white"
+      stroke="white"
+      stroke-width="0.3"
+    />
+    <path
+      d="M18.7002 17.4546L19.46 18.2017L19.5664 18.3062L19.4609 18.4136L16.9473 20.9722L16.8418 21.0796L16.7344 20.9741L16.4424 20.687L16.4404 20.6909L16.3291 20.5913L15.0439 19.4321L14.9326 19.3315L15.0332 19.2202L15.7461 18.4292L15.8467 18.3179L15.958 18.4185L16.7979 19.1763L18.4883 17.4565L18.5928 17.3501L18.7002 17.4546Z"
+      fill="white"
+      stroke="white"
+      stroke-width="0.3"
+    />
+  </svg>
+);
+
 interface Token {
   id?: string;
   tokenId?: string;
@@ -352,15 +383,13 @@ export default function VestFundsForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] shadow-2xl p-4 xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
-      <div className="mb-4 flex items-center justify-between px-1">
+      <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="font-khand flex h-6 w-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#6b4d9f] lg:h-7 lg:w-7 lg:text-base">
-            ⏰
-          </div>
+          <FormIcon />
           <div className="font-khand text-xs font-semibold text-[#190E79] lg:text-sm dark:text-white">
-            Fill the form to lock funds 
+            Fill the form to lock funds
           </div>
         </div>
       </div>
@@ -436,11 +465,26 @@ export default function VestFundsForm({
               onChange={(e) =>
                 handleInputChange("releaseModel", e.target.value)
               }
-              className="font-khand w-20 rounded-3xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-sm font-bold text-[#190E79] appearance-none sm:w-24 lg:w-30 2xl:w-30 lg:px-3 lg:py-1 lg:text-base dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-20 appearance-none rounded-3xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-sm font-bold text-[#190E79] sm:w-24 lg:w-30 lg:px-3 lg:py-1 lg:text-base 2xl:w-30 dark:bg-[#453DC8] dark:text-white"
             >
-              <option value="daily" className="text-sm lg:text-base">daily</option>
-              <option value="weekly" className="text-sm lg:text-base">weekly</option>
-              <option value="monthly" className="text-sm lg:text-base">monthly</option>
+              <option
+                value="daily"
+                className="text-sm lg:text-base"
+              >
+                daily
+              </option>
+              <option
+                value="weekly"
+                className="text-sm lg:text-base"
+              >
+                weekly
+              </option>
+              <option
+                value="monthly"
+                className="text-sm lg:text-base"
+              >
+                monthly
+              </option>
             </select>
             <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">
               duration:
@@ -450,7 +494,7 @@ export default function VestFundsForm({
               value={formData.duration || ""}
               onChange={(e) => handleInputChange("duration", e.target.value)}
               placeholder="0"
-              className="font-khand w-8 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 sm:w-16 md:w-10 lg:w-14 2xl:w-18 lg:px-3 lg:py-1.5 lg:text-sm dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-8 rounded-2xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] placeholder-gray-400 sm:w-16 md:w-10 lg:w-14 lg:px-3 lg:py-1.5 lg:text-sm 2xl:w-18 dark:bg-[#453DC8] dark:text-white"
               required
             />
             <span className="font-khand text-xs font-bold text-[#190E79] lg:text-sm dark:text-white">

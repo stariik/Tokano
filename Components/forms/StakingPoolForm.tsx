@@ -43,6 +43,33 @@ const Warning = () => (
   </svg>
 );
 
+const FormIcon = () => (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 35 35"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M18.0087 33.7286C8.70208 34.0534 0.89867 26.8979 0.579276 17.7465C0.259882 8.59498 7.54545 0.912924 16.852 0.588116C26.1586 0.263309 33.962 7.41874 34.2814 16.5702C34.6008 25.7217 27.3153 33.4038 18.0087 33.7286Z"
+      fill="white"
+    />
+    <path
+      d="M17.8323 28.6816C11.3606 28.9075 5.93413 23.9317 5.71202 17.5678C5.48992 11.2039 10.5562 5.86189 17.028 5.63602C23.4997 5.41015 28.9261 10.386 29.1482 16.7499C29.3704 23.1137 24.304 28.4558 17.8323 28.6816Z"
+      fill="#0E1C79"
+    />
+    <path
+      d="M17.5515 29.413C10.6521 29.6538 4.86388 24.2559 4.62308 17.3566C4.38229 10.4572 9.78012 4.66898 16.6795 4.42818C23.5788 4.18739 29.3671 9.58522 29.6079 16.4846C29.8487 23.3839 24.4508 29.1722 17.5515 29.413Z"
+      fill="#190E79"
+    />
+    <path
+      d="M14.4962 23.2185L14.4962 23.1751C15.5372 22.033 16.0432 21.0209 16.0143 20.139C16.0143 19.8932 15.9781 19.6475 15.9058 19.4017C15.8336 19.1559 15.7179 18.8595 15.5589 18.5125C15.3998 18.1656 15.1757 17.7174 14.8866 17.168C14.6553 16.7053 14.489 16.2933 14.3878 15.9319C14.2866 15.5704 14.2215 15.1873 14.1926 14.7825C14.1782 14.1897 14.2938 13.5825 14.5396 12.9608C14.7998 12.3247 15.1685 11.7391 15.6456 11.2042L16.4697 11.2042L16.4697 8.99219L17.7709 8.99219L17.7709 11.2042L19.701 11.2042L19.701 11.2476C19.166 11.8403 18.7829 12.3753 18.5516 12.8524C18.3203 13.315 18.2046 13.7921 18.2046 14.2837C18.2046 14.6451 18.2697 14.9993 18.3998 15.3463C18.5299 15.6933 18.7395 16.1415 19.0287 16.6909C19.419 17.3993 19.6865 17.9776 19.8311 18.4258C19.9757 18.8595 20.0552 19.3077 20.0696 19.7704C20.0841 20.392 19.9829 20.9776 19.766 21.527C19.5636 22.0619 19.2311 22.6257 18.7685 23.2185L17.7709 23.2185L17.7709 25.3438L16.4697 25.3438L16.4697 23.2185L14.4962 23.2185Z"
+      fill="white"
+    />
+  </svg>
+);
+
 interface Token {
   id?: string;
   tokenId?: string;
@@ -357,13 +384,11 @@ export default function StakingPoolForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] shadow-2xl p-4 xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
-      <div className="mb-4 flex items-center justify-between px-1">
+      <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="font-khand flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-white text-base font-bold text-[#6b4d9f]">
-            i
-          </div>
+          <FormIcon />
           <div className="font-khand text-sm font-semibold text-[#190E79] dark:text-white">
             Fill the form to create staking pool
           </div>

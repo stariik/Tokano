@@ -43,6 +43,31 @@ const Warning = () => (
   </svg>
 );
 
+const FormIcon = () => (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 35 35"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M18.1217 34.5723C8.76614 34.8997 0.917297 27.5587 0.590782 18.1756C0.264267 8.79243 7.58372 0.920432 16.9392 0.592953C26.2948 0.265474 34.1436 7.60653 34.4701 16.9897C34.7966 26.3728 27.4772 34.2448 18.1217 34.5723Z"
+      fill="white"
+    />
+    <path
+      d="M18.3122 30.4208C11.4332 30.6616 5.66196 25.2637 5.42188 18.3644C5.18179 11.465 10.5637 5.67679 17.4428 5.43599C24.3219 5.1952 30.0931 10.593 30.3331 17.4924C30.5732 24.3918 25.1913 30.18 18.3122 30.4208Z"
+      fill="#0E1C79"
+    />
+    <path
+      d="M11.9102 14.2415H16.1801V17.9853H20.3256V21.6369H24.1996"
+      stroke="white"
+      stroke-width="3.2"
+      stroke-linecap="round"
+    />
+  </svg>
+);
+
 interface Token {
   id?: string;
   tokenId?: string;
@@ -316,11 +341,9 @@ export default function LockFundsForm({
   return (
     <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
-      <div className="mb-4 flex items-center justify-between px-1">
+      <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="font-khand flex h-6 w-6 items-center justify-center rounded-full bg-white text-sm font-bold text-[#6b4d9f] lg:h-7 lg:w-7 lg:text-sm xl:text-base">
-            🔒
-          </div>
+          <FormIcon />
           <div className="font-khand text-xs font-semibold text-[#190E79] lg:text-sm dark:text-white">
             Fill the form to create step vesting
           </div>
