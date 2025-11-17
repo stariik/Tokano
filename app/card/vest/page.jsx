@@ -41,7 +41,7 @@ function VestPageContent() {
   }, [fetchVestData]);
 
   return (
-    <div className="mx-auto flex justify-center gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:justify-between xl:justify-between xl:py-6 2xl:gap-4 2xl:px-2">
+    <div className="mx-auto flex max-w-lg justify-center gap-4 md:max-w-full md:px-2 lg:justify-between xl:justify-between xl:py-6 2xl:gap-4 2xl:px-2">
       <div className="xl:w-full xl:max-w-sm 2xl:max-w-md">
         <PortfolioTokenGrid
           gridCols="grid-cols-2"
@@ -60,7 +60,7 @@ function VestPageContent() {
           />
         )}
       </div>
-      <div className="max-w-xs lg:max-w-sm lg:w-full 2xl:max-w-md">
+      <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">
         <PortfolioRightMenu />
       </div>
     </div>
@@ -71,7 +71,7 @@ function Page() {
   return (
     <Suspense
       fallback={
-        <div className="mx-auto flex justify-center gap-4 sm:max-w-lg md:max-w-full md:px-2 lg:justify-between xl:justify-between xl:py-6 2xl:gap-4 2xl:px-2">
+        <div className="mx-auto flex max-w-lg justify-center gap-4 md:max-w-full md:px-2 lg:justify-between xl:justify-between xl:py-6 2xl:gap-4 2xl:px-2">
           <div className="xl:w-full xl:max-w-sm 2xl:max-w-md">
             <PortfolioTokenGrid
               gridCols="grid-cols-2"
@@ -83,7 +83,7 @@ function Page() {
               Loading...
             </div>
           </div>
-      <div className="max-w-xs lg:max-w-sm lg:w-full 2xl:max-w-md">
+          <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">
             <PortfolioRightMenu />
           </div>
         </div>

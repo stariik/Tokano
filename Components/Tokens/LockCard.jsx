@@ -63,7 +63,7 @@ function LockCard({
 
   const StakeIcon = () => (
     <svg
-      className="w-[60px] lg:w-[70px] xl:w-[80px]"
+      className="w-[45px] sm:w-[60px] lg:w-[70px] xl:w-[80px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -163,14 +163,14 @@ function LockCard({
 
           {/*  */}
 
-          <div className="absolute -bottom-6 left-0 z-5 flex w-11/13 md:w-13/16">
+          <div className="absolute -bottom-3 sm:-bottom-6 left-0 z-5 flex w-11/13 md:w-13/16">
             <div className="mx-2 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
               LOCK
             </div>
             <StakeIcon />
             <div className="my-auto flex w-full flex-col text-[10px] sm:text-xs">
               <div
-                className="-z-1 -ml-2 flex w-full justify-between rounded-full pr-4 pl-4 text-white dark:bg-transparent"
+                className="-z-1 -ml-2 flex w-full justify-between rounded-full py-0.5 px-4 md:px-2 lg:px-4 text-white dark:bg-transparent"
                 style={{
                   background: "var(--gradient-lock)",
                 }}

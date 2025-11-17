@@ -8,17 +8,28 @@ import { CiPill } from "react-icons/ci";
 import { useTheme } from "@/hooks/useTheme";
 import { useFavorites } from "@/hooks/useFavorites";
 
-function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecimals, isPreview = false, previewData = null, tokenImage = null }) {
+function VestCard({
+  id,
+  title,
+  created,
+  marketCap,
+  wallet,
+  vestData,
+  tokenDecimals,
+  isPreview = false,
+  previewData = null,
+  tokenImage = null,
+}) {
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
 
-  const isFav = isFavorite('vest', wallet);
+  const isFav = isFavorite("vest", wallet);
 
   const handleStarClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (wallet) {
-      toggleFavorite('vest', wallet);
+      toggleFavorite("vest", wallet);
     }
   };
 
@@ -30,7 +41,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
   // Format amount with proper decimals
   const formatAmount = (amount, decimals = 9) => {
     if (!amount) return "0";
-    const amountNum = typeof amount === 'number' ? amount : Number(amount);
+    const amountNum = typeof amount === "number" ? amount : Number(amount);
     const value = amountNum / Math.pow(10, decimals);
 
     if (value >= 1000000) {
@@ -44,8 +55,8 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}.${month}.${year}`;
   };
@@ -63,7 +74,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
 
   const shortenReleaseModel = (model) => {
     if (!model) return "MO";
-    switch(model.toLowerCase()) {
+    switch (model.toLowerCase()) {
       case "daily":
         return "DA";
       case "weekly":
@@ -104,7 +115,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 80 80"
-      className=" w-[57px] xl:w-[80px]"
+      className="w-[57px] xl:w-[80px]"
       fill="none"
     >
       <circle
@@ -131,10 +142,12 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
     </svg>
   );
 
-  const CardWrapper = isPreview ? 'div' : Link;
-  const wrapperProps = isPreview ? {} : {
-    href: wallet ? `/card/vest?vest=${wallet}` : `/card/vest`
-  };
+  const CardWrapper = isPreview ? "div" : Link;
+  const wrapperProps = isPreview
+    ? {}
+    : {
+        href: wallet ? `/card/vest?vest=${wallet}` : `/card/vest`,
+      };
 
   return (
     <CardWrapper
@@ -158,7 +171,7 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
       >
         {!isPreview && (
           <div
-            className="absolute top-6 right-4 cursor-pointer hover:scale-110 transition-transform z-10"
+            className="absolute top-6 right-4 z-10 cursor-pointer transition-transform hover:scale-110"
             onClick={handleStarClick}
           >
             <StarIcon filled={isFav} />
@@ -186,11 +199,11 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
         <div className="flex flex-col justify-start">
           <img
             src={tokenImage || "/vest.png"}
-            className="mr-16 sm:mr-26 lg:mr-24 mb-4 w-14 h-14 sm:w-20 sm:h-20 lg:w-18 lg:h-18 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28 rounded-2xl lg:rounded-2xl xl:rounded-3xl object-cover"
+            className="mr-16 mb-4 h-14 w-14 rounded-2xl object-cover sm:mr-26 sm:h-20 sm:w-20 lg:mr-24 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
           />
 
-          <div className="absolute -bottom-7 sm:-bottom-4 left-1 sm:left-4 z-2 flex w-7/10">
-            <div className="mx-2 md:mx-1 flex items-center text-xl xl:mx-4 xl:text-3xl">
+          <div className="absolute -bottom-5 left-1 z-2 flex w-7/10 sm:-bottom-3 sm:left-4">
+            <div className="mx-2 flex items-center text-xl md:mx-1 xl:mx-4 xl:text-3xl">
               VEST
             </div>
             <VestIcon />
@@ -213,15 +226,23 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
                 <div className="font-khand font-normal lg:pr-1 xl:pr-0">
                   {isPreview ? (
                     <>
-                      TYPE: {shortenReleaseModel(previewData?.releaseModel || 'monthly')} <span className="ml-0.5 md:ml-1" /> CLIFF: {previewData?.cliffPeriod || '0'}d START: {formatDate(previewData?.activationDateTime) || '---'}
+                      TYPE:{" "}
+                      {shortenReleaseModel(
+                        previewData?.releaseModel || "monthly",
+                      )}{" "}
+                      <span className="ml-0.5 md:ml-1" /> CLIFF:{" "}
+                      {previewData?.cliffPeriod || "0"}d START:{" "}
+                      {formatDate(previewData?.activationDateTime) || "---"}
                     </>
                   ) : vestData ? (
                     <>
-                      TYPE: {getScheduleTypeShort(vestData.scheduleType)} START: {formatDate(vestData.startTime)}
+                      TYPE: {getScheduleTypeShort(vestData.scheduleType)} START:{" "}
+                      {formatDate(vestData.startTime)}
                     </>
                   ) : (
                     <>
-                      TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" /> CLIFF: |5d
+                      TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" />{" "}
+                      CLIFF: |5d
                     </>
                   )}
                 </div>
@@ -232,12 +253,14 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
           {/*  */}
         </div>
         <p className="absolute right-5 bottom-0 text-xl text-[#FFB01C]">
-          {vestData?.totalVestedAmount ? formatAmount(vestData.totalVestedAmount, tokenDecimals) : "0"}
+          {vestData?.totalVestedAmount
+            ? formatAmount(vestData.totalVestedAmount, tokenDecimals)
+            : "0"}
         </p>
       </div>
-      <div className="flex items-center justify-end gap-1 sm:gap-2 pr-4 pb-2 xl:gap-6">
+      <div className="flex items-center justify-end gap-1 pr-4 pb-2 sm:gap-2 xl:gap-6">
         <div
-          className="font-khand mt-4 sm:-mt-2 flex rounded-xl px-2 py-0 text-[10px] sm:text-xs font-normal text-white xl:text-sm dark:bg-transparent"
+          className="font-khand mt-1 flex justify-between rounded-xl px-2 py-0 text-[10px] font-normal text-white sm:-mt-2 sm:text-xs xl:text-sm dark:bg-transparent w-[90px] [@media(min-width:385px)]:w-[110px] sm:w-[160px] md:w-[120px] lg:w-[180px] xl:w-[140px] 2xl:w-[230px]"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}
@@ -252,19 +275,34 @@ function VestCard({ id, title, created, marketCap, wallet, vestData, tokenDecima
             }
           `}</style>
           {isPreview ? (
-            `PARTS: ${previewData?.duration || '0'} LEFT: ${formatTokenAmountSimple(previewData?.tokenAmount || '0')}`
+            <>
+              <span>PARTS: {previewData?.duration || "0"}</span>
+              <span>LEFT: {formatTokenAmountSimple(previewData?.tokenAmount || "0")}</span>
+            </>
           ) : vestData ? (
             (() => {
-              const duration = calculateDuration(vestData.startTime, vestData.endTime);
-              const leftAmount = vestData.totalVestedAmount ?
-                formatAmount(vestData.totalVestedAmount.toString(), tokenDecimals) : '0';
-              return `PARTS: ${duration.value} LEFT: ${leftAmount}`;
+              const duration = calculateDuration(
+                vestData.startTime,
+                vestData.endTime,
+              );
+              const leftAmount = vestData.totalVestedAmount
+                ? formatAmount(
+                    vestData.totalVestedAmount.toString(),
+                    tokenDecimals,
+                  )
+                : "0";
+              return (
+                <>
+                  <span>PARTS: {duration.value}</span>
+                  <span>LEFT: {leftAmount}</span>
+                </>
+              );
             })()
           ) : (
-            'LEFT: 56% ENDS: |2d.12h'
+            "LEFT: 56% ENDS: |2d.12h"
           )}
         </div>
-        <p className="text-lg text-white">locked</p>
+        <p className="text-lg text-white mb-2">locked</p>
       </div>
     </CardWrapper>
   );
