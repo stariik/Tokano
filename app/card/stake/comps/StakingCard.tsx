@@ -179,7 +179,7 @@ function StakingCard({ pool }: StakingCardProps) {
             }}
           />
           <div className="font-khand ml-4 font-normal lg:ml-8">
-            <h1 className="font-khand text-xl sm:text-2xl font-semibold md:text-3xl 2xl:text-5xl">
+            <h1 className="font-khand text-xl font-semibold sm:text-2xl md:text-3xl 2xl:text-5xl">
               {tokenName} ({tokenSymbol})
             </h1>
 
