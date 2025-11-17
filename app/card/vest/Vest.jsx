@@ -57,42 +57,114 @@ function Vest({ vestData, vestAddress }) {
   // Format address
   const formatAddress = (address) => {
     if (!address) return "N/A";
-    const addrString = typeof address === 'string' ? address : address.toBase58();
+    const addrString =
+      typeof address === "string" ? address : address.toBase58();
     return `${addrString.slice(0, 4)}...${addrString.slice(-3)}`;
   };
 
-  // Calculate time remaining or progress
-  const getVestingProgress = (startTime, endTime) => {
-    if (!startTime || !endTime) return "N/A";
+  // Format schedule type to uppercase
+  const formatScheduleType = (scheduleType) => {
+    if (!scheduleType) return "N/A";
+    return scheduleType.toString().toUpperCase();
+  };
+
+  // Calculate cliff period in days
+  const getCliffPeriod = (startTime) => {
+    if (!startTime) return "N/A";
     const now = Date.now();
-    const startDate = startTime instanceof Date ? startTime : new Date(startTime);
+    const startDate =
+      startTime instanceof Date ? startTime : new Date(startTime);
+    const startTimestamp = startDate.getTime();
+
+    if (now >= startTimestamp) return "0d";
+
+    const diffMs = startTimestamp - now;
+    const diffDays = Math.ceil(diffMs / (24 * 60 * 60 * 1000));
+    return `${diffDays}d`;
+  };
+
+  // Calculate vesting steps (completed/total)
+  const getVestingSteps = (startTime, endTime, scheduleType) => {
+    if (!startTime || !endTime || !scheduleType) return "N/A";
+
+    const now = Date.now();
+    const startDate =
+      startTime instanceof Date ? startTime : new Date(startTime);
     const endDate = endTime instanceof Date ? endTime : new Date(endTime);
     const startTimestamp = startDate.getTime();
     const endTimestamp = endDate.getTime();
 
-    if (now < startTimestamp) return "Not started";
-    if (now >= endTimestamp) return "Completed";
+    // Calculate period duration in milliseconds based on schedule type
+    let periodMs;
+    const scheduleStr = scheduleType.toString().toLowerCase();
+    if (scheduleStr === "daily") {
+      periodMs = 24 * 60 * 60 * 1000;
+    } else if (scheduleStr === "weekly") {
+      periodMs = 7 * 24 * 60 * 60 * 1000;
+    } else if (scheduleStr === "monthly") {
+      periodMs = 30 * 24 * 60 * 60 * 1000; // Approximate month
+    } else {
+      return "N/A";
+    }
 
-    const elapsed = now - startTimestamp;
-    const duration = endTimestamp - startTimestamp;
-    const progress = (elapsed / duration) * 100;
-    return `${progress.toFixed(1)}% vested`;
+    // Total steps
+    const totalDuration = endTimestamp - startTimestamp;
+    const totalSteps = Math.ceil(totalDuration / periodMs);
+
+    // Completed steps
+    if (now < startTimestamp) {
+      return `0/${totalSteps}`;
+    } else if (now >= endTimestamp) {
+      return `${totalSteps}/${totalSteps}`;
+    } else {
+      const elapsed = now - startTimestamp;
+      const completedSteps = Math.floor(elapsed / periodMs);
+      return `${completedSteps}/${totalSteps}`;
+    }
+  };
+
+  // Calculate time remaining until vesting ends
+  const getTimeRemaining = (endTime) => {
+    if (!endTime) return "N/A";
+    const now = Date.now();
+    const endDate = endTime instanceof Date ? endTime : new Date(endTime);
+    const endTimestamp = endDate.getTime();
+
+    if (now >= endTimestamp) return "0d.0h";
+
+    const diffMs = endTimestamp - now;
+    const diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000));
+    const diffHours = Math.floor(
+      (diffMs % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000),
+    );
+
+    return `${diffDays}d.${diffHours}h`;
   };
 
   // Format amount with decimals
   const formatAmount = (amount, decimals = 6) => {
     if (!amount) return "0";
-    const amountNum = typeof amount === 'number' ? amount : Number(amount);
-    return (amountNum / Math.pow(10, decimals)).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 6
-    });
+    const amountNum = typeof amount === "number" ? amount : Number(amount);
+    const value = amountNum / Math.pow(10, decimals);
+
+    if (value >= 1000000) {
+      const millions = value / 1000000;
+      return millions % 1 === 0
+        ? `${millions.toFixed(0)}M`
+        : `${millions.toFixed(1)}M`;
+    } else if (value >= 1000) {
+      const thousands = value / 1000;
+      return thousands % 1 === 0
+        ? `${thousands.toFixed(0)}K`
+        : `${thousands.toFixed(1)}K`;
+    }
+    return value.toFixed(0);
   };
   const VestIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 80 80"
-      className="h-[57px] w-[57px] lg:h-[80px] lg:w-[80px]"
+      className="h-[120px] w-[90px] xl:w-[100px]"
       fill="none"
     >
       <circle
@@ -121,7 +193,7 @@ function Vest({ vestData, vestAddress }) {
 
   return (
     <div
-      className="dark:border-secondary sm:mx-4 rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:mx-0 lg:pb-2 dark:text-white"
+      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] sm:mx-4 lg:mx-0 lg:pb-2 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -138,7 +210,7 @@ function Vest({ vestData, vestAddress }) {
               : "linear-gradient(45deg, #EFEFEF 30%, #9C3B8A 100%)",
         }}
       >
-        <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-6 lg:left-2 lg:gap-2 xl:top-12 xl:left-4 xl:gap-4">
+        <div className="absolute top-8 left-2 flex flex-col gap-2 md:left-4 lg:top-6 lg:left-2 lg:gap-2 xl:top-12 xl:left-4 xl:gap-4">
           {tokenInfo?.telegram && (
             <a
               href={tokenInfo.telegram}
@@ -179,54 +251,91 @@ function Vest({ vestData, vestAddress }) {
               e.target.src = "/vest.png";
             }}
           />
-          <div className="font-khand ml-4 font-normal lg:ml-2 xl:ml-8">
-            <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl">
-              {tokenInfo?.name || "Unknown Token"} ({tokenInfo?.symbol || "N/A"})
+          <div className="font-khand ml-4 font-normal lg:ml-8">
+            <h1 className="font-khand text-xl font-semibold sm:text-2xl md:text-3xl 2xl:text-5xl">
+              {tokenInfo?.name || "Unknown Token"} ({tokenInfo?.symbol || "N/A"}
+              )
             </h1>
 
-            <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
+            <div className="mt-1 pl-1 text-xs md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
               <p className="flex items-center gap-2">
                 Pool ID: {formatAddress(vestAddress)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof vestAddress === 'string' ? vestAddress : vestAddress?.toBase58(), "poolId")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof vestAddress === "string"
+                        ? vestAddress
+                        : vestAddress?.toBase58(),
+                      "poolId",
+                    )
+                  }
                   title="Copy Pool ID"
                 />
                 {copiedField === "poolId" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
               <p className="flex items-center gap-2">
                 Creator: {formatAddress(vestData?.walletUser)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof vestData?.walletUser === 'string' ? vestData?.walletUser : vestData?.walletUser?.toBase58(), "creator")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof vestData?.walletUser === "string"
+                        ? vestData?.walletUser
+                        : vestData?.walletUser?.toBase58(),
+                      "creator",
+                    )
+                  }
                   title="Copy Creator"
                 />
                 {copiedField === "creator" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
               <p className="flex items-center gap-2">
                 Token ID: {formatAddress(vestData?.tokenMint)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof vestData?.tokenMint === 'string' ? vestData?.tokenMint : vestData?.tokenMint?.toBase58(), "tokenId")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof vestData?.tokenMint === "string"
+                        ? vestData?.tokenMint
+                        : vestData?.tokenMint?.toBase58(),
+                      "tokenId",
+                    )
+                  }
                   title="Copy Token ID"
                 />
                 {copiedField === "tokenId" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
               <p className="flex items-center gap-2">
                 Receiver: {formatAddress(vestData?.receiverUser)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof vestData?.receiverUser === 'string' ? vestData?.receiverUser : vestData?.receiverUser?.toBase58(), "receiver")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof vestData?.receiverUser === "string"
+                        ? vestData?.receiverUser
+                        : vestData?.receiverUser?.toBase58(),
+                      "receiver",
+                    )
+                  }
                   title="Copy Receiver"
                 />
                 {copiedField === "receiver" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
             </div>
@@ -246,14 +355,14 @@ function Vest({ vestData, vestAddress }) {
         </div>
 
         <div className="absolute left-0 z-5 flex w-11/13">
-          <div className="font-khand mx-4 flex max-w-20 items-center text-xl font-semibold lg:mx-2 xl:mx-4 xl:text-3xl">
+          <div className="font-khand mx-3 flex max-w-20 items-center text-2xl font-semibold sm:text-4xl lg:mx-6 xl:mx-4 xl:text-3xl">
             Vest
           </div>
           <VestIcon />
 
-          <div className="font-khand my-auto flex w-5/5 flex-col text-[10px] sm:text-xs font-normal xl:text-sm">
+          <div className="font-khand my-auto flex w-5/5 flex-col gap-1 text-sm font-normal md:text-sm lg:text-base">
             <div
-              className="font-khand -z-1 -ml-4 flex w-auto justify-between rounded-full py-1 pr-1 pl-4 font-normal text-white md:w-4/4 lg:w-4/5 2xl:pr-5 2xl:pl-6"
+              className="font-khand -z-1 -ml-6 flex w-9/10 justify-between rounded-full py-0.5 pr-4 pl-8 font-normal text-white md:w-4/5 lg:w-4/5 2xl:pr-5 2xl:pl-8"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -261,12 +370,22 @@ function Vest({ vestData, vestAddress }) {
                     : "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>START: {vestData?.startTime ? formatTimestamp(vestData.startTime) : "N/A"}</div>
-              <div>STATUS: {vestData ? getVestingProgress(vestData.startTime, vestData.endTime) : "N/A"}</div>
+              <div>
+                TYPE:{" "}
+                {vestData?.scheduleType
+                  ? formatScheduleType(vestData.scheduleType)
+                  : "N/A"}
+              </div>
+              <div>
+                CLIFF:{" "}
+                {vestData?.startTime
+                  ? getCliffPeriod(vestData.startTime)
+                  : "N/A"}
+              </div>
             </div>
 
             <div
-              className="font-khand -z-1 ml-14 flex w-6/7 justify-between rounded-full py-1 pr-2 pl-2 font-normal text-white md:w-2/3 lg:ml-12 lg:w-auto xl:ml-26 2xl:ml-32 2xl:pr-5 2xl:pl-6"
+              className="font-khand -z-1 ml-8 flex w-full justify-between rounded-full py-0.5 pr-2 pl-2 font-normal text-white md:ml-9 md:w-auto lg:ml-12 lg:w-auto xl:ml-20 2xl:ml-32 2xl:pr-5 2xl:pl-6"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -274,14 +393,28 @@ function Vest({ vestData, vestAddress }) {
                     : "linear-gradient(90deg, rgba(53, 66, 197, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>SCHEDULE: {vestData?.scheduleType || "N/A"}</div>
-              <div>DURATION: {vestData?.startTime && vestData?.endTime ? `${Math.floor((new Date(vestData.endTime).getTime() - new Date(vestData.startTime).getTime()) / (24 * 60 * 60 * 1000))}d` : "N/A"}</div>
+              <div>
+                STEPS:{" "}
+                {vestData
+                  ? getVestingSteps(
+                      vestData.startTime,
+                      vestData.endTime,
+                      vestData.scheduleType,
+                    )
+                  : "N/A"}
+              </div>
+              <div>
+                ENDS:{" "}
+                {vestData?.endTime ? getTimeRemaining(vestData.endTime) : "N/A"}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="font-khand mt-14 mr-4 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-16 lg:text-3xl">
-          {vestData?.totalVestedAmount ? formatAmount(vestData.totalVestedAmount, tokenInfo?.decimals || 6) : "0"}
+        <div className="font-khand mt-24 mr-4 text-end text-4xl font-semibold text-[#FFB01C]">
+          {vestData?.totalVestedAmount
+            ? formatAmount(vestData.totalVestedAmount, tokenInfo?.decimals || 6)
+            : "0"}
         </div>
       </div>
 
