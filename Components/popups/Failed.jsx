@@ -1,19 +1,90 @@
 import React from "react";
-import { FaExclamation } from "react-icons/fa6";
 
 function Failed() {
   return (
-    <div className="flex max-w-sm items-center justify-center rounded-full border-4 border-gray-200 bg-white/80 backdrop-blur-sm px-4 py-2 pl-8 shadow-lg">
-      <h2 className="font-khand mr-4 text-xl font-bold text-black md:text-3xl">
-        FAILED!
-      </h2>
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/80">
-        <FaExclamation
-          size={40}
-          color="red"
+    <svg
+      width="247"
+      height="95"
+      viewBox="0 0 247 95"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="cursor-pointer transition-transform hover:scale-105"
+    >
+      <g filter="url(#filter0_d_1314_6492)">
+        <path
+          d="M205 6.90283C223.225 6.90283 238 21.6784 238 39.9038V46.9028C238 65.128 223.225 79.9038 205 79.9038H43C24.7748 79.9038 10.0003 65.128 10 46.9028V39.9038C10 21.6784 24.7746 6.90283 43 6.90283H205ZM206.531 18.7983C202.38 15.0487 195.971 15.173 191.97 19.1743H191.969L182.094 29.0503L172.219 19.1763V19.1753L171.824 18.8003C167.673 15.0505 161.264 15.1751 157.263 19.1763H157.262C153.132 23.3074 153.136 30.0028 157.265 34.1313L167.139 44.0054L157.269 53.8794C153.141 58.0089 153.139 64.7053 157.27 68.8354V68.8364C161.401 72.9666 168.096 72.9616 172.225 68.8335H172.226L182.096 58.9604L191.968 68.8325V68.8335C196.098 72.9623 202.794 72.962 206.924 68.8325H206.925C211.054 64.7021 211.052 58.0067 206.923 53.8774L197.051 44.0054L206.927 34.1284L207.302 33.7339C211.051 29.5829 210.927 23.1752 206.927 19.1743L206.926 19.1733L206.531 18.7983Z"
+          fill="url(#paint0_linear_1314_6492)"
         />
-      </div>
-    </div>
+        <path
+          d="M204.099 22.0018C206.667 24.5695 206.667 28.7326 204.099 31.3005L191.396 44.005L204.097 56.7053C206.664 59.2729 206.665 63.436 204.098 66.004C201.53 68.572 197.366 68.5717 194.798 66.004L182.098 53.3037L169.399 66.0054C166.831 68.5731 162.668 68.5742 160.1 66.0068C157.532 63.4392 157.532 59.2754 160.099 56.7073L172.798 44.0057L160.094 31.3033C157.527 28.7356 157.526 24.5726 160.093 22.0046C162.661 19.4366 166.824 19.4362 169.393 22.0039L182.097 34.7069L194.8 22.0025C197.368 19.4345 201.531 19.4342 204.099 22.0018Z"
+          fill="url(#paint1_linear_1314_6492)"
+        />
+        <path
+          d="M45.319 31.0368H56.839V34.8168H49.675V42.0888H56.371V45.9408H49.675V55.6968H45.319V31.0368ZM69.8215 55.6968L68.6335 49.5408H63.0895L61.9375 55.6968H57.7975L62.9095 31.0368H68.9215L73.9975 55.6968H69.8215ZM63.7735 45.8688H67.9135L65.8255 34.9248L63.7735 45.8688ZM76.2917 31.0368H80.6477V55.6968H76.2917V31.0368ZM84.5182 31.0368H88.8742V52.0248H95.8222V55.6968H84.5182V31.0368ZM97.9479 31.0368H109.792V34.8168H102.268V41.3328H108.784V45.1128H102.268V51.9168H109.792V55.6968H97.9479V31.0368ZM122.324 36.6888C122.324 35.3208 121.58 34.6368 120.092 34.6368H117.104V51.9528H120.092C121.58 51.9528 122.324 51.1848 122.324 49.6488V36.6888ZM112.784 31.0368H120.632C122.552 31.0368 124.028 31.5168 125.06 32.4768C126.116 33.4128 126.644 34.7688 126.644 36.5448V49.9728C126.644 53.7888 124.712 55.6968 120.848 55.6968H112.784V31.0368ZM133.642 56.0208C132.01 56.0208 131.194 55.2288 131.194 53.6448C131.194 52.0368 132.01 51.2328 133.642 51.2328C135.298 51.2328 136.126 52.0368 136.126 53.6448C136.126 55.2288 135.298 56.0208 133.642 56.0208ZM131.302 31.0368H135.946L135.37 48.3888H131.878L131.302 31.0368Z"
+          fill="#1E1E1E"
+        />
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_1314_6492"
+          x="7.2"
+          y="6.90283"
+          width="239.6"
+          height="87.801"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dx="3" dy="9" />
+          <feGaussianBlur stdDeviation="2.9" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_1314_6492"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_1314_6492"
+            result="shape"
+          />
+        </filter>
+        <linearGradient
+          id="paint0_linear_1314_6492"
+          x1="78"
+          y1="-39.8064"
+          x2="101.001"
+          y2="175.199"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0.0453033" stopColor="#F4E0FB" />
+          <stop offset="0.387195" stopColor="white" />
+          <stop offset="1" stopColor="#D8D1D1" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_1314_6492"
+          x1="198.507"
+          y1="92.6565"
+          x2="198.608"
+          y2="47.7937"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0.0336538" stopColor="#7C041E" />
+          <stop offset="1" stopColor="#D40043" />
+        </linearGradient>
+      </defs>
+    </svg>
   );
 }
 

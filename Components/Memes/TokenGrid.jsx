@@ -336,7 +336,7 @@ function TokenGrid({
       {/* Mobile Menu Overlay */}
       {hideOnMobile && show && (
         <div
-          className="menu-overlay-active fixed inset-0 z-999 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="menu-overlay-active fixed inset-0 z-999 bg-black/60  lg:hidden"
           onClick={() => setShow(false)}
         >
           <div

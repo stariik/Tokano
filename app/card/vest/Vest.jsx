@@ -186,24 +186,24 @@ function Vest({ vestData, vestAddress }) {
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
               <p className="flex items-center gap-2">
-                Vest ID: {formatAddress(vestAddress)}
+                Pool ID: {formatAddress(vestAddress)}
                 <LuCopy
                   className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof vestAddress === 'string' ? vestAddress : vestAddress?.toBase58(), "vestId")}
-                  title="Copy Vest ID"
+                  onClick={() => copyToClipboard(typeof vestAddress === 'string' ? vestAddress : vestAddress?.toBase58(), "poolId")}
+                  title="Copy Pool ID"
                 />
-                {copiedField === "vestId" && (
+                {copiedField === "poolId" && (
                   <span className="text-xs md:text-base text-green-500">Copied!</span>
                 )}
               </p>
               <p className="flex items-center gap-2">
-                Receiver: {formatAddress(vestData?.receiverUser)}
+                Creator: {formatAddress(vestData?.walletUser)}
                 <LuCopy
                   className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof vestData?.receiverUser === 'string' ? vestData?.receiverUser : vestData?.receiverUser?.toBase58(), "receiver")}
-                  title="Copy Receiver"
+                  onClick={() => copyToClipboard(typeof vestData?.walletUser === 'string' ? vestData?.walletUser : vestData?.walletUser?.toBase58(), "creator")}
+                  title="Copy Creator"
                 />
-                {copiedField === "receiver" && (
+                {copiedField === "creator" && (
                   <span className="text-xs md:text-base text-green-500">Copied!</span>
                 )}
               </p>
@@ -218,7 +218,17 @@ function Vest({ vestData, vestAddress }) {
                   <span className="text-xs md:text-base text-green-500">Copied!</span>
                 )}
               </p>
-              <p>Market cap: {tokenInfo?.mcap ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K` : "N/A"}</p>
+              <p className="flex items-center gap-2">
+                Receiver: {formatAddress(vestData?.receiverUser)}
+                <LuCopy
+                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
+                  onClick={() => copyToClipboard(typeof vestData?.receiverUser === 'string' ? vestData?.receiverUser : vestData?.receiverUser?.toBase58(), "receiver")}
+                  title="Copy Receiver"
+                />
+                {copiedField === "receiver" && (
+                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                )}
+              </p>
             </div>
           </div>
         </div>
@@ -276,7 +286,7 @@ function Vest({ vestData, vestAddress }) {
       </div>
 
       <div className="font-khand mr-12 text-end text-xl font-medium lg:text-2xl">
-        vesting {tokenInfo?.symbol || ""}
+        locked
       </div>
     </div>
   );

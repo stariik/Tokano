@@ -407,7 +407,7 @@ function PortfolioTokenGrid({
       {/* Mobile Menu Overlay */}
       {show && (
         <div
-          className="menu-overlay-active fixed inset-0 z-999 bg-black/60 backdrop-blur-sm xl:hidden"
+          className="menu-overlay-active fixed inset-0 z-999 bg-black/60 xl:hidden"
           onClick={() => setShow(false)}
         >
           <div

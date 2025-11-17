@@ -140,7 +140,7 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
       {/* Popup overlay */}
       {showPopup && (
         <div
-          className={`bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-[#eeeded] dark:bg-[#000310a6] ${
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-[#00031079] ${
             isClosing ? "animate-fadeOut" : "animate-fadeIn"
           }`}
           onClick={closePopup}

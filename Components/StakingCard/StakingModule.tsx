@@ -33,10 +33,14 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       if (!publicKey || !pool?.tokenMint) return;
 
       // Ensure tokenMint is a PublicKey
-      const tokenMint = pool.tokenMint instanceof PublicKey
-        ? pool.tokenMint
-        : new PublicKey(pool.tokenMint);
-      const userTokenAccount = await getAssociatedTokenAddress(tokenMint, publicKey);
+      const tokenMint =
+        pool.tokenMint instanceof PublicKey
+          ? pool.tokenMint
+          : new PublicKey(pool.tokenMint);
+      const userTokenAccount = await getAssociatedTokenAddress(
+        tokenMint,
+        publicKey,
+      );
 
       try {
         const accountInfo = await getAccount(connection, userTokenAccount);
@@ -56,16 +60,22 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       if (!publicKey || !pool?.poolAddress || !staking) return;
 
       // Ensure pool.poolAddress is a PublicKey
-      const poolAddress = pool.poolAddress instanceof PublicKey
-        ? pool.poolAddress
-        : new PublicKey(pool.poolAddress);
+      const poolAddress =
+        pool.poolAddress instanceof PublicKey
+          ? pool.poolAddress
+          : new PublicKey(pool.poolAddress);
 
       // Fetch user stake accounts for this specific pool using SDK method
-      const poolStakes = await staking.fetchUserStakeAccountsForPool(publicKey, poolAddress);
+      const poolStakes = await staking.fetchUserStakeAccountsForPool(
+        publicKey,
+        poolAddress,
+      );
 
       const decimals = pool.tokenInfo?.decimals || 9;
       const totalStaked = poolStakes.reduce((sum: number, stake: any) => {
-        const amount = stake.stakedTokenBalance ? stake.stakedTokenBalance.toNumber() : 0;
+        const amount = stake.stakedTokenBalance
+          ? stake.stakedTokenBalance.toNumber()
+          : 0;
         return sum + amount;
       }, 0);
 
@@ -99,9 +109,10 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       const amountInLamports = new BN(amount * Math.pow(10, decimals));
 
       // Ensure poolAddress is a PublicKey
-      const poolAddress = pool.poolAddress instanceof PublicKey
-        ? pool.poolAddress
-        : new PublicKey(pool.poolAddress);
+      const poolAddress =
+        pool.poolAddress instanceof PublicKey
+          ? pool.poolAddress
+          : new PublicKey(pool.poolAddress);
 
       // Check if user already has a stake account for this pool
       // TODO: Implement checking for existing user stake account
@@ -179,7 +190,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       return `${(num / 1000).toFixed(1)}K`;
     } else if (num < 1 && num > 0) {
       // For small decimal numbers, use toFixed to avoid scientific notation
-      return num.toFixed(6).replace(/\.?0+$/, '');
+      return num.toFixed(6).replace(/\.?0+$/, "");
     } else {
       return num.toString();
     }
@@ -220,9 +231,10 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
   const calculateUnlockTime = () => {
     if (!pool?.poolLockPeriod) return "0";
     try {
-      const lockPeriodSeconds = typeof pool.poolLockPeriod.toNumber === 'function'
-        ? pool.poolLockPeriod.toNumber()
-        : Number(pool.poolLockPeriod);
+      const lockPeriodSeconds =
+        typeof pool.poolLockPeriod.toNumber === "function"
+          ? pool.poolLockPeriod.toNumber()
+          : Number(pool.poolLockPeriod);
 
       // Calculate time units
       const months = Math.floor(lockPeriodSeconds / (86400 * 30));
@@ -237,7 +249,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       if (hours > 0) parts.push(`${hours}h`);
       if (minutes > 0 && months === 0) parts.push(`${minutes}m`);
 
-      return parts.length > 0 ? parts.slice(0, 2).join(' ') : "0";
+      return parts.length > 0 ? parts.slice(0, 2).join(" ") : "0";
     } catch (error) {
       console.error("Error calculating unlock time:", error);
       return "N/A";
@@ -245,10 +257,10 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
   };
 
   return (
-    <div className="dark:border-secondary font-khand overflow-hidden rounded-4xl border-2 border-[#CDCDE9] mt-4">
+    <div className="dark:border-secondary font-khand mt-4 overflow-hidden rounded-4xl border-2 border-[#CDCDE9]">
       <div className="grid grid-cols-2 bg-gradient-to-r from-[#8D85FB] to-[#4B317C] text-white dark:from-[#574DDD] dark:to-[#330E79] dark:text-[#190E79]">
         {/* Left side */}
-        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] px-4 py-2 text-base md:text-xl font-semibold lg:p-2 lg:text-xs xl:p-4 xl:text-base 2xl:text-4xl dark:text-white">
+        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] px-4 py-2 text-base font-semibold md:text-xl lg:p-2 lg:text-xs xl:p-4 xl:text-base 2xl:text-4xl dark:text-white">
           <div className="flex flex-col items-center justify-center leading-none">
             <span>Staking</span>
             <span>Module</span>
@@ -264,7 +276,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
         </div>
 
         {/* Right side */}
-        <div className="px-4 py-2 ">
+        <div className="px-4 py-2">
           {stats.map((stat, index) => (
             <div
               key={index}
@@ -280,7 +292,11 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       <div className="bg-gradient-to-r from-[#C9CDD7] to-[#EAE4FF] py-4 pb-1 text-[#190E79] dark:from-[#130C71] dark:to-[#173991] dark:text-white">
         <div className="grid min-h-18 grid-cols-7">
           <div className="col-span-2 ml-4 flex items-center justify-center text-xs md:text-base">
-            Available: {userBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            Available:{" "}
+            {userBalance.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </div>
           {/* <div className="flex justify-center">You Will Stake:</div> */}
 
@@ -298,7 +314,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
                   placeholder="0.00"
-                  className="font-khand mb-4 border-b-1 border-white/40 text-xs font-semibold md:text-lg 2xl:text-2xl bg-transparent text-center w-16 sm:w-32 outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="font-khand mb-4 w-16 [appearance:textfield] border-b-1 border-white/40 bg-transparent text-center text-xs font-semibold outline-none sm:w-32 md:text-lg 2xl:text-2xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   disabled={isStaking || !publicKey}
                 />
                 {/* <div className="hidden md:block absolute bottom-5 right-0 h-[1px] bg-white/40 w-38" /> */}
@@ -326,21 +342,25 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
               ✗ {error}
             </p>
           )}
-          <p className="line-clamp-2 text-center text-sm font-medium lg:text-xs xl:text-sm px-4">
+          <p className="line-clamp-2 px-4 text-center text-sm font-medium lg:text-xs xl:text-sm">
             !!! Please keep in mind, either STAKEING or UNBONDING needs some
-            amount of SOL on wallet available for network fees or the transaction
-            will fail. !!!
+            amount of SOL on wallet available for network fees or the
+            transaction will fail. !!!
           </p>
         </div>
       </div>
 
       <div className="font-khand dark:border-secondary flex items-center justify-end gap-8 border-t-2 border-[#CDCDE9] bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 pr-8 text-xs font-semibold text-white md:gap-16 md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
         You are Staking: {formatNumber(userStakedAmount)}
-
         <button
           onClick={handleStake}
-          disabled={isStaking || !publicKey || !stakeAmount || parseFloat(stakeAmount) <= 0}
-          className="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={
+            isStaking ||
+            !publicKey ||
+            !stakeAmount ||
+            parseFloat(stakeAmount) <= 0
+          }
+          className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
         >
           <svg
             width="162"
