@@ -105,7 +105,6 @@ export default function VestFundsForm({
   const { publicKey, signTransaction } = useWallet();
 
   const [formData, setFormData] = useState({
-    activationDateTime: "",
     tokenAmount: "",
     cliffPeriod: "",
     duration: "",
@@ -145,7 +144,6 @@ export default function VestFundsForm({
 
     // Validate required fields
     if (
-      !formData.activationDateTime ||
       !formData.tokenAmount ||
       !formData.cliffPeriod ||
       !formData.duration ||
@@ -200,9 +198,6 @@ export default function VestFundsForm({
       );
 
       // Convert activation datetime to Unix timestamp (in seconds)
-      const startTimestamp = Math.floor(
-        new Date(formData.activationDateTime).getTime() / 1000,
-      );
 
       // Map release model to VestingSchedule enum
       let scheduleType: VestingSchedule;
@@ -257,7 +252,7 @@ export default function VestFundsForm({
         receiverPk: receiverPk,
         tokenMint: tokenMint,
         totalVestingAmount: amountInSmallestUnit,
-        startTimestamp: startTimestamp + cliffPeriodInSeconds, // Start after cliff
+        startTimestamp: cliffPeriodInSeconds, // Start after cliff
         vestingDuration: vestingDurationInSeconds,
         scheduleType: scheduleType,
       });
@@ -615,7 +610,7 @@ export default function VestFundsForm({
             <button
               onClick={handleCreateVest}
               disabled={isCreating || !publicKey}
-              className="relative flex cursor-pointer rounded-full bg-[#6D11B3] px-2.5 py-1 transition-colors hover:bg-[#1a1f9e] disabled:cursor-not-allowed disabled:bg-gray-500 md:px-4"
+              className="relative flex cursor-pointer rounded-full bg-[#6D11B3] px-2.5 py-1 transition-colors hover:bg-[#580e90] disabled:cursor-not-allowed disabled:bg-gray-500 md:px-4"
             >
               <div className="mr-2">
                 <svg

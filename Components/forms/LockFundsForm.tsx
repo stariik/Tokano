@@ -506,7 +506,7 @@ export default function LockFundsForm({
             <button
               onClick={handleCreateLock}
               disabled={isCreating || !publicKey}
-              className="relative flex cursor-pointer rounded-full bg-[#074BA3] px-2.5 py-1 transition-colors hover:bg-[#1a1f9e] disabled:cursor-not-allowed disabled:bg-gray-500 md:px-4"
+              className="relative flex cursor-pointer rounded-full bg-[#074BA3] px-2.5 py-1 transition-colors hover:bg-[#101488] disabled:cursor-not-allowed disabled:bg-gray-500 md:px-4"
             >
               <div className="mr-2">
                 <svg

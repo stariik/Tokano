@@ -223,26 +223,21 @@ function VestCard({
                     );
                   }
                 `}</style>
-                <div className="font-khand font-normal lg:pr-1 xl:pr-0">
+                <div className="font-khand flex justify-between font-normal lg:pr-1 xl:pr-0 w-1/2 mx-auto">
                   {isPreview ? (
                     <>
-                      TYPE:{" "}
-                      {shortenReleaseModel(
-                        previewData?.releaseModel || "monthly",
-                      )}{" "}
-                      <span className="ml-0.5 md:ml-1" /> CLIFF:{" "}
-                      {previewData?.cliffPeriod || "0"}d START:{" "}
-                      {formatDate(previewData?.activationDateTime) || "---"}
+                      <span>TYPE: {shortenReleaseModel(previewData?.releaseModel || "monthly")}</span>
+                      <span>CLIFF: {previewData?.cliffPeriod || "0"}d</span>
                     </>
                   ) : vestData ? (
                     <>
-                      TYPE: {getScheduleTypeShort(vestData.scheduleType)} START:{" "}
-                      {formatDate(vestData.startTime)}
+                      <span>TYPE: {getScheduleTypeShort(vestData.scheduleType)}</span>
+                      <span>START: {formatDate(vestData.startTime)}</span>
                     </>
                   ) : (
                     <>
-                      TYPE: LIN/MONTHLY <span className="ml-0.5 md:ml-1" />{" "}
-                      CLIFF: |5d
+                      <span>TYPE: LIN/MONTHLY</span>
+                      <span>CLIFF: |5d</span>
                     </>
                   )}
                 </div>
