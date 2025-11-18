@@ -27,9 +27,9 @@ export default function RainbowBalance({
   };
 
   return (
-    <div className="w-7/8 md:maw-6/7 overflow-hidden rounded-b-xl mx-auto">
+    <div className="md:maw-6/7 mx-auto w-7/8 overflow-hidden rounded-b-xl">
       <div
-        className="flex h-full items-center justify-center md:justify-between gap-2 px-3 md:px-4 xl:px-2 2xl:px-4"
+        className="flex h-full items-center justify-center gap-2 px-3 md:justify-between md:px-4 xl:px-2 2xl:px-4"
         style={{
           background:
             "linear-gradient(90deg, rgba(109, 17, 179, 1) 10%, rgba(249, 44, 157, 1) 35%, rgba(255, 212, 42, 1) 89%)",
@@ -40,7 +40,7 @@ export default function RainbowBalance({
           <span
             key={item.value}
             onClick={() => handlePercentClick(item.value)}
-            className="font-khand cursor-pointer select-none text-[10px] md:text-xs font-bold transition-transform hover:scale-110 xl:text-sm"
+            className="font-khand cursor-pointer text-[10px] font-bold transition-transform select-none hover:scale-110 md:text-xs xl:text-sm"
             style={{
               color: item.color,
             }}
