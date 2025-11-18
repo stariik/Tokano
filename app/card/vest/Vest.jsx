@@ -244,15 +244,14 @@ function Vest({ vestData, vestAddress }) {
         </div>
 
         <div className="flex">
-          <img
-            src={tokenInfo?.icon || "/vest.png"}
-            className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:rounded-3xl xl:ml-8 xl:w-32 2xl:w-38"
-            onError={(e) => {
-              e.target.src = "/vest.png";
+          <div
+            className="ml-4 h-20 w-20 rounded-2xl bg-cover bg-center md:ml-6 md:h-24 md:w-24 lg:ml-10 lg:rounded-3xl xl:ml-8 xl:h-32 xl:w-32 2xl:h-38 2xl:w-38"
+            style={{
+              backgroundImage: `url('${tokenInfo?.icon || "/vest.png"}')`,
             }}
-          />
-          <div className="font-khand ml-4 font-normal lg:ml-8">
-            <h1 className="font-khand text-xl font-semibold sm:text-2xl md:text-3xl 2xl:text-5xl">
+          ></div>
+          <div className="font-khand ml-4 font-normal lg:ml-10">
+            <h1 className="font-khand text-xl font-semibold sm:text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl">
               {tokenInfo?.name || "Unknown Token"} ({tokenInfo?.symbol || "N/A"}
               )
             </h1>
@@ -411,7 +410,7 @@ function Vest({ vestData, vestAddress }) {
           </div>
         </div>
 
-        <div className="font-khand mt-24 mr-4 text-end text-4xl font-semibold text-[#FFB01C]">
+               <div className="font-khand mt-9 mr-2 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-10 lg:text-3xl">
           {vestData?.totalVestedAmount
             ? formatAmount(vestData.totalVestedAmount, tokenInfo?.decimals || 6)
             : "0"}

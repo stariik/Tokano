@@ -57,7 +57,8 @@ function Lock({ lockData, lockAddress }) {
   // Format address
   const formatAddress = (address) => {
     if (!address) return "N/A";
-    const addrString = typeof address === 'string' ? address : address.toBase58();
+    const addrString =
+      typeof address === "string" ? address : address.toBase58();
     return `${addrString.slice(0, 4)}...${addrString.slice(-3)}`;
   };
 
@@ -65,7 +66,8 @@ function Lock({ lockData, lockAddress }) {
   const getTimeRemaining = (unlockTime) => {
     if (!unlockTime) return "N/A";
     const now = Date.now();
-    const unlockDate = unlockTime instanceof Date ? unlockTime : new Date(unlockTime);
+    const unlockDate =
+      unlockTime instanceof Date ? unlockTime : new Date(unlockTime);
     const diff = (unlockDate.getTime() - now) / 1000;
 
     if (diff <= 0) return "Unlocked";
@@ -78,11 +80,21 @@ function Lock({ lockData, lockAddress }) {
   // Format amount with decimals
   const formatAmount = (amount, decimals = 6) => {
     if (!amount) return "0";
-    const amountNum = typeof amount === 'number' ? amount : Number(amount);
-    return (amountNum / Math.pow(10, decimals)).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 6
-    });
+    const amountNum = typeof amount === "number" ? amount : Number(amount);
+    const value = amountNum / Math.pow(10, decimals);
+
+    if (value >= 1000000) {
+      const millions = value / 1000000;
+      return millions % 1 === 0
+        ? `${millions.toFixed(0)}M`
+        : `${millions.toFixed(1)}M`;
+    } else if (value >= 1000) {
+      const thousands = value / 1000;
+      return thousands % 1 === 0
+        ? `${thousands.toFixed(0)}K`
+        : `${thousands.toFixed(1)}K`;
+    }
+    return value.toFixed(0);
   };
   const StakeIcon = () => (
     <svg
@@ -175,53 +187,85 @@ function Lock({ lockData, lockAddress }) {
         </div>
 
         <div className="flex">
-          <img
-            src={tokenInfo?.icon || "/vest.png"}
-            className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:rounded-3xl xl:ml-8 xl:w-32 2xl:w-38"
-            onError={(e) => {
-              e.target.src = "/vest.png";
+          <div
+            className="ml-4 h-20 w-20 rounded-2xl bg-cover bg-center md:ml-6 md:h-24 md:w-24 lg:ml-10 lg:rounded-3xl xl:ml-8 xl:h-32 xl:w-32 2xl:h-38 2xl:w-38"
+            style={{
+              backgroundImage: `url('${tokenInfo?.icon || "/vest.png"}')`,
             }}
-          />
-          <div className="font-khand ml-4 font-normal lg:ml-2 xl:ml-8">
-            <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl">
-              {tokenInfo?.name || "Unknown Token"} ({tokenInfo?.symbol || "N/A"})
+          ></div>
+          <div className="font-khand ml-4 font-normal lg:ml-10 xl:ml-8">
+            <h1 className="font-khand text-xl font-semibold sm:text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl">
+              {tokenInfo?.name || "Unknown Token"} ({tokenInfo?.symbol || "N/A"}
+              )
             </h1>
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-sm xl:text-lg 2xl:text-xl">
               <p className="flex items-center gap-2">
                 Lock ID: {formatAddress(lockAddress)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof lockAddress === 'string' ? lockAddress : lockAddress?.toBase58(), "lockId")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof lockAddress === "string"
+                        ? lockAddress
+                        : lockAddress?.toBase58(),
+                      "lockId",
+                    )
+                  }
                   title="Copy Lock ID"
                 />
                 {copiedField === "lockId" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
               <p className="flex items-center gap-2">
                 Receiver: {formatAddress(lockData?.receiverUser)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof lockData?.receiverUser === 'string' ? lockData?.receiverUser : lockData?.receiverUser?.toBase58(), "receiver")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof lockData?.receiverUser === "string"
+                        ? lockData?.receiverUser
+                        : lockData?.receiverUser?.toBase58(),
+                      "receiver",
+                    )
+                  }
                   title="Copy Receiver"
                 />
                 {copiedField === "receiver" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
               <p className="flex items-center gap-2">
                 Token ID: {formatAddress(lockData?.tokenMint)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof lockData?.tokenMint === 'string' ? lockData?.tokenMint : lockData?.tokenMint?.toBase58(), "tokenId")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof lockData?.tokenMint === "string"
+                        ? lockData?.tokenMint
+                        : lockData?.tokenMint?.toBase58(),
+                      "tokenId",
+                    )
+                  }
                   title="Copy Token ID"
                 />
                 {copiedField === "tokenId" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
-              <p>Market cap: {tokenInfo?.mcap ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K` : "N/A"}</p>
+              <p>
+                Market cap:{" "}
+                {tokenInfo?.mcap
+                  ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K`
+                  : "N/A"}
+              </p>
             </div>
           </div>
         </div>
@@ -231,7 +275,9 @@ function Lock({ lockData, lockAddress }) {
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
-            {lockData?.unlockTime ? formatTimestamp(lockData.unlockTime) : "N/A"}
+            {lockData?.unlockTime
+              ? formatTimestamp(lockData.unlockTime)
+              : "N/A"}
           </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
@@ -243,7 +289,7 @@ function Lock({ lockData, lockAddress }) {
             LOCK
           </div>
           <StakeIcon />
-          <div className="font-khand my-auto flex w-5/5 flex-col text-[10px] sm:text-xs font-normal xl:text-sm">
+          <div className="font-khand my-auto flex w-5/5 flex-col text-[10px] font-normal sm:text-xs xl:text-sm">
             <div
               className="font-khand -z-1 -ml-4 flex justify-between rounded-full py-1 pr-5 pl-6 font-medium text-white"
               style={{
@@ -253,14 +299,26 @@ function Lock({ lockData, lockAddress }) {
                     : "linear-gradient(90deg, rgba(215, 5, 169, 1) 10%, rgba(42, 141, 255, 1) 90%)",
               }}
             >
-              <div>LOCKED: {lockData?.lastUpdateTime ? formatTimestamp(lockData.lastUpdateTime) : "N/A"}</div>
-              <div>ENDS: {lockData?.unlockTime ? getTimeRemaining(lockData.unlockTime) : "N/A"}</div>
+              <div>
+                LOCKED:{" "}
+                {lockData?.lastUpdateTime
+                  ? formatTimestamp(lockData.lastUpdateTime)
+                  : "N/A"}
+              </div>
+              <div>
+                ENDS:{" "}
+                {lockData?.unlockTime
+                  ? getTimeRemaining(lockData.unlockTime)
+                  : "N/A"}
+              </div>
             </div>
           </div>
         </div>
 
         <div className="font-khand mt-9 mr-2 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-10 lg:text-3xl">
-          {lockData?.lockAmount ? formatAmount(lockData.lockAmount, tokenInfo?.decimals || 6) : "0"}
+          {lockData?.lockAmount
+            ? formatAmount(lockData.lockAmount, tokenInfo?.decimals || 6)
+            : "0"}
         </div>
       </div>
 
