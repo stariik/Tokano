@@ -128,14 +128,14 @@ function SoonCard({
             />
           </div>
           <div className="flex-col items-center justify-center text-center">
-            <p className="text-md font-khand mt-2 font-semibold md:text-lg lg:text-base xl:text-xl 2xl:text-2xl">
+            <p className="text-lg font-khand mt-2 font-semibold md:text-lg lg:text-base xl:text-xl 2xl:text-2xl">
               {title}
             </p>
-            <h1 className="font-khand text-xl font-bold md:text-2xl lg:mt-4 lg:text-2xl 2xl:text-4xl">
+            <h1 className="font-khand text-2xl font-bold md:text-2xl lg:mt-4 lg:text-2xl 2xl:text-4xl">
               LAUNCHING SOON
             </h1>
             <p
-              className="font-khand mx-auto mt-2 w-38 rounded-2xl text-xs font-semibold text-[#311880] lg:w-38 lg:text-sm xl:w-48"
+              className="font-khand mx-auto mt-2 w-30 rounded-2xl text-[10px] font-semibold text-[#311880] lg:w-38 lg:text-sm xl:w-48"
               style={{
                 background:
                   resolvedTheme === "dark"
@@ -158,7 +158,7 @@ function SoonCard({
             <div className="font-khand mt-4 font-semibold lg:text-xl xl:text-2xl 2xl:text-3xl">
               {poolType}
             </div>
-            <div className="z-10 mt-2 rounded-full bg-[#f5f3fb] p-1 pr-0 pl-2 lg:mt-1 xl:mt-0 dark:bg-[#2A1C7B]">
+            <div className="z-10 mt-2 rounded-full p-1 pr-0 pl-2 lg:mt-1 xl:mt-0 bg-[#2A1C7B]">
               <StakeIcon />
             </div>
           </div>

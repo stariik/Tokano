@@ -35,10 +35,10 @@ export default function Home() {
         
 
         <div className="mx-auto md:flex justify-between gap-4 max-w-lg md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">
-          <div className="lg:w-1/3">
+          <div className="xl:w-1/3">
             <LaunchingSoon />
           </div>
-          <div className="md:w-1/2 lg:w-1/3 2xl:max-w-2xl ">
+          <div className="md:w-1/2 xl:w-1/3 2xl:max-w-2xl ">
             <Live />
           </div>
           <div className="md:max-w-[360px] lg:max-w-full lg:w-1/3">
@@ -88,7 +88,7 @@ export default function Home() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className={`dark:border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x-1 border-r-1 border-[#CDCDE9] bg-white px-2 py-1 text-sm font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl lg:hidden ${
+        className={`dark:border-secondary fixed bottom-22 left-0 z-70 flex flex-col items-center justify-center rounded-r-lg border-x-1 border-r-1 border-[#CDCDE9] bg-white px-2 py-1 text-sm font-bold text-[#190E79] shadow-2xl transition-all duration-300 ease-in-out [writing-mode:vertical-rl] hover:shadow-xl xl:hidden ${
           isMobileMenuOpen ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
         id="left-menu-button"
@@ -105,7 +105,7 @@ export default function Home() {
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div
-            className={`bg-dark dark:border-secondary fixed top-13 left-0 flex w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] transition-transform duration-300 ease-in-out ${
+            className={`bg-[#f0f0f0] dark:bg-dark dark:border-secondary fixed top-13 left-0 flex w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] transition-transform duration-300 ease-in-out ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             }`}
             style={{
@@ -115,7 +115,7 @@ export default function Home() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="dark:border-secondary bg-dark flex flex-shrink-0 items-center justify-between border-b border-[#CDCDE9] p-4">
+            <div className="dark:border-secondary bg-[#f0f0f0] dark:bg-dark flex flex-shrink-0 items-center justify-between border-b border-[#CDCDE9] p-4">
               <h2 className="font-khand text-xl font-semibold">
                 LAUNCHING SOON
               </h2>

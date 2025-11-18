@@ -45,11 +45,17 @@ function LockCard({
     const value = amountNum / Math.pow(10, decimals);
 
     if (value >= 1000000) {
-      return `${(value / 1000000).toFixed(1)}M`;
+      const millions = value / 1000000;
+      return millions % 1 === 0
+        ? `${millions.toFixed(0)}M`
+        : `${millions.toFixed(1)}M`;
     } else if (value >= 1000) {
-      return `${(value / 1000).toFixed(1)}K`;
+      const thousands = value / 1000;
+      return thousands % 1 === 0
+        ? `${thousands.toFixed(0)}K`
+        : `${thousands.toFixed(1)}K`;
     }
-    return value.toFixed(2);
+    return value.toFixed(0);
   };
 
   const formatDate = (dateString) => {

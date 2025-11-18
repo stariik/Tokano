@@ -45,11 +45,17 @@ function VestCard({
     const value = amountNum / Math.pow(10, decimals);
 
     if (value >= 1000000) {
-      return `${(value / 1000000).toFixed(1)}M`;
+      const millions = value / 1000000;
+      return millions % 1 === 0
+        ? `${millions.toFixed(0)}M`
+        : `${millions.toFixed(1)}M`;
     } else if (value >= 1000) {
-      return `${(value / 1000).toFixed(1)}K`;
+      const thousands = value / 1000;
+      return thousands % 1 === 0
+        ? `${thousands.toFixed(0)}K`
+        : `${thousands.toFixed(1)}K`;
     }
-    return value.toFixed(2);
+    return value.toFixed(0);
   };
 
   const formatDate = (dateString) => {
@@ -93,6 +99,21 @@ function VestCard({
     if (scheduleType === 4) return "WE";
     if (scheduleType === 5) return "MO";
     return "MO";
+  };
+
+  // Calculate cliff period in days
+  const getCliffPeriod = (startTime) => {
+    if (!startTime) return "N/A";
+    const now = Date.now();
+    const startDate =
+      startTime instanceof Date ? startTime : new Date(startTime);
+    const startTimestamp = startDate.getTime();
+
+    if (now >= startTimestamp) return "0d";
+
+    const diffMs = startTimestamp - now;
+    const diffDays = Math.ceil(diffMs / (24 * 60 * 60 * 1000));
+    return `${diffDays}d`;
   };
 
   // Calculate duration in appropriate units from start/end time
@@ -223,16 +244,23 @@ function VestCard({
                     );
                   }
                 `}</style>
-                <div className="font-khand flex justify-between font-normal lg:pr-1 xl:pr-0 w-1/2 mx-auto">
+                <div className="font-khand mx-auto flex w-3/4 justify-between font-normal md:w-3/4 lg:pr-1 xl:pr-0">
                   {isPreview ? (
                     <>
-                      <span>TYPE: {shortenReleaseModel(previewData?.releaseModel || "monthly")}</span>
+                      <span>
+                        TYPE:{" "}
+                        {shortenReleaseModel(
+                          previewData?.releaseModel || "monthly",
+                        )}
+                      </span>
                       <span>CLIFF: {previewData?.cliffPeriod || "0"}d</span>
                     </>
                   ) : vestData ? (
                     <>
-                      <span>TYPE: {getScheduleTypeShort(vestData.scheduleType)}</span>
-                      <span>START: {formatDate(vestData.startTime)}</span>
+                      <span>
+                        TYPE: {getScheduleTypeShort(vestData.scheduleType)}
+                      </span>
+                      <span>CLIFF: {getCliffPeriod(vestData.startTime)}</span>
                     </>
                   ) : (
                     <>
@@ -255,7 +283,7 @@ function VestCard({
       </div>
       <div className="flex items-center justify-end gap-1 pr-4 pb-2 sm:gap-2 xl:gap-6">
         <div
-          className="font-khand mt-1 flex justify-between rounded-xl px-2 py-0 text-[10px] font-normal text-white sm:-mt-2 sm:text-xs xl:text-sm dark:bg-transparent w-[90px] [@media(min-width:385px)]:w-[110px] sm:w-[160px] md:w-[120px] lg:w-[180px] xl:w-[140px] 2xl:w-[230px]"
+          className="font-khand mt-1 flex w-[90px] justify-between rounded-xl px-2 py-0 text-[10px] font-normal text-white sm:-mt-2 sm:w-[160px] sm:text-xs md:w-[120px] lg:w-[180px] xl:w-[140px] xl:text-sm 2xl:w-1/3 dark:bg-transparent [@media(max-width:385px)]:w-[100px]"
           style={{
             background: "var(--gradient-vest-bottom)",
           }}
@@ -272,7 +300,9 @@ function VestCard({
           {isPreview ? (
             <>
               <span>PARTS: {previewData?.duration || "0"}</span>
-              <span>LEFT: {formatTokenAmountSimple(previewData?.tokenAmount || "0")}</span>
+              <span>
+                LEFT: {formatTokenAmountSimple(previewData?.tokenAmount || "0")}
+              </span>
             </>
           ) : vestData ? (
             (() => {
@@ -297,7 +327,7 @@ function VestCard({
             "LEFT: 56% ENDS: |2d.12h"
           )}
         </div>
-        <p className="text-lg text-white mb-2">locked</p>
+        <p className="mb-2 text-lg text-white">locked</p>
       </div>
     </CardWrapper>
   );

@@ -322,8 +322,8 @@ function Lock({ lockData, lockAddress }) {
         </div>
       </div>
 
-      <div className="font-khand mr-10 text-end text-xl font-medium lg:text-2xl">
-        locked {tokenInfo?.symbol || ""}
+      <div className="font-khand mr-10 lg:mr-6 xl:mr-10 text-end text-xl font-medium lg:text-2xl">
+        locked
       </div>
     </div>
   );

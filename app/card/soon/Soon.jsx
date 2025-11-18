@@ -40,11 +40,11 @@ function Soon() {
           data.type = "stake";
         } else if (type === "vest" && vestAddress) {
           const allVestings = await vesting.fetchAllVestings();
-          data = allVestings.find(v => v.address.toBase58() === vestAddress);
+          data = allVestings.find((v) => v.address.toBase58() === vestAddress);
           if (data) data.type = "vest";
         } else if (type === "lock" && lockAddress) {
           const allLocks = await lock.fetchAllLocks();
-          data = allLocks.find(l => l.address.toBase58() === lockAddress);
+          data = allLocks.find((l) => l.address.toBase58() === lockAddress);
           if (data) data.type = "lock";
         }
 
@@ -66,7 +66,16 @@ function Soon() {
     };
 
     fetchData();
-  }, [type, poolAddress, vestAddress, lockAddress, staking, vesting, lock, fetchTokenInfo]);
+  }, [
+    type,
+    poolAddress,
+    vestAddress,
+    lockAddress,
+    staking,
+    vesting,
+    lock,
+    fetchTokenInfo,
+  ]);
 
   // Copy to clipboard function
   const copyToClipboard = (text, fieldName) => {
@@ -90,7 +99,8 @@ function Soon() {
   // Format address
   const formatAddress = (address) => {
     if (!address) return "N/A";
-    const addrString = typeof address === 'string' ? address : address.toBase58();
+    const addrString =
+      typeof address === "string" ? address : address.toBase58();
     return `${addrString.slice(0, 4)}...${addrString.slice(-3)}`;
   };
 
@@ -98,7 +108,8 @@ function Soon() {
   const getCountdown = (launchTime) => {
     if (!launchTime) return "N/A";
     const now = Date.now();
-    const launchDate = launchTime instanceof Date ? launchTime : new Date(launchTime);
+    const launchDate =
+      launchTime instanceof Date ? launchTime : new Date(launchTime);
     const diff = launchDate.getTime() - now;
 
     if (diff <= 0) return "LIVE NOW";
@@ -164,21 +175,21 @@ function Soon() {
 
   return (
     <div
-      className="dark:border-secondary rounded-3xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:mx-0 lg:pb-8 dark:text-white"
+      className="dark:border-secondary rounded-4xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] lg:mx-0 lg:pb-6 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
             ? "linear-gradient(90deg, #170D56 10%, #622CCD 80%)"
-            : "linear-gradient(90deg, #e8e4f8 10%, #d5d2ec 80%)",
+            : "linear-gradient(90deg, #DBD4EA 10%, #D1B8F8 80%)",
       }}
     >
       <div
-        className="relative rounded-3xl p-8 pb-0"
+        className="relative rounded-4xl p-8 pb-0"
         style={{
           background:
             resolvedTheme === "dark"
               ? "linear-gradient(45deg, #170D56 0%, #622CCD 100%)"
-              : "linear-gradient(45deg, #e8e4f8 0%, #d5d2ec 100%)",
+              : "linear-gradient(180deg, #FFFFFF 40%, #DBD4EA 100%)",
         }}
       >
         <div className="absolute top-8 left-4 flex flex-col gap-2 lg:top-16 lg:gap-4">
@@ -229,39 +240,70 @@ function Soon() {
 
             <div className="mt-1 pl-1 text-sm md:text-base lg:text-lg xl:text-xl">
               <p className="flex items-center gap-2">
-                {type === "stake" ? "Pool" : type === "vest" ? "Vest" : "Lock"} ID: {formatAddress(address)}
+                {type === "stake" ? "Pool" : type === "vest" ? "Vest" : "Lock"}{" "}
+                ID: {formatAddress(address)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof address === 'string' ? address : address?.toBase58(), "poolId")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof address === "string"
+                        ? address
+                        : address?.toBase58(),
+                      "poolId",
+                    )
+                  }
                   title="Copy Pool ID"
                 />
                 {copiedField === "poolId" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
               <p className="flex items-center gap-2">
-                Creator: {formatAddress(poolData.initializer || poolData.receiverUser)}
+                Creator:{" "}
+                {formatAddress(poolData.initializer || poolData.receiverUser)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof (poolData.initializer || poolData.receiverUser) === 'string' ? (poolData.initializer || poolData.receiverUser) : (poolData.initializer || poolData.receiverUser)?.toBase58(), "creator")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof (poolData.initializer || poolData.receiverUser) ===
+                        "string"
+                        ? poolData.initializer || poolData.receiverUser
+                        : (
+                            poolData.initializer || poolData.receiverUser
+                          )?.toBase58(),
+                      "creator",
+                    )
+                  }
                   title="Copy Creator"
                 />
                 {copiedField === "creator" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
               <p className="flex items-center gap-2">
                 Token ID: {formatAddress(poolData.tokenMint)}
                 <LuCopy
-                  className="cursor-pointer hover:opacity-70 transition-opacity scale-x-[-1]"
-                  onClick={() => copyToClipboard(typeof poolData.tokenMint === 'string' ? poolData.tokenMint : poolData.tokenMint?.toBase58(), "tokenId")}
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof poolData.tokenMint === "string"
+                        ? poolData.tokenMint
+                        : poolData.tokenMint?.toBase58(),
+                      "tokenId",
+                    )
+                  }
                   title="Copy Token ID"
                 />
                 {copiedField === "tokenId" && (
-                  <span className="text-xs md:text-base text-green-500">Copied!</span>
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
                 )}
               </p>
-              <p>Market cap: {tokenInfo?.mcap ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K` : "N/A"}</p>
             </div>
           </div>
         </div>
@@ -270,9 +312,6 @@ function Soon() {
             <CiPill size={28} />
           </div>
 
-          <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
-            {formatTimestamp(launchTime)}
-          </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
           </div>
@@ -280,7 +319,11 @@ function Soon() {
 
         <div className="absolute left-0 z-5 mt-4 flex w-11/13">
           <div className="font-khand ml-3 flex max-w-20 items-center text-xl font-semibold md:mx-4 lg:text-2xl">
-            {type === "stake" ? "STAKING POOL" : type === "vest" ? "VEST" : "LOCK"}
+            {type === "stake"
+              ? "STAKING POOL"
+              : type === "vest"
+                ? "VEST"
+                : "LOCK"}
           </div>
           <div className="mr-4">
             <StakeIcon />
@@ -296,12 +339,12 @@ function Soon() {
               }}
             ></div>
             <div
-              className="font-khand -z-1 ml-0 flex justify-between rounded-full py-1 pr-1 pl-1 text-xs font-medium text-[#6D11B3] lg:-ml-4 lg:pr-5 lg:pl-6 lg:text-base"
+              className="font-khand -z-1 ml-0 flex justify-center rounded-full py-0.5 pr-1 pl-1 text-sm font-bold text-[#311880] lg:-ml-4 lg:pr-5 lg:pl-6 lg:text-base"
               style={{
                 background:
                   resolvedTheme === "dark"
                     ? "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)"
-                    : "linear-gradient(90deg, rgba(255, 220, 160, 1) 20%, rgba(255, 180, 225, 1) 50%,  rgba(255, 220, 160, 1) 90%)",
+                    : "linear-gradient(90deg, rgba(237,144,45,1) 20%, rgba(249, 44, 157, 1) 50%,  rgba(237,144,45,1) 90%)",
               }}
             >
               <div>LAUNCHING IN: {getCountdown(launchTime)}</div>
@@ -314,8 +357,9 @@ function Soon() {
         </div>
       </div>
 
-      <div className="font-khand mt-8 text-end text-xl font-medium lg:text-2xl">
+      <div className="font-khand mt-4 flex justify-center text-end text-xl font-medium lg:text-2xl">
         {/* Empty space for layout */}
+        POLL SIZE 1.2M FIRED
       </div>
     </div>
   );
