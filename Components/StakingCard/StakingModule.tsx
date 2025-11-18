@@ -4,6 +4,7 @@ import { PublicKey } from "@solana/web3.js";
 import { getAssociatedTokenAddress, getAccount } from "@solana/spl-token";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { BN } from "bn.js";
+import RainbowBalance from "./RainbowBalance";
 
 interface StakingModuleProps {
   pool?: any;
@@ -84,6 +85,10 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       console.error("Error fetching user staked amount:", error);
       setUserStakedAmount(0);
     }
+  };
+
+  const handlePercentClick = (amount: string) => {
+    setStakeAmount(amount);
   };
 
   const handleStake = async () => {
@@ -260,27 +265,28 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
     <div className="dark:border-secondary font-khand mt-4 overflow-hidden rounded-4xl border-2 border-[#CDCDE9]">
       <div className="grid grid-cols-2 bg-gradient-to-r from-[#8D85FB] to-[#4B317C] text-white dark:from-[#574DDD] dark:to-[#330E79] dark:text-[#190E79]">
         {/* Left side */}
-        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] px-4 py-2 text-base font-semibold md:text-xl lg:p-2 lg:text-xs xl:p-4 xl:text-base 2xl:text-4xl dark:text-white">
+        <div className="font-khand dark:border-secondary flex items-center justify-between border-r-2 border-[#CDCDE9] px-4 py-2 text-base font-semibold md:text-xl lg:p-4 lg:text-3xl xl:text-2xl 2xl:text-4xl dark:text-white">
           <div className="flex flex-col items-center justify-center leading-none">
             <span>Staking</span>
             <span>Module</span>
           </div>
           <div className="flex w-full items-center justify-center">
-            <img
-              src={pool?.tokenInfo?.icon || "/image.png"}
-              alt={pool?.tokenInfo?.symbol || "Token"}
-              className="m-2 w-8 rounded-full md:m-4 md:w-12"
-            />
+            <div
+              className="m-2 h-8 w-8 rounded-full bg-cover bg-center md:m-4 md:h-10 md:w-10 lg:h-14 lg:w-14"
+              style={{
+                backgroundImage: `url('${pool?.tokenInfo?.icon || "/image.png"}')`,
+              }}
+            ></div>
           </div>
           <div className=" ">ACTIVE</div>
         </div>
 
         {/* Right side */}
-        <div className="px-4 py-2">
+        <div className="px-4 py-1 md:py-2">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="font-khand flex items-center justify-between text-sm font-medium last:mb-0 md:text-sm lg:text-xs xl:text-base dark:text-white"
+              className="font-khand flex items-center justify-between text-sm font-medium last:mb-0 md:text-sm lg:text-base xl:text-base dark:text-white"
             >
               <span>{stat.label}</span>
               <span>{stat.value}</span>
@@ -290,47 +296,79 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       </div>
 
       <div className="bg-gradient-to-r from-[#C9CDD7] to-[#EAE4FF] py-4 pb-1 text-[#190E79] dark:from-[#130C71] dark:to-[#173991] dark:text-white">
-        <div className="grid min-h-18 grid-cols-7">
-          <div className="col-span-2 ml-4 flex items-center justify-center text-xs md:text-base">
-            Available:{" "}
-            {userBalance.toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
+        <div className="flex w-full justify-between">
+          <div className="flex w-4/5 items-center justify-center text-xs md:text-base">
+            <div className="w-full items-end border-b-1 border-current text-center">
+              Available:{" "}
+              {(() => {
+                const [integer, decimal] = userBalance
+                  .toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })
+                  .split(".");
+                return (
+                  <>
+                    {integer}
+                    <span className="text-[0.7em]">.{decimal}</span>
+                  </>
+                );
+              })()}
+            </div>
           </div>
           {/* <div className="flex justify-center">You Will Stake:</div> */}
 
-          <div className="dark:border-secondary relative col-span-3 flex flex-col items-center rounded-xl border-2 border-[#CDCDE9] bg-gradient-to-t from-[#DEDEDE] to-[#EAE4FF] px-1 pb-6 text-[#190E79] md:px-4 md:pb-2 xl:px-[5px] 2xl:px-4 2xl:py-2 dark:from-[#0A0C50] dark:to-[#24068E] dark:text-white">
-            {/* Top Row */}
-            <div className="flex w-full items-center justify-between">
-              <div className="flex h-full items-center">
-                <span className="font-khand text-xs font-medium md:text-sm 2xl:mt-1 2xl:text-base">
-                  You will <br /> Stake:
-                </span>
-              </div>
-              <div className="flex flex-col items-center">
+          <div className="mt-4 flex w-full flex-col">
+            <div className="dark:border-secondary gap- relative flex w-full flex-col items-center rounded-xl border-2 border-[#CDCDE9] bg-gradient-to-t from-[#DEDEDE] to-[#EAE4FF] px-4 py-2 text-[#190E79] dark:from-[#0A0C50] dark:to-[#24068E] dark:text-white">
+              {/* Top Row */}
+              <div className="flex w-full items-center justify-between gap-2">
+                <div className="flex h-full items-center">
+                  <span className="font-khand text-xs font-medium md:text-sm 2xl:mt-1 2xl:text-base">
+                    enter <br /> amount:
+                  </span>
+                </div>
                 <input
                   type="number"
                   value={stakeAmount}
                   onChange={(e) => setStakeAmount(e.target.value)}
                   placeholder="0.00"
-                  className="font-khand mb-4 w-16 [appearance:textfield] border-b-1 border-white/40 bg-transparent text-center text-xs font-semibold outline-none sm:w-32 md:text-lg 2xl:text-2xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  className="font-khand mb-2 w-2/3 border-b border-white bg-transparent text-center text-base font-semibold outline-none md:text-xl 2xl:text-2xl"
                   disabled={isStaking || !publicKey}
                 />
                 {/* <div className="hidden md:block absolute bottom-5 right-0 h-[1px] bg-white/40 w-38" /> */}
               </div>
+              {/* Rainbow Balance Component */}
+              <div className="w-full"></div>
             </div>
-
-            {/* Bottom Text */}
-            <div className="font-khand absolute right-2 bottom-1 flex w-full justify-end text-[10px] font-medium sm:text-sm lg:text-xs xl:text-[10px]">
-              this is what you will stake
-            </div>
+            <RainbowBalance
+              availableBalance={userBalance}
+              onPercentClick={handlePercentClick}
+            />
           </div>
 
-          <div className="col-span-2 flex items-center justify-center text-xs md:text-base">
-            Unlocking: <span className="">{calculateUnlockTime()}</span>
+          <div className="relative flex w-2/3 flex-col items-center py-1 text-xs font-semibold text-white md:text-base">
+            <div className="">ATTENTION!</div>
+
+            <div
+              className="flex w-full items-center justify-center gap-2"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(255, 199, 51, 1) 0%, rgba(249, 44, 157, 1) 40%)",
+              }}
+            >
+              Unlocking:{" "}
+              <span className="text-lg lg:text-xl">
+                {calculateUnlockTime()}
+              </span>
+            </div>
+
+            <div className="absolute top-12 md:top-14 mt-1 w-4/5 text-[10px] font-normal text-center lg:text-xs">
+              Your tokens will become unlocked for UNSTAKING after this period
+              of time.
+            </div>
           </div>
         </div>
+
         <div className="font-khand mx-auto mt-4 max-w-full px-2 lg:mt-4 xl:mt-6 2xl:mx-8">
           {success && (
             <p className="mb-2 text-center text-sm font-semibold text-green-600 dark:text-green-400">
@@ -350,18 +388,22 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
         </div>
       </div>
 
-      <div className="font-khand dark:border-secondary flex items-center justify-end gap-8 border-t-2 border-[#CDCDE9] bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 pr-8 text-xs font-semibold text-white md:gap-16 md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
-        You are Staking: {formatNumber(userStakedAmount)}
-        <button
-          onClick={handleStake}
-          disabled={
-            isStaking ||
-            !publicKey ||
-            !stakeAmount ||
-            parseFloat(stakeAmount) <= 0
-          }
-          className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
-        >
+      <div className="font-khand dark:border-secondary flex items-center justify-between border-t-2 border-[#CDCDE9] bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 text-xs font-semibold text-white md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
+        <div className="flex-1"></div>
+        <div className="flex-1 text-center">
+          You are Staking: {formatNumber(userStakedAmount)}
+        </div>
+        <div className="flex flex-1 justify-end">
+          <button
+            onClick={handleStake}
+            disabled={
+              isStaking ||
+              !publicKey ||
+              !stakeAmount ||
+              parseFloat(stakeAmount) <= 0
+            }
+            className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+          >
           <svg
             width="162"
             height="45"
@@ -393,7 +435,8 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
               fill="#F6F3FF"
             />
           </svg>
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   );
