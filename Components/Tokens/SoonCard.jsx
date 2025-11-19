@@ -45,7 +45,7 @@ function SoonCard({
   launchTimestamp,
   tokenImage = "/image.png",
   poolType = "STAKE", // Can be "STAKE", "VEST", or "LOCK"
-  fullAddress = "" // Full address for favorites (not shortened)
+  fullAddress = "", // Full address for favorites (not shortened)
 }) {
   const { resolvedTheme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -112,11 +112,11 @@ function SoonCard({
               : "linear-gradient(45deg, rgb(208 199 245) 35%, rgb(202 199 221) 100%)",
         }}
       >
-        <div>
+        <div className="mb-2 flex justify-end">
           <img
             src={tokenImage}
             alt={title}
-            className="mt-2 ml-4 w-24 h-24 md:mt-4 md:ml-8 lg:ml-4 lg:w-28 lg:h-28 xl:ml-4 xl:w-32 xl:h-32 rounded-4xl object-cover"
+            className="mt-2 h-24 w-24 rounded-4xl object-cover md:mt-4 md:ml-8 lg:h-28 lg:w-28 xl:h-32 xl:w-32"
           />
         </div>
 
@@ -128,7 +128,7 @@ function SoonCard({
             />
           </div>
           <div className="flex-col items-center justify-center text-center">
-            <p className="text-lg font-khand mt-2 font-semibold md:text-lg lg:text-base xl:text-xl 2xl:text-2xl">
+            <p className="font-khand mt-2 text-lg font-semibold md:text-lg lg:text-base xl:text-xl 2xl:text-2xl">
               {title}
             </p>
             <h1 className="font-khand text-2xl font-bold md:text-2xl lg:mt-4 lg:text-2xl 2xl:text-4xl">
@@ -146,7 +146,7 @@ function SoonCard({
               LAUNCHING IN : {getCountdown()}
             </p>
             <div
-              className="absolute top-1/2 right-0.5 xl:right-2 2xl:right-4 cursor-pointer hover:scale-110 transition-transform"
+              className="absolute top-1/2 right-0.5 cursor-pointer transition-transform hover:scale-110 xl:right-2 2xl:right-4"
               onClick={handleStarClick}
             >
               <StarIcon filled={isFav} />
@@ -158,7 +158,7 @@ function SoonCard({
             <div className="font-khand mt-4 font-semibold lg:text-xl xl:text-2xl 2xl:text-3xl">
               {poolType}
             </div>
-            <div className="z-10 mt-2 rounded-full p-1 pr-0 pl-2 lg:mt-1 xl:mt-0 bg-[#2A1C7B]">
+            <div className="z-10 mt-2 rounded-full bg-[#2A1C7B] p-1 pr-0 pl-2 lg:mt-1 xl:mt-0">
               <StakeIcon />
             </div>
           </div>
