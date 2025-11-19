@@ -7,7 +7,7 @@ import { useTokens } from "@/contexts/tokens-context";
 import { PoolState } from "tokano-sdk";
 import StakingCard from "@/app/card/stake/comps/StakingCard";
 import StakingModule from "@/Components/StakingCard/StakingModule";
-import MyStaking from "./comps/MyStaking";
+import StakingPositionsTable from "./comps/StakingPositionsTable";
 import Details from "@/Components/RightMenu/ui/Details";
 import PortfolioRightMenu from "@/Components/RightMenu/PortfolioRightMenu";
 import PortfolioTokenGrid from "@/Components/Memes/PortfolioTokenGrid";
@@ -131,12 +131,9 @@ function StakePageContent() {
           onStakeSuccess={fetchPool}
         />
 
-        {/* Show MyStaking on desktop, Details on mobile */}
-        <div className="hidden text-[#190E79] lg:block dark:text-white">
-          <MyStaking pool={pool} />
-        </div>
-        <div className="max-w-2xl overflow-hidden rounded-2xl py-6 text-[#190E79] lg:hidden lg:rounded-none dark:text-white">
-          <Details />
+        {/* Show StakingPositionsTable on desktop, Details on mobile */}
+        <div>
+          <StakingPositionsTable />
         </div>
       </div>
       <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">
