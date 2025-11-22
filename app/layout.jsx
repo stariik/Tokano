@@ -31,6 +31,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       suppressHydrationWarning
+      className="font-khand"
     >
       <head>
         <script
@@ -59,7 +60,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark dark:text-light bg-[#f5f5f5] text-black antialiased flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark dark:text-light bg-[#f5f5f5] text-black antialiased flex flex-col min-h-screen font-khand`}
       >
         <LayoutProviders>
           <Analytics />

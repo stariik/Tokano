@@ -112,7 +112,7 @@ function SoonCard({
               : "linear-gradient(45deg, rgb(208 199 245) 35%, rgb(202 199 221) 100%)",
         }}
       >
-        <div className="mb-2 flex justify-end">
+        <div className="mb-2 flex justify-center">
           <img
             src={tokenImage}
             alt={title}
