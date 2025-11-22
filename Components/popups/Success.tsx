@@ -5,15 +5,26 @@ import { useRouter } from "next/navigation";
 interface SuccessProps {
   poolAddress?: string;
   type?: "stake" | "vest" | "lock";
+  activationDateTime?: string;
 }
 
-function Success({ poolAddress, type = "stake" }: SuccessProps) {
+function Success({ poolAddress, type = "stake", activationDateTime }: SuccessProps) {
   const router = useRouter();
 
   const handleViewClick = () => {
+    // Check if staking pool is launching soon
+    const isLaunchingSoon = type === "stake" && activationDateTime &&
+      new Date(activationDateTime).getTime() > Date.now();
+
     // Determine the route and query parameter based on type
-    const baseRoute = type === "vest" ? "/card/vest" : type === "lock" ? "/card/lock" : "/card/stake";
-    const queryParam = type === "vest" ? "vest" : type === "lock" ? "lock" : "pool";
+    let baseRoute = type === "vest" ? "/card/vest" : type === "lock" ? "/card/lock" : "/card/stake";
+    let queryParam = type === "vest" ? "vest" : type === "lock" ? "lock" : "pool";
+
+    // If staking pool is launching soon, navigate to soon page
+    if (isLaunchingSoon) {
+      baseRoute = "/card/soon";
+      queryParam = "pool";
+    }
 
     if (poolAddress) {
       router.push(`${baseRoute}?${queryParam}=${poolAddress}`);

@@ -59,7 +59,7 @@ function Soon({ data, token }) {
   };
   const StakeIcon = () => (
     <svg
-      className="h-full w-[35px] md:w-[37px] xl:w-[40px]"
+      className="h-full w-[35px] md:w-[37px] xl:w-[30px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -139,12 +139,12 @@ function Soon({ data, token }) {
           {getCountdown()}
         </div>
         {/* Stats Row */}
-        <div className="font-khand flex items-center justify-end gap-4 font-semibold mt-1">
+        <div className="font-khand flex items-center justify-end gap-2 font-semibold mt-0.5">
           <div className="rounded-full lg:mt-1 xl:mt-0">
             <StakeIcon />
           </div>
           <div className="flex text-2xl text-white xl:text-3xl">
-            Soon
+            SOON
           </div>
         </div>
       </div>

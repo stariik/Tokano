@@ -74,7 +74,7 @@ function Lock({ data, token }) {
         />
       </div>
       {/* Card Content */}
-      <div className="flex flex-1 flex-col px-3 py-2 lg:px-1.5 xl:px-2 2xl:px-3">
+      <div className="flex flex-1 flex-col px-3 pt-2 lg:px-1.5 xl:px-2 2xl:px-3">
         {/* Title & Star */}
         <div className="mb-1 flex items-center justify-between">
           <span
@@ -91,12 +91,12 @@ function Lock({ data, token }) {
           </span>
         </div>
         {/* Stats Row */}
-        <div className="font-khand flex items-center justify-between font-semibold xl:mb-1">
+        <div className="font-khand flex items-center justify-between font-semibold">
           <div className="flex text-xl text-white lg:text-lg xl:text-2xl">
             Vest
           </div>
           <div className="rounded-3xl bg-white">
-            <div className="m-1.5 rounded-2xl bg-[#190E79] p-1.5 px-1 lg:m-2 lg:p-2 lg:px-1.5">
+            <div className="m-1.5 rounded-2xl bg-[#190E79] p-1.5 px-1 lg:p-2 lg:px-1.5">
               <VestIcon />
             </div>
           </div>
@@ -111,9 +111,9 @@ function Lock({ data, token }) {
         </div>
       </div>
       {/* Bottom Bar */}
-      <div className="flex flex-row justify-between gap-1 text-white">
+      <div className="flex flex-row justify-between gap-1 text-white mb-1">
         <div
-          className="font-khand flex h-6 basis-40 items-center justify-center rounded-r-xl text-center text-[11px] font-medium lg:text-xs"
+          className="font-khand flex h-5 basis-40 items-center justify-center rounded-r-xl text-center text-[11px] font-medium lg:text-xs"
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
@@ -121,7 +121,7 @@ function Lock({ data, token }) {
           TYPE: LIN/MONTHLY
         </div>
         <div
-          className="font-khand flex h-6 w-30 items-center justify-center rounded-l-xl text-center text-[11px] font-medium lg:text-xs"
+          className="font-khand flex h-5 w-30 items-center justify-center rounded-l-xl text-center text-[11px] font-medium lg:text-xs"
           style={{
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}

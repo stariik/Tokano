@@ -7,12 +7,16 @@ import { LuCopy } from "react-icons/lu";
 import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
 import { useTokens } from "@/contexts/tokens-context";
+import { useConnection } from "@solana/wallet-adapter-react";
+import { getMint } from "@solana/spl-token";
+import { PublicKey } from "@solana/web3.js";
 
 import { CiPill } from "react-icons/ci";
 
 function Lock({ lockData, lockAddress }) {
   const { resolvedTheme } = useTheme();
   const { fetchTokenInfo } = useTokens();
+  const { connection } = useConnection();
   const [tokenInfo, setTokenInfo] = useState(null);
   const [copiedField, setCopiedField] = useState(null);
 
@@ -33,14 +37,73 @@ function Lock({ lockData, lockAddress }) {
 
   useEffect(() => {
     const loadTokenInfo = async () => {
-      if (lockData?.tokenMint) {
+      if (!lockData?.tokenMint || !connection) return;
+
+      try {
         const mintString = lockData.tokenMint.toBase58();
-        const info = await fetchTokenInfo([mintString]);
-        setTokenInfo(info[mintString]);
+
+        // Try to fetch from Jupiter API first
+        const jupiterInfo = await fetchTokenInfo([mintString]);
+
+        // Fetch on-chain metadata
+        const mintPubkey = new PublicKey(mintString);
+        const mintInfo = await getMint(connection, mintPubkey);
+
+        // Fetch Metaplex metadata
+        let name = "Unknown Token";
+        let symbol = "N/A";
+
+        try {
+          const metadataPDA = PublicKey.findProgramAddressSync(
+            [
+              Buffer.from("metadata"),
+              new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s").toBuffer(),
+              mintPubkey.toBuffer(),
+            ],
+            new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s")
+          )[0];
+
+          const metadataAccount = await connection.getAccountInfo(metadataPDA);
+
+          if (metadataAccount) {
+            // Parse Metaplex metadata
+            const data = metadataAccount.data;
+            // Skip first 1 + 32 + 32 bytes (key + update authority + mint)
+            let offset = 1 + 32 + 32;
+
+            // Read name (first 4 bytes = length, then string)
+            const nameLength = data.readUInt32LE(offset);
+            offset += 4;
+            name = data.slice(offset, offset + nameLength).toString('utf8').replace(/\0/g, '');
+            offset += nameLength;
+
+            // Read symbol (first 4 bytes = length, then string)
+            const symbolLength = data.readUInt32LE(offset);
+            offset += 4;
+            symbol = data.slice(offset, offset + symbolLength).toString('utf8').replace(/\0/g, '');
+          }
+        } catch (metadataError) {
+          console.log("Metaplex metadata not found, using defaults");
+        }
+
+        // Combine all info
+        setTokenInfo({
+          id: mintString,
+          name: jupiterInfo[mintString]?.name || name,
+          symbol: jupiterInfo[mintString]?.symbol || symbol,
+          decimals: jupiterInfo[mintString]?.decimals || mintInfo.decimals,
+          mcap: jupiterInfo[mintString]?.mcap,
+          icon: jupiterInfo[mintString]?.icon || "/vest.png",
+          telegram: jupiterInfo[mintString]?.telegram,
+          twitter: jupiterInfo[mintString]?.twitter,
+          website: jupiterInfo[mintString]?.website,
+        });
+      } catch (error) {
+        console.error("Error loading token info:", error);
       }
     };
     loadTokenInfo();
-  }, [lockData, fetchTokenInfo]);
+  }, [lockData, connection, fetchTokenInfo]);
 
   // Format timestamp to DD.MM.YY/HH:MM
   const formatTimestamp = (timestamp) => {
@@ -221,20 +284,20 @@ function Lock({ lockData, lockAddress }) {
                 )}
               </p>
               <p className="flex items-center gap-2">
-                Receiver: {formatAddress(lockData?.receiverUser)}
+                Creator: {formatAddress(lockData?.initializerUser)}
                 <LuCopy
                   className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
                   onClick={() =>
                     copyToClipboard(
-                      typeof lockData?.receiverUser === "string"
-                        ? lockData?.receiverUser
-                        : lockData?.receiverUser?.toBase58(),
-                      "receiver",
+                      typeof lockData?.initializerUser === "string"
+                        ? lockData?.initializerUser
+                        : lockData?.initializerUser?.toBase58(),
+                      "creator",
                     )
                   }
-                  title="Copy Receiver"
+                  title="Copy Creator"
                 />
-                {copiedField === "receiver" && (
+                {copiedField === "creator" && (
                   <span className="text-xs text-green-500 md:text-base">
                     Copied!
                   </span>
@@ -260,11 +323,25 @@ function Lock({ lockData, lockAddress }) {
                   </span>
                 )}
               </p>
-              <p>
-                Market cap:{" "}
-                {tokenInfo?.mcap
-                  ? `$${(tokenInfo.mcap / 1000).toFixed(1)}K`
-                  : "N/A"}
+              <p className="flex items-center gap-2">
+                Receiver: {formatAddress(lockData?.receiverUser)}
+                <LuCopy
+                  className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
+                  onClick={() =>
+                    copyToClipboard(
+                      typeof lockData?.receiverUser === "string"
+                        ? lockData?.receiverUser
+                        : lockData?.receiverUser?.toBase58(),
+                      "receiver",
+                    )
+                  }
+                  title="Copy Receiver"
+                />
+                {copiedField === "receiver" && (
+                  <span className="text-xs text-green-500 md:text-base">
+                    Copied!
+                  </span>
+                )}
               </p>
             </div>
           </div>

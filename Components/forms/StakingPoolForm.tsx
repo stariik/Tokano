@@ -649,6 +649,7 @@ export default function StakingPoolForm({
               <Success
                 type="stake"
                 poolAddress={createdPoolAddress || undefined}
+                activationDateTime={formData.activationDateTime}
               />
             )}
             {showPopup === "failed" && <Failed />}

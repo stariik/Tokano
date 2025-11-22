@@ -104,7 +104,7 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
   return (
     <>
       <style>{scrollbarStyles}</style>
-      <div className="font-khand dark:border-secondary overflow-hidden border-2 border-[#CDCDE9]">
+      <div className="font-khand dark:border-secondary overflow-hidden border-2 border-b-0 border-[#CDCDE9]">
         {/* Header Section */}
         <div
           className="flex items-center justify-between px-6 py-2 bg-gradient-to-r from-[#9A7BF6] to-white dark:from-[#4000FF] dark:to-black"
