@@ -155,10 +155,10 @@ function StakeCard({
           <div className="h-20 w-20 md:h-24 md:w-24">
             <img
               src={tokenImage || "/fired.png"}
-              className="mr-4 w-full h-full rounded-2xl object-cover md:rounded-3xl lg:rounded-4xl"
+              className="mr-4 h-full w-full rounded-2xl object-cover md:rounded-3xl lg:rounded-4xl"
             />
           </div>
-          <div className="mt-8 lg:mt-6 xl:mt-8">
+          <div className="mt-2 md:mt-0 xl:mt-5">
             <div className="absolute left-0 z-5 flex w-80">
               <div className="mx-2 flex items-center text-xl md:mx-4 lg:mx-1 xl:mx-4 xl:text-3xl">
                 STAKE
@@ -198,14 +198,12 @@ function StakeCard({
               {title}
             </h1>
           </div>
-          <div className="font-khand mt-1 pl-2 text-left text-xs font-normal leading-tight md:mt-2 md:pl-4 xl:text-base">
+          <div className="font-khand mt-1 pl-2 text-left text-xs leading-tight font-normal md:mt-2 md:pl-4 xl:text-base">
             <p>
-              <span className="">Pool ID: </span>{" "}
-              {formatAddress(wallet)}
+              <span className="">Pool ID: </span> {formatAddress(wallet)}
             </p>
             <p>
-              <span className="">Token ID: </span>{" "}
-              {formatAddress(created)}
+              <span className="">Token ID: </span> {formatAddress(created)}
             </p>
             <p className="">
               <span className="">REWARDS: </span>

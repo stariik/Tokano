@@ -40,6 +40,10 @@ function PortfolioTokenGrid({
   const [vestings, setVestings] = useState<any[]>([]);
   const [locks, setLocks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
 
   // Filter states
   const [searchQuery, setSearchQuery] = useState("");
@@ -50,6 +54,41 @@ function PortfolioTokenGrid({
   const { staking, vesting, lock } = useTokano();
   const { fetchTokenInfo } = useTokens();
   const { isFavorite } = useFavorites();
+
+  // Swipe handlers for Portfolio Token menu (left side - swipe left to close)
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!touchStart) return;
+    const currentTouch = e.targetTouches[0].clientX;
+    setTouchEnd(currentTouch);
+
+    // Calculate drag offset (only allow dragging left, not right)
+    const offset = currentTouch - touchStart;
+    if (offset < 0) {
+      setDragOffset(offset);
+    }
+  };
+
+  const onTouchEnd = () => {
+    setIsDragging(false);
+    if (!touchStart || !touchEnd) {
+      setDragOffset(0);
+      return;
+    }
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    if (isLeftSwipe) {
+      setShow(false);
+    }
+    setDragOffset(0);
+  };
 
   // Fetch all blockchain data
   const fetchAllData = useCallback(async () => {
@@ -409,14 +448,25 @@ function PortfolioTokenGrid({
         <div
           className="menu-overlay-active fixed inset-0 z-999 bg-black/60 xl:hidden"
           onClick={() => setShow(false)}
-        >
-          <div
-            className="fixed top-0 left-0 flex h-screen w-[95vw] max-w-md transform flex-col overflow-hidden border-r-2 border-[#292B8C] bg-[#fafafa] transition-transform duration-300 ease-in-out dark:bg-[#13153A]"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              borderTopRightRadius: "1.5rem",
-            }}
-          >
+        />
+      )}
+
+      {/* Mobile Menu */}
+      <div
+        className={`fixed top-0 left-0 z-999 flex h-screen w-[95vw] max-w-md transform flex-col overflow-hidden border-r-2 border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] xl:hidden ${
+          isDragging ? "" : "transition-transform duration-300 ease-in-out"
+        } ${
+          show ? "translate-x-0 pointer-events-auto" : "-translate-x-full pointer-events-none"
+        }`}
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        style={{
+          borderTopRightRadius: "1.5rem",
+          transform: isDragging ? `translateX(${dragOffset}px)` : undefined,
+        }}
+      >
             <div className="flex flex-shrink-0 items-center justify-between border-b border-[#292B8C] bg-[#fafafa] px-3 py-2 dark:bg-[#13153A]">
               <h2 className="text-xl font-semibold">TOKENS</h2>
               <button
@@ -441,8 +491,6 @@ function PortfolioTokenGrid({
               {tokenContentMobile}
             </div>
           </div>
-        </div>
-      )}
 
       {/* Desktop view - always visible on lg+ screens */}
       <div className="dark:border-secondary hidden h-full rounded-tr-4xl border-2 border-[#CDCDE9] bg-white xl:block dark:bg-[#12002a]">

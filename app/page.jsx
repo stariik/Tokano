@@ -12,11 +12,62 @@ import Banner from "@/Components/Banner";
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
   const { tokens } = useBalances();
 
   useEffect(() => {
     console.log("tokens", tokens);
   }, [tokens]);
+
+  // Swipe handlers for Soon menu (left side - swipe left to close)
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const onTouchMove = (e) => {
+    if (!touchStart) return;
+    const currentTouch = e.targetTouches[0].clientX;
+    setTouchEnd(currentTouch);
+
+    // Calculate drag offset (only allow dragging left, not right)
+    const offset = currentTouch - touchStart;
+    if (offset < 0) {
+      setDragOffset(offset);
+    }
+  };
+
+  const onTouchEnd = () => {
+    setIsDragging(false);
+    if (!touchStart || !touchEnd) {
+      setDragOffset(0);
+      return;
+    }
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    if (isLeftSwipe) {
+      setIsMobileMenuOpen(false);
+    }
+    setDragOffset(0);
+  };
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <main className="dark:bg-dark relative bg-[#f5f5f5] px-2 py-8 lg:px-2 lg:py-6">
@@ -100,21 +151,30 @@ export default function Home() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="menu-overlay-active fixed z-30 bg-black/60 lg:hidden"
+          className="menu-overlay-active fixed z-50 bg-black/60 lg:hidden"
           style={{ top: "3rem", bottom: 0, left: 0, right: 0 }}
           onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <div
-            className={`bg-[#f0f0f0] dark:bg-dark dark:border-secondary fixed top-13 left-0 flex w-[90vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] transition-transform duration-300 ease-in-out ${
-              isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
-            style={{
-              borderTopRightRadius: "2.5rem",
-              bottom: 0,
-              height: "auto",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
+        />
+      )}
+
+      {/* Mobile Menu */}
+      <div
+        className={`bg-[#f0f0f0] dark:bg-dark dark:border-secondary fixed top-0 left-0 z-50 flex w-[95vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] lg:hidden ${
+          isDragging ? "" : "transition-transform duration-300 ease-in-out"
+        } ${
+          isMobileMenuOpen ? "translate-x-0 pointer-events-auto" : "-translate-x-full pointer-events-none"
+        }`}
+        style={{
+          borderTopRightRadius: "2.5rem",
+          bottom: 0,
+          height: "auto",
+          transform: isDragging ? `translateX(${dragOffset}px)` : undefined,
+        }}
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
             <div className="dark:border-secondary bg-[#f0f0f0] dark:bg-dark flex flex-shrink-0 items-center justify-between border-b border-[#CDCDE9] p-4">
               <h2 className="font-khand text-xl font-semibold">
                 LAUNCHING SOON
@@ -130,8 +190,6 @@ export default function Home() {
               <LaunchingSoon isMobile={true} />
             </div>
           </div>
-        </div>
-      )}
     </main>
   );
 }

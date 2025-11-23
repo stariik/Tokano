@@ -40,8 +40,8 @@ const StakeIcon = () => (
 function SoonCard({
   id,
   title = "YOU'RE FIRED (FIRED)",
-  poolId = "0xdl3…ezx41",
-  tokenId = "0xfc9…ed1d",
+  poolId = "0xd…x41",
+  tokenId = "0xf…d1d",
   launchTimestamp,
   tokenImage = "/image.png",
   poolType = "STAKE", // Can be "STAKE", "VEST", or "LOCK"
@@ -116,7 +116,7 @@ function SoonCard({
           <img
             src={tokenImage}
             alt={title}
-            className="mt-2 h-24 w-24 rounded-4xl object-cover md:mt-4 md:ml-8 lg:h-28 lg:w-28 xl:h-32 xl:w-32"
+            className="mt-2 ml-2 h-20 w-20 rounded-3xl md:rounded-4xl object-cover md:mt-4 md:ml-8 lg:h-28 lg:w-28 xl:h-32 xl:w-32"
           />
         </div>
 
@@ -154,20 +154,20 @@ function SoonCard({
           </div>
         </div>
         <div className="relative mx-auto my-6">
-          <div className="absolute -top-[20px] -left-[35px] flex gap-2 lg:-left-[40px] xl:-left-[50px]">
+          <div className="absolute -top-[20px] -left-[35px] flex gap-0 sm:gap-2 lg:-left-[40px] xl:-left-[50px]">
             <div className="font-khand mt-4 font-semibold lg:text-xl xl:text-2xl 2xl:text-3xl">
               {poolType}
             </div>
-            <div className="z-10 mt-2 rounded-full bg-[#2A1C7B] p-1 pr-0 pl-2 lg:mt-1 xl:mt-0">
+            <div className="z-10 mt-2 rounded-full p-1 pr-0 pl-2 lg:mt-1 xl:mt-0">
               <StakeIcon />
             </div>
           </div>
           <div className="absolute top-[20px] left-[80px] h-[3px] rounded-full bg-gradient-to-r from-[#002382] from-25% to-[#8B0000] xl:w-[100px] 2xl:w-[280px] dark:from-[#190E79]"></div>
         </div>
-        <div className="font-khand mt-4 pl-1 text-xs lg:pl-2 xl:pl-4 2xl:text-base">
+        <div className="font-khand mt-4 pl-1 text-[10px] sm:text-xs lg:pl-2 xl:pl-4 2xl:text-base">
           Pool ID: {poolId}
         </div>
-        <div className="font-khand mt-4 text-xs 2xl:text-base">
+        <div className="font-khand mt-4 text-[10px] sm:text-xs text-xs 2xl:text-base">
           Token ID: {tokenId}
         </div>
       </div>

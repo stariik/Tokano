@@ -70,6 +70,58 @@ const TokanoHeader = () => (
 
 function HomeRightMenu() {
   const [show, setShow] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Swipe handlers for Tokano menu (right side - swipe right to close) - mobile only
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!isMobile || !touchStart) return;
+    const currentTouch = e.targetTouches[0].clientX;
+    setTouchEnd(currentTouch);
+
+    // Calculate drag offset (only allow dragging right, not left)
+    const offset = currentTouch - touchStart;
+    if (offset > 0) {
+      setDragOffset(offset);
+    }
+  };
+
+  const onTouchEnd = () => {
+    if (!isMobile) return;
+    setIsDragging(false);
+    if (!touchStart || !touchEnd) {
+      setDragOffset(0);
+      return;
+    }
+    const distance = touchEnd - touchStart;
+    const isRightSwipe = distance > minSwipeDistance;
+    if (isRightSwipe) {
+      setShow(false);
+    }
+    setDragOffset(0);
+  };
 
   // Prevent body scroll when menu is open on mobile
   useEffect(() => {
@@ -153,8 +205,15 @@ function HomeRightMenu() {
 
       {/* Right-side menu - Always visible on desktop for home page */}
       <div
-        className={`custom-scrollbar dark:border-secondary shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed right-0 z-40 w-[90vw] max-w-sm overflow-y-auto rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-white pb-6 transition-transform duration-300 ease-in-out md:overflow-visible lg:max-h-[83rem] lg:min-h-[83rem] xl:max-h-full dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} md:static md:top-2 md:z-0 md:h-auto md:w-auto md:max-w-none md:translate-x-0 md:border-2 md:pb-0 md:shadow-none 2xl:max-w-[620px]`}
-        style={{ top: "3.5rem", bottom: 0, height: "auto" }}
+        className={`custom-scrollbar dark:border-secondary shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed top-0 right-0 z-100 h-screen w-[95vw] max-w-sm overflow-y-auto rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-white pb-6 ${
+          isDragging && isMobile ? "" : "transition-transform duration-300 ease-in-out"
+        } md:h-auto lg:max-h-[83rem] lg:min-h-[83rem] xl:max-h-full dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} md:static md:top-2 md:z-0 md:w-auto md:max-w-none md:translate-x-0 md:border-2 md:pb-0 md:shadow-none 2xl:max-w-[620px]`}
+        style={{
+          transform: isDragging && isMobile ? `translateX(${dragOffset}px)` : undefined,
+        }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
       >
         <div
           className={`dark:border-secondary flex items-center justify-between rounded-tr-4xl border-b-2 border-[#CDCDE9] px-8 py-4 text-4xl`}

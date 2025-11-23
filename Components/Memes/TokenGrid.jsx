@@ -21,6 +21,10 @@ function TokenGrid({
   const [vestings, setVestings] = useState([]);
   const [locks, setLocks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
 
   // Filter states
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,6 +36,41 @@ function TokenGrid({
   const { fetchTokenInfo } = useTokens();
   const { isFavorite } = useFavorites();
   const visibilityClass = hideOnMobile ? "hidden lg:block" : "block";
+
+  // Swipe handlers for Meme/Token menu (left side - swipe left to close)
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const onTouchMove = (e) => {
+    if (!touchStart) return;
+    const currentTouch = e.targetTouches[0].clientX;
+    setTouchEnd(currentTouch);
+
+    // Calculate drag offset (only allow dragging left, not right)
+    const offset = currentTouch - touchStart;
+    if (offset < 0) {
+      setDragOffset(offset);
+    }
+  };
+
+  const onTouchEnd = () => {
+    setIsDragging(false);
+    if (!touchStart || !touchEnd) {
+      setDragOffset(0);
+      return;
+    }
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    if (isLeftSwipe) {
+      setShow(false);
+    }
+    setDragOffset(0);
+  };
 
   // Fetch all blockchain data
   const fetchAllData = useCallback(async () => {
@@ -336,16 +375,28 @@ function TokenGrid({
       {/* Mobile Menu Overlay */}
       {hideOnMobile && show && (
         <div
-          className="menu-overlay-active fixed inset-0 z-999 bg-black/60  lg:hidden"
+          className="menu-overlay-active fixed inset-0 z-999 bg-black/60 lg:hidden"
           onClick={() => setShow(false)}
+        />
+      )}
+
+      {/* Mobile Menu */}
+      {hideOnMobile && (
+        <div
+          className={`fixed top-0 left-0 z-999 flex h-screen w-[95vw] max-w-md transform flex-col overflow-hidden border-r-2 border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] lg:hidden ${
+            isDragging ? "" : "transition-transform duration-300 ease-in-out"
+          } ${
+            show ? "translate-x-0 pointer-events-auto" : "-translate-x-full pointer-events-none"
+          }`}
+          onClick={(e) => e.stopPropagation()}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          style={{
+            borderTopRightRadius: "1.5rem",
+            transform: isDragging ? `translateX(${dragOffset}px)` : undefined,
+          }}
         >
-          <div
-            className="fixed top-0 left-0 flex h-screen w-[95vw] max-w-md transform flex-col overflow-hidden border-r-2 border-[#292B8C] bg-[#fafafa] transition-transform duration-300 ease-in-out dark:bg-[#13153A]"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              borderTopRightRadius: "1.5rem",
-            }}
-          >
             <div className="flex flex-shrink-0 items-center justify-between border-b border-[#292B8C] bg-[#fafafa] px-3 py-2 dark:bg-[#13153A]">
               <h2 className="text-xl font-semibold">TOKENS</h2>
               <button
@@ -370,7 +421,6 @@ function TokenGrid({
               {tokenContentMobile}
             </div>
           </div>
-        </div>
       )}
 
       {/* Desktop view - always visible based on visibilityClass */}

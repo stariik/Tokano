@@ -13,13 +13,16 @@ function Soon({ data, token }) {
 
   // Support both old (token prop) and new (data prop) usage
   const poolData = data || {};
-  const tokenData = data ? {
-    name: data.tokenInfo?.name || data.tokenInfo?.symbol || "Unknown Token",
-    image: data.tokenInfo?.image || "/image.png",
-  } : token;
+  const tokenData = data
+    ? {
+        name: data.tokenInfo?.name || data.tokenInfo?.symbol || "Unknown Token",
+        image: data.tokenInfo?.image || "/image.png",
+      }
+    : token;
 
-  const poolAddress = poolData.poolAddress?.toBase58() || poolData.address?.toBase58() || "";
-  const poolType = poolData.poolAddress ? 'stake' : 'vest'; // Determine if it's a pool or vest
+  const poolAddress =
+    poolData.poolAddress?.toBase58() || poolData.address?.toBase58() || "";
+  const poolType = poolData.poolAddress ? "stake" : "vest"; // Determine if it's a pool or vest
   const isFav = isFavorite(poolType, poolAddress);
 
   // Calculate countdown
@@ -40,7 +43,7 @@ function Soon({ data, token }) {
 
   const handleClick = () => {
     if (poolAddress) {
-      if (poolType === 'stake') {
+      if (poolType === "stake") {
         router.push(`/card/soon?pool=${poolAddress}`);
       } else {
         router.push(`/card/soon?vest=${poolAddress}`);
@@ -90,7 +93,7 @@ function Soon({ data, token }) {
   return (
     <div
       onClick={handleClick}
-      className="relative flex w-full flex-col overflow-hidden rounded bg-[#f5f3fb] pb-1 shadow-lg cursor-pointer dark:bg-transparent"
+      className="font-khand relative flex w-full cursor-pointer flex-col overflow-hidden rounded bg-[#f5f3fb] pb-1 shadow-lg dark:bg-transparent"
       style={{
         background: "var(--tw-gradient)",
       }}
@@ -114,14 +117,11 @@ function Soon({ data, token }) {
       <div className="flex flex-1 flex-col px-3 pt-2">
         {/* Title & Star */}
         <div className="mb-2 flex items-center justify-between">
-          <span
-            className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px] lg:text-[10px] xl:text-[14px]"
-            style={{ fontFamily: "Montserrat, sans-serif" }}
-          >
+          <span className="font-khand text-[12px] leading-tight font-semibold tracking-tight text-[#E6E6E6] md:text-[14px] lg:text-[10px] xl:text-[14px]">
             {tokenData.name}
           </span>
           <span
-            className="ml-2 cursor-pointer hover:scale-110 transition-transform"
+            className="ml-2 cursor-pointer transition-transform hover:scale-110"
             onClick={handleStarClick}
           >
             <StarIcon filled={isFav} />
@@ -139,11 +139,11 @@ function Soon({ data, token }) {
           {getCountdown()}
         </div>
         {/* Stats Row */}
-        <div className="font-khand flex items-center justify-end gap-2 font-semibold mt-0.5">
+        <div className="font-khand mt-0.5 flex items-center justify-end gap-2 font-semibold">
           <div className="rounded-full lg:mt-1 xl:mt-0">
             <StakeIcon />
           </div>
-          <div className="flex text-2xl text-white xl:text-3xl">
+          <div className="flex items-center text-2xl text-white xl:text-3xl">
             SOON
           </div>
         </div>
