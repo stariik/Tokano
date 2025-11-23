@@ -20,7 +20,6 @@ function TokenCard({ token }) {
         <div className="mb-1 flex items-center justify-between">
           <span
             className="text-[1.05rem] leading-tight font-bold tracking-tight text-[#E6E6E6]"
-            style={{ fontFamily: "Montserrat, sans-serif" }}
           >
             {token.name}
           </span>

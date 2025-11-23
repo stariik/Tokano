@@ -96,7 +96,7 @@ function CryptoWallet({
   );
 
   return (
-    <div className="max-w-4xl overflow-hidden rounded-3xl bg-[#C7C1F5] font-sans shadow-2xl lg:mx-auto dark:bg-[#231570]">
+    <div className="max-w-4xl overflow-hidden rounded-3xl bg-[#C7C1F5] font-khand shadow-2xl lg:mx-auto dark:bg-[#231570]">
       {/* Header */}
       <div className="dark:border-secondary flex items-center justify-between border-b-2 border-[#F1F1F1] bg-[#C7C1F5] px-6 py-2 md:py-3 dark:bg-[#231570]">
         <h1 className="font-khand text-base font-bold tracking-wide text-[#190E79] lg:text-2xl dark:text-white">

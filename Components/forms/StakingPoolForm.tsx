@@ -574,7 +574,7 @@ export default function StakingPoolForm({
 
         <div className="mt-6">
           <h3 className="font-khand mb-4 text-xl font-bold text-[#190E79] md:text-2xl dark:text-white">
-            {!publicKey ? "CONNECT WALLET" : "PREVIEW YOUR POOL:"}
+            PREVIEW YOUR POOL:
           </h3>
           <StakingPoolResult
             token={token}
@@ -625,7 +625,7 @@ export default function StakingPoolForm({
               </div>
 
               <span className="font-khand relative inline-block text-sm font-bold text-white md:text-base">
-                {!publicKey ? "CONNECT WALLET" : isCreating ? "CREATING..." : "CREATE POOL"}
+                {isCreating ? "CREATING..." : "CREATE POOL"}
                 <span className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-[#E31F9B] to-[#FFD42A]"></span>
               </span>
             </button>
