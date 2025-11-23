@@ -150,7 +150,7 @@ function LockCard({
               {title}
             </h1>
           </div>
-          <div className="font-khand mt-2 pr-4 text-right text-sm font-normal xl:text-base 2xl:text-lg">
+          <div className="font-khand mt-2 pr-4 text-right text-[9px] [@media(min-width:380px)]:text-sm font-normal xl:text-base 2xl:text-lg">
             <p>
               <span className="">Pool ID: </span>{" "}
               {shortenAddress(wallet)}
@@ -162,10 +162,16 @@ function LockCard({
           </div>
         </div>
         <div className="flex flex-col justify-start">
-          <img
-            src={tokenImage || "/vest.png"}
-            className="mr-16 mb-4 h-14 w-14 rounded-2xl object-cover sm:mr-26 sm:h-20 sm:w-20 lg:mr-24 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
-          />
+          {tokenImage ? (
+            <img
+              src={tokenImage}
+              className="mr-16 mb-4 h-14 w-14 rounded-2xl object-cover sm:mr-26 sm:h-20 sm:w-20 lg:mr-24 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
+            />
+          ) : (
+            <div className="mr-4 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-300 text-2xl font-bold text-gray-600 sm:h-20 sm:w-20 sm:text-4xl lg:mr-6 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl xl:text-5xl 2xl:h-28 2xl:w-28 2xl:text-6xl dark:bg-gray-700 dark:text-gray-400">
+              ?
+            </div>
+          )}
 
           {/*  */}
 
@@ -174,9 +180,9 @@ function LockCard({
               LOCK
             </div>
             <StakeIcon />
-            <div className="my-auto flex w-full flex-col text-[10px] sm:text-xs">
+            <div className="my-auto flex w-full flex-col text-[9px] [@media(min-width:380px)]:text-[10px] sm:text-xs">
               <div
-                className="-z-1 -ml-2 flex w-full justify-between rounded-full py-0.5 px-4 md:px-2 lg:px-4 text-white dark:bg-transparent"
+                className="-z-1 -ml-2 flex w-full justify-between rounded-full py-0.5 px-3 md:px-2 lg:px-4 text-white dark:bg-transparent"
                 style={{
                   background: "var(--gradient-lock)",
                 }}

@@ -99,10 +99,16 @@ function StakingPoolResult({ token, formData, tokenImage }) {
       >
         <div className="mt-2 grid grid-cols-3 items-start">
           <div className="flex w-full items-start justify-center">
+             {tokenImage ? (
             <img
-              src={tokenImage || "/vest.png"}
-              className="h-16 w-16 rounded-2xl object-cover md:h-18 md:w-18 lg:h-16 lg:w-16 xl:h-22 xl:w-22 xl:rounded-3xl"
+              src={tokenImage}
+              className="mr-16 mb-4 h-14 w-14 rounded-2xl object-cover sm:mr-26 sm:h-20 sm:w-20 lg:mr-24 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
             />
+          ) : (
+            <div className="mr-4 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-300 text-2xl font-bold text-gray-600 sm:h-20 sm:w-20 sm:text-4xl lg:mr-6 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl xl:text-5xl 2xl:h-28 2xl:w-28 2xl:text-6xl dark:bg-gray-700 dark:text-gray-400">
+              ?
+            </div>
+          )}
           </div>
           <div className="font-khand col-span-2 font-normal">
             <div className="flex max-w-xs justify-between">
@@ -110,7 +116,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
                 {token?.name || "TOKEN NAME"}
               </h1>
               <div className="">
-                <CiPill size={36} />
+                <CiPill className="w-[18px] h-[18px] lg:w-[36px] lg:h-[36px]" />
               </div>
             </div>
             <div className="mt-1 pl-1 text-xs leading-[1.1] md:text-sm lg:text-base 2xl:text-base">
@@ -145,7 +151,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
             </div>
           </div>
         </div>
-        <div className="absolute top-15 right-0">
+        <div className="absolute top-18 sm:top-15 right-0">
           <div className="font-khand mt-2 rounded-l-2xl bg-[#2B923E] pr-2 pl-2 text-[10px] font-normal text-white md:mt-6 lg:text-sm lg:text-xs xl:text-sm dark:bg-[#2B923E]">
             {formData?.activationDateTime === "IMMEDIATELY"
               ? "IMMEDIATELY"

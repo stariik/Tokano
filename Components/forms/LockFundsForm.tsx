@@ -339,7 +339,7 @@ export default function LockFundsForm({
   };
 
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-3 sm:p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -464,7 +464,7 @@ export default function LockFundsForm({
         </div>
         <div className="mt-6">
           <h3 className="font-khand mb-4 text-lg font-bold text-[#190E79] lg:text-2xl dark:text-white">
-            PREVIEW YOUR LOCK:
+            {!publicKey ? "CONNECT WALLET" : "PREVIEW YOUR LOCK:"}
           </h3>
           <div className="pointer-events-none">
             <LockCard
