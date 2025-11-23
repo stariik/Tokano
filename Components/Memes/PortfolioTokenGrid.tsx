@@ -469,12 +469,12 @@ function PortfolioTokenGrid({
       >
             <div className="flex flex-shrink-0 items-center justify-between border-b border-[#292B8C] bg-[#fafafa] px-3 py-2 dark:bg-[#13153A]">
               <h2 className="text-xl font-semibold">TOKENS</h2>
-              <button
+              {/* <button
                 onClick={() => setShow(false)}
                 className="text-3xl text-[#190E79] transition-colors hover:text-purple-400 dark:text-white"
               >
                 ×
-              </button>
+              </button> */}
             </div>
             <GridFilter
               variant="portfolio"

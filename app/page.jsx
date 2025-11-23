@@ -83,26 +83,23 @@ export default function Home() {
           </div>
           <RightMenu />
         </div> */}
-        
 
-        <div className="mx-auto md:flex justify-between gap-4 max-w-lg md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">
+        <div className="mx-auto max-w-lg justify-between gap-4 md:flex md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">
           <div className="xl:w-1/3">
             <LaunchingSoon />
           </div>
-          <div className="md:w-1/2 xl:w-1/3 2xl:max-w-2xl ">
+          <div className="md:w-1/2 xl:w-1/3 2xl:max-w-2xl">
             <Live />
           </div>
-          <div className="md:max-w-[360px] lg:max-w-full lg:w-1/3">
+          <div className="md:max-w-[360px] lg:w-1/3 lg:max-w-full">
             <HomeRightMenu />
           </div>
         </div>
       </div>
       <Banner src={"banner1.png"} />
 
-      <div className="mt-4 w-full min-[385px]:flex min-[385px]:justify-center mx-auto max-w-lg md:max-w-full">
-        <HomeTokenGrid
-          gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-9"
-        />
+      <div className="mx-auto mt-4 w-full max-w-lg min-[385px]:flex min-[385px]:justify-center md:max-w-full">
+        <HomeTokenGrid gridCols="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-9" />
       </div>
 
       <style
@@ -152,17 +149,19 @@ export default function Home() {
       {isMobileMenuOpen && (
         <div
           className="menu-overlay-active fixed z-50 bg-black/60 lg:hidden"
-          style={{ top: "3rem", bottom: 0, left: 0, right: 0 }}
+          style={{ top: 0, bottom: 0, left: 0, right: 0 }}
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile Menu */}
       <div
-        className={`bg-[#f0f0f0] dark:bg-dark dark:border-secondary fixed top-0 left-0 z-50 flex w-[95vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] lg:hidden ${
+        className={`dark:bg-dark dark:border-secondary fixed top-0 left-0 z-50 flex w-[95vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] bg-[#f0f0f0] lg:hidden ${
           isDragging ? "" : "transition-transform duration-300 ease-in-out"
         } ${
-          isMobileMenuOpen ? "translate-x-0 pointer-events-auto" : "-translate-x-full pointer-events-none"
+          isMobileMenuOpen
+            ? "pointer-events-auto translate-x-0"
+            : "pointer-events-none -translate-x-full"
         }`}
         style={{
           borderTopRightRadius: "2.5rem",
@@ -175,21 +174,19 @@ export default function Home() {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-            <div className="dark:border-secondary bg-[#f0f0f0] dark:bg-dark flex flex-shrink-0 items-center justify-between border-b border-[#CDCDE9] p-4">
-              <h2 className="font-khand text-xl font-semibold">
-                LAUNCHING SOON
-              </h2>
-              <button
+        <div className="dark:border-secondary dark:bg-dark flex flex-shrink-0 items-center justify-between border-b border-[#CDCDE9] bg-[#f0f0f0] p-4">
+          <h2 className="font-khand text-xl font-semibold">LAUNCHING SOON</h2>
+          {/* <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-3xl text-[#190E79] transition-colors hover:text-purple-400 dark:text-white"
               >
                 ×
-              </button>
-            </div>
-            <div className="custom-scrollbar flex-1 overflow-y-auto pb-6">
-              <LaunchingSoon isMobile={true} />
-            </div>
-          </div>
+              </button> */}
+        </div>
+        <div className="custom-scrollbar flex-1 overflow-y-auto pb-6">
+          <LaunchingSoon isMobile={true} />
+        </div>
+      </div>
     </main>
   );
 }

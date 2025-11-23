@@ -197,8 +197,8 @@ function PortfolioRightMenu() {
       {/* Overlay - mobile only */}
       {show && (
         <div
-          className="menu-overlay-active fixed z-40 bg-black/60 md:hidden"
-          style={{ top: "3.5rem", bottom: 0, left: 0, right: 0 }}
+          className="menu-overlay-active fixed z-100 bg-black/60 md:hidden"
+          style={{ top: 0, bottom: 0, left: 0, right: 0 }}
           onClick={() => setShow(false)}
         />
       )}
@@ -207,7 +207,7 @@ function PortfolioRightMenu() {
       <div
         className={`custom-scrollbar dark:border-secondary shadow-[ -60px_0_120px_40px_rgba(10,0,40,0.85) ] fixed top-0 right-0 z-100 h-screen w-[95vw] max-w-sm overflow-y-auto rounded-tl-[2.5rem] border-l-2 border-[#CDCDE9] bg-white pb-6 ${
           isDragging && isMobile ? "" : "transition-transform duration-300 ease-in-out"
-        } md:h-auto lg:max-h-[83rem] lg:min-h-[83rem] xl:max-h-full dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} md:static md:top-2 md:z-0 md:w-auto md:max-w-none md:translate-x-0 md:border-2 md:pb-0 md:shadow-none 2xl:max-w-[620px]`}
+        } md:h-auto lg:min-h-[83rem] xl:max-h-full dark:bg-[#12002a] ${show ? "translate-x-0" : "translate-x-full"} md:static md:top-2 md:z-0 md:w-auto md:max-w-none md:translate-x-0 md:border-2 md:pb-0 md:shadow-none 2xl:max-w-[620px]`}
         style={{
           transform: isDragging && isMobile ? `translateX(${dragOffset}px)` : undefined,
         }}
@@ -219,12 +219,12 @@ function PortfolioRightMenu() {
           className={`dark:border-secondary flex items-center justify-between rounded-tr-4xl border-b-2 border-[#CDCDE9] px-6 py-3 text-4xl`}
         >
           <TokanoHeader />
-          <button
+          {/* <button
             onClick={() => setShow(false)}
             className="text-3xl text-[#190E79] transition-colors hover:text-purple-400 md:hidden dark:text-white"
           >
             ✕
-          </button>
+          </button> */}
         </div>
         <GlobalData />
         <div className="dark:border-secondary w-full border-y-2 border-[#CDCDE9] py-2 pl-4">

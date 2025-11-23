@@ -146,7 +146,7 @@ function RightMenu() {
       {/* Overlay - mobile only */}
       {show && (
         <div
-          className="menu-overlay-active fixed z-40 bg-black/60 md:hidden"
+          className="menu-overlay-active fixed z-100 bg-black/60 md:hidden"
           style={{ top: "3.5rem", bottom: 0, left: 0, right: 0 }}
           onClick={() => setShow(false)}
         />
