@@ -30,7 +30,7 @@ function GlobalDataRow({ label, data }) {
           return (
             <div
               key={index}
-              className={`dark:border-secondary flex flex-col justify-center px-2 py-1 text-xs md:text-sm lg:px-1 lg:text-xs xl:px-2 xl:text-sm 2xl:text-base ${
+              className={`dark:border-secondary flex flex-col justify-center px-2 py-1 text-xs lg:px-1 lg:text-xs xl:px-2 xl:text-sm 2xl:text-base ${
                 !isLastSection ? "border-r-2 border-[#CDCDE9]" : ""
               }`}
               style={{ flex: '1 1 auto', minWidth: '0' }}

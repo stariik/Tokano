@@ -6,11 +6,11 @@ function BalanceComp() {
 
   return (
     <div>
-      <div className="relative z-10 -ml-7 flex items-center rounded-full bg-[#f5f3fb] p-1 lg:-ml-5 xl:-ml-5 dark:bg-[#1a0033]">
+      <div className="relative z-10 -ml-7 flex items-center rounded-full bg-[#f5f3fb] p-1 md:-ml-5 lg:-ml-5 xl:-ml-5 dark:bg-[#1a0033]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG
           <svg
-            className="h-[28px] w-[28px] lg:h-[21px] lg:w-[21px] xl:h-[28px] xl:w-[28px]"
+            className="h-[26px] w-[26px] lg:h-[21px] lg:w-[21px] xl:h-[28px] xl:w-[28px]"
             width="33"
             height="33"
             viewBox="0 0 33 33"
@@ -27,7 +27,7 @@ function BalanceComp() {
         ) : (
           // ☀️ LIGHT MODE SVG
           <svg
-            className="h-[34px] w-[34px] lg:h-[26px] lg:w-[26px] xl:h-[34px] xl:w-[34px]"
+            className="h-[26px] w-[26px] lg:h-[21px] lg:w-[21px] xl:h-[28px] xl:w-[28px]"
             width="33"
             height="33"
             viewBox="0 0 33 33"
@@ -42,7 +42,7 @@ function BalanceComp() {
             />
           </svg>
         )}
-        <span className="ml-1 text-xs font-bold text-[#190E79] sm:ml-2 sm:text-sm md:text-lg lg:text-sm xl:text-base 2xl:text-xl dark:text-white leading-none flex items-center">
+        <span className="ml-1 flex items-center text-xs leading-none font-bold text-[#190E79] sm:ml-2 md:ml-0.5 sm:text-sm md:text-sm lg:text-sm xl:text-base 2xl:text-xl dark:text-white">
           13,000
         </span>
       </div>

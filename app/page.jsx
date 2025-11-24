@@ -31,7 +31,7 @@ export default function Home() {
           <RightMenu />
         </div> */}
 
-        <div className="mx-auto max-w-lg justify-between gap-4 md:flex md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2">
+        <div className="mx-auto max-w-lg justify-between gap-4 md:flex md:max-w-full md:px-2 lg:py-6 2xl:gap-4 2xl:px-2 mt-4 lg:mt-0">
           <div className="xl:w-1/3">
             <LaunchingSoon />
           </div>

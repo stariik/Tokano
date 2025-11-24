@@ -152,13 +152,13 @@ function StakeCard({
         </div>
 
         <div className="relative ml-2 flex flex-col justify-start md:ml-0 lg:ml-2">
-          <div className="h-20 w-20 md:h-24 md:w-24">
+          <div className="h-20 w-20 xl:h-24 xl:w-24">
             <img
               src={tokenImage || "/fired.png"}
               className="mr-4 h-full w-full rounded-2xl object-cover md:rounded-3xl lg:rounded-4xl"
             />
           </div>
-          <div className="mt-2 md:mt-0 xl:mt-5">
+          <div className="mt-2 md:mt-4 xl:mt-5">
             <div className="absolute left-0 z-5 flex w-80">
               <div className="mx-2 flex items-center text-xl md:mx-4 lg:mx-1 xl:mx-4 xl:text-3xl">
                 STAKE
