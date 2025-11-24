@@ -101,7 +101,7 @@ function SoonMenuMobile() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="menu-overlay-active fixed z-50 bg-black/60 lg:hidden"
+          className="menu-overlay-active fixed z-50 bg-black/60 xl:hidden"
           style={{ top: 0, bottom: 0, left: 0, right: 0 }}
           onClick={() => setIsMobileMenuOpen(false)}
         />
@@ -109,7 +109,7 @@ function SoonMenuMobile() {
 
       {/* Mobile Menu */}
       <div
-        className={`dark:bg-dark dark:border-secondary fixed top-0 left-0 z-50 flex w-[95vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] bg-[#f0f0f0] lg:hidden ${
+        className={`dark:bg-dark dark:border-secondary fixed top-0 left-0 z-50 flex w-[95vw] max-w-sm transform flex-col overflow-hidden rounded-tr-[2.5rem] border-r-2 border-[#CDCDE9] bg-[#f0f0f0] xl:hidden ${
           isDragging ? "" : "transition-transform duration-300 ease-in-out"
         } ${
           isMobileMenuOpen
