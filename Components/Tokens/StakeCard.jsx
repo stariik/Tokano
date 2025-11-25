@@ -158,7 +158,7 @@ function StakeCard({
               className="mr-4 h-full w-full rounded-2xl object-cover md:rounded-3xl lg:rounded-4xl"
             />
           </div>
-          <div className="mt-2 md:mt-4 xl:mt-5">
+          {/* <div className="mt-2 md:mt-4 xl:mt-5">
             <div className="absolute left-0 z-5 flex w-80">
               <div className="mx-2 flex items-center text-xl md:mx-4 lg:mx-1 xl:mx-4 xl:text-3xl">
                 STAKE
@@ -190,7 +190,7 @@ function StakeCard({
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="mb-6 flex w-full flex-col pr-8">
           <div className="flex w-full items-center justify-start pl-2 md:pl-4">
@@ -215,8 +215,48 @@ function StakeCard({
           {formatStakersCount(stakersCount)}
         </p>
       </div>
-      <div className="flex items-center justify-end gap-6 pr-4 pb-2">
+      {/* <div className="flex items-center justify-end gap-6 pr-4 pb-2">
         <p className="pr-1 text-lg lg:text-xl xl:text-2xl">stakers</p>
+      </div> */}
+      <div className="flex items-center justify-end gap-0 pr-4 pb-2 [@media(min-width:400px)]:gap-2">
+        <div className="flex w-full">
+          <div className="mx-2 flex items-center text-xl md:mx-4 lg:mx-1 xl:mx-4 xl:text-3xl">
+            STAKE
+          </div>
+          <div className="z-10">
+            <StakeIcon />
+          </div>
+          <div className="mt-2 flex w-full flex-col text-xs text-white xl:text-sm">
+            <div
+              className={`${variant === "portfolio" ? "pr-6" : "w-full"} -ml-4 rounded-full pl-5 lg:pl-6`}
+              style={{
+                background:
+                  resolvedTheme === "dark"
+                    ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
+                    : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
+              }}
+            >
+              ENDS: |{calculateTimeLeft()}
+            </div>
+
+            <div
+              className="mr-2 -ml-4 rounded-full pr-1 pl-5 lg:pl-6"
+              style={{
+                width: `${Number(calculateRewardsLeft()) + 20}%`,
+                // width: `${15 + 20}%`,
+                minWidth: "fit-content",
+                maxWidth: "97%",
+                background:
+                  resolvedTheme === "dark"
+                    ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
+                    : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
+              }}
+            >
+              LEFT: |{calculateRewardsLeft()}%
+            </div>
+          </div>
+        </div>
+        <div className="pr-1 text-lg lg:text-xl xl:text-2xl">stakers</div>
       </div>
     </Link>
   );
