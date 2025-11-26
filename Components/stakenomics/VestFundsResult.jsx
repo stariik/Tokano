@@ -63,7 +63,6 @@ function VestFundsResult({ token, formData, creatorWallet }) {
             : "linear-gradient(90deg, #EFEFEF 0%, #9C3B8A 100%)",
       }}
     >
-      
       <div
         className="relative rounded-3xl px-4 pt-4 md:px-8 lg:px-4 xl:px-8"
         style={{
@@ -74,7 +73,7 @@ function VestFundsResult({ token, formData, creatorWallet }) {
         }}
       >
         <div className="flex justify-between">
-          <div className="font-khand ml-14 md:ml-8 font-normal">
+          <div className="font-khand ml-14 font-normal md:ml-8">
             <div className="flex w-full justify-start">
               <h1 className="font-khand lg:text-2xlxl:text-4xl text-lg font-semibold sm:text-2xl md:text-xl">
                 {token?.name || "TOKEN NAME"}
@@ -129,7 +128,7 @@ function VestFundsResult({ token, formData, creatorWallet }) {
             </div>
             <div className="flex w-full justify-end">
               <div
-                className="font-khand -z-1 mt-1 flex w-12/13 justify-between rounded-full px-1 py-0.5 font-normal text-white sm:px-2 md:w-5/6 xl:w-5/6 lg:w-full 2xl:pr-5 2xl:pl-6 dark:bg-transparent mr-2 lg:mr-5 xl:mr-5 2xl:mr-0"
+                className="font-khand -z-1 mt-1 mr-2 flex w-12/13 justify-between rounded-full px-1 py-0.5 font-normal text-white sm:px-2 md:w-5/6 lg:mr-5 lg:w-full xl:mr-5 xl:w-5/6 2xl:mr-0 2xl:pr-5 2xl:pl-6 dark:bg-transparent"
                 style={{
                   background: "var(--gradient-vest-2)",
                 }}

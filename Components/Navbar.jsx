@@ -203,7 +203,11 @@ function Navbar() {
 
   const getThemeIcon = () => {
     // Show icon based on resolved theme (what's actually displayed)
-    return resolvedTheme === "dark" ? <FaLightbulb /> : <FaLightbulb color="black" />;
+    return resolvedTheme === "dark" ? (
+      <FaLightbulb />
+    ) : (
+      <FaLightbulb color="black" />
+    );
   };
 
   const getThemeLabel = () => {
@@ -228,7 +232,10 @@ function Navbar() {
       {/* Top Section - Mobile Header */}
       <div className="dark:bg-dark dark:text-light fixed top-0 z-50 w-full border-b border-gray-200 bg-white py-2 text-black md:py-4 lg:hidden dark:border-transparent">
         <div className="flex items-center justify-between px-4 lg:justify-center lg:gap-40">
-          <Link href="/" className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+          >
             <svg
               width="166"
               height="33"
@@ -298,7 +305,10 @@ function Navbar() {
       {/* Navigation Section - Desktop */}
       <div className="dark:bg-dark dark:text-light hidden grid-cols-3 items-center border-b border-gray-200 bg-white py-6 text-black lg:grid dark:border-transparent">
         <div className="flex items-center justify-center gap-2">
-          <Link href="/" className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+          >
             <svg
               width="166"
               height="33"

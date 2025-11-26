@@ -14,11 +14,12 @@ export default function RainbowBalance() {
   };
 
   return (
-    <div className="h-7 overflow-hidden rainbow-balance-wrapper">
+    <div className="rainbow-balance-wrapper h-7 overflow-hidden">
       <div
-        className="flex h-full items-center justify-between gap-2 px-2  xl:px-3 2xl:px-4"
+        className="flex h-full items-center justify-between gap-2 px-2 xl:px-3 2xl:px-4"
         style={{
-          background: "linear-gradient(90deg, rgba(109, 17, 179, 1) 10%, rgba(249, 44, 157, 1) 35%, rgba(255, 212, 42, 1) 89%)",
+          background:
+            "linear-gradient(90deg, rgba(109, 17, 179, 1) 10%, rgba(249, 44, 157, 1) 35%, rgba(255, 212, 42, 1) 89%)",
           height: "100%",
         }}
       >
@@ -26,10 +27,10 @@ export default function RainbowBalance() {
           <span
             key={item.value}
             onClick={() => handlePercentClick(item.value)}
-            className="text-xs font-bold xl:text-sm cursor-pointer select-none"
+            className="cursor-pointer text-xs font-bold select-none xl:text-sm"
             style={{
               color: item.color,
-              fontFamily: "inherit"
+              fontFamily: "inherit",
             }}
           >
             {item.value}

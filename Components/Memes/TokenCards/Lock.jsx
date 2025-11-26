@@ -162,7 +162,7 @@ function Lock({ data, token }) {
           </svg>
 
           <div className="mt-1 flex flex-col items-end">
-            <span className="text-xl text-end leading-none font-bold text-[#FFD600]">
+            <span className="text-end text-xl leading-none font-bold text-[#FFD600]">
               {stakersCount}
             </span>
             <span className="-mt-1 text-xs font-semibold text-[#B0B3D6]">

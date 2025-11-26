@@ -87,13 +87,16 @@ export default function ResultsDisplay({ filledData, selectedToken }) {
 
     if (fundType === "STAKING POOL" && formData.rewardAmount) {
       amount = parseFloat(formData.rewardAmount);
-    } else if ((fundType === "LOCK FUNDS" || fundType === "VEST FUNDS") && formData.tokenAmount) {
+    } else if (
+      (fundType === "LOCK FUNDS" || fundType === "VEST FUNDS") &&
+      formData.tokenAmount
+    ) {
       amount = parseFloat(formData.tokenAmount);
     }
 
     const fee = amount * 0.01;
-    const tokenName = token?.name || 'tokens';
-    return fee > 0 ? `${fee.toFixed(2)} ${tokenName}` : '0';
+    const tokenName = token?.name || "tokens";
+    return fee > 0 ? `${fee.toFixed(2)} ${tokenName}` : "0";
   };
 
   return (

@@ -105,7 +105,9 @@ export default function CreateStake({
 
   return (
     <div className="mb-8 rounded-lg border p-4">
-      <h2 className="mb-4 text-base font-semibold lg:text-xl">Stake in a Pool</h2>
+      <h2 className="mb-4 text-base font-semibold lg:text-xl">
+        Stake in a Pool
+      </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <select
           value={selectedPoolAddress}

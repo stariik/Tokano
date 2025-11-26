@@ -116,7 +116,7 @@ function SoonCard({
           <img
             src={tokenImage}
             alt={title}
-            className="mt-2 ml-2 h-20 w-20 rounded-3xl md:rounded-4xl object-cover md:mt-4 md:ml-8 lg:h-28 lg:w-28 xl:h-32 xl:w-32"
+            className="mt-2 ml-2 h-20 w-20 rounded-3xl object-cover md:mt-4 md:ml-8 md:rounded-4xl lg:h-28 lg:w-28 xl:h-32 xl:w-32"
           />
         </div>
 
@@ -167,7 +167,7 @@ function SoonCard({
         <div className="font-khand mt-4 pl-1 text-[10px] sm:text-xs lg:pl-2 xl:pl-4 2xl:text-base">
           Pool ID: {poolId}
         </div>
-        <div className="font-khand mt-4 text-[10px] sm:text-xs text-xs 2xl:text-base">
+        <div className="font-khand mt-4 text-xs text-[10px] sm:text-xs 2xl:text-base">
           Token ID: {tokenId}
         </div>
       </div>

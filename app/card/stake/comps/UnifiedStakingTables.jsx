@@ -2,7 +2,16 @@
 
 import React from "react";
 
-function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs, onUnstake, onClaim, processing }) {
+function UnifiedStakingTables({
+  data,
+  popup,
+  setPopup,
+  scrollRef,
+  itemRefs,
+  onUnstake,
+  onClaim,
+  processing,
+}) {
   const handleUnstakeClick = (position) => {
     if (position.isLocked) {
       // Show locked popup
@@ -40,7 +49,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs, onUn
       {/* Headers Row */}
       <div className="font-khand grid grid-cols-2 gap-4 font-medium">
         {/* First Table Header */}
-        <div className="dark:border-secondary flex items-center justify-between border-y border-x border-[#CDCDE9] bg-[#f5f3fb] text-xs font-semibold text-[#190E79] dark:bg-[#2A1C78] dark:text-white">
+        <div className="dark:border-secondary flex items-center justify-between border-x border-y border-[#CDCDE9] bg-[#f5f3fb] text-xs font-semibold text-[#190E79] dark:bg-[#2A1C78] dark:text-white">
           <div className="flex w-full items-center justify-between pr-2 pl-4 xl:pr-8 xl:pl-12">
             <div className="dark:border-secondary flex items-center justify-center border-[#CDCDE9]">
               Positions
@@ -191,7 +200,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs, onUn
                             </div>
                             <div className="flex flex-col space-y-2">
                               <button
-                                className="rounded-full bg-red-500 px-6 py-1 text-sm font-bold text-white hover:bg-red-600 lg:py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="rounded-full bg-red-500 px-6 py-1 text-sm font-bold text-white hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50 lg:py-2"
                                 disabled={processing}
                                 onClick={() => {
                                   onUnstake(popup.positionId);
@@ -255,7 +264,7 @@ function UnifiedStakingTables({ data, popup, setPopup, scrollRef, itemRefs, onUn
                             </div>
                             <div className="flex flex-col space-y-2">
                               <button
-                                className="rounded-full bg-green-500 px-6 py-1 text-sm font-bold text-white hover:bg-green-600 lg:py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="rounded-full bg-green-500 px-6 py-1 text-sm font-bold text-white hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-50 lg:py-2"
                                 disabled={processing}
                                 onClick={() => {
                                   onClaim(popup.positionId);

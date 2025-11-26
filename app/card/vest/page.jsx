@@ -42,7 +42,7 @@ function VestPageContent() {
   }, [fetchVestData]);
 
   return (
-    <div className="mx-auto flex max-w-lg justify-center gap-4 md:max-w-full md:px-2 lg:justify-between xl:justify-between xl:py-6 2xl:gap-4 2xl:px-2 mt-4 lg:mt-0 ">
+    <div className="mx-auto mt-4 flex max-w-lg justify-center gap-4 md:max-w-full md:px-2 lg:mt-0 lg:justify-between xl:justify-between xl:py-6 2xl:gap-4 2xl:px-2">
       <div className="xl:w-full xl:max-w-sm 2xl:max-w-md">
         <PortfolioTokenGrid
           gridCols="grid-cols-2"

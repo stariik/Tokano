@@ -44,7 +44,7 @@ function LaunchingSoon({ isMobile = false }) {
       const enrichedPools = pools
         .map((pool) => ({
           ...pool,
-          type: 'pool',
+          type: "pool",
           timestamp: pool.startTimestamp.getTime(),
           tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
         }))
@@ -55,7 +55,7 @@ function LaunchingSoon({ isMobile = false }) {
       const enrichedVestings = vestingData
         .map((vest) => ({
           ...vest,
-          type: 'vest',
+          type: "vest",
           timestamp: vest.startTime.getTime(),
           tokenInfo: tokenInfos[vest.tokenMint.toBase58()],
         }))
@@ -71,8 +71,8 @@ function LaunchingSoon({ isMobile = false }) {
         .slice(0, 20);
 
       // Separate back into their types
-      const limitedPools = allItems.filter(item => item.type === 'pool');
-      const limitedVestings = allItems.filter(item => item.type === 'vest');
+      const limitedPools = allItems.filter((item) => item.type === "pool");
+      const limitedVestings = allItems.filter((item) => item.type === "vest");
 
       setStakePools(limitedPools);
       setVestings(limitedVestings);
@@ -111,12 +111,12 @@ function LaunchingSoon({ isMobile = false }) {
   }
 
   return (
-    <div className="dark:border-secondary hidden max-h-332 overflow-hidden border-2 border-[#CDCDE9] xl:flex xl:flex-col xl:max-h-359 2xl:max-h-378 2xl:max-w-[620px] dark:bg-dark bg-white">
+    <div className="dark:border-secondary dark:bg-dark hidden max-h-332 overflow-hidden border-2 border-[#CDCDE9] bg-white xl:flex xl:max-h-359 xl:flex-col 2xl:max-h-378 2xl:max-w-[620px]">
       <div
         className={`dark:border-secondary font-khand relative z-10 flex justify-center border-b-2 border-[#CDCDE9] py-4 text-2xl font-semibold shadow-lg shadow-black/30 ${
           resolvedTheme === "dark"
             ? "bg-gradient-to-r from-[#050047] to-[#4530B5]"
-            : "bg-gradient-to-r from-[#FDFDFD] to-[#E4DEFF] text-primary"
+            : "text-primary bg-gradient-to-r from-[#FDFDFD] to-[#E4DEFF]"
         }`}
       >
         <h1>| Launching Soon |</h1>

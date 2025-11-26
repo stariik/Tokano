@@ -90,12 +90,12 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
   return (
     <div className="mx-auto max-w-3xl">
       {/* Fund Cards */}
-      <div className="grid gap-2 md:gap-4 xl:gap-6 px-2 py-4 grid-cols-4">
+      <div className="grid grid-cols-4 gap-2 px-2 py-4 md:gap-4 xl:gap-6">
         {FUND_TYPES.map((fund) => (
           <div
             key={fund.id}
             onClick={() => handleCardClick(fund)}
-            className={`relative h-22 md:h-20 lg:h-24 xl:h-28 w-full ${
+            className={`relative h-22 w-full md:h-20 lg:h-24 xl:h-28 ${
               fund.bgColor
             } rounded-2xl p-4 pb-2 shadow-lg transition-all duration-300 ${
               fund.disabled
@@ -103,7 +103,7 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
                 : "cursor-pointer hover:scale-105 hover:shadow-xl"
             } ${
               selectedFund?.id === fund.id
-                ? "ring-opacity-50 ring-4 ring-purple-500 opacity-100"
+                ? "ring-opacity-50 opacity-100 ring-4 ring-purple-500"
                 : ""
             } ${!fund.active && selectedFund?.id !== fund.id ? "opacity-50" : ""}`}
             style={{
@@ -119,7 +119,7 @@ export default function FundCards({ selectedToken, selectedTokenData }) {
             <button
               onClick={(e) => handleCreateClick(e, fund)}
               disabled={fund.disabled}
-              className={`font-khand absolute top-2 left-2 rounded-full px-2 py-0.5 text-[10px] font-bold transition-colors duration-200  xl:top-3 xl:left-3 md:px-3 md:py-0.5 lg:py-0.5 xl:py-1md:text-xs ${fund.buttonColor}`}
+              className={`font-khand xl:py-1md:text-xs absolute top-2 left-2 rounded-full px-2 py-0.5 text-[10px] font-bold transition-colors duration-200 md:px-3 md:py-0.5 lg:py-0.5 xl:top-3 xl:left-3 ${fund.buttonColor}`}
             >
               CREATE
             </button>

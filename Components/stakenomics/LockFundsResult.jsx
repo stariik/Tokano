@@ -24,7 +24,7 @@ function LockFundsResult({ token, formData, creatorWallet }) {
 
   const LockIcon = () => (
     <svg
-      className="w-[47px] h-full lg:w-[60px]"
+      className="h-full w-[47px] lg:w-[60px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +83,7 @@ function LockFundsResult({ token, formData, creatorWallet }) {
         <div className="flex justify-end">
           <div className="font-khand font-normal">
             <div className="flex w-full justify-start">
-              <h1 className="font-khand lg:text-2xlxl:text-4xl text-lg font-semibold sm:text-2xl md:text-xl -ml-6">
+              <h1 className="font-khand lg:text-2xlxl:text-4xl -ml-6 text-lg font-semibold sm:text-2xl md:text-xl">
                 {token?.name || "TOKEN NAME"}
               </h1>
             </div>

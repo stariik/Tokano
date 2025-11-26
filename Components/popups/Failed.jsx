@@ -34,16 +34,25 @@ function Failed() {
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB"
         >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
             result="hardAlpha"
           />
-          <feOffset dx="3" dy="9" />
+          <feOffset
+            dx="3"
+            dy="9"
+          />
           <feGaussianBlur stdDeviation="2.9" />
-          <feComposite in2="hardAlpha" operator="out" />
+          <feComposite
+            in2="hardAlpha"
+            operator="out"
+          />
           <feColorMatrix
             type="matrix"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
@@ -68,9 +77,18 @@ function Failed() {
           y2="175.199"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0453033" stopColor="#F4E0FB" />
-          <stop offset="0.387195" stopColor="white" />
-          <stop offset="1" stopColor="#D8D1D1" />
+          <stop
+            offset="0.0453033"
+            stopColor="#F4E0FB"
+          />
+          <stop
+            offset="0.387195"
+            stopColor="white"
+          />
+          <stop
+            offset="1"
+            stopColor="#D8D1D1"
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1314_6492"
@@ -80,8 +98,14 @@ function Failed() {
           y2="47.7937"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0336538" stopColor="#7C041E" />
-          <stop offset="1" stopColor="#D40043" />
+          <stop
+            offset="0.0336538"
+            stopColor="#7C041E"
+          />
+          <stop
+            offset="1"
+            stopColor="#D40043"
+          />
         </linearGradient>
       </defs>
     </svg>

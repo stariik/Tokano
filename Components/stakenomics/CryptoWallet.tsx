@@ -96,7 +96,7 @@ function CryptoWallet({
   );
 
   return (
-    <div className="max-w-4xl overflow-hidden rounded-3xl bg-[#C7C1F5] font-khand shadow-2xl lg:mx-auto dark:bg-[#231570]">
+    <div className="font-khand max-w-4xl overflow-hidden rounded-3xl bg-[#C7C1F5] shadow-2xl lg:mx-auto dark:bg-[#231570]">
       {/* Header */}
       <div className="dark:border-secondary flex items-center justify-between border-b-2 border-[#F1F1F1] bg-[#C7C1F5] px-6 py-2 md:py-3 dark:bg-[#231570]">
         <h1 className="font-khand text-base font-bold tracking-wide text-[#190E79] lg:text-2xl dark:text-white">
@@ -188,7 +188,7 @@ function CryptoWallet({
             </div>
 
             {/* Token Information */}
-            <div className=" dark:border-secondary h-full flex-1 border-x-2 border-t-2 border-[#F1F1F1] p-2 md:p-4">
+            <div className="dark:border-secondary h-full flex-1 border-x-2 border-t-2 border-[#F1F1F1] p-2 md:p-4">
               {selectedTokenData ? (
                 <div className="space-y-2">
                   <div>

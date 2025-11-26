@@ -2,7 +2,12 @@ import React from "react";
 import "@/Components/Live/styles/scrollbar.css";
 import SoonCard from "@/Components/Tokens/SoonCard";
 
-function ScrollingSoonCards({ stakePools = [], vestings = [], locks = [], isMobile = false }) {
+function ScrollingSoonCards({
+  stakePools = [],
+  vestings = [],
+  locks = [],
+  isMobile = false,
+}) {
   // Helper to shorten addresses
   const shortenAddress = (address) => {
     if (!address || address.length < 12) return address;
@@ -16,11 +21,13 @@ function ScrollingSoonCards({ stakePools = [], vestings = [], locks = [], isMobi
   return (
     <div className={containerClass}>
       {/* Show message if no upcoming pools */}
-      {stakePools.length === 0 && vestings.length === 0 && locks.length === 0 && (
-        <div className="flex items-center justify-center p-8 text-center text-gray-500">
-          No upcoming launches at the moment
-        </div>
-      )}
+      {stakePools.length === 0 &&
+        vestings.length === 0 &&
+        locks.length === 0 && (
+          <div className="flex items-center justify-center p-8 text-center text-gray-500">
+            No upcoming launches at the moment
+          </div>
+        )}
 
       {/* Upcoming staking pool cards */}
       {stakePools.map((pool, index) => {

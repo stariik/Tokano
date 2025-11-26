@@ -410,7 +410,7 @@ function Vest({ vestData, vestAddress }) {
           </div>
         </div>
 
-               <div className="font-khand mt-24 mr-2 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-30 lg:text-3xl">
+        <div className="font-khand mt-24 mr-2 text-end text-2xl font-semibold text-[#FFB01C] lg:mt-30 lg:text-3xl">
           {vestData?.totalVestedAmount
             ? formatAmount(vestData.totalVestedAmount, tokenInfo?.decimals || 6)
             : "0"}

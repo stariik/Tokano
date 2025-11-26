@@ -120,12 +120,6 @@ export default function VestFundsForm({
     null,
   );
 
-  if (!token) {
-    return (
-      <div className="p-6 text-center text-gray-600">No token selected</div>
-    );
-  }
-
   const handleInputChange = (field: string, value: string) => {
     const updatedData = {
       ...formData,
@@ -377,8 +371,14 @@ export default function VestFundsForm({
     }, 300);
   };
 
+  if (!token) {
+    return (
+      <div className="p-6 text-center text-gray-600">No token selected</div>
+    );
+  }
+
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-3 sm:p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-3 shadow-2xl sm:p-4 xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -460,7 +460,7 @@ export default function VestFundsForm({
               onChange={(e) =>
                 handleInputChange("releaseModel", e.target.value)
               }
-              className="font-khand w-18 sm:w-20 appearance-none rounded-3xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs sm:text-sm font-bold text-[#190E79] sm:w-24 lg:w-30 lg:px-3 lg:py-1 lg:text-base 2xl:w-30 dark:bg-[#453DC8] dark:text-white"
+              className="font-khand w-18 appearance-none rounded-3xl border-none bg-[#e8e4f8] px-2 py-1 text-right text-xs font-bold text-[#190E79] sm:w-20 sm:w-24 sm:text-sm lg:w-30 lg:px-3 lg:py-1 lg:text-base 2xl:w-30 dark:bg-[#453DC8] dark:text-white"
             >
               <option
                 value="daily"
@@ -559,10 +559,10 @@ export default function VestFundsForm({
               <span className="absolute left-0 font-bold">3.</span>
               <span className="font-bold">Undistributed Tokens:</span> Any
               undistributed tokens remaining in the pool will be available for
-              retraction to the creator's wallet for 365 days after the pool's
-              distribution period ends. After this period, tokens will be
-              converted to Tokano native tokens, and the creator must contact
-              support to recover them.
+              retraction to the creator&#39;s wallet for 365 days after the
+              pool&#39;s distribution period ends. After this period, tokens
+              will be converted to Tokano native tokens, and the creator must
+              contact support to recover them.
             </li>
           </ul>
         </div>
@@ -646,7 +646,7 @@ export default function VestFundsForm({
       {/* Popup overlay */}
       {showPopup && (
         <div
-          className={` fixed inset-0 z-50 flex items-center justify-center bg-[#00031079] ${
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-[#00031079] ${
             isClosing ? "animate-fadeOut" : "animate-fadeIn"
           }`}
           onClick={closePopup}
