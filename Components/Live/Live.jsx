@@ -36,7 +36,9 @@ function Live() {
         if (!stakersPerPool[poolAddress]) {
           stakersPerPool[poolAddress] = new Set();
         }
-        stakersPerPool[poolAddress].add(userStake.account.stakerUser.toBase58());
+        stakersPerPool[poolAddress].add(
+          userStake.account.stakerUser.toBase58(),
+        );
       });
 
       // Collect all unique token mints
@@ -56,30 +58,38 @@ function Live() {
       const enrichedPools = pools
         .map((pool) => ({
           ...pool,
-          type: 'pool',
+          type: "pool",
           timestamp: pool.startTimestamp.getTime(),
           tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
           stakersCount: stakersPerPool[pool.poolAddress.toBase58()]?.size || 0,
         }))
-        .filter((pool) => pool.timestamp <= currentTime && pool.endTimestamp.getTime() > currentTime)
+        .filter(
+          (pool) =>
+            pool.timestamp <= currentTime &&
+            pool.endTimestamp.getTime() > currentTime,
+        )
         .sort((a, b) => b.timestamp - a.timestamp);
 
       // Enrich and filter vestings - only show LIVE vestings (startTime <= now AND endTime > now)
       const enrichedVestings = vestingData
         .map((vest) => ({
           ...vest,
-          type: 'vest',
+          type: "vest",
           timestamp: vest.startTime.getTime(),
           tokenInfo: tokenInfos[vest.tokenMint.toBase58()],
         }))
-        .filter((vest) => vest.timestamp <= currentTime && vest.endTime.getTime() > currentTime)
+        .filter(
+          (vest) =>
+            vest.timestamp <= currentTime &&
+            vest.endTime.getTime() > currentTime,
+        )
         .sort((a, b) => b.timestamp - a.timestamp);
 
       // Enrich and filter locks - only show LIVE locks (not yet unlocked: unlockTime > now)
       const enrichedLocks = lockData
         .map((lockItem) => ({
           ...lockItem,
-          type: 'lock',
+          type: "lock",
           timestamp: lockItem.unlockTime.getTime(),
           tokenInfo: tokenInfos[lockItem.tokenMint.toBase58()],
         }))
@@ -92,9 +102,9 @@ function Live() {
         .slice(0, 20);
 
       // Separate back into their types
-      const limitedPools = allItems.filter(item => item.type === 'pool');
-      const limitedVestings = allItems.filter(item => item.type === 'vest');
-      const limitedLocks = allItems.filter(item => item.type === 'lock');
+      const limitedPools = allItems.filter((item) => item.type === "pool");
+      const limitedVestings = allItems.filter((item) => item.type === "vest");
+      const limitedLocks = allItems.filter((item) => item.type === "lock");
 
       setStakePools(limitedPools);
       setVestings(limitedVestings);
@@ -115,8 +125,8 @@ function Live() {
   }, [fetchAllData]);
 
   return (
-    <div className="dark:border-secondary mx-auto flex max-h-352 lg:max-h-332 border-2 border-[#CDCDE9] lg:mx-0 xl:max-h-359 2xl:max-h-378 rounded-tr-4xl overflow-hidden dark:bg-dark bg-white">
-      <div className="flex  w-full flex-col lg:rounded-tr-4xl">
+    <div className="dark:border-secondary dark:bg-dark mx-auto flex max-h-352 overflow-hidden rounded-tr-4xl border-2 border-[#CDCDE9] bg-white lg:mx-0 lg:max-h-332 xl:max-h-359 2xl:max-h-378">
+      <div className="flex w-full flex-col lg:rounded-tr-4xl">
         <div
           className={`dark:border-secondary font-khand relative z-10 flex justify-center border-b-2 border-[#CDCDE9] py-2 text-2xl font-semibold shadow-lg shadow-black/30 lg:py-4 ${
             resolvedTheme === "dark"

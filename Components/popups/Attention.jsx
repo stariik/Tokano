@@ -3,7 +3,7 @@ import { FaExclamation } from "react-icons/fa6";
 
 function Attention() {
   return (
-    <div className="flex max-w-sm items-center justify-center rounded-full border-4 border-gray-200 bg-white/80  px-4 py-2 pl-8 shadow-lg">
+    <div className="flex max-w-sm items-center justify-center rounded-full border-4 border-gray-200 bg-white/80 px-4 py-2 pl-8 shadow-lg">
       <h2 className="font-khand mr-4 text-xl font-bold text-black md:text-3xl">
         ATTENTION
       </h2>

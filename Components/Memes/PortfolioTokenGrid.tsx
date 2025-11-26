@@ -453,10 +453,12 @@ function PortfolioTokenGrid({
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 z-999 flex h-screen w-[95vw] max-w-md transform flex-col overflow-hidden border-r-2 border-[#292B8C] bg-[#fafafa] dark:bg-[#13153A] xl:hidden ${
+        className={`fixed top-0 left-0 z-999 flex h-screen w-[95vw] max-w-md transform flex-col overflow-hidden border-r-2 border-[#292B8C] bg-[#fafafa] xl:hidden dark:bg-[#13153A] ${
           isDragging ? "" : "transition-transform duration-300 ease-in-out"
         } ${
-          show ? "translate-x-0 pointer-events-auto" : "-translate-x-full pointer-events-none"
+          show
+            ? "pointer-events-auto translate-x-0"
+            : "pointer-events-none -translate-x-full"
         }`}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={onTouchStart}
@@ -467,30 +469,30 @@ function PortfolioTokenGrid({
           transform: isDragging ? `translateX(${dragOffset}px)` : undefined,
         }}
       >
-            <div className="flex flex-shrink-0 items-center justify-between border-b border-[#292B8C] bg-[#fafafa] px-3 py-2 dark:bg-[#13153A]">
-              <h2 className="text-xl font-semibold">TOKENS</h2>
-              {/* <button
+        <div className="flex flex-shrink-0 items-center justify-between border-b border-[#292B8C] bg-[#fafafa] px-3 py-2 dark:bg-[#13153A]">
+          <h2 className="text-xl font-semibold">TOKENS</h2>
+          {/* <button
                 onClick={() => setShow(false)}
                 className="text-3xl text-[#190E79] transition-colors hover:text-purple-400 dark:text-white"
               >
                 ×
               </button> */}
-            </div>
-            <GridFilter
-              variant="portfolio"
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              showType={showType}
-              setShowType={setShowType}
-              showFavorites={showFavorites}
-              setShowFavorites={setShowFavorites}
-            />
-            <div className="custom-scrollbar flex-1 overflow-y-auto text-[#190E79] dark:text-white">
-              {tokenContentMobile}
-            </div>
-          </div>
+        </div>
+        <GridFilter
+          variant="portfolio"
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          showType={showType}
+          setShowType={setShowType}
+          showFavorites={showFavorites}
+          setShowFavorites={setShowFavorites}
+        />
+        <div className="custom-scrollbar flex-1 overflow-y-auto text-[#190E79] dark:text-white">
+          {tokenContentMobile}
+        </div>
+      </div>
 
       {/* Desktop view - always visible on lg+ screens */}
       <div className="dark:border-secondary hidden h-full rounded-tr-4xl border-2 border-[#CDCDE9] bg-white xl:block dark:bg-[#12002a]">

@@ -74,7 +74,7 @@ export const SIcon = () => (
 
 export const StarIcon = ({ filled = false }) => (
   <svg
-    className="w-4 h-4 sm:w-[22px] sm:h-[22px]"
+    className="h-4 w-4 sm:h-[22px] sm:w-[22px]"
     viewBox="0 0 28 27"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

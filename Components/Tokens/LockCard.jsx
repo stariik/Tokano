@@ -150,14 +150,12 @@ function LockCard({
               {title}
             </h1>
           </div>
-          <div className="font-khand mt-2 pr-4 text-right text-[9px] [@media(min-width:380px)]:text-sm font-normal xl:text-base 2xl:text-lg">
+          <div className="font-khand mt-2 pr-4 text-right text-[9px] font-normal xl:text-base 2xl:text-lg [@media(min-width:380px)]:text-sm">
             <p>
-              <span className="">Pool ID: </span>{" "}
-              {shortenAddress(wallet)}
+              <span className="">Pool ID: </span> {shortenAddress(wallet)}
             </p>
             <p>
-              <span className="">Token ID: </span>{" "}
-              {shortenAddress(created)}
+              <span className="">Token ID: </span> {shortenAddress(created)}
             </p>
           </div>
         </div>
@@ -175,14 +173,14 @@ function LockCard({
 
           {/*  */}
 
-          <div className="absolute -bottom-3 sm:-bottom-6 left-0 z-5 flex w-11/13 md:w-13/16">
+          <div className="absolute -bottom-3 left-0 z-5 flex w-11/13 sm:-bottom-6 md:w-13/16">
             <div className="mx-2 flex items-center text-xl lg:mx-1 xl:mx-4 xl:text-3xl">
               LOCK
             </div>
             <StakeIcon />
-            <div className="my-auto flex w-full flex-col text-[9px] [@media(min-width:380px)]:text-[10px] sm:text-xs">
+            <div className="my-auto flex w-full flex-col text-[9px] sm:text-xs [@media(min-width:380px)]:text-[10px]">
               <div
-                className="-z-1 -ml-2 flex w-full justify-between rounded-full py-0.5 px-3 md:px-2 lg:px-4 text-white dark:bg-transparent"
+                className="-z-1 -ml-2 flex w-full justify-between rounded-full px-3 py-0.5 text-white md:px-2 lg:px-4 dark:bg-transparent"
                 style={{
                   background: "var(--gradient-lock)",
                 }}

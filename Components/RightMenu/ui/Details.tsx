@@ -96,7 +96,7 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
       stakeAmount: "10,000",
       lockPeriod: "180 days",
       unclaimedRewards: "900",
-    }
+    },
   ];
 
   const displayPositions = positions.length > 0 ? positions : samplePositions;
@@ -106,9 +106,7 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
       <style>{scrollbarStyles}</style>
       <div className="font-khand dark:border-secondary overflow-hidden border-2 border-b-0 border-[#CDCDE9]">
         {/* Header Section */}
-        <div
-          className="flex items-center justify-between px-6 py-2 bg-gradient-to-r from-[#9A7BF6] to-white dark:from-[#4000FF] dark:to-black"
-        >
+        <div className="flex items-center justify-between bg-gradient-to-r from-[#9A7BF6] to-white px-6 py-2 dark:from-[#4000FF] dark:to-black">
           <h2 className="text-lg font-medium text-[#39317D] dark:text-white">
             Positions
           </h2>
@@ -141,8 +139,8 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
             activePopup !== null ? "overflow-hidden" : "overflow-y-scroll"
           }`}
         >
-          <table className="w-full h-full">
-            <tbody className="text-center h-full">
+          <table className="h-full w-full">
+            <tbody className="h-full text-center">
               {displayPositions.map((position, index) => (
                 <tr
                   key={index}
@@ -180,9 +178,7 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
 
           {/* Popup Overlay */}
           {activePopup !== null && (
-            <div
-              className="absolute inset-0 flex items-center justify-center bg-black/30 dark:bg-black/70"
-            >
+            <div className="absolute inset-0 flex items-center justify-center bg-black/30 dark:bg-black/70">
               <div
                 className="dark:border-secondary rounded-2xl border-2 border-[#CDCDE9] px-8 py-6"
                 style={{ backgroundColor: "#2A1C78" }}

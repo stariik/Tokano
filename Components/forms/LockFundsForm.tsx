@@ -112,12 +112,6 @@ export default function LockFundsForm({
     null,
   );
 
-  if (!token) {
-    return (
-      <div className="p-6 text-center text-gray-600">No token selected</div>
-    );
-  }
-
   const handleInputChange = (field: string, value: string) => {
     const updatedData = {
       ...formData,
@@ -338,8 +332,14 @@ export default function LockFundsForm({
     }, 300);
   };
 
+  if (!token) {
+    return (
+      <div className="p-6 text-center text-gray-600">No token selected</div>
+    );
+  }
+
   return (
-    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-3 sm:p-4 shadow-2xl xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
+    <div className="mx-auto w-full rounded-3xl border-2 border-[#CDCDE9] bg-[#EEEDFF] p-3 shadow-2xl sm:p-4 xl:p-6 dark:border-[#453DC8] dark:bg-[#1B105C]">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -455,10 +455,10 @@ export default function LockFundsForm({
               <span className="absolute left-0 font-bold">3.</span>
               <span className="font-bold">Undistributed Tokens:</span> Any
               undistributed tokens remaining in the pool will be available for
-              retraction to the creator's wallet for 365 days after the pool's
-              distribution period ends. After this period, tokens will be
-              converted to Tokano native tokens, and the creator must contact
-              support to recover them.
+              retraction to the creator&#39;s wallet for 365 days after the
+              pool&#39;s distribution period ends. After this period, tokens
+              will be converted to Tokano native tokens, and the creator must
+              contact support to recover them.
             </li>
           </ul>
         </div>

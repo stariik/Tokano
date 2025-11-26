@@ -25,9 +25,9 @@ function GridFilter({
 }: GridFilterProps) {
   if (variant === "portfolio") {
     return (
-      <div className="mb-2 flex w-full flex-col border-b border-[#C6C1F5] dark:border-[#6D6FDF] text-sm font-medium text-[#B0B3D6]">
+      <div className="mb-2 flex w-full flex-col border-b border-[#C6C1F5] text-sm font-medium text-[#B0B3D6] dark:border-[#6D6FDF]">
         {/* Container 1: REVEAL BY and favorites */}
-        <div className="flex items-center justify-between border-b border-[#C6C1F5] dark:border-[#6D6FDF] px-4 py-3">
+        <div className="flex items-center justify-between border-b border-[#C6C1F5] px-4 py-3 dark:border-[#6D6FDF]">
           <div className="font-bold whitespace-nowrap text-[#190E79] dark:text-white">
             REVEAL BY:
           </div>
@@ -46,7 +46,7 @@ function GridFilter({
         </div>
 
         {/* Container 2: any/creator/token and all/vests/locks/pools */}
-        <div className="flex items-center justify-between border-b border-[#C6C1F5] dark:border-[#6D6FDF] px-4 py-3">
+        <div className="flex items-center justify-between border-b border-[#C6C1F5] px-4 py-3 dark:border-[#6D6FDF]">
           <div className="whitespace-nowrap">
             <span className="cursor-pointer hover:text-[#190E79] dark:text-white">
               any
@@ -64,7 +64,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "all"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("all")}
@@ -75,7 +75,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "vests"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("vests")}
@@ -86,7 +86,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "locks"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("locks")}
@@ -97,7 +97,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "stake"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("stake")}
@@ -114,7 +114,7 @@ function GridFilter({
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full rounded-none border-none bg-[#e0dff5] px-3 py-3 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? 'text-left' : 'text-center'}`}
+            className={`w-full rounded-none border-none bg-[#e0dff5] px-3 py-3 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? "text-left" : "text-center"}`}
           />
         </div>
       </div>
@@ -125,9 +125,9 @@ function GridFilter({
   return (
     <>
       {/* Mobile/Tablet: Vertical layout */}
-      <div className="mb-2 flex w-full flex-col border-b border-[#C6C1F5] dark:border-[#6D6FDF] text-sm font-medium text-[#B0B3D6] lg:hidden">
+      <div className="mb-2 flex w-full flex-col border-b border-[#C6C1F5] text-sm font-medium text-[#B0B3D6] lg:hidden dark:border-[#6D6FDF]">
         {/* Row 1: TOKENS BY PLATFORM and favorites */}
-        <div className="flex items-center justify-between border-b border-[#C6C1F5] dark:border-[#6D6FDF] px-4 py-3">
+        <div className="flex items-center justify-between border-b border-[#C6C1F5] px-4 py-3 dark:border-[#6D6FDF]">
           <div className="text-xs font-bold whitespace-nowrap text-[#190E79] dark:text-white">
             TOKENS BY PLATFORM
           </div>
@@ -146,13 +146,13 @@ function GridFilter({
         </div>
 
         {/* Row 2: Sort and Show - Two lines below 385px */}
-        <div className="max-[384px]:flex-col flex items-center justify-between border-b border-[#C6C1F5] dark:border-[#6D6FDF] px-1 py-3 text-xs md:px-4 max-[384px]:items-start max-[384px]:gap-2">
+        <div className="flex items-center justify-between border-b border-[#C6C1F5] px-1 py-3 text-xs max-[384px]:flex-col max-[384px]:items-start max-[384px]:gap-2 md:px-4 dark:border-[#6D6FDF]">
           <div className="whitespace-nowrap">
             <span className="mr-2">sort:</span>
             <span
               className={`cursor-pointer transition-colors ${
                 sortBy === "time"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setSortBy("time")}
@@ -163,7 +163,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 sortBy === "a-z"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setSortBy("a-z")}
@@ -174,7 +174,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 sortBy === "size"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setSortBy("size")}
@@ -185,7 +185,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 sortBy === "price"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setSortBy("price")}
@@ -198,7 +198,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "all"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("all")}
@@ -209,7 +209,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "locks"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("locks")}
@@ -220,7 +220,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "vests"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("vests")}
@@ -231,7 +231,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "stake"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("stake")}
@@ -242,7 +242,7 @@ function GridFilter({
             <span
               className={`cursor-pointer transition-colors ${
                 showType === "soon"
-                  ? "text-[#190E79] dark:text-white font-bold"
+                  ? "font-bold text-[#190E79] dark:text-white"
                   : "hover:text-[#190E79] dark:hover:text-white"
               }`}
               onClick={() => setShowType("soon")}
@@ -259,13 +259,13 @@ function GridFilter({
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full rounded-none border-none bg-[#e0dff5] px-3 py-3 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? 'text-left' : 'text-center'}`}
+            className={`w-full rounded-none border-none bg-[#e0dff5] px-3 py-3 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? "text-left" : "text-center"}`}
           />
         </div>
       </div>
 
       {/* Desktop: Horizontal layout */}
-      <div className="mb-2 hidden w-full items-center gap-4 border-b-2 border-[#C6C1F5] dark:border-[#6D6FDF] text-sm font-medium text-[#B0B3D6] lg:flex">
+      <div className="mb-2 hidden w-full items-center gap-4 border-b-2 border-[#C6C1F5] text-sm font-medium text-[#B0B3D6] lg:flex dark:border-[#6D6FDF]">
         {/* 1. Text: TOKENS BY PLATFORM */}
         <div className="flex items-center justify-center px-4 py-3 whitespace-nowrap text-[#190E79] dark:text-white">
           TOKENS BY PLATFORM
@@ -278,7 +278,7 @@ function GridFilter({
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-2/3 rounded-none border-none bg-[#e0dff5] px-3 py-3.5 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? 'text-left' : 'text-center'}`}
+            className={`w-2/3 rounded-none border-none bg-[#e0dff5] px-3 py-3.5 text-xs text-[#190E79] placeholder-[#190E79]/50 dark:bg-[#464794] dark:text-white dark:placeholder-white/50 ${searchQuery ? "text-left" : "text-center"}`}
           />
         </div>
 
@@ -302,7 +302,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               sortBy === "time"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setSortBy("time")}
@@ -313,7 +313,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               sortBy === "a-z"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setSortBy("a-z")}
@@ -324,7 +324,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               sortBy === "size"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setSortBy("size")}
@@ -335,7 +335,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               sortBy === "price"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setSortBy("price")}
@@ -350,7 +350,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               showType === "all"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setShowType("all")}
@@ -361,7 +361,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               showType === "locks"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setShowType("locks")}
@@ -372,7 +372,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               showType === "vests"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setShowType("vests")}
@@ -383,7 +383,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               showType === "stake"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setShowType("stake")}
@@ -394,7 +394,7 @@ function GridFilter({
           <span
             className={`cursor-pointer transition-colors ${
               showType === "soon"
-                ? "text-[#190E79] dark:text-white font-bold"
+                ? "font-bold text-[#190E79] dark:text-white"
                 : "hover:text-[#190E79] dark:hover:text-white"
             }`}
             onClick={() => setShowType("soon")}

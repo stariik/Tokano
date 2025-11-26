@@ -55,7 +55,9 @@ export const StakeGrad = ({ poolData }) => {
     if (!poolData || !poolData.endTimestamp) return "0d-0h";
 
     const now = Date.now();
-    const endTime = poolData.endTimestamp.getTime ? poolData.endTimestamp.getTime() : poolData.endTimestamp;
+    const endTime = poolData.endTimestamp.getTime
+      ? poolData.endTimestamp.getTime()
+      : poolData.endTimestamp;
     const diff = endTime - now;
 
     if (diff <= 0) return "Ended";
@@ -80,7 +82,7 @@ export const StakeGrad = ({ poolData }) => {
           {calculateTimeLeft()}
         </div>
         <div
-          className="font-khand lg:pl-5 text-xs -ml-4 max-w-14 rounded-r-2xl py-0.5 pr-1 pl-4 font-bold text-purple-950 lg:pr-2"
+          className="font-khand -ml-4 max-w-14 rounded-r-2xl py-0.5 pr-1 pl-4 text-xs font-bold text-purple-950 lg:pr-2 lg:pl-5"
           style={{
             background:
               "linear-gradient(90deg, #c026d3 0%, #ec4899 50%, #fb923c 100%)",
@@ -92,4 +94,3 @@ export const StakeGrad = ({ poolData }) => {
     </div>
   );
 };
-

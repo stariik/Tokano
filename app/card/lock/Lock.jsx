@@ -57,10 +57,12 @@ function Lock({ lockData, lockAddress }) {
           const metadataPDA = PublicKey.findProgramAddressSync(
             [
               Buffer.from("metadata"),
-              new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s").toBuffer(),
+              new PublicKey(
+                "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",
+              ).toBuffer(),
               mintPubkey.toBuffer(),
             ],
-            new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s")
+            new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"),
           )[0];
 
           const metadataAccount = await connection.getAccountInfo(metadataPDA);
@@ -74,13 +76,19 @@ function Lock({ lockData, lockAddress }) {
             // Read name (first 4 bytes = length, then string)
             const nameLength = data.readUInt32LE(offset);
             offset += 4;
-            name = data.slice(offset, offset + nameLength).toString('utf8').replace(/\0/g, '');
+            name = data
+              .slice(offset, offset + nameLength)
+              .toString("utf8")
+              .replace(/\0/g, "");
             offset += nameLength;
 
             // Read symbol (first 4 bytes = length, then string)
             const symbolLength = data.readUInt32LE(offset);
             offset += 4;
-            symbol = data.slice(offset, offset + symbolLength).toString('utf8').replace(/\0/g, '');
+            symbol = data
+              .slice(offset, offset + symbolLength)
+              .toString("utf8")
+              .replace(/\0/g, "");
           }
         } catch (metadataError) {
           console.log("Metaplex metadata not found, using defaults");
@@ -399,7 +407,7 @@ function Lock({ lockData, lockAddress }) {
         </div>
       </div>
 
-      <div className="font-khand mr-10 lg:mr-6 xl:mr-10 text-end text-xl font-medium lg:text-2xl">
+      <div className="font-khand mr-10 text-end text-xl font-medium lg:mr-6 lg:text-2xl xl:mr-10">
         locked
       </div>
     </div>

@@ -33,10 +33,13 @@ function GlobalDataRow({ label, data }) {
               className={`dark:border-secondary flex flex-col justify-center px-2 py-1 text-xs lg:px-1 lg:text-xs xl:px-2 xl:text-sm 2xl:text-base ${
                 !isLastSection ? "border-r-2 border-[#CDCDE9]" : ""
               }`}
-              style={{ flex: '1 1 auto', minWidth: '0' }}
+              style={{ flex: "1 1 auto", minWidth: "0" }}
             >
               {entries.map(([key, value], entryIndex) => (
-                <div key={entryIndex} className="flex justify-between whitespace-nowrap">
+                <div
+                  key={entryIndex}
+                  className="flex justify-between whitespace-nowrap"
+                >
                   <span>{key}:</span>
                   <span className="ml-2">{value}</span>
                 </div>

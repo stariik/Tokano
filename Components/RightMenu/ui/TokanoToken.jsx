@@ -23,7 +23,12 @@ const Icon = () => {
   );
 };
 
-function TokanoToken({ children, TableName, className = "", showIcon = false }) {
+function TokanoToken({
+  children,
+  TableName,
+  className = "",
+  showIcon = false,
+}) {
   return (
     <div className="font-khand">
       <div

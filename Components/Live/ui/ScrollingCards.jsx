@@ -18,7 +18,7 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
   };
 
   return (
-    <div className="custom-scroll flex-1 min-h-0 space-y-2 overflow-y-auto px-2 xl:px-4">
+    <div className="custom-scroll min-h-0 flex-1 space-y-2 overflow-y-auto px-2 xl:px-4">
       {/* Real staking pool cards */}
       {stakePools.map((pool, index) => {
         const tokenName = pool.tokenInfo?.name || "Unknown Token";

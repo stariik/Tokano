@@ -42,7 +42,7 @@ function BalanceComp() {
             />
           </svg>
         )}
-        <span className="ml-1 flex items-center text-xs leading-none font-bold text-[#190E79] sm:ml-2 md:ml-0.5 sm:text-sm md:text-sm lg:text-sm xl:text-base 2xl:text-xl dark:text-white">
+        <span className="ml-1 flex items-center text-xs leading-none font-bold text-[#190E79] sm:ml-2 sm:text-sm md:ml-0.5 md:text-sm lg:text-sm xl:text-base 2xl:text-xl dark:text-white">
           13,000
         </span>
       </div>

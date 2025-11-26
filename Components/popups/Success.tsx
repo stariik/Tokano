@@ -8,17 +8,29 @@ interface SuccessProps {
   activationDateTime?: string;
 }
 
-function Success({ poolAddress, type = "stake", activationDateTime }: SuccessProps) {
+function Success({
+  poolAddress,
+  type = "stake",
+  activationDateTime,
+}: SuccessProps) {
   const router = useRouter();
 
   const handleViewClick = () => {
     // Check if staking pool is launching soon
-    const isLaunchingSoon = type === "stake" && activationDateTime &&
+    const isLaunchingSoon =
+      type === "stake" &&
+      activationDateTime &&
       new Date(activationDateTime).getTime() > Date.now();
 
     // Determine the route and query parameter based on type
-    let baseRoute = type === "vest" ? "/card/vest" : type === "lock" ? "/card/lock" : "/card/stake";
-    let queryParam = type === "vest" ? "vest" : type === "lock" ? "lock" : "pool";
+    let baseRoute =
+      type === "vest"
+        ? "/card/vest"
+        : type === "lock"
+          ? "/card/lock"
+          : "/card/stake";
+    let queryParam =
+      type === "vest" ? "vest" : type === "lock" ? "lock" : "pool";
 
     // If staking pool is launching soon, navigate to soon page
     if (isLaunchingSoon) {
@@ -71,16 +83,25 @@ function Success({ poolAddress, type = "stake", activationDateTime }: SuccessPro
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB"
         >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
             result="hardAlpha"
           />
-          <feOffset dx="3" dy="9" />
+          <feOffset
+            dx="3"
+            dy="9"
+          />
           <feGaussianBlur stdDeviation="2.9" />
-          <feComposite in2="hardAlpha" operator="out" />
+          <feComposite
+            in2="hardAlpha"
+            operator="out"
+          />
           <feColorMatrix
             type="matrix"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
@@ -105,9 +126,18 @@ function Success({ poolAddress, type = "stake", activationDateTime }: SuccessPro
           y2="195.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0453033" stopColor="#F4E0FB" />
-          <stop offset="0.387195" stopColor="white" />
-          <stop offset="1" stopColor="#D8D1D1" />
+          <stop
+            offset="0.0453033"
+            stopColor="#F4E0FB"
+          />
+          <stop
+            offset="0.387195"
+            stopColor="white"
+          />
+          <stop
+            offset="1"
+            stopColor="#D8D1D1"
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1314_6483"
@@ -117,8 +147,14 @@ function Success({ poolAddress, type = "stake", activationDateTime }: SuccessPro
           y2="62.0019"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0336538" stopColor="#047C7C" />
-          <stop offset="1" stopColor="#0CE07D" />
+          <stop
+            offset="0.0336538"
+            stopColor="#047C7C"
+          />
+          <stop
+            offset="1"
+            stopColor="#0CE07D"
+          />
         </linearGradient>
       </defs>
     </svg>

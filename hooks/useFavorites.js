@@ -45,10 +45,10 @@ export function useFavorites() {
   const isFavorite = useCallback(
     (type, address) => {
       return favorites.some(
-        (fav) => fav.type === type && fav.address === address
+        (fav) => fav.type === type && fav.address === address,
       );
     },
-    [favorites]
+    [favorites],
   );
 
   // Toggle favorite status
@@ -56,14 +56,14 @@ export function useFavorites() {
     (type, address) => {
       setFavorites((prev) => {
         const exists = prev.some(
-          (fav) => fav.type === type && fav.address === address
+          (fav) => fav.type === type && fav.address === address,
         );
 
         let newFavorites;
         if (exists) {
           // Remove from favorites
           newFavorites = prev.filter(
-            (fav) => !(fav.type === type && fav.address === address)
+            (fav) => !(fav.type === type && fav.address === address),
           );
         } else {
           // Add to favorites
@@ -75,7 +75,7 @@ export function useFavorites() {
         return newFavorites;
       });
     },
-    [saveToCookie]
+    [saveToCookie],
   );
 
   // Get all favorites of a specific type
@@ -83,7 +83,7 @@ export function useFavorites() {
     (type) => {
       return favorites.filter((fav) => fav.type === type);
     },
-    [favorites]
+    [favorites],
   );
 
   // Clear all favorites

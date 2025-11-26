@@ -50,7 +50,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
 
   const StakeIcon = () => (
     <svg
-      className="absolute top-1/2 -translate-y-1/2 -mr-1 w-[47px] lg:w-[70px]"
+      className="absolute top-1/2 -mr-1 w-[47px] -translate-y-1/2 lg:w-[70px]"
       viewBox="0 0 57 57"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -99,16 +99,16 @@ function StakingPoolResult({ token, formData, tokenImage }) {
       >
         <div className="mt-2 grid grid-cols-3 items-start">
           <div className="flex w-full items-start justify-center">
-             {tokenImage ? (
-            <img
-              src={tokenImage}
-              className="mb-4 h-14 w-14 rounded-2xl object-cover mr-4 sm:h-20 sm:w-20 lg:mr-24 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
-            />
-          ) : (
-            <div className="mr-4 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-300 text-2xl font-bold text-gray-600 sm:h-20 sm:w-20 sm:text-4xl lg:mr-6 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl xl:text-5xl 2xl:h-28 2xl:w-28 2xl:text-6xl dark:bg-gray-700 dark:text-gray-400">
-              ?
-            </div>
-          )}
+            {tokenImage ? (
+              <img
+                src={tokenImage}
+                className="mr-4 mb-4 h-14 w-14 rounded-2xl object-cover sm:h-20 sm:w-20 lg:mr-24 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
+              />
+            ) : (
+              <div className="mr-4 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-300 text-2xl font-bold text-gray-600 sm:h-20 sm:w-20 sm:text-4xl lg:mr-6 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl xl:text-5xl 2xl:h-28 2xl:w-28 2xl:text-6xl dark:bg-gray-700 dark:text-gray-400">
+                ?
+              </div>
+            )}
           </div>
           <div className="font-khand col-span-2 font-normal">
             <div className="flex max-w-xs justify-between">
@@ -116,7 +116,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
                 {token?.name || "TOKEN NAME"}
               </h1>
               <div className="">
-                <CiPill className="w-[18px] h-[18px] lg:w-[36px] lg:h-[36px]" />
+                <CiPill className="h-[18px] w-[18px] lg:h-[36px] lg:w-[36px]" />
               </div>
             </div>
             <div className="mt-1 pl-1 text-xs leading-[1.1] md:text-sm lg:text-base 2xl:text-base">
@@ -151,7 +151,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
             </div>
           </div>
         </div>
-        <div className="absolute top-18 sm:top-15 right-0">
+        <div className="absolute top-18 right-0 sm:top-15">
           <div className="font-khand mt-2 rounded-l-2xl bg-[#2B923E] pr-2 pl-2 text-[10px] font-normal text-white md:mt-6 lg:text-sm lg:text-xs xl:text-sm dark:bg-[#2B923E]">
             {formData?.activationDateTime === "IMMEDIATELY"
               ? "IMMEDIATELY"
@@ -171,7 +171,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
 
         <div className="font-khand relative mx-auto max-w-md text-end text-xl font-medium lg:text-2xl">
           <div className="absolute -bottom-4 z-5 mt-2 flex w-full md:-bottom-8 xl:-bottom-11">
-            <div className="font-khand flex max-w-20 items-center text-left text-sm font-semibold md:text-xl lg:text-xl mx-2 ms:mx-3 md:mx-4">
+            <div className="font-khand ms:mx-3 mx-2 flex max-w-20 items-center text-left text-sm font-semibold md:mx-4 md:text-xl lg:text-xl">
               <div className="leading-tight">
                 <div>STAKING</div>
                 <div>POOL</div>
@@ -179,22 +179,22 @@ function StakingPoolResult({ token, formData, tokenImage }) {
             </div>
             <div className="font-khand relative my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
               <StakeIcon />
-                <div
-                  className="font-khand -z-1 w-3/4 rounded-full pr-2 pl-4 font-medium text-white ml-8 py-0.5 md:pl-10 lg:py-1"
-                  style={{
-                    background:
-                      resolvedTheme === "dark"
-                        ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
-                        : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
-                  }}
-                >
-                  <div className="h-full flex justify-between">
-                    <span>ENDS: </span>
-                    <span>{formData?.distributionLength || "0"} days</span>
-                  </div>
-                </div>
               <div
-                className="font-khand -z-1 w-2/3 rounded-full pr-2 pl-4 font-medium text-black ml-8 py-0.5 md:pl-10 lg:py-1"
+                className="font-khand -z-1 ml-8 w-3/4 rounded-full py-0.5 pr-2 pl-4 font-medium text-white md:pl-10 lg:py-1"
+                style={{
+                  background:
+                    resolvedTheme === "dark"
+                      ? "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)"
+                      : "linear-gradient(90deg, rgba(7,75,163,1) 0%, rgba(4,88,124,1) 36%, rgba(12,224,207,1) 100%)",
+                }}
+              >
+                <div className="flex h-full justify-between">
+                  <span>ENDS: </span>
+                  <span>{formData?.distributionLength || "0"} days</span>
+                </div>
+              </div>
+              <div
+                className="font-khand -z-1 ml-8 w-2/3 rounded-full py-0.5 pr-2 pl-4 font-medium text-black md:pl-10 lg:py-1"
                 style={{
                   background:
                     resolvedTheme === "dark"

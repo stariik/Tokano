@@ -18,9 +18,7 @@ function TokenCard({ token }) {
       <div className="flex flex-1 flex-col px-3 py-2">
         {/* Title & Star */}
         <div className="mb-1 flex items-center justify-between">
-          <span
-            className="text-[1.05rem] leading-tight font-bold tracking-tight text-[#E6E6E6]"
-          >
+          <span className="text-[1.05rem] leading-tight font-bold tracking-tight text-[#E6E6E6]">
             {token.name}
           </span>
           <span className="ml-2 text-xl text-[#FF00A8]">★</span>

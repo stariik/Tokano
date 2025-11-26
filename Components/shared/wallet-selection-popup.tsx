@@ -112,7 +112,12 @@ function WalletSelectionPopup({
       }
 
       try {
-        console.log("Wallet click:", wallet.adapter.name, "State:", wallet.readyState);
+        console.log(
+          "Wallet click:",
+          wallet.adapter.name,
+          "State:",
+          wallet.readyState,
+        );
 
         if (
           wallet.readyState === WalletReadyState.Installed ||
@@ -127,10 +132,14 @@ function WalletSelectionPopup({
           console.warn(`${wallet.adapter.name} is not installed`);
           // Attempt to open wallet install page
           if (wallet.adapter.url) {
-            window.open(wallet.adapter.url, '_blank');
+            window.open(wallet.adapter.url, "_blank");
           }
         } else {
-          console.log("Wallet state:", wallet.readyState, "- Attempting connection anyway");
+          console.log(
+            "Wallet state:",
+            wallet.readyState,
+            "- Attempting connection anyway",
+          );
           select(wallet.adapter.name);
           await connect();
           onClose();
@@ -180,7 +189,7 @@ function WalletSelectionPopup({
                       : "cursor-not-allowed opacity-50"
                   }`}
                 >
-                  <span className="text-base font-medium text-[#190E79] sm:text-lg md:text-xl ">
+                  <span className="text-base font-medium text-[#190E79] sm:text-lg md:text-xl">
                     {wallet.adapter.name}
                   </span>
                   <div
@@ -219,9 +228,11 @@ function WalletSelectionPopup({
               className="peer sr-only"
             />
             <div className="relative flex h-5 w-5 items-center justify-center rounded-full border-[3.5px] border-[#8F97FE] bg-white transition-all peer-checked:border-[#8F97FE] sm:h-6 sm:w-6">
-              <div className={`h-2 w-2 rounded-full transition-all sm:h-2.5 sm:w-2.5 ${agreedToTerms ? 'bg-[#FF1F7D] scale-100' : 'bg-transparent scale-0'}`}></div>
+              <div
+                className={`h-2 w-2 rounded-full transition-all sm:h-2.5 sm:w-2.5 ${agreedToTerms ? "scale-100 bg-[#FF1F7D]" : "scale-0 bg-transparent"}`}
+              ></div>
             </div>
-            <span className="select-none text-sm text-[#190E79] sm:text-base">
+            <span className="text-sm text-[#190E79] select-none sm:text-base">
               I agree to the Terms and Conditions
             </span>
           </label>
