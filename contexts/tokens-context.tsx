@@ -14,6 +14,9 @@ export interface TokenInfo {
   decimals: number;
   mcap: number;
   icon: string;
+  totalSupply?: number;
+  holderCount?: number;
+  usdPrice?: number;
   launchpad?: string;
   twitter?: string;
   telegram?: string;
@@ -72,7 +75,7 @@ export const TokensProvider = ({ children }: { children: ReactNode }) => {
             `https://lite-api.jup.ag/tokens/v2/search?query=${query}`,
           );
           const data: TokenInfo[] = await response.json();
-
+          console.log("Data", data);
           const newTokens: Record<string, TokenInfo> = {};
           if (Array.isArray(data)) {
             data.forEach((tokenData) => {
@@ -85,6 +88,9 @@ export const TokensProvider = ({ children }: { children: ReactNode }) => {
                   mcap: tokenData.mcap,
                   icon: tokenData.icon,
                   launchpad: tokenData.launchpad,
+                  totalSupply: tokenData.totalSupply,
+                  holderCount: tokenData.holderCount,
+                  usdPrice: tokenData.usdPrice,
                   twitter: tokenData.twitter,
                   telegram: tokenData.telegram,
                   website: tokenData.website,
