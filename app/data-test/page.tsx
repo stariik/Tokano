@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { TokenInfo, useTokens } from "@/contexts/tokens-context";
 import { TOKANO_MINT_ADDRESS, TOKANO_POOL_ID } from "@/lib/constants";
 import { useTokano } from "@/contexts/tokano-sdk-context";
+import { BN } from "@coral-xyz/anchor";
 
 // Inlined TokenRow component
 const TokenInfoRow = ({ label, value }) => (
@@ -92,19 +93,23 @@ export default function DataTest() {
         {
           id: 1,
           label: "Total Tokens Staked",
-          value: stakingInfo.totalTokensStaked,
+          value: stakingInfo.totalTokensStaked.toString(),
         },
         { id: 2, label: "Total Tokens", value: stakingInfo.totalTokens },
-        { id: 3, label: "Total Stakers", value: stakingInfo.totalStakers },
+        {
+          id: 3,
+          label: "Total Stakers",
+          value: stakingInfo.totalStakers.toString(),
+        },
         {
           id: 4,
           label: "Reward Distributed",
-          value: stakingInfo.rewardDistributed,
+          value: stakingInfo.rewardDistributed.toString(),
         },
         {
           id: 5,
           label: "Total Reward Generated",
-          value: stakingInfo.totalRewardGenerated,
+          value: stakingInfo.totalRewardGenerated.toString(),
         },
       ]
     : [];
