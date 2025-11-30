@@ -17,12 +17,12 @@ function Stake({ data, token }) {
   const tokenData = data
     ? {
         name: data.tokenInfo?.name || data.tokenInfo?.symbol || "Unknown Token",
-        image: data.tokenInfo?.image || "/image.png",
+        image: data.tokenInfo?.icon || "/image.png",
       }
     : token;
 
   const poolAddress = poolData.poolAddress?.toBase58() || "";
-  const stakersCount = 0; // We don't have stakers count in SDK yet
+  const stakersCount = poolData.totalStakers ? poolData.totalStakers.toNumber() : 0;
   const isFav = isFavorite("stake", poolAddress);
 
   const handleClick = () => {
@@ -55,13 +55,13 @@ function Stake({ data, token }) {
         }
       `}</style>
       {/* Token Image */}
-      <div className="relative aspect-[1.6/1] w-full bg-black">
+      <div className="relative aspect-[1.1/1] w-full bg-black">
         <Image
           src={tokenData.image}
           alt={tokenData.name}
           fill
           className="static! object-cover"
-          sizes="220px"
+          sizes="500px"
         />
       </div>
       {/* Card Content */}

@@ -133,7 +133,10 @@ function StakePageContent() {
 
         {/* Show StakingPositionsTable on desktop, Details on mobile */}
         <div>
-          <StakingPositionsTable />
+          <StakingPositionsTable
+            pool={pool}
+            onRefresh={fetchPool}
+          />
         </div>
       </div>
       <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">

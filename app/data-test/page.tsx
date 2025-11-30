@@ -54,7 +54,14 @@ export default function DataTest() {
     const totalTokens = tokenInfo.totalSupply;
     const totalStakers = res.totalStakers;
     const rewardDistributed = res.rewardDistributed;
-    const totalRewardGenerated = res.totalRewardGenerated;
+
+    // Calculate total reward generated from rewardRate and time period
+    const periodInSeconds = new BN(
+      Math.floor(
+        (res.endTimestamp.getTime() - res.startTimestamp.getTime()) / 1000,
+      ),
+    );
+    const totalRewardGenerated = res.rewardRate.mul(periodInSeconds);
 
     return {
       totalTokensStaked,

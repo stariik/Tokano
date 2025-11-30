@@ -39,13 +39,50 @@ function Lock({ data, token }) {
   const tokenData = data
     ? {
         name: data.tokenInfo?.name || data.tokenInfo?.symbol || "Unknown Token",
-        image: data.tokenInfo?.image || "/image.png",
+        image: data.tokenInfo?.icon || "/image.png",
       }
     : token;
 
   const vestAddress = vestData.address?.toBase58() || "";
   const lockersCount = 0; // We don't have count in SDK yet
   const isFav = isFavorite("vest", vestAddress);
+
+  // Get schedule type name
+  const getScheduleType = () => {
+    if (!vestData.scheduleType && vestData.scheduleType !== 0) return "LINEAR";
+
+    const scheduleNames = {
+      0: "SECONDLY",
+      1: "MINUTELY",
+      2: "HOURLY",
+      3: "DAILY",
+      4: "WEEKLY",
+      5: "MONTHLY",
+      6: "QUARTERLY",
+      7: "YEARLY",
+      8: "TILL THE END"
+    };
+
+    return scheduleNames[vestData.scheduleType] || "LINEAR";
+  };
+
+  // Calculate time remaining until end
+  const getTimeRemaining = () => {
+    if (!vestData.endTime) return "2d-12h";
+
+    const endTime = vestData.endTime.getTime
+      ? vestData.endTime.getTime()
+      : vestData.endTime;
+    const now = Date.now();
+    const diff = endTime - now;
+
+    if (diff <= 0) return "ENDED";
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    return `${days}d-${hours}h`;
+  };
 
   const handleClick = () => {
     if (vestAddress) {
@@ -72,13 +109,13 @@ function Lock({ data, token }) {
       }}
     >
       {/* Token Image */}
-      <div className="relative aspect-[1.6/1] w-full bg-black">
+      <div className="relative aspect-[1.1/1] w-full bg-black">
         <Image
           src={tokenData.image}
           alt={tokenData.name}
           fill
           className="static! object-cover"
-          sizes="220px"
+          sizes="500px"
         />
       </div>
       {/* Card Content */}
@@ -123,7 +160,7 @@ function Lock({ data, token }) {
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
         >
-          TYPE: LIN/MONTHLY
+          TYPE: {getScheduleType()}
         </div>
         <div
           className="font-khand flex h-5 w-30 items-center justify-center rounded-l-xl text-center text-[11px] font-medium lg:text-xs"
@@ -131,7 +168,7 @@ function Lock({ data, token }) {
             background: "linear-gradient(90deg, #3542C5 0%, #2A8DFF 100%)",
           }}
         >
-          ENDS: | 2d-12h
+          ENDS: | {getTimeRemaining()}
         </div>
       </div>
     </div>

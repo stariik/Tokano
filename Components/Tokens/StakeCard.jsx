@@ -141,7 +141,7 @@ function StakeCard({
             // className="md:h-[30px] md:w-[30px]"
           />
         </div>
-        <div className="font-khand absolute top-12 right-0 rounded-l-2xl bg-[#2B923E] pl-2 text-xs font-normal text-white md:top-16 xl:text-sm dark:bg-[#2B923E]">
+        <div className="font-khand absolute top-12 right-0 rounded-l-2xl bg-[#2B923E] pr-0.5 sm:pr-1 pl-2 text-xs font-normal text-white md:top-16 xl:text-sm dark:bg-[#2B923E]">
           {stakeTimestamp || "N/A"}
         </div>
         <div

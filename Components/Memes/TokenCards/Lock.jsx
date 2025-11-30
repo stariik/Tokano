@@ -16,7 +16,7 @@ function Lock({ data, token }) {
   const tokenData = data
     ? {
         name: data.tokenInfo?.name || data.tokenInfo?.symbol || "Unknown Token",
-        image: data.tokenInfo?.image || "/image.png",
+        image: data.tokenInfo?.icon || "/image.png",
       }
     : token;
 
@@ -72,13 +72,13 @@ function Lock({ data, token }) {
         }
       `}</style>
       {/* Token Image */}
-      <div className="relative aspect-[1.6/1] w-full bg-black">
+      <div className="relative aspect-[1.1/1] w-full bg-black">
         <Image
           src={tokenData.image}
           alt={tokenData.name}
           fill
           className="static! object-cover"
-          sizes="220px"
+          sizes="500px"
         />
       </div>
       {/* Card Content */}

@@ -1,8 +1,70 @@
-import React from "react";
+"use client";
+
+import React, { useCallback, useEffect, useState } from "react";
+import { BN } from "@coral-xyz/anchor";
 import TokanoToken from "./TokanoToken";
 import GlobalDataRow from "../comps/GlobalDataRow";
+import { useTokens } from "@/contexts/tokens-context";
+import { useTokano } from "@/contexts/tokano-sdk-context";
+import { TOKANO_MINT_ADDRESS, TOKANO_POOL_ID } from "@/lib/constants";
 
 function GlobalData() {
+  const { fetchTokenInfo } = useTokens();
+  const { staking } = useTokano();
+  const [tokenInfo, setTokenInfo] = useState(null);
+  const [stakingInfo, setStakingInfo] = useState(null);
+
+  const tokenFetch = useCallback(async () => {
+    const res = await fetchTokenInfo([TOKANO_MINT_ADDRESS]);
+    return res[TOKANO_MINT_ADDRESS];
+  }, [fetchTokenInfo]);
+
+  const stakingFetch = useCallback(async () => {
+    if (!tokenInfo) return null;
+    const res = await staking.fetchStakePool(TOKANO_POOL_ID);
+    const totalTokensStaked = res.totalTokenStaked;
+    const totalStakers = res.totalStakers;
+    const rewardDistributed = res.rewardDistributed;
+
+    // Calculate total reward generated from rewardRate and time period
+    const periodInSeconds = new BN(
+      Math.floor((res.endTimestamp.getTime() - res.startTimestamp.getTime()) / 1000)
+    );
+    const totalRewardGenerated = res.rewardRate.mul(periodInSeconds);
+
+    return {
+      totalTokensStaked,
+      totalStakers,
+      rewardDistributed,
+      totalRewardGenerated,
+    };
+  }, [staking, tokenInfo]);
+
+  useEffect(() => {
+    tokenFetch().then((res) => setTokenInfo(res));
+  }, [tokenFetch]);
+
+  useEffect(() => {
+    if (tokenInfo) {
+      stakingFetch().then((res) => setStakingInfo(res));
+    }
+  }, [tokenInfo, stakingFetch]);
+
+  // Format numbers for display
+  const formatNumber = (num) => {
+    if (!num) return "0";
+    const value = typeof num === 'string' ? parseFloat(num) : num;
+    if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
+    if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
+    if (value >= 1e3) return `${(value / 1e3).toFixed(2)}K`;
+    return value.toFixed(2);
+  };
+
+  const formatBN = (bn) => {
+    if (!bn) return "0";
+    return formatNumber(bn.toString() / 1e9); // Assuming 9 decimals
+  };
+
   return (
     <div className="px-2 xl:px-4 2xl:px-6">
       <TokanoToken
@@ -18,9 +80,15 @@ function GlobalData() {
             <GlobalDataRow
               label=""
               data={[
-                { supply: "1.073B", holders: "3111" },
+                {
+                  supply: tokenInfo ? formatNumber(tokenInfo.totalSupply) : "Loading...",
+                  holders: tokenInfo?.holderCount?.toString() || "Loading..."
+                },
                 { unsold: "500M", unlocked: "200M" },
-                { "m-cap": "$12m/1 SOL", price: "$0.003 / 0 SOL" },
+                {
+                  "m-cap": tokenInfo ? `$${formatNumber(tokenInfo.mcap)}` : "Loading...",
+                  price: tokenInfo ? `$${parseFloat(tokenInfo.usdPrice).toFixed(3)}` : "Loading..."
+                },
               ]}
             />
           </div>
@@ -30,8 +98,14 @@ function GlobalData() {
             <GlobalDataRow
               label="STAKED"
               data={[
-                { total: "500M", stakes: "1234" },
-                { "active rewards": "10K", "earned rewards": "50K" },
+                {
+                  total: stakingInfo ? formatBN(stakingInfo.totalTokensStaked) : "Loading...",
+                  stakes: stakingInfo?.totalStakers?.toString() || "Loading..."
+                },
+                {
+                  "active rewards": stakingInfo ? formatBN(stakingInfo.totalRewardGenerated) : "Loading...",
+                  "earned rewards": stakingInfo ? formatBN(stakingInfo.rewardDistributed) : "Loading..."
+                },
               ]}
             />
           </div>
