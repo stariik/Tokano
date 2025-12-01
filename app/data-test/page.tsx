@@ -2,9 +2,19 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { TokenInfo, useTokens } from "@/contexts/tokens-context";
-import { TOKANO_MINT_ADDRESS, TOKANO_POOL_ID } from "@/lib/constants";
+import {
+  TOKANO_LOCK_ADDRESS,
+  TOKANO_MINT_ADDRESS,
+  TOKANO_POOL_ID,
+  TOKANO_PUMP_LIQUIDITY_POOL_ADDRESS,
+  TOKANO_VESTING_ADDRESS,
+} from "@/lib/constants";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { BN } from "@coral-xyz/anchor";
+import { useConnection } from "@solana/wallet-adapter-react";
+import { PublicKey } from "@solana/web3.js";
+import { LockState, VestingState } from "tokano-sdk";
+import { TokenBalanceT } from "@/lib/balances";
 
 // Inlined TokenRow component
 const TokenInfoRow = ({ label, value }) => (
@@ -37,14 +47,56 @@ const TokenInfoTable = ({ header, data }) => (
 );
 
 export default function DataTest() {
+  const { connection } = useConnection();
   const { fetchTokenInfo } = useTokens();
-  const { staking } = useTokano();
+  const { staking, vesting, lock } = useTokano();
   const [tokenInfo, setTokenInfo] = useState<TokenInfo | null>(null);
   const [stakingInfo, setStakingInfo] = useState<any | null>(null);
+  const [vestingInfo, setVestingInfo] = useState<VestingState | null>(null);
+  const [lockInfo, setLockInfo] = useState<LockState | null>(null);
+  const [unsoldTokenBalance, setUnsoldTokenBalance] =
+    useState<TokenBalanceT | null>(null);
+
+  const fetchUnsoldTokens = useCallback(async () => {
+    const balances = await connection.getParsedTokenAccountsByOwner(
+      new PublicKey(TOKANO_PUMP_LIQUIDITY_POOL_ADDRESS),
+      {
+        mint: new PublicKey(TOKANO_MINT_ADDRESS),
+      },
+    );
+    const result: TokenBalanceT = balances.value.map((value) => {
+      return {
+        mintAddress: value.account.data.parsed.info.mint,
+        decimals: value.account.data.parsed.info.tokenAmount.decimals,
+        amount: value.account.data.parsed.info.tokenAmount.uiAmountString,
+        amountRaw: Number.parseInt(
+          value.account.data.parsed.info.tokenAmount.amount,
+        ),
+      };
+    })[0];
+
+    if (!result) return;
+    setUnsoldTokenBalance(result);
+  }, [connection]);
+
+  const fetchLock = useCallback(async () => {
+    const result = await lock.fetchLock(new PublicKey(TOKANO_LOCK_ADDRESS));
+    if (!result) return;
+    setLockInfo(result);
+  }, [lock]);
+
+  const fetchVest = useCallback(async () => {
+    const result = await vesting.fetchVesting(
+      new PublicKey(TOKANO_VESTING_ADDRESS),
+    );
+    if (!result) return;
+    setVestingInfo(result);
+  }, [vesting]);
 
   const tokenFetch = useCallback(async () => {
     const res = await fetchTokenInfo([TOKANO_MINT_ADDRESS]);
-    return res[TOKANO_MINT_ADDRESS];
+    if (!res[TOKANO_MINT_ADDRESS]) return;
+    setTokenInfo(res[TOKANO_MINT_ADDRESS]);
   }, [fetchTokenInfo]);
 
   const stakingFetch = useCallback(async () => {
@@ -63,24 +115,29 @@ export default function DataTest() {
     );
     const totalRewardGenerated = res.rewardRate.mul(periodInSeconds);
 
-    return {
+    const result = {
       totalTokensStaked,
       totalTokens,
       totalStakers,
       rewardDistributed,
       totalRewardGenerated,
     };
+
+    setStakingInfo(result);
   }, [staking, tokenInfo]);
 
   useEffect(() => {
-    tokenFetch().then((res) => setTokenInfo(res));
-  }, [tokenFetch]);
-
-  useEffect(() => {
-    if (tokenInfo) {
-      stakingFetch().then((res) => setStakingInfo(res));
-    }
-  }, [tokenInfo, stakingFetch]);
+    console.log("Fetching");
+    Promise.allSettled([
+      tokenFetch(),
+      stakingFetch(),
+      fetchVest(),
+      fetchLock(),
+      fetchUnsoldTokens(),
+    ])
+      .then(() => console.log("All data fetched"))
+      .catch((e) => console.error(e));
+  }, [fetchLock, fetchUnsoldTokens, fetchVest, stakingFetch, tokenFetch]);
 
   if (!tokenInfo) {
     return <div>Loading Token Info...</div>;
