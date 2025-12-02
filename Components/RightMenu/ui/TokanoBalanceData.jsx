@@ -1,8 +1,87 @@
-import React from "react";
+"use client";
+
+import React, { useCallback, useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useTokano } from "@/contexts/tokano-sdk-context";
+import { useBalances } from "@/contexts/balances-context";
+import { TOKANO_MINT_ADDRESS } from "@/lib/constants";
 
 function TokanoBalanceData() {
   const { resolvedTheme } = useTheme();
+  const { publicKey } = useWallet();
+  const { staking, lock } = useTokano();
+  const { tokens } = useBalances();
+  const [stakedBalance, setStakedBalance] = useState(null);
+  const [lockedBalance, setLockedBalance] = useState(null);
+
+  // Get available TOKANO balance from wallet
+  const tokanoToken = tokens.find((t) => t.mintAddress === TOKANO_MINT_ADDRESS);
+  const availableBalance = tokanoToken?.amount || "0";
+
+  // Fetch staked balance
+  const fetchStakedBalance = useCallback(async () => {
+    if (!publicKey || !staking) {
+      setStakedBalance(null);
+      return;
+    }
+
+    try {
+      // Get all user stake accounts
+      const allStakes = await staking.fetchUserStakeAccounts(publicKey);
+
+      // Get all pools to match with stakes
+      const pools = await staking.fetchStakePools();
+
+      // Filter stakes for TOKANO token and sum balances
+      const totalStaked = allStakes
+        .map((stake) => {
+          const pool = pools.find((p) => p.poolAddress.equals(stake.poolAddress));
+          return { stake, pool };
+        })
+        .filter(({ pool }) => pool?.tokenMint.toBase58() === TOKANO_MINT_ADDRESS)
+        .reduce((sum, { stake }) => sum + parseFloat(stake.stakedTokenBalance.toString()) / 1e9, 0);
+
+      setStakedBalance(totalStaked);
+    } catch (error) {
+      console.error("Error fetching staked balance:", error);
+      setStakedBalance(0);
+    }
+  }, [publicKey, staking]);
+
+  // Fetch locked balance
+  const fetchLockedBalance = useCallback(async () => {
+    if (!publicKey || !lock) {
+      setLockedBalance(null);
+      return;
+    }
+
+    try {
+      const userLocks = await lock.fetchUserLocks(publicKey);
+      // Sum up all locked amounts for TOKANO token
+      const totalLocked = userLocks
+        .filter((lockItem) => lockItem.tokenMint.toBase58() === TOKANO_MINT_ADDRESS)
+        .reduce((sum, lockItem) => sum + parseFloat(lockItem.lockAmount.toString()) / 1e9, 0);
+      setLockedBalance(totalLocked);
+    } catch (error) {
+      console.error("Error fetching locked balance:", error);
+      setLockedBalance(0);
+    }
+  }, [publicKey, lock]);
+
+  useEffect(() => {
+    fetchStakedBalance();
+    fetchLockedBalance();
+  }, [fetchStakedBalance, fetchLockedBalance]);
+
+  const formatBalance = (balance) => {
+    if (balance === null || balance === undefined) return "0.000";
+    const num = typeof balance === "string" ? parseFloat(balance) : balance;
+    if (isNaN(num)) return "0.000";
+
+    const [integer, decimal] = num.toFixed(3).split(".");
+    return { integer: parseInt(integer).toLocaleString(), decimal };
+  };
 
   return (
     <div className="flex items-stretch">
@@ -50,7 +129,14 @@ function TokanoBalanceData() {
             Available:
           </span>
           <span className="text-right text-base font-bold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
-            13,000,239.<span className="text-sm">127</span>
+            {publicKey ? (
+              <>
+                {formatBalance(availableBalance).integer}.
+                <span className="text-sm">{formatBalance(availableBalance).decimal}</span>
+              </>
+            ) : (
+              "Not Connected"
+            )}
           </span>
         </div>
         <div className="flex items-center justify-between border-b border-[#7B3FE4] px-4 py-1">
@@ -58,7 +144,18 @@ function TokanoBalanceData() {
             Staked:
           </span>
           <span className="text-base font-bold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
-            120,000.<span className="text-sm">200</span>
+            {publicKey ? (
+              stakedBalance !== null ? (
+                <>
+                  {formatBalance(stakedBalance).integer}.
+                  <span className="text-sm">{formatBalance(stakedBalance).decimal}</span>
+                </>
+              ) : (
+                "Loading..."
+              )
+            ) : (
+              "Not Connected"
+            )}
           </span>
         </div>
         <div className="flex items-center justify-between px-4 py-1">
@@ -66,7 +163,18 @@ function TokanoBalanceData() {
             Locked:
           </span>
           <span className="text-base font-bold text-[#190E79] lg:text-base xl:text-lg 2xl:text-xl dark:text-white">
-            120,000.<span className="text-sm">200</span>
+            {publicKey ? (
+              lockedBalance !== null ? (
+                <>
+                  {formatBalance(lockedBalance).integer}.
+                  <span className="text-sm">{formatBalance(lockedBalance).decimal}</span>
+                </>
+              ) : (
+                "Loading..."
+              )
+            ) : (
+              "Not Connected"
+            )}
           </span>
         </div>
       </div>

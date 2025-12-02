@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 const percents = [
@@ -8,9 +10,11 @@ const percents = [
   { value: "100%", color: "#330E79" },
 ];
 
-export default function RainbowBalance() {
+export default function RainbowBalance({ onPercentageClick, selectedPercentage }) {
   const handlePercentClick = (percent) => {
-    // TODO: Add functionality when needed
+    if (onPercentageClick) {
+      onPercentageClick(percent);
+    }
   };
 
   return (
@@ -23,19 +27,27 @@ export default function RainbowBalance() {
           height: "100%",
         }}
       >
-        {percents.map((item) => (
-          <span
-            key={item.value}
-            onClick={() => handlePercentClick(item.value)}
-            className="cursor-pointer text-xs font-bold select-none xl:text-sm"
-            style={{
-              color: item.color,
-              fontFamily: "inherit",
-            }}
-          >
-            {item.value}
-          </span>
-        ))}
+        {percents.map((item) => {
+          const isSelected = selectedPercentage === item.value;
+          return (
+            <span
+              key={item.value}
+              onClick={() => handlePercentClick(item.value)}
+              className={`cursor-pointer text-xs font-bold select-none xl:text-sm transition-all ${
+                isSelected ? "scale-125 drop-shadow-lg" : ""
+              }`}
+              style={{
+                color: item.color,
+                fontFamily: "inherit",
+                textShadow: isSelected
+                  ? "0 0 8px rgba(255, 255, 255, 0.9), 0 0 4px rgba(0, 0, 0, 0.8)"
+                  : "none",
+              }}
+            >
+              {item.value}
+            </span>
+          );
+        })}
       </div>
     </div>
   );

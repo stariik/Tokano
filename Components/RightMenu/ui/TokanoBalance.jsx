@@ -1,4 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useBalances } from "@/contexts/balances-context";
+import { TOKANO_MINT_ADDRESS } from "@/lib/constants";
 import BalanceComp from "../comps/BalanceComp";
 import TokanoToken from "./TokanoToken";
 import RainbowBalance from "../comps/RainbowBalance";
@@ -6,6 +11,36 @@ import StakeButton from "../comps/StakeButton";
 import TokanoBalanceData from "./TokanoBalanceData";
 
 export default function TokanoBalance() {
+  const { publicKey } = useWallet();
+  const { tokens } = useBalances();
+  const [stakeAmount, setStakeAmount] = useState("");
+  const [selectedPercentage, setSelectedPercentage] = useState(null);
+
+  // Get available TOKANO balance from wallet
+  const tokanoToken = tokens.find((t) => t.mintAddress === TOKANO_MINT_ADDRESS);
+  const availableBalance = tokanoToken?.amount || "0";
+  const decimals = tokanoToken?.decimals || 9;
+
+  const formatBalance = (balance) => {
+    if (!balance) return "0.000";
+    const num = typeof balance === "string" ? parseFloat(balance) : balance;
+    if (isNaN(num)) return "0.000";
+    return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
+  const handlePercentageClick = (percentage) => {
+    const percentValue = parseInt(percentage);
+    const availableNum = parseFloat(availableBalance);
+    const calculatedAmount = Math.floor((availableNum * percentValue) / 100);
+    setStakeAmount(calculatedAmount.toString());
+    setSelectedPercentage(percentage);
+  };
+
+  const handleAmountChange = (value) => {
+    setStakeAmount(value);
+    setSelectedPercentage(null); // Clear percentage highlight when manually typing
+  };
+
   return (
     <div className="dark:border-secondary border-x-2 border-[#CDCDE9] bg-[#f5f3fb] dark:bg-[#1a0033]">
       <TokanoToken
@@ -23,18 +58,30 @@ export default function TokanoBalance() {
             Available:
           </span>
           <span className="text-lg font-bold text-[#190E79] lg:text-base xl:text-lg dark:text-white">
-            13,000,239.12
+            {publicKey ? formatBalance(availableBalance) : "Not Connected"}
           </span>
         </div>
         {/* Progress Bar & Stake Row */}
         <div className="flex items-center justify-between bg-[#f5f3fb] py-2 pr-2 lg:py-1 2xl:py-2 2xl:pr-6 dark:bg-[#1a0033]">
           {/* Progress bar */}
           <div className="relative flex items-center gap-2">
-            <RainbowBalance />
-            <BalanceComp />
+            <RainbowBalance
+              onPercentageClick={handlePercentageClick}
+              selectedPercentage={selectedPercentage}
+            />
+            <BalanceComp
+              value={stakeAmount}
+              onChange={handleAmountChange}
+              maxAmount={availableBalance}
+            />
           </div>
           <div className="">
-            <StakeButton />
+            <StakeButton
+              stakeAmount={stakeAmount}
+              availableBalance={availableBalance}
+              decimals={decimals}
+              onStakeComplete={() => setStakeAmount("")}
+            />
           </div>
         </div>
 

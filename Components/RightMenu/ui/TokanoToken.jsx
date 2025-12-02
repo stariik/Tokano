@@ -1,5 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
+import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 const Icon = () => {
   const { resolvedTheme } = useTheme();
@@ -29,6 +33,38 @@ function TokanoToken({
   className = "",
   showIcon = false,
 }) {
+  const { publicKey } = useWallet();
+  const { connection } = useConnection();
+  const [solBalance, setSolBalance] = useState(null);
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      if (!publicKey || !connection) {
+        setSolBalance(null);
+        return;
+      }
+
+      try {
+        const balance = await connection.getBalance(publicKey);
+        setSolBalance(balance / LAMPORTS_PER_SOL);
+      } catch (error) {
+        console.error("Error fetching SOL balance:", error);
+        setSolBalance(null);
+      }
+    };
+
+    fetchBalance();
+
+    // Poll for balance updates every 10 seconds
+    const interval = setInterval(fetchBalance, 10000);
+    return () => clearInterval(interval);
+  }, [publicKey, connection]);
+
+  const formatBalance = (balance) => {
+    if (balance === null) return "0.0000";
+    return balance.toFixed(4);
+  };
+
   return (
     <div className="font-khand">
       <div
@@ -79,7 +115,9 @@ function TokanoToken({
             );
           }
         `}</style>
-        <h1>Balance in SOL: 203.0123</h1>
+        <h1>
+          Balance in SOL: {publicKey ? formatBalance(solBalance) : "Not Connected"}
+        </h1>
       </div>
     </div>
   );

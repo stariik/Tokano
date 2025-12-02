@@ -1,8 +1,24 @@
+"use client";
+
 import React from "react";
 import { useTheme } from "@/hooks/useTheme";
+import { NumericFormat } from "react-number-format";
 
-function BalanceComp() {
+function BalanceComp({ value, onChange, maxAmount }) {
   const { resolvedTheme } = useTheme();
+
+  const handleValueChange = (values) => {
+    const { value: newValue } = values;
+    const maxNum = parseFloat(maxAmount);
+    const inputNum = parseFloat(newValue);
+
+    // Validate max amount
+    if (inputNum > maxNum) {
+      onChange(maxAmount);
+    } else {
+      onChange(newValue);
+    }
+  };
 
   return (
     <div>
@@ -42,9 +58,16 @@ function BalanceComp() {
             />
           </svg>
         )}
-        <span className="ml-1 flex items-center text-xs leading-none font-bold text-[#190E79] sm:ml-2 sm:text-sm md:ml-0.5 md:text-sm lg:text-sm xl:text-base 2xl:text-xl dark:text-white">
-          13,000
-        </span>
+        <NumericFormat
+          value={value}
+          onValueChange={handleValueChange}
+          placeholder="0"
+          valueIsNumericString={true}
+          allowNegative={false}
+          thousandSeparator=","
+          decimalScale={0}
+          className="ml-1 w-24 bg-transparent text-xs leading-none font-bold text-[#190E79] outline-none sm:ml-2 sm:w-28 sm:text-sm md:ml-0.5 md:text-sm lg:text-sm lg:w-20 xl:text-base xl:w-24 2xl:text-xl 2xl:w-32 dark:text-white"
+        />
       </div>
     </div>
   );
