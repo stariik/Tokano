@@ -79,11 +79,24 @@ function TokenGrid({
     setLoading(true);
     try {
       // Fetch all data in parallel
-      const [pools, vestingData, lockData] = await Promise.all([
+      const [pools, vestingData, lockData, allUserStakes] = await Promise.all([
         staking.fetchStakePools(),
         vesting.fetchAllVestings(),
         lock.fetchAllLocks(),
+        staking.program.account.userState.all(),
       ]);
+
+      // Count unique stakers per pool
+      const stakersPerPool = {};
+      allUserStakes.forEach((userStake) => {
+        const poolAddress = userStake.account.poolAddress.toBase58();
+        if (!stakersPerPool[poolAddress]) {
+          stakersPerPool[poolAddress] = new Set();
+        }
+        stakersPerPool[poolAddress].add(
+          userStake.account.stakerUser.toBase58()
+        );
+      });
 
       // Collect all unique token mints
       const allMints = [
@@ -106,6 +119,7 @@ function TokenGrid({
           type: pool.startTimestamp.getTime() > currentTime ? "soon" : "stake",
           timestamp: pool.startTimestamp.getTime(),
           tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
+          stakersCount: stakersPerPool[pool.poolAddress.toBase58()]?.size || 0,
         }));
 
       // Process vestings - filter out ended vestings

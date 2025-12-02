@@ -44,7 +44,27 @@ function Lock({ data, token }) {
     : token;
 
   const vestAddress = vestData.address?.toBase58() || "";
-  const lockersCount = 0; // We don't have count in SDK yet
+
+  // Format vested amount
+  const formatAmount = (amount, decimals = 9) => {
+    if (!amount) return "0";
+    const amountNum = typeof amount === "number" ? amount : Number(amount);
+    const value = amountNum / Math.pow(10, decimals);
+
+    if (value >= 1000000) {
+      const millions = value / 1000000;
+      return millions % 1 === 0
+        ? `${millions.toFixed(0)}M`
+        : `${millions.toFixed(1)}M`;
+    } else if (value >= 1000) {
+      const thousands = value / 1000;
+      return thousands % 1 === 0
+        ? `${thousands.toFixed(0)}K`
+        : `${thousands.toFixed(1)}K`;
+    }
+    return value.toFixed(0);
+  };
+
   const isFav = isFavorite("vest", vestAddress);
 
   // Get schedule type name
@@ -60,7 +80,7 @@ function Lock({ data, token }) {
       5: "MONTHLY",
       6: "QUARTERLY",
       7: "YEARLY",
-      8: "TILL THE END"
+      8: "TILL THE END",
     };
 
     return scheduleNames[vestData.scheduleType] || "LINEAR";
@@ -144,7 +164,12 @@ function Lock({ data, token }) {
           </div>
           <div className="mt-1 flex flex-col items-end">
             <span className="text-xl leading-none font-bold text-[#FFD600]">
-              {lockersCount}
+              {vestData?.totalVestedAmount
+                ? formatAmount(
+                    vestData.totalVestedAmount,
+                    vestData.tokenInfo?.decimals || 9
+                  )
+                : "0"}
             </span>
             <span className="-mt-1 text-sm font-semibold text-[#B0B3D6]">
               locked

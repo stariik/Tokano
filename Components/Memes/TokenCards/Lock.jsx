@@ -21,7 +21,37 @@ function Lock({ data, token }) {
     : token;
 
   const lockAddress = lockData.address?.toBase58() || "";
-  const stakersCount = 0; // We don't have count in SDK yet
+
+  // Format lock amount (same as in LockCard.jsx)
+  const formatAmount = (amount, decimals = 9) => {
+    if (!amount) return "0";
+    try {
+      const amountNum =
+        typeof amount === "number" ? amount : Number(amount.toString());
+      const value = amountNum / Math.pow(10, decimals);
+
+      if (value >= 1000000) {
+        const millions = value / 1000000;
+        return millions % 1 === 0
+          ? `${millions.toFixed(0)}M`
+          : `${millions.toFixed(1)}M`;
+      } else if (value >= 1000) {
+        const thousands = value / 1000;
+        return thousands % 1 === 0
+          ? `${thousands.toFixed(0)}K`
+          : `${thousands.toFixed(1)}K`;
+      }
+      return value.toFixed(0);
+    } catch (error) {
+      console.error("Error formatting lock amount:", error, amount);
+      return "0";
+    }
+  };
+
+  const lockedAmount = lockData?.lockAmount
+    ? formatAmount(lockData.lockAmount, lockData.tokenInfo?.decimals || 9)
+    : "0";
+
   const isFav = isFavorite("lock", lockAddress);
 
   // Calculate time remaining
@@ -163,7 +193,7 @@ function Lock({ data, token }) {
 
           <div className="mt-1 flex flex-col items-end">
             <span className="text-end text-xl leading-none font-bold text-[#FFD600]">
-              {stakersCount}
+              {lockedAmount}
             </span>
             <span className="-mt-1 text-xs font-semibold text-[#B0B3D6]">
               locked

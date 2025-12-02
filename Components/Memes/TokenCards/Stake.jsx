@@ -22,7 +22,17 @@ function Stake({ data, token }) {
     : token;
 
   const poolAddress = poolData.poolAddress?.toBase58() || "";
-  const stakersCount = poolData.totalStakers ? poolData.totalStakers.toNumber() : 0;
+
+  // Format stakers count with fallback
+  const formatStakersCount = (count) => {
+    if (!count || count === 0) return "0";
+    if (count >= 1000) {
+      return `${(count / 1000).toFixed(1)}K`;
+    }
+    return count.toString();
+  };
+
+  const stakersCount = poolData.stakersCount || poolData.totalStakers || 0;
   const isFav = isFavorite("stake", poolAddress);
 
   const handleClick = () => {
@@ -84,7 +94,7 @@ function Stake({ data, token }) {
           <StakeGrad poolData={poolData} />
           <div className="flex flex-col">
             <div className="flex justify-end gap-0 text-base text-[#FFB01C] sm:text-lg md:text-xl lg:text-xl 2xl:text-2xl">
-              {stakersCount > 0 ? `${stakersCount}K` : "0"}
+              {formatStakersCount(stakersCount)}
             </div>
             <div className="-ml-1.5 text-xs text-white sm:-ml-2 sm:text-sm md:ml-0">
               stakers
