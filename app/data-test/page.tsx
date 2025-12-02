@@ -80,14 +80,18 @@ export default function DataTest() {
   }, [connection]);
 
   const fetchLock = useCallback(async () => {
-    const result = await lock.fetchLock(new PublicKey(TOKANO_LOCK_ADDRESS));
+    const allLocks = await lock.fetchAllLocks();
+    const result = allLocks.find(
+      (l) => l.address.toBase58() === TOKANO_LOCK_ADDRESS,
+    );
     if (!result) return;
     setLockInfo(result);
   }, [lock]);
 
   const fetchVest = useCallback(async () => {
-    const result = await vesting.fetchVesting(
-      new PublicKey(TOKANO_VESTING_ADDRESS),
+    const allVestings = await vesting.fetchAllVestings();
+    const result = allVestings.find(
+      (v) => v.address.toBase58() === TOKANO_VESTING_ADDRESS,
     );
     if (!result) return;
     setVestingInfo(result);

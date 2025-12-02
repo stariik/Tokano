@@ -44,7 +44,7 @@ function Soon({ data, token }) {
   const handleClick = () => {
     if (poolAddress) {
       if (poolType === "stake") {
-        router.push(`/card/soon?pool=${poolAddress}`);
+        router.push(`/card/soon?type=${poolAddress}`);
       } else {
         router.push(`/card/soon?vest=${poolAddress}`);
       }
