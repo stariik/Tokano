@@ -417,7 +417,7 @@ function Vest({ vestData, vestAddress }) {
         </div>
       </div>
 
-      <div className="font-khand mr-10 lg:mr-6 xl:mr-10 text-end text-xl font-medium lg:text-2xl">
+      <div className="font-khand mr-10 text-end text-xl font-medium lg:mr-6 lg:text-2xl xl:mr-10">
         locked
       </div>
     </div>

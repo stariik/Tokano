@@ -167,7 +167,7 @@ function Lock({ data, token }) {
               {vestData?.totalVestedAmount
                 ? formatAmount(
                     vestData.totalVestedAmount,
-                    vestData.tokenInfo?.decimals || 9
+                    vestData.tokenInfo?.decimals || 9,
                   )
                 : "0"}
             </span>

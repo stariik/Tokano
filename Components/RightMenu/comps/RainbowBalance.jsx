@@ -24,9 +24,9 @@ export default function RainbowBalance({
   };
 
   return (
-    <div className="rainbow-balance-wrapper relative flex h-7 w-full ">
+    <div className="rainbow-balance-wrapper relative flex h-7 w-full">
       <div
-        className="flex h-full w-full items-center justify-between pr-8 md:pr-10 pl-2 xl:pl-3"
+        className="flex h-full w-full items-center justify-between pr-8 pl-2 md:pr-10 xl:pl-3"
         style={{
           background:
             "linear-gradient(90deg, rgba(109, 17, 179, 1) 10%, rgba(249, 44, 157, 1) 35%, rgba(255, 212, 42, 1) 89%)",
@@ -55,7 +55,7 @@ export default function RainbowBalance({
           );
         })}
       </div>{" "}
-      <div className="absolute -top-1.5 -right-1.5 z-10 flex items-center rounded-l-full pl-1 pr-1.5 py-1.5 dark:bg-[#1a0033]">
+      <div className="absolute -top-1.5 -right-1.5 z-10 flex items-center rounded-l-full py-1.5 pr-1.5 pl-1 dark:bg-[#1a0033]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG
           <svg
