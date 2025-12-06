@@ -155,7 +155,7 @@ function Lock({ data, token }) {
         {/* Stats Row */}
         <div className="font-khand flex items-center justify-between font-semibold">
           <div className="flex text-xl text-white lg:text-lg xl:text-2xl">
-            Vest
+            VEST
           </div>
           <div className="">
             <div className="">
@@ -171,7 +171,7 @@ function Lock({ data, token }) {
                   )
                 : "0"}
             </span>
-            <span className="-mt-1 text-sm font-semibold text-[#B0B3D6]">
+            <span className="-mt-1 text-sm font-semibold text-white">
               locked
             </span>
           </div>

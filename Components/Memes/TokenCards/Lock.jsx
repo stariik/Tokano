@@ -195,7 +195,7 @@ function Lock({ data, token }) {
             <span className="text-end text-xl leading-none font-bold text-[#FFD600]">
               {lockedAmount}
             </span>
-            <span className="-mt-1 text-xs font-semibold text-[#B0B3D6]">
+            <span className="-mt-1 text-xs font-semibold text-white">
               locked
             </span>
           </div>

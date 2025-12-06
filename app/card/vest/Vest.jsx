@@ -345,7 +345,7 @@ function Vest({ vestData, vestAddress }) {
             <CiPill className="h-5 w-5 lg:h-5 lg:w-5 xl:h-7 xl:w-7" />
           </div>
 
-          <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pl-1 text-xs font-normal md:pl-2 md:text-sm dark:bg-[#2B923E]">
+          <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pr-0.5 pl-1 text-xs font-normal md:pl-2 md:text-sm lg:pr-1 dark:bg-[#2B923E]">
             {vestData?.startTime ? formatTimestamp(vestData.startTime) : "N/A"}
           </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
@@ -417,7 +417,7 @@ function Vest({ vestData, vestAddress }) {
         </div>
       </div>
 
-      <div className="font-khand mr-12 text-end text-xl font-medium lg:text-2xl">
+      <div className="font-khand mr-10 lg:mr-6 xl:mr-10 text-end text-xl font-medium lg:text-2xl">
         locked
       </div>
     </div>

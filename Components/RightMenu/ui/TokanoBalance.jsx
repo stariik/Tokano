@@ -25,7 +25,10 @@ export default function TokanoBalance() {
     if (!balance) return "0.000";
     const num = typeof balance === "string" ? parseFloat(balance) : balance;
     if (isNaN(num)) return "0.000";
-    return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return num.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
 
   const handlePercentageClick = (percentage) => {
@@ -62,9 +65,9 @@ export default function TokanoBalance() {
           </span>
         </div>
         {/* Progress Bar & Stake Row */}
-        <div className="flex items-center justify-between bg-[#f5f3fb] py-2 pr-2 lg:py-1 2xl:py-2 2xl:pr-6 dark:bg-[#1a0033]">
+        <div className="flex items-center justify-between w-full bg-[#f5f3fb] py-2 pr-2 lg:py-1 2xl:py-2 dark:bg-[#1a0033]">
           {/* Progress bar */}
-          <div className="relative flex items-center gap-2">
+          <div className="flex w-full items-center justify-between gap-2">
             <RainbowBalance
               onPercentageClick={handlePercentageClick}
               selectedPercentage={selectedPercentage}
