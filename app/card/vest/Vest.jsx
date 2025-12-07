@@ -355,7 +355,7 @@ function Vest({ vestData, vestAddress }) {
 
         <div className="absolute left-0 z-5 flex w-11/13">
           <div className="font-khand mx-3 flex max-w-20 items-center text-2xl font-semibold sm:text-4xl lg:mx-6 xl:mx-4 xl:text-3xl">
-            Vest
+            VEST
           </div>
           <VestIcon />
 
