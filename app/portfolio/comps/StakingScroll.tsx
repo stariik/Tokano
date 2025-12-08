@@ -369,7 +369,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                   {displayData.stakes.map((stake, index) => {
                     if (!stake.pool) return null;
 
-                    const decimals = selectedToken.decimals;
+                    const decimals =
+                      selectedToken.info?.decimals || selectedToken.decimals;
                     const rewards =
                       stake.approximateReward.toNumber() /
                       Math.pow(10, decimals);
@@ -383,7 +384,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                           id={index + 1}
                           title={`${selectedToken.info?.name || "Unknown"} (${selectedToken.info?.symbol || "N/A"})`}
                           created={selectedToken.mintAddress}
-                          marketCap={`${rewards.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
+                          marketCap={`${rewards.toFixed(4)} ${selectedToken.info?.symbol || ""}`}
                           wallet={stake.pool.poolAddress.toBase58()}
                           poolAddress={stake.pool.poolAddress.toBase58()}
                           variant="portfolio"
@@ -396,6 +397,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                             stake.pool.endTimestamp.getTime() / 1000
                           }
                           poolData={stake.pool}
+                          tokenImage={selectedToken.info?.icon}
                         />
                       </div>
                     );
@@ -403,10 +405,10 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
                   {/* Render created pools */}
                   {displayData.pools.map((pool, index) => {
-                    const decimals = selectedToken.decimals;
+                    const decimals =
+                      selectedToken.info?.decimals || selectedToken.decimals;
                     const totalRewards =
-                      pool.rewardDistributed.toNumber() /
-                      Math.pow(10, decimals);
+                      pool.rewardRate.toNumber() / Math.pow(10, decimals);
 
                     return (
                       <div
@@ -417,7 +419,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                           id={displayData.stakes.length + index + 1}
                           title={`${selectedToken.info?.name || "Unknown"} (${selectedToken.info?.symbol || "N/A"})`}
                           created={selectedToken.mintAddress}
-                          marketCap={`${totalRewards.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
+                          marketCap={`${totalRewards.toFixed(6)} ${selectedToken.info?.symbol || ""}`}
                           wallet={pool.poolAddress.toBase58()}
                           poolAddress={pool.poolAddress.toBase58()}
                           variant="portfolio"
@@ -427,6 +429,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                           stakersCount={0}
                           poolEndTimestamp={pool.endTimestamp.getTime() / 1000}
                           poolData={pool}
+                          tokenImage={selectedToken.info?.icon}
                         />
                       </div>
                     );
@@ -448,9 +451,10 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
               </div>
             ) : (
               displayData.pools.map((pool, index) => {
-                const decimals = selectedToken.decimals;
+                const decimals =
+                  selectedToken.info?.decimals || selectedToken.decimals;
                 const totalRewards =
-                  pool.rewardDistributed.toNumber() / Math.pow(10, decimals);
+                  pool.rewardRate.toNumber() / Math.pow(10, decimals);
 
                 return (
                   <div
@@ -471,6 +475,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                       stakersCount={0}
                       poolEndTimestamp={pool.endTimestamp.getTime() / 1000}
                       poolData={pool}
+                      tokenImage={selectedToken.info?.icon}
                     />
                   </div>
                 );
@@ -486,7 +491,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
             displayData.stakes.map((stake, index) => {
               if (!stake.pool) return null;
 
-              const decimals = selectedToken.decimals;
+              const decimals =
+                selectedToken.info?.decimals || selectedToken.decimals;
               const rewards =
                 stake.approximateReward.toNumber() / Math.pow(10, decimals);
 
@@ -510,6 +516,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
                     stakersCount={stake.totalStakers || 0}
                     poolEndTimestamp={stake.pool.endTimestamp.getTime() / 1000}
                     poolData={stake.pool}
+                    tokenImage={selectedToken.info?.icon}
                   />
                 </div>
               );
@@ -518,24 +525,26 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
           {/* Render Vest Cards */}
           {displayData.vests.map((vest, index) => {
-            const decimals = selectedToken.decimals;
+            const decimals =
+              selectedToken.info?.decimals || selectedToken.decimals;
             const vestedAmount = vest.amount
               ? vest.amount.toNumber() / Math.pow(10, decimals)
               : 0;
 
             return (
               <div
-                key={vest.accountAddress?.toBase58() || `vest-${index}`}
+                key={vest.address?.toBase58() || `vest-${index}`}
                 className="mb-4"
               >
                 <VestCard
                   id={index + 1}
                   title={`${selectedToken.info?.name || "Unknown"} (${selectedToken.info?.symbol || "N/A"})`}
                   created={selectedToken.mintAddress}
-                  marketCap={`${vestedAmount.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
-                  wallet={vest.receiver?.toBase58() || "N/A"}
+                  marketCap={`${vestedAmount.toFixed(4)} ${selectedToken.info?.symbol || ""}`}
+                  wallet={vest.address?.toBase58() || "N/A"}
                   vestData={vest}
                   tokenDecimals={decimals}
+                  tokenImage={selectedToken.info?.icon}
                 />
               </div>
             );
@@ -543,24 +552,26 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
           {/* Render Lock Cards */}
           {displayData.locks.map((lockItem, index) => {
-            const decimals = selectedToken.decimals;
+            const decimals =
+              selectedToken.info?.decimals || selectedToken.decimals;
             const lockedAmount = lockItem.amount
               ? lockItem.amount.toNumber() / Math.pow(10, decimals)
               : 0;
 
             return (
               <div
-                key={lockItem.accountAddress?.toBase58() || `lock-${index}`}
+                key={lockItem.address?.toBase58() || `lock-${index}`}
                 className="mb-4"
               >
                 <LockCard
                   id={index + 1}
                   title={`${selectedToken.info?.name || "Unknown"} (${selectedToken.info?.symbol || "N/A"})`}
                   created={selectedToken.mintAddress}
-                  marketCap={`${lockedAmount.toFixed(2)} ${selectedToken.info?.symbol || ""}`}
-                  wallet={lockItem.receiver?.toBase58() || "N/A"}
+                  marketCap={`${lockedAmount.toFixed(4)} ${selectedToken.info?.symbol || ""}`}
+                  wallet={lockItem.address?.toBase58() || "N/A"}
                   lockData={lockItem}
                   tokenDecimals={decimals}
+                  tokenImage={selectedToken.info?.icon}
                 />
               </div>
             );

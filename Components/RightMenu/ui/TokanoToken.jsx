@@ -116,7 +116,8 @@ function TokanoToken({
           }
         `}</style>
         <h1>
-          Balance in SOL: {publicKey ? formatBalance(solBalance) : "Not Connected"}
+          Balance in SOL:{" "}
+          {publicKey ? formatBalance(solBalance) : "Not Connected"}
         </h1>
       </div>
     </div>

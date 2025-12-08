@@ -278,14 +278,14 @@ function Vest({ vestData, vestAddress }) {
                 )}
               </p>
               <p className="flex items-center gap-2">
-                Creator: {formatAddress(vestData?.walletUser)}
+                Creator: {formatAddress(vestData?.initializerUser)}
                 <LuCopy
                   className="scale-x-[-1] cursor-pointer transition-opacity hover:opacity-70"
                   onClick={() =>
                     copyToClipboard(
-                      typeof vestData?.walletUser === "string"
-                        ? vestData?.walletUser
-                        : vestData?.walletUser?.toBase58(),
+                      typeof vestData?.initializerUser === "string"
+                        ? vestData?.initializerUser
+                        : vestData?.initializerUser?.toBase58(),
                       "creator",
                     )
                   }

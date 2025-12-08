@@ -36,11 +36,19 @@ function TokanoBalanceData() {
       // Filter stakes for TOKANO token and sum balances
       const totalStaked = allStakes
         .map((stake) => {
-          const pool = pools.find((p) => p.poolAddress.equals(stake.poolAddress));
+          const pool = pools.find((p) =>
+            p.poolAddress.equals(stake.poolAddress),
+          );
           return { stake, pool };
         })
-        .filter(({ pool }) => pool?.tokenMint.toBase58() === TOKANO_MINT_ADDRESS)
-        .reduce((sum, { stake }) => sum + parseFloat(stake.stakedTokenBalance.toString()) / 1e9, 0);
+        .filter(
+          ({ pool }) => pool?.tokenMint.toBase58() === TOKANO_MINT_ADDRESS,
+        )
+        .reduce(
+          (sum, { stake }) =>
+            sum + parseFloat(stake.stakedTokenBalance.toString()) / 1e9,
+          0,
+        );
 
       setStakedBalance(totalStaked);
     } catch (error) {
@@ -60,8 +68,14 @@ function TokanoBalanceData() {
       const userLocks = await lock.fetchUserLocks(publicKey);
       // Sum up all locked amounts for TOKANO token
       const totalLocked = userLocks
-        .filter((lockItem) => lockItem.tokenMint.toBase58() === TOKANO_MINT_ADDRESS)
-        .reduce((sum, lockItem) => sum + parseFloat(lockItem.lockAmount.toString()) / 1e9, 0);
+        .filter(
+          (lockItem) => lockItem.tokenMint.toBase58() === TOKANO_MINT_ADDRESS,
+        )
+        .reduce(
+          (sum, lockItem) =>
+            sum + parseFloat(lockItem.lockAmount.toString()) / 1e9,
+          0,
+        );
       setLockedBalance(totalLocked);
     } catch (error) {
       console.error("Error fetching locked balance:", error);
@@ -84,7 +98,7 @@ function TokanoBalanceData() {
   };
 
   return (
-    <div className="flex items-stretch">
+    <div className="flex items-stretch dark:border-secondary border-x-2 border-[#CDCDE9] border-b-2">
       <div className="dark:border-secondary flex min-w-[80px] flex-col items-center justify-center border-r-2 border-[#CDCDE9] bg-[#f0edf8] px-4 py-4 dark:bg-[#2d0a5c]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG
@@ -132,7 +146,9 @@ function TokanoBalanceData() {
             {publicKey ? (
               <>
                 {formatBalance(availableBalance).integer}.
-                <span className="text-sm">{formatBalance(availableBalance).decimal}</span>
+                <span className="text-sm">
+                  {formatBalance(availableBalance).decimal}
+                </span>
               </>
             ) : (
               "Not Connected"
@@ -148,7 +164,9 @@ function TokanoBalanceData() {
               stakedBalance !== null ? (
                 <>
                   {formatBalance(stakedBalance).integer}.
-                  <span className="text-sm">{formatBalance(stakedBalance).decimal}</span>
+                  <span className="text-sm">
+                    {formatBalance(stakedBalance).decimal}
+                  </span>
                 </>
               ) : (
                 "Loading..."
@@ -167,7 +185,9 @@ function TokanoBalanceData() {
               lockedBalance !== null ? (
                 <>
                   {formatBalance(lockedBalance).integer}.
-                  <span className="text-sm">{formatBalance(lockedBalance).decimal}</span>
+                  <span className="text-sm">
+                    {formatBalance(lockedBalance).decimal}
+                  </span>
                 </>
               ) : (
                 "Loading..."

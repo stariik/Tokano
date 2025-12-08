@@ -102,7 +102,7 @@ function StakingPoolResult({ token, formData, tokenImage }) {
             {tokenImage ? (
               <img
                 src={tokenImage}
-                className="mr-4 mb-4 h-14 w-14 rounded-2xl object-cover sm:h-20 sm:w-20 lg:mr-24 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
+                className="mb-4 h-14 w-14 rounded-2xl object-cover sm:h-20 sm:w-20 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl 2xl:h-28 2xl:w-28"
               />
             ) : (
               <div className="mr-4 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-300 text-2xl font-bold text-gray-600 sm:h-20 sm:w-20 sm:text-4xl lg:mr-6 lg:h-18 lg:w-18 lg:rounded-2xl xl:h-24 xl:w-24 xl:rounded-3xl xl:text-5xl 2xl:h-28 2xl:w-28 2xl:text-6xl dark:bg-gray-700 dark:text-gray-400">
