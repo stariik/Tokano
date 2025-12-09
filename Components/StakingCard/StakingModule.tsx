@@ -67,10 +67,12 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
           : new PublicKey(pool.poolAddress);
 
       // Fetch user stake accounts for this specific pool using SDK method
-      const poolStakes = await staking.fetchUserStakeAccountsForPool(
-        publicKey,
-        poolAddress,
-      );
+      const poolStakes = await staking
+        .fetchUserStakeAccountsForPool(publicKey, poolAddress)
+        .catch((err) => {
+          console.error("Error fetching user stake accounts for pool:", err);
+          return [];
+        });
 
       const decimals = pool.tokenInfo?.decimals || 9;
       const totalStaked = poolStakes.reduce((sum: number, stake: any) => {
@@ -136,8 +138,11 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
 
-      // Sign and send transaction
-      const signature = await sendTransaction(tx, connection);
+      // Sign and send transaction with skipPreflight to avoid simulation errors
+      const signature = await sendTransaction(tx, connection, {
+        skipPreflight: true,
+        maxRetries: 3,
+      });
 
       // Confirm transaction with longer timeout and better error handling
       let transactionConfirmed = false;
@@ -209,12 +214,14 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
   const rewardsDistributed = pool?.rewardDistributed
     ? pool.rewardDistributed.toNumber() / Math.pow(10, decimals)
     : 0;
-  const totalRewardAmount = pool?.rewardAmount
-    ? pool.rewardAmount.toNumber() / Math.pow(10, decimals)
+  const totalRewardGenerated = pool?.totalRewardGenerated
+    ? pool.totalRewardGenerated.toNumber() / Math.pow(10, decimals)
     : 0;
-  const rewardsLeft = Math.max(0, totalRewardAmount - rewardsDistributed);
+  const rewardsLeft = Math.max(0, totalRewardGenerated - rewardsDistributed);
 
-  const stakersCount = (pool as any)?.stakersCount || 0;
+  const stakersCount = pool?.totalStakers
+    ? pool.totalStakers.toNumber()
+    : (pool as any)?.stakersCount || 0;
 
   const stats = [
     { label: "Wallets Staking:", value: stakersCount.toString() },

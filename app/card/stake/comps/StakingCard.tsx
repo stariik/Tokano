@@ -230,7 +230,7 @@ function StakingCard({ pool }: StakingCardProps) {
           </div>
 
           <div className="font-khand mt-6 rounded-l-2xl bg-[#2B923E] pr-0.5 pl-1 text-xs font-normal md:pl-2 md:text-sm lg:pr-1 dark:bg-[#2B923E]">
-            {formatDate(pool.startTimestamp)}
+            {pool?.startTimestamp ? formatDate(pool.startTimestamp) : "N/A"}
           </div>
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
             <StarIcon />
@@ -253,7 +253,10 @@ function StakingCard({ pool }: StakingCardProps) {
                     : "linear-gradient(90deg, #074BA3 10%, #04587C 20%, #0CE0CF 70%)",
               }}
             >
-              <div>ENDS: {formatDate(pool.endTimestamp)}</div>
+              <div>
+                ENDS:{" "}
+                {pool?.endTimestamp ? formatDate(pool.endTimestamp) : "N/A"}
+              </div>
             </div>
             <div
               className="font-khand -z-1 ml-9 w-2/3 rounded-r-full py-0.5 pl-4 font-medium text-black md:pl-10"

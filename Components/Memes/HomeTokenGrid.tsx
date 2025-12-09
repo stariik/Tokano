@@ -56,10 +56,13 @@ function HomeTokenGrid({
     try {
       // Fetch all data in parallel
       const [pools, vestingData, lockData, allUserStakes] = await Promise.all([
-        staking.fetchStakePools(),
-        vesting.fetchAllVestings(),
-        lock.fetchAllLocks(),
-        (staking as any).program.account.userState.all(),
+        staking.fetchStakePools().catch((err) => {
+          console.error("Error fetching stake pools:", err);
+          return [];
+        }),
+        vesting.fetchAllVestings().catch(() => []),
+        lock.fetchAllLocks().catch(() => []),
+        (staking as any).program.account.userState.all().catch(() => []),
       ]);
 
       // Count unique stakers per pool
@@ -70,7 +73,7 @@ function HomeTokenGrid({
           stakersPerPool[poolAddress] = new Set();
         }
         stakersPerPool[poolAddress].add(
-          userStake.account.stakerUser.toBase58()
+          userStake.account.stakerUser.toBase58(),
         );
       });
 

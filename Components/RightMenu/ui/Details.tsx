@@ -46,8 +46,16 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
 
     try {
       setLoading(true);
-      const userStakes = await staking.fetchUserStakeAccounts(publicKey);
-      const pools = await staking.fetchStakePools();
+      const userStakes = await staking
+        .fetchUserStakeAccounts(publicKey)
+        .catch((err) => {
+          console.error("Error fetching user stake accounts:", err);
+          return [];
+        });
+      const pools = await staking.fetchStakePools().catch((err) => {
+        console.error("Error fetching stake pools:", err);
+        return [];
+      });
 
       // Filter for TOKANO pool stakes
       const tokanoStakes = userStakes.filter((stake) => {
@@ -56,29 +64,35 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
       });
 
       // Transform to display format
-      const formattedPositions: StakingPosition[] = tokanoStakes.map((stake) => {
-        const now = Date.now();
-        const releaseTime = stake.releaseTime.getTime();
-        const isLocked = now < releaseTime;
-        const diffMs = releaseTime - now;
+      const formattedPositions: StakingPosition[] = tokanoStakes.map(
+        (stake) => {
+          const now = Date.now();
+          const releaseTime = stake.releaseTime.getTime();
+          const isLocked = now < releaseTime;
+          const diffMs = releaseTime - now;
 
-        let lockPeriod = "Unlocked";
-        if (isLocked) {
-          const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          lockPeriod = days > 0 ? `${days}d ${hours}h` : `${hours}h`;
-        }
+          let lockPeriod = "Unlocked";
+          if (isLocked) {
+            const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+              (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+            );
+            lockPeriod = days > 0 ? `${days}d ${hours}h` : `${hours}h`;
+          }
 
-        return {
-          stakeAmount: (parseFloat(stake.stakedTokenBalance.toString()) / 1e9).toLocaleString(undefined, {
-            maximumFractionDigits: 0,
-          }),
-          lockPeriod,
-          unclaimedRewards: stake.approximateReward.toNumber().toFixed(2),
-          rawStake: stake,
-          isLocked,
-        };
-      });
+          return {
+            stakeAmount: (
+              parseFloat(stake.stakedTokenBalance.toString()) / 1e9
+            ).toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            }),
+            lockPeriod,
+            unclaimedRewards: stake.approximateReward.toNumber().toFixed(2),
+            rawStake: stake,
+            isLocked,
+          };
+        },
+      );
 
       setPositions(formattedPositions);
     } catch (error) {
@@ -112,7 +126,14 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
   };
 
   const handleConfirm = async () => {
-    if (!activePopup || !publicKey || !staking || !connection || !sendTransaction) return;
+    if (
+      !activePopup ||
+      !publicKey ||
+      !staking ||
+      !connection ||
+      !sendTransaction
+    )
+      return;
 
     const position = positions[activePopup.index];
     if (!position.rawStake) return;
@@ -145,10 +166,17 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
 
-      const signature = await sendTransaction(tx, connection);
+      const signature = await sendTransaction(tx, connection, {
+        skipPreflight: true,
+        maxRetries: 3,
+      });
       await connection.confirmTransaction(signature, "confirmed");
 
-      alert(activePopup.type === "unstake" ? "Successfully unstaked!" : "Successfully claimed rewards!");
+      alert(
+        activePopup.type === "unstake"
+          ? "Successfully unstaked!"
+          : "Successfully claimed rewards!",
+      );
       await fetchStakingPositions();
     } catch (error: any) {
       console.error(`Error ${activePopup.type}:`, error);
@@ -223,44 +251,50 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
         >
           {loading ? (
             <div className="flex h-full items-center justify-center">
-              <p className="text-lg text-gray-500 dark:text-gray-400">Loading positions...</p>
+              <p className="text-lg text-gray-500 dark:text-gray-400">
+                Loading positions...
+              </p>
             </div>
           ) : !publicKey ? (
             <div className="flex h-full items-center justify-center">
-              <p className="text-lg text-gray-500 dark:text-gray-400">Connect wallet to view positions</p>
+              <p className="text-lg text-gray-500 dark:text-gray-400">
+                Connect wallet to view positions
+              </p>
             </div>
           ) : displayPositions.length === 0 ? (
             <div className="flex h-full items-center justify-center">
-              <p className="text-lg text-gray-500 dark:text-gray-400">No staking positions found</p>
+              <p className="text-lg text-gray-500 dark:text-gray-400">
+                No staking positions found
+              </p>
             </div>
           ) : (
             <table className="h-full w-full">
               <tbody className="h-full text-center">
                 {displayPositions.map((position, index) => (
-                <tr
-                  key={index}
-                  // style={{ backgroundColor: "#0A0520" }}
-                >
-                  <td className="items w-6 justify-center border-r border-[#CDCDE9] py-4 text-sm dark:border-[#6D6FDF] dark:text-white">
-                    {index + 1}.
-                  </td>
-                  <td
-                    className="cursor-pointer border-r border-[#CDCDE9] px-6 py-4 text-base whitespace-nowrap transition-colors hover:bg-[#CDCDE9] dark:border-[#6D6FDF] dark:text-white dark:hover:bg-[#220052]"
-                    onClick={() => handleUnstake(index)}
+                  <tr
+                    key={index}
+                    // style={{ backgroundColor: "#0A0520" }}
                   >
-                    {position.stakeAmount}
-                  </td>
-                  <td className="border-r border-[#CDCDE9] px-6 py-4 text-base whitespace-nowrap text-purple-400 dark:border-[#6D6FDF] dark:text-purple-300">
-                    {position.lockPeriod}
-                  </td>
-                  <td
-                    className="cursor-pointer px-6 py-4 text-base whitespace-nowrap transition-colors hover:bg-[#CDCDE9] dark:text-white dark:hover:bg-[#220052]"
-                    onClick={() => handleClaim(index)}
-                  >
-                    {position.unclaimedRewards}
-                  </td>
-                </tr>
-              ))}
+                    <td className="items w-6 justify-center border-r border-[#CDCDE9] py-4 text-sm dark:border-[#6D6FDF] dark:text-white">
+                      {index + 1}.
+                    </td>
+                    <td
+                      className="cursor-pointer border-r border-[#CDCDE9] px-6 py-4 text-base whitespace-nowrap transition-colors hover:bg-[#CDCDE9] dark:border-[#6D6FDF] dark:text-white dark:hover:bg-[#220052]"
+                      onClick={() => handleUnstake(index)}
+                    >
+                      {position.stakeAmount}
+                    </td>
+                    <td className="border-r border-[#CDCDE9] px-6 py-4 text-base whitespace-nowrap text-purple-400 dark:border-[#6D6FDF] dark:text-purple-300">
+                      {position.lockPeriod}
+                    </td>
+                    <td
+                      className="cursor-pointer px-6 py-4 text-base whitespace-nowrap transition-colors hover:bg-[#CDCDE9] dark:text-white dark:hover:bg-[#220052]"
+                      onClick={() => handleClaim(index)}
+                    >
+                      {position.unclaimedRewards}
+                    </td>
+                  </tr>
+                ))}
                 {/* Filler row to extend borders to full height */}
                 <tr className="h-full">
                   <td className="border-r border-[#CDCDE9] dark:border-[#6D6FDF]"></td>
@@ -283,8 +317,8 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
                   {processing
                     ? `${activePopup.type === "unstake" ? "Unstaking" : "Claiming"}...`
                     : activePopup.type === "unstake"
-                    ? "Unstake?"
-                    : "Claim rewards?"}
+                      ? "Unstake?"
+                      : "Claim rewards?"}
                 </p>
                 {!processing && (
                   <div className="flex justify-center gap-4">

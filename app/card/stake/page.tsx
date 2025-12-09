@@ -40,9 +40,19 @@ function StakePageContent() {
 
       // Fetch the specific pool and all user stakes
       const [poolData, allUserStakes] = await Promise.all([
-        staking.fetchStakePool(poolAddress),
-        (staking as any).program.account.userState.all(),
+        staking.fetchStakePool(poolAddress).catch((err) => {
+          console.error("Error fetching pool:", err);
+          return null;
+        }),
+        (staking as any).program.account.userState.all().catch(() => []),
       ]);
+
+      // Check if pool data is valid
+      if (!poolData) {
+        setError("Pool not found or invalid");
+        setLoading(false);
+        return;
+      }
 
       // Count unique stakers for this specific pool
       const uniqueStakers = new Set();

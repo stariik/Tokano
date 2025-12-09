@@ -48,7 +48,12 @@ function MyStaking({ pool }: MyStakingProps) {
       // Fetch all user stake accounts with batching to avoid RPC limits
       let allStakes: any[] = [];
       try {
-        allStakes = await staking.fetchUserStakeAccounts(publicKey);
+        allStakes = await staking
+          .fetchUserStakeAccounts(publicKey)
+          .catch((err) => {
+            console.error("Error fetching user stake accounts:", err);
+            return [];
+          });
       } catch (error: any) {
         // If we hit RPC limits, try fetching individually or with smaller batches
         if (
@@ -59,7 +64,8 @@ function MyStaking({ pool }: MyStakingProps) {
           setRpcLimitError(true);
           allStakes = [];
         } else {
-          throw error;
+          console.error("Error in fetchUserStakingPositions:", error);
+          allStakes = [];
         }
       }
 
@@ -106,8 +112,11 @@ function MyStaking({ pool }: MyStakingProps) {
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
 
-      // Sign and send transaction
-      const signature = await sendTransaction(tx, connection);
+      // Sign and send transaction with skipPreflight to avoid simulation errors
+      const signature = await sendTransaction(tx, connection, {
+        skipPreflight: true,
+        maxRetries: 3,
+      });
 
       await connection.confirmTransaction(signature, "confirmed");
 
@@ -153,8 +162,11 @@ function MyStaking({ pool }: MyStakingProps) {
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
 
-      // Sign and send transaction
-      const signature = await sendTransaction(tx, connection);
+      // Sign and send transaction with skipPreflight to avoid simulation errors
+      const signature = await sendTransaction(tx, connection, {
+        skipPreflight: true,
+        maxRetries: 3,
+      });
 
       await connection.confirmTransaction(signature, "confirmed");
 

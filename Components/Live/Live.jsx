@@ -23,10 +23,13 @@ function Live() {
     try {
       // Fetch all data in parallel
       const [pools, vestingData, lockData, allUserStakes] = await Promise.all([
-        staking.fetchStakePools(),
-        vesting.fetchAllVestings(),
-        lock.fetchAllLocks(),
-        staking.program.account.userState.all(),
+        staking.fetchStakePools().catch((err) => {
+          console.error("Error fetching stake pools:", err);
+          return [];
+        }),
+        vesting.fetchAllVestings().catch(() => []),
+        lock.fetchAllLocks().catch(() => []),
+        staking.program.account.userState.all().catch(() => []),
       ]);
 
       // Count unique stakers per pool

@@ -28,10 +28,18 @@ function TokanoBalanceData() {
 
     try {
       // Get all user stake accounts
-      const allStakes = await staking.fetchUserStakeAccounts(publicKey);
+      const allStakes = await staking
+        .fetchUserStakeAccounts(publicKey)
+        .catch((err) => {
+          console.error("Error fetching user stake accounts:", err);
+          return [];
+        });
 
       // Get all pools to match with stakes
-      const pools = await staking.fetchStakePools();
+      const pools = await staking.fetchStakePools().catch((err) => {
+        console.error("Error fetching stake pools:", err);
+        return [];
+      });
 
       // Filter stakes for TOKANO token and sum balances
       const totalStaked = allStakes
@@ -98,7 +106,7 @@ function TokanoBalanceData() {
   };
 
   return (
-    <div className="flex items-stretch dark:border-secondary border-x-2 border-[#CDCDE9] border-b-2">
+    <div className="dark:border-secondary flex items-stretch border-x-2 border-b-2 border-[#CDCDE9]">
       <div className="dark:border-secondary flex min-w-[80px] flex-col items-center justify-center border-r-2 border-[#CDCDE9] bg-[#f0edf8] px-4 py-4 dark:bg-[#2d0a5c]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG

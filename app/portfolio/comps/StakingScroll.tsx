@@ -48,10 +48,18 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
     setLoading(true);
     try {
       // Get all user stake accounts
-      const allStakes = await staking.fetchUserStakeAccounts(publicKey);
+      const allStakes = await staking
+        .fetchUserStakeAccounts(publicKey)
+        .catch((err) => {
+          console.error("Error fetching user stake accounts:", err);
+          return [];
+        });
 
       // Get all pools to match with stakes
-      const pools = await staking.fetchStakePools();
+      const pools = await staking.fetchStakePools().catch((err) => {
+        console.error("Error fetching stake pools:", err);
+        return [];
+      });
       setPoolDetails(pools);
 
       // Filter stakes for selected token and enrich with pool data
@@ -89,7 +97,12 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
     setLoading(true);
     try {
-      const pools = await staking.fetchUserCreatedStakePools(publicKey);
+      const pools = await staking
+        .fetchUserCreatedStakePools(publicKey)
+        .catch((err) => {
+          console.error("Error fetching user created pools:", err);
+          return [];
+        });
 
       // Filter pools for selected token
       const tokenPools = pools.filter(

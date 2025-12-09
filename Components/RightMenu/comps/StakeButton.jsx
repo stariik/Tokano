@@ -7,7 +7,12 @@ import { useTokano } from "@/contexts/tokano-sdk-context";
 import { TOKANO_POOL_ID } from "@/lib/constants";
 import { toSmallestUnit, transactionListener } from "@/lib/balances";
 
-function StakeButton({ stakeAmount, availableBalance, decimals, onStakeComplete }) {
+function StakeButton({
+  stakeAmount,
+  availableBalance,
+  decimals,
+  onStakeComplete,
+}) {
   const { resolvedTheme } = useTheme();
   const { publicKey, signTransaction } = useWallet();
   const { connection } = useConnection();
@@ -23,13 +28,23 @@ function StakeButton({ stakeAmount, availableBalance, decimals, onStakeComplete 
 
       try {
         // Fetch the TOKANO pool
-        const pool = await staking.fetchStakePool(TOKANO_POOL_ID);
+        const pool = await staking
+          .fetchStakePool(TOKANO_POOL_ID)
+          .catch((err) => {
+            console.error("Error fetching stake pool:", err);
+            return null;
+          });
         setTokanoPool(pool);
 
         // Check if user has existing stake account
-        const userStakes = await staking.fetchUserStakeAccounts(publicKey);
-        const existingStake = userStakes.find((stake) =>
-          stake.poolAddress.toBase58() === TOKANO_POOL_ID
+        const userStakes = await staking
+          .fetchUserStakeAccounts(publicKey)
+          .catch((err) => {
+            console.error("Error fetching user stake accounts:", err);
+            return [];
+          });
+        const existingStake = userStakes.find(
+          (stake) => stake.poolAddress.toBase58() === TOKANO_POOL_ID,
         );
         setUserStakeAccount(existingStake || null);
       } catch (error) {
@@ -81,7 +96,10 @@ function StakeButton({ stakeAmount, availableBalance, decimals, onStakeComplete 
       tx.feePayer = publicKey;
 
       const signedTx = await signTransaction(tx);
-      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      const txId = await connection.sendRawTransaction(signedTx.serialize(), {
+        skipPreflight: true,
+        maxRetries: 3,
+      });
       console.log("Stake transaction sent:", txId);
 
       transactionListener(connection, txId, (completed) => {
@@ -117,12 +135,25 @@ function StakeButton({ stakeAmount, availableBalance, decimals, onStakeComplete 
     <div className="flex items-center">
       <button
         onClick={handleStake}
-        disabled={isStaking || !publicKey || !stakeAmount || parseFloat(stakeAmount) <= 0}
+        disabled={
+          isStaking ||
+          !publicKey ||
+          !stakeAmount ||
+          parseFloat(stakeAmount) <= 0
+        }
         className="relative"
       >
         <svg
-          className="h-[40px] w-[100px] lg:h-[30px] lg:w-[90px] xl:h-[40px] xl:w-[95px] 2xl:h-[43px] 2xl:w-[130px] transition-opacity"
-          style={{ opacity: isStaking || !publicKey || !stakeAmount || parseFloat(stakeAmount) <= 0 ? 0.5 : 1 }}
+          className="h-[40px] w-[100px] transition-opacity lg:h-[30px] lg:w-[90px] xl:h-[40px] xl:w-[95px] 2xl:h-[43px] 2xl:w-[130px]"
+          style={{
+            opacity:
+              isStaking ||
+              !publicKey ||
+              !stakeAmount ||
+              parseFloat(stakeAmount) <= 0
+                ? 0.5
+                : 1,
+          }}
           viewBox="0 0 123 43"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +202,7 @@ function StakeButton({ stakeAmount, availableBalance, decimals, onStakeComplete 
           </defs>
         </svg>
         {isStaking && (
-          <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-xs font-bold">
+          <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-xs font-bold text-white">
             Staking...
           </span>
         )}

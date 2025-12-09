@@ -22,9 +22,12 @@ function LaunchingSoon({ isMobile = false }) {
     try {
       // Fetch all data in parallel
       const [pools, vestingData, lockData] = await Promise.all([
-        staking.fetchStakePools(),
-        vesting.fetchAllVestings(),
-        lock.fetchAllLocks(),
+        staking.fetchStakePools().catch((err) => {
+          console.error("Error fetching stake pools:", err);
+          return [];
+        }),
+        vesting.fetchAllVestings().catch(() => []),
+        lock.fetchAllLocks().catch(() => []),
       ]);
 
       // Collect all unique token mints

@@ -43,10 +43,12 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
 
     try {
       setLoading(true);
-      const positions = await staking.fetchUserStakeAccountsForPool(
-        publicKey,
-        pool.poolAddress,
-      );
+      const positions = await staking
+        .fetchUserStakeAccountsForPool(publicKey, pool.poolAddress)
+        .catch((err) => {
+          console.error("Error fetching user stake accounts for pool:", err);
+          return [];
+        });
       setUserPositions(positions);
     } catch (error) {
       console.error("Error fetching user positions:", error);
@@ -104,9 +106,12 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
 
-      // Sign and send transaction
+      // Sign and send transaction with skipPreflight to avoid simulation errors
       const signedTx = await signTransaction(tx);
-      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      const txId = await connection.sendRawTransaction(signedTx.serialize(), {
+        skipPreflight: true,
+        maxRetries: 3,
+      });
 
       // Listen for transaction completion
       transactionListener(connection, txId, (completed) => {
@@ -211,13 +216,13 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
             <thead>
               <tr>
                 <th className="w-6 py-2"></th>
-                <th className="px-6 py-2 text-center text-sm font-normal dark:text-white">
+                <th className="w-1/3 px-6 py-2 text-center text-sm font-normal dark:text-white">
                   stake positions
                 </th>
-                <th className="px-6 py-2 text-center text-sm font-normal dark:text-white">
+                <th className="w-1/3 px-6 py-2 text-center text-sm font-normal dark:text-white">
                   lock period
                 </th>
-                <th className="px-2 py-2 text-center text-sm font-normal dark:text-white">
+                <th className="w-1/3 px-6 py-2 text-center text-sm font-normal dark:text-white">
                   unclaimed rewards
                 </th>
               </tr>
@@ -251,16 +256,27 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
                   const timeRemaining = getTimeRemaining(position.releaseTime);
                   const isUnlocked = timeRemaining === "UNLOCKED";
 
+                  // Debug: log decimals being used
+                  const decimals = pool?.tokenInfo?.decimals || 9;
+                  if (index === 0) {
+                    console.log(
+                      "Pool decimals:",
+                      decimals,
+                      "Pool tokenInfo:",
+                      pool?.tokenInfo,
+                    );
+                  }
+
                   return (
                     <tr
                       key={position.accountAddress.toBase58()}
                       // style={{ backgroundColor: "#0A0520" }}
                     >
-                      <td className="items w-6 justify-center border-r border-[#CDCDE9] py-4 text-sm dark:border-[#6D6FDF] dark:text-white">
+                      <td className="items w-1/29 justify-center border-r border-[#CDCDE9] py-4 text-sm dark:border-[#6D6FDF] dark:text-white">
                         {index + 1}.
                       </td>
                       <td
-                        className={`border-r border-[#CDCDE9] px-6 py-4 text-base whitespace-nowrap transition-colors dark:border-[#6D6FDF] dark:text-white ${
+                        className={`w-2/7 border-r border-[#CDCDE9] px-6 py-4 text-base whitespace-nowrap transition-colors dark:border-[#6D6FDF] dark:text-white ${
                           isUnlocked
                             ? "cursor-pointer hover:bg-[#CDCDE9] dark:hover:bg-[#220052]"
                             : "cursor-not-allowed opacity-50"
@@ -272,10 +288,13 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
                             : "Locked - wait for unlock time"
                         }
                       >
-                        {formatTokenAmount(position.stakedTokenBalance)}
+                        {formatTokenAmount(
+                          position.stakedTokenBalance,
+                          decimals,
+                        )}
                       </td>
                       <td
-                        className={`border-r border-[#CDCDE9] px-6 py-4 text-base whitespace-nowrap dark:border-[#6D6FDF] ${
+                        className={`w-2/7 border-r border-[#CDCDE9] px-6 py-4 text-base whitespace-nowrap dark:border-[#6D6FDF] ${
                           isUnlocked
                             ? "text-green-400 dark:text-green-300"
                             : "text-purple-400 dark:text-purple-300"
@@ -284,20 +303,23 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
                         {timeRemaining}
                       </td>
                       <td
-                        className="cursor-pointer px-6 py-4 text-base whitespace-nowrap transition-colors hover:bg-[#CDCDE9] dark:text-white dark:hover:bg-[#220052]"
+                        className="w-2/7 cursor-pointer px-6 py-4 text-base whitespace-nowrap transition-colors hover:bg-[#CDCDE9] dark:text-white dark:hover:bg-[#220052]"
                         onClick={() => handleClaim(index)}
                       >
-                        {formatTokenAmount(position.approximateReward)}
+                        {formatTokenAmount(
+                          position.approximateReward,
+                          decimals,
+                        )}
                       </td>
                     </tr>
                   );
                 })}
                 {/* Filler row to extend borders to full height */}
                 <tr className="h-full">
-                  <td className="border-r border-[#CDCDE9] dark:border-[#6D6FDF]"></td>
-                  <td className="border-r border-[#CDCDE9] dark:border-[#6D6FDF]"></td>
-                  <td className="border-r border-[#CDCDE9] dark:border-[#6D6FDF]"></td>
-                  <td></td>
+                  <td className="w-6 border-r border-[#CDCDE9] dark:border-[#6D6FDF]"></td>
+                  <td className="w-1/3 border-r border-[#CDCDE9] dark:border-[#6D6FDF]"></td>
+                  <td className="w-1/3 border-r border-[#CDCDE9] dark:border-[#6D6FDF]"></td>
+                  <td className="w-1/3"></td>
                 </tr>
               </tbody>
             </table>
