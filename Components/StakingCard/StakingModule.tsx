@@ -75,12 +75,15 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
         });
 
       const decimals = pool.tokenInfo?.decimals || 9;
-      const totalStaked = poolStakes.reduce((sum: number, stake: any) => {
-        const amount = stake.stakedTokenBalance
-          ? stake.stakedTokenBalance.toNumber()
-          : 0;
-        return sum + amount;
-      }, 0);
+      const totalStaked = (poolStakes as any[]).reduce(
+        (sum: number, stake: any): number => {
+          const amount = stake.stakedTokenBalance
+            ? stake.stakedTokenBalance.toNumber()
+            : 0;
+          return sum + amount;
+        },
+        0,
+      );
 
       setUserStakedAmount(totalStaked / Math.pow(10, decimals));
     } catch (error) {
