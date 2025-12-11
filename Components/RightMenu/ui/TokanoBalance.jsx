@@ -46,7 +46,7 @@ export default function TokanoBalance() {
 
   return (
     // dark:border-secondary border-x-2 border-[#CDCDE9]
-    <div className=" bg-[#f5f3fb] dark:bg-[#1a0033]">
+    <div className="bg-[#f5f3fb] dark:bg-[#1a0033]">
       <TokanoToken
         TableName="YOUR TOKANO BALANCE"
         className=""
@@ -56,7 +56,7 @@ export default function TokanoBalance() {
       </TokanoToken>
 
       {/* Balance in SOL */}
-      <div className="w-full dark:border-secondary border-x-2 border-[#CDCDE9] -mt-2">
+      <div className="dark:border-secondary -mt-2 w-full border-x-2 border-[#CDCDE9]">
         <div className="mt-2 ml-4 flex items-center px-4 py-2 lg:mt-1 lg:ml-2 lg:px-1 xl:px-2 2xl:mt-2 2xl:ml-4">
           <span className="pr-2 text-sm text-[#190E79] lg:text-xs xl:text-sm dark:text-white/80">
             Available:

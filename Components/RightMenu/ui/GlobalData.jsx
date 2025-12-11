@@ -41,7 +41,9 @@ function GlobalData() {
 
       // Calculate total reward generated from rewardRate and time period
       const periodInSeconds = new BN(
-        Math.floor((res.endTimestamp.getTime() - res.startTimestamp.getTime()) / 1000)
+        Math.floor(
+          (res.endTimestamp.getTime() - res.startTimestamp.getTime()) / 1000,
+        ),
       );
       const totalRewardGenerated = res.rewardRate.mul(periodInSeconds);
 
@@ -61,15 +63,18 @@ function GlobalData() {
     try {
       const balances = await connection.getParsedTokenAccountsByOwner(
         new PublicKey(TOKANO_PUMP_LIQUIDITY_POOL_ADDRESS),
-        { mint: new PublicKey(TOKANO_MINT_ADDRESS) }
+        { mint: new PublicKey(TOKANO_MINT_ADDRESS) },
       );
       if (balances.value.length > 0) {
         const result = {
           mintAddress: balances.value[0].account.data.parsed.info.mint,
-          decimals: balances.value[0].account.data.parsed.info.tokenAmount.decimals,
-          amount: balances.value[0].account.data.parsed.info.tokenAmount.uiAmountString,
+          decimals:
+            balances.value[0].account.data.parsed.info.tokenAmount.decimals,
+          amount:
+            balances.value[0].account.data.parsed.info.tokenAmount
+              .uiAmountString,
           amountRaw: Number.parseInt(
-            balances.value[0].account.data.parsed.info.tokenAmount.amount
+            balances.value[0].account.data.parsed.info.tokenAmount.amount,
           ),
         };
         return result;
@@ -85,7 +90,7 @@ function GlobalData() {
     try {
       const allLocks = await lock.fetchAllLocks();
       const result = allLocks.find(
-        (l) => l.address.toBase58() === TOKANO_LOCK_ADDRESS
+        (l) => l.address.toBase58() === TOKANO_LOCK_ADDRESS,
       );
       return result || null;
     } catch (error) {
@@ -99,7 +104,7 @@ function GlobalData() {
     try {
       const allVestings = await vesting.fetchAllVestings();
       const result = allVestings.find(
-        (v) => v.address.toBase58() === TOKANO_VESTING_ADDRESS
+        (v) => v.address.toBase58() === TOKANO_VESTING_ADDRESS,
       );
       return result || null;
     } catch (error) {
@@ -138,16 +143,16 @@ function GlobalData() {
   // Format numbers for display
   const formatNumber = (num) => {
     if (!num) return "0";
-    const value = typeof num === 'string' ? parseFloat(num) : num;
+    const value = typeof num === "string" ? parseFloat(num) : num;
     if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
     if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
     if (value >= 1e3) return `${(value / 1e3).toFixed(2)}K`;
     return value.toFixed(2);
   };
 
-  const formatBN = (bn) => {
+  const formatBN = (bn, decimals) => {
     if (!bn) return "0";
-    return formatNumber(bn.toString() / 1e9); // Assuming 9 decimals
+    return formatNumber(bn.toString() / Math.pow(10, decimals)); // Assuming 9 decimals
   };
 
   return (
@@ -166,16 +171,26 @@ function GlobalData() {
               label=""
               data={[
                 {
-                  supply: tokenInfo ? formatNumber(tokenInfo.totalSupply) : "Loading...",
-                  holders: tokenInfo?.holderCount?.toString() || "Loading..."
+                  supply: tokenInfo
+                    ? formatNumber(tokenInfo.totalSupply)
+                    : "Loading...",
+                  holders: tokenInfo?.holderCount?.toString() || "Loading...",
                 },
                 {
-                  unsold: unsoldTokenBalance ? formatNumber(unsoldTokenBalance.amount) : "Loading...",
-                  unlocked: lockInfo ? formatBN(lockInfo.lockAmount) : "Loading..."
+                  unsold: unsoldTokenBalance
+                    ? formatNumber(unsoldTokenBalance.amount)
+                    : "Loading...",
+                  unlocked: lockInfo
+                    ? formatBN(lockInfo.lockAmount, tokenInfo.decimals)
+                    : "Loading...",
                 },
                 {
-                  "m-cap": tokenInfo ? `$${formatNumber(tokenInfo.mcap)}` : "Loading...",
-                  price: tokenInfo ? `$${parseFloat(tokenInfo.usdPrice).toFixed(3)}` : "Loading..."
+                  "m-cap": tokenInfo
+                    ? `$${formatNumber(tokenInfo.mcap)}`
+                    : "Loading...",
+                  price: tokenInfo
+                    ? `$${parseFloat(tokenInfo.usdPrice).toFixed(3)}`
+                    : "Loading...",
                 },
               ]}
             />
@@ -187,12 +202,27 @@ function GlobalData() {
               label="STAKED"
               data={[
                 {
-                  total: stakingInfo ? formatBN(stakingInfo.totalTokensStaked) : "Loading...",
-                  stakes: stakingInfo?.totalStakers?.toString() || "Loading..."
+                  total: stakingInfo
+                    ? formatBN(
+                        stakingInfo.totalTokensStaked,
+                        tokenInfo.decimals,
+                      )
+                    : "Loading...",
+                  stakes: stakingInfo?.totalStakers?.toString() || "Loading...",
                 },
                 {
-                  "active rewards": stakingInfo ? formatBN(stakingInfo.totalRewardGenerated) : "Loading...",
-                  "earned rewards": stakingInfo ? formatBN(stakingInfo.rewardDistributed) : "Loading..."
+                  "active rewards": stakingInfo
+                    ? formatBN(
+                        stakingInfo.totalRewardGenerated,
+                        tokenInfo.decimals,
+                      )
+                    : "Loading...",
+                  "earned rewards": stakingInfo
+                    ? formatBN(
+                        stakingInfo.rewardDistributed,
+                        tokenInfo.decimals,
+                      )
+                    : "Loading...",
                 },
               ]}
             />
@@ -203,20 +233,31 @@ function GlobalData() {
             <GlobalDataRow
               label="LOCKED"
               data={[
-                { locked: lockInfo ? formatBN(lockInfo.lockAmount) : "Loading..." },
                 {
-                  "unlocks in": lockInfo && lockInfo.unlockTime
-                    ? (() => {
-                        const now = Date.now();
-                        const unlockTime = lockInfo.unlockTime.getTime();
-                        const diffMs = unlockTime - now;
-                        if (diffMs <= 0) return "Unlocked";
-                        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-                        const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        return diffDays > 0 ? `${diffDays}d ${diffHours}h` : `${diffHours}h`;
-                      })()
-                    : "Loading..."
-                }
+                  locked: lockInfo
+                    ? formatBN(lockInfo.lockAmount, tokenInfo.decimals)
+                    : "Loading...",
+                },
+                {
+                  "unlocks in":
+                    lockInfo && lockInfo.unlockTime
+                      ? (() => {
+                          const now = Date.now();
+                          const unlockTime = lockInfo.unlockTime.getTime();
+                          const diffMs = unlockTime - now;
+                          if (diffMs <= 0) return "Unlocked";
+                          const diffDays = Math.floor(
+                            diffMs / (1000 * 60 * 60 * 24),
+                          );
+                          const diffHours = Math.floor(
+                            (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                          );
+                          return diffDays > 0
+                            ? `${diffDays}d ${diffHours}h`
+                            : `${diffHours}h`;
+                        })()
+                      : "Loading...",
+                },
               ]}
             />
           </div>
@@ -227,28 +268,47 @@ function GlobalData() {
               label="VESTING"
               data={[
                 {
-                  locked: vestingInfo && vestingInfo.totalVestedAmount && vestingInfo.totalWithdrawnAmount
-                    ? formatBN(vestingInfo.totalVestedAmount.sub(vestingInfo.totalWithdrawnAmount))
-                    : "Loading..."
+                  locked:
+                    vestingInfo &&
+                    vestingInfo.totalVestedAmount &&
+                    vestingInfo.totalWithdrawnAmount
+                      ? formatBN(
+                          vestingInfo.totalVestedAmount.sub(
+                            vestingInfo.totalWithdrawnAmount,
+                          ),
+                          tokenInfo.decimals,
+                        )
+                      : "Loading...",
                 },
                 {
-                  claimable: vestingInfo && vestingInfo.currentlyClaimableAmount
-                    ? formatBN(vestingInfo.currentlyClaimableAmount)
-                    : "Loading..."
+                  claimable:
+                    vestingInfo && vestingInfo.currentlyClaimableAmount
+                      ? formatBN(
+                          vestingInfo.currentlyClaimableAmount,
+                          tokenInfo.decimals,
+                        )
+                      : "Loading...",
                 },
                 {
-                  "ends in": vestingInfo && vestingInfo.endTime
-                    ? (() => {
-                        const now = Date.now();
-                        const endTime = vestingInfo.endTime.getTime();
-                        const diffMs = endTime - now;
-                        if (diffMs <= 0) return "Completed";
-                        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-                        const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        return diffDays > 0 ? `${diffDays}d/${diffHours}h` : `${diffHours}h`;
-                      })()
-                    : "Loading..."
-                }
+                  "ends in":
+                    vestingInfo && vestingInfo.endTime
+                      ? (() => {
+                          const now = Date.now();
+                          const endTime = vestingInfo.endTime.getTime();
+                          const diffMs = endTime - now;
+                          if (diffMs <= 0) return "Completed";
+                          const diffDays = Math.floor(
+                            diffMs / (1000 * 60 * 60 * 24),
+                          );
+                          const diffHours = Math.floor(
+                            (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                          );
+                          return diffDays > 0
+                            ? `${diffDays}d/${diffHours}h`
+                            : `${diffHours}h`;
+                        })()
+                      : "Loading...",
+                },
               ]}
             />
           </div>
