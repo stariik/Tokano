@@ -3,10 +3,11 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useCallback, useEffect, useState } from "react";
-import { VestingState } from "tokano-sdk";
+import { VestingState, VestingSchedule } from "tokano-sdk";
 import CreateVesting from "@/Components/vesting/create-vesting";
 import ClaimVesting from "@/Components/vesting/claim-vesting";
 import { TokenInfo, useTokens } from "@/contexts/tokens-context";
+import { getVestingSteps, vestingScheduleToString } from "@/lib/utils";
 
 interface VestingStateWithTokenInfo extends VestingState {
   tokenInfo?: TokenInfo;
@@ -97,40 +98,12 @@ export default function VestingTestPage() {
           <div className="space-y-4">
             {vestedAccounts.length > 0 ? (
               vestedAccounts.map((account, index) => (
-                <div
+                <VestingCard
                   key={index}
-                  className="rounded-lg border bg-gray-800 p-4 text-sm"
-                >
-                  {account.tokenInfo && (
-                    <div className="mb-2 flex items-center gap-2">
-                      <img
-                        src={account.tokenInfo.icon}
-                        alt={account.tokenInfo.name}
-                        className="h-6 w-6 rounded-full"
-                      />
-                      <span className="font-bold">
-                        {account.tokenInfo.name} ({account.tokenInfo.symbol})
-                      </span>
-                    </div>
-                  )}
-                  <p className="font-mono">
-                    Address: {account.address.toBase58()}
-                  </p>
-                  <p className="font-mono">
-                    Mint: {account.tokenMint.toBase58()}
-                  </p>
-                  <p>Total Vested: {account.totalVestedAmount.toString()}</p>
-                  <p>Withdrawn: {account.totalWithdrawnAmount.toString()}</p>
-                  <p>
-                    Claimable: {account.currentlyClaimableAmount.toString()}
-                  </p>
-                  <p>Start: {account.startTime.toLocaleString()}</p>
-                  <p>End: {account.endTime.toLocaleString()}</p>
-                  <ClaimVesting
-                    vestingAccountAddress={account.address}
-                    onVestingClaimed={fetchVestedAccounts}
-                  />
-                </div>
+                  account={account}
+                  showClaim={true}
+                  onRefresh={fetchVestedAccounts}
+                />
               ))
             ) : (
               <p>No vested accounts found.</p>
@@ -151,39 +124,11 @@ export default function VestingTestPage() {
           <div className="space-y-4">
             {userCreatedVestingAccounts.length > 0 ? (
               userCreatedVestingAccounts.map((account, index) => (
-                <div
+                <VestingCard
                   key={index}
-                  className="rounded-lg border bg-gray-800 p-4 text-sm"
-                >
-                  {account.tokenInfo && (
-                    <div className="mb-2 flex items-center gap-2">
-                      <img
-                        src={account.tokenInfo.icon}
-                        alt={account.tokenInfo.name}
-                        className="h-6 w-6 rounded-full"
-                      />
-                      <span className="font-bold">
-                        {account.tokenInfo.name} ({account.tokenInfo.symbol})
-                      </span>
-                    </div>
-                  )}
-                  <p className="font-mono">
-                    Address: {account.address.toBase58()}
-                  </p>
-                  <p className="font-mono">
-                    Receiver: {account.receiverUser.toBase58()}
-                  </p>
-                  <p className="font-mono">
-                    Mint: {account.tokenMint.toBase58()}
-                  </p>
-                  <p>Total Vested: {account.totalVestedAmount.toString()}</p>
-                  <p>Withdrawn: {account.totalWithdrawnAmount.toString()}</p>
-                  <p>
-                    Claimable: {account.currentlyClaimableAmount.toString()}
-                  </p>
-                  <p>Start: {account.startTime.toLocaleString()}</p>
-                  <p>End: {account.endTime.toLocaleString()}</p>
-                </div>
+                  account={account}
+                  showReceiver={true}
+                />
               ))
             ) : (
               <p>You have not created any vesting accounts.</p>
@@ -191,6 +136,99 @@ export default function VestingTestPage() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function VestingCard({
+  account,
+  showClaim = false,
+  showReceiver = false,
+  onRefresh,
+}: {
+  account: VestingStateWithTokenInfo;
+  showClaim?: boolean;
+  showReceiver?: boolean;
+  onRefresh?: () => void;
+}) {
+  const [steps, setSteps] = useState(() =>
+    getVestingSteps(account.scheduleType, account.startTime, account.endTime),
+  );
+
+  useEffect(() => {
+    // Update steps immediately when account details change
+    setSteps(
+      getVestingSteps(account.scheduleType, account.startTime, account.endTime),
+    );
+
+    let intervalMs = 0;
+    switch (account.scheduleType) {
+      case VestingSchedule.Secondly:
+        intervalMs = 1000;
+        break;
+      case VestingSchedule.Minutely:
+        intervalMs = 60 * 1000;
+        break;
+      case VestingSchedule.Hourly:
+        intervalMs = 60 * 60 * 1000;
+        break;
+      default:
+        // No timer for Daily or longer
+        return;
+    }
+
+    const interval = setInterval(() => {
+      setSteps(
+        getVestingSteps(
+          account.scheduleType,
+          account.startTime,
+          account.endTime,
+        ),
+      );
+    }, intervalMs);
+
+    return () => clearInterval(interval);
+  }, [account.scheduleType, account.startTime, account.endTime]);
+
+  const { currentStep, totalSteps } = steps;
+
+  return (
+    <div className="rounded-lg border bg-gray-800 p-4 text-sm">
+      {account.tokenInfo && (
+        <div className="mb-2 flex items-center gap-2">
+          <img
+            src={account.tokenInfo.icon}
+            alt={account.tokenInfo.name}
+            className="h-6 w-6 rounded-full"
+          />
+          <span className="font-bold">
+            {account.tokenInfo.name} ({account.tokenInfo.symbol})
+          </span>
+        </div>
+      )}
+      <p className="font-mono">Address: {account.address.toBase58()}</p>
+      <p className="font-mono">Creator: {account.initializerUser.toBase58()}</p>
+      {showReceiver && (
+        <p className="font-mono">Receiver: {account.receiverUser.toBase58()}</p>
+      )}
+      <p className="font-mono">Mint: {account.tokenMint.toBase58()}</p>
+      <p className="font-mono">
+        Vesting Type: {vestingScheduleToString(account.scheduleType)}
+      </p>
+      <p>
+        Steps: {currentStep} / {totalSteps}
+      </p>
+      <p>Total Vested: {account.totalVestedAmount.toString()}</p>
+      <p>Withdrawn: {account.totalWithdrawnAmount.toString()}</p>
+      <p>Claimable: {account.currentlyClaimableAmount.toString()}</p>
+      <p>Start: {account.startTime.toLocaleString()}</p>
+      <p>End: {account.endTime.toLocaleString()}</p>
+      {showClaim && onRefresh && (
+        <ClaimVesting
+          vestingAccountAddress={account.address}
+          onVestingClaimed={onRefresh}
+        />
+      )}
     </div>
   );
 }
