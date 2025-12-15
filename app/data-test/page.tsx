@@ -14,7 +14,7 @@ import { BN } from "@coral-xyz/anchor";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { LockState, VestingState } from "tokano-sdk";
-import { formatBN, TokenBalanceT } from "@/lib/balances";
+import { formatBN, formatNumber, TokenBalanceT } from "@/lib/balances";
 
 // Inlined TokenRow component
 const TokenInfoRow = ({ label, value }) => (
@@ -190,10 +190,14 @@ export default function DataTest() {
     ? [
         {
           id: 1,
+          label: "Total Tokens (Supply)",
+          value: formatNumber(stakingInfo.totalTokens),
+        },
+        {
+          id: 2,
           label: "Total Tokens Staked",
           value: formatBN(stakingInfo.totalTokensStaked, tokenInfo.decimals),
         },
-        { id: 2, label: "Total Tokens", value: stakingInfo.totalTokens },
         {
           id: 3,
           label: "Total Stakers",
