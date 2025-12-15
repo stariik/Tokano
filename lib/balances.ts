@@ -214,3 +214,17 @@ export function transactionListener(
     "confirmed",
   );
 }
+
+export const formatNumber = (num) => {
+  if (!num) return "0";
+  const value = typeof num === "string" ? parseFloat(num) : num;
+  if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
+  if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
+  if (value >= 1e3) return `${(value / 1e3).toFixed(2)}K`;
+  return value.toFixed(2);
+};
+
+export const formatBN = (bn, decimals) => {
+  if (!bn) return "0";
+  return formatNumber(bn.toString() / Math.pow(10, decimals));
+};

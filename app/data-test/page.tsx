@@ -14,7 +14,7 @@ import { BN } from "@coral-xyz/anchor";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { LockState, VestingState } from "tokano-sdk";
-import { TokenBalanceT } from "@/lib/balances";
+import { formatBN, TokenBalanceT } from "@/lib/balances";
 
 // Inlined TokenRow component
 const TokenInfoRow = ({ label, value }) => (
@@ -46,12 +46,32 @@ const TokenInfoTable = ({ header, data }) => (
   </div>
 );
 
+type StakingInfoT = {
+  readonly totalTokensStaked: BN;
+  readonly totalTokens: number;
+  readonly totalStakers: BN;
+  readonly rewardDistributed: BN;
+  readonly totalRewardGenerated: BN;
+};
+
+const vestingScheduleMap = [
+  "Secondly",
+  "Minutely",
+  "Hourly",
+  "Daily",
+  "Weekly",
+  "Monthly",
+  "Quarterly",
+  "Yearly",
+  "TillTheEnd",
+];
+
 export default function DataTest() {
   const { connection } = useConnection();
   const { fetchTokenInfo } = useTokens();
   const { staking, vesting, lock } = useTokano();
   const [tokenInfo, setTokenInfo] = useState<TokenInfo | null>(null);
-  const [stakingInfo, setStakingInfo] = useState<any | null>(null);
+  const [stakingInfo, setStakingInfo] = useState<StakingInfoT | null>(null);
   const [vestingInfo, setVestingInfo] = useState<VestingState | null>(null);
   const [lockInfo, setLockInfo] = useState<LockState | null>(null);
   const [unsoldTokenBalance, setUnsoldTokenBalance] =
@@ -117,7 +137,7 @@ export default function DataTest() {
         (res.endTimestamp.getTime() - res.startTimestamp.getTime()) / 1000,
       ),
     );
-    const totalRewardGenerated = res.rewardRate.mul(periodInSeconds);
+    const totalRewardGenerated = res.rewardRate.mul(periodInSeconds) as BN;
 
     const result = {
       totalTokensStaked,
@@ -125,7 +145,7 @@ export default function DataTest() {
       totalStakers,
       rewardDistributed,
       totalRewardGenerated,
-    };
+    } as const;
 
     setStakingInfo(result);
   }, [staking, tokenInfo]);
@@ -147,11 +167,21 @@ export default function DataTest() {
     return <div>Loading Token Info...</div>;
   }
 
+  const unsold = unsoldTokenBalance ? parseFloat(unsoldTokenBalance.amount) : 0;
+  const unlocked =
+    stakingInfo && unsoldTokenBalance
+      ? tokenInfo.totalSupply -
+        parseFloat(
+          formatBN(stakingInfo.rewardDistributed, tokenInfo.decimals),
+        ) -
+        unsold
+      : 0;
+
   const tokenData = [
     { id: 1, label: "Supply", value: tokenInfo.totalSupply },
     { id: 2, label: "Holders", value: tokenInfo.holderCount },
-    { id: 3, label: "Unsold", value: 0 },
-    { id: 4, label: "Unlocked", value: 0 },
+    { id: 3, label: "Unsold", value: unsold },
+    { id: 4, label: "Unlocked", value: unlocked },
     { id: 5, label: "Market Cap (USD)", value: tokenInfo.mcap },
     { id: 6, label: "Price (USD)", value: tokenInfo.usdPrice },
   ];
@@ -161,7 +191,7 @@ export default function DataTest() {
         {
           id: 1,
           label: "Total Tokens Staked",
-          value: stakingInfo.totalTokensStaked.toString(),
+          value: formatBN(stakingInfo.totalTokensStaked, tokenInfo.decimals),
         },
         { id: 2, label: "Total Tokens", value: stakingInfo.totalTokens },
         {
@@ -172,12 +202,115 @@ export default function DataTest() {
         {
           id: 4,
           label: "Reward Distributed",
-          value: stakingInfo.rewardDistributed.toString(),
+          value: formatBN(stakingInfo.rewardDistributed, tokenInfo.decimals),
         },
         {
           id: 5,
           label: "Total Reward Generated",
-          value: stakingInfo.totalRewardGenerated.toString(),
+          value: formatBN(stakingInfo.totalRewardGenerated, tokenInfo.decimals),
+        },
+      ]
+    : [];
+
+  const vestingData = vestingInfo
+    ? [
+        {
+          id: 1,
+          label: "Address",
+          value: vestingInfo.address.toBase58(),
+        },
+        {
+          id: 2,
+          label: "Initializer",
+          value: vestingInfo.initializerUser.toBase58(),
+        },
+        {
+          id: 3,
+          label: "Receiver",
+          value: vestingInfo.receiverUser.toBase58(),
+        },
+        {
+          id: 4,
+          label: "Token Mint",
+          value: vestingInfo.tokenMint.toBase58(),
+        },
+        {
+          id: 5,
+          label: "Start Time",
+          value: vestingInfo.startTime.toLocaleString(),
+        },
+        {
+          id: 6,
+          label: "End Time",
+          value: vestingInfo.endTime.toLocaleString(),
+        },
+        {
+          id: 7,
+          label: "Schedule Type",
+          value: vestingScheduleMap[vestingInfo.scheduleType],
+        },
+        {
+          id: 8,
+          label: "Last Update Time",
+          value: vestingInfo.lastUpdateTime.toLocaleString(),
+        },
+        {
+          id: 9,
+          label: "Total Vested Amount",
+          value: formatBN(vestingInfo.totalVestedAmount, tokenInfo.decimals),
+        },
+        {
+          id: 10,
+          label: "Total Withdrawn Amount",
+          value: formatBN(vestingInfo.totalWithdrawnAmount, tokenInfo.decimals),
+        },
+        {
+          id: 11,
+          label: "Currently Claimable Amount",
+          value: formatBN(
+            vestingInfo.currentlyClaimableAmount,
+            tokenInfo.decimals,
+          ),
+        },
+      ]
+    : [];
+
+  const lockData = lockInfo
+    ? [
+        {
+          id: 1,
+          label: "Address",
+          value: lockInfo.address.toBase58(),
+        },
+        {
+          id: 2,
+          label: "Initializer",
+          value: lockInfo.initializerUser.toBase58(),
+        },
+        {
+          id: 3,
+          label: "Receiver",
+          value: lockInfo.receiverUser.toBase58(),
+        },
+        {
+          id: 4,
+          label: "Token Mint",
+          value: lockInfo.tokenMint.toBase58(),
+        },
+        {
+          id: 5,
+          label: "Unlock Time",
+          value: lockInfo.unlockTime.toLocaleString(),
+        },
+        {
+          id: 6,
+          label: "Last Update Time",
+          value: lockInfo.lastUpdateTime.toLocaleString(),
+        },
+        {
+          id: 7,
+          label: "Lock Amount",
+          value: formatBN(lockInfo.lockAmount, tokenInfo.decimals),
         },
       ]
     : [];
@@ -195,6 +328,22 @@ export default function DataTest() {
         />
       ) : (
         <div>Loading Staking Info...</div>
+      )}
+      {vestingInfo ? (
+        <TokenInfoTable
+          header="Vesting Information"
+          data={vestingData}
+        />
+      ) : (
+        <div>Loading Vesting Info...</div>
+      )}
+      {lockInfo ? (
+        <TokenInfoTable
+          header="Lock Information"
+          data={lockData}
+        />
+      ) : (
+        <div>Loading Lock Info...</div>
       )}
     </div>
   );

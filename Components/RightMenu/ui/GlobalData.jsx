@@ -15,6 +15,7 @@ import {
   TOKANO_LOCK_ADDRESS,
   TOKANO_VESTING_ADDRESS,
 } from "@/lib/constants";
+import { formatBN, formatNumber } from "@/lib/balances";
 
 function GlobalData() {
   const { connection } = useConnection();
@@ -66,7 +67,7 @@ function GlobalData() {
         { mint: new PublicKey(TOKANO_MINT_ADDRESS) },
       );
       if (balances.value.length > 0) {
-        const result = {
+        return {
           mintAddress: balances.value[0].account.data.parsed.info.mint,
           decimals:
             balances.value[0].account.data.parsed.info.tokenAmount.decimals,
@@ -77,7 +78,6 @@ function GlobalData() {
             balances.value[0].account.data.parsed.info.tokenAmount.amount,
           ),
         };
-        return result;
       }
     } catch (error) {
       console.error("Error fetching unsold tokens:", error);
@@ -139,21 +139,6 @@ function GlobalData() {
 
     fetchAllData();
   }, [tokenFetch, stakingFetch, fetchUnsoldTokens, fetchLock, fetchVest]);
-
-  // Format numbers for display
-  const formatNumber = (num) => {
-    if (!num) return "0";
-    const value = typeof num === "string" ? parseFloat(num) : num;
-    if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
-    if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
-    if (value >= 1e3) return `${(value / 1e3).toFixed(2)}K`;
-    return value.toFixed(2);
-  };
-
-  const formatBN = (bn, decimals) => {
-    if (!bn) return "0";
-    return formatNumber(bn.toString() / Math.pow(10, decimals)); // Assuming 9 decimals
-  };
 
   return (
     <div className="px-2 xl:px-4 2xl:px-6">
