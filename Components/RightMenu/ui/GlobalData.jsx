@@ -163,7 +163,7 @@ function GlobalData() {
                   unsold: unsoldTokenBalance
                     ? formatNumber(unsoldTokenBalance.amount)
                     : "Loading...",
-                  unlocked: lockInfo
+                  unlocked: lockInfo && tokenInfo
                     ? formatBN(lockInfo.lockAmount, tokenInfo.decimals)
                     : "Loading...",
                 },
@@ -185,7 +185,7 @@ function GlobalData() {
               label="STAKED"
               data={[
                 {
-                  total: stakingInfo
+                  total: stakingInfo && tokenInfo
                     ? formatBN(
                         stakingInfo.totalTokensStaked,
                         tokenInfo.decimals,
@@ -194,13 +194,13 @@ function GlobalData() {
                   stakes: stakingInfo?.totalStakers?.toString() || "Loading...",
                 },
                 {
-                  "active rewards": stakingInfo
+                  "active rewards": stakingInfo && tokenInfo
                     ? formatBN(
                         stakingInfo.totalRewardGenerated,
                         tokenInfo.decimals,
                       )
                     : "Loading...",
-                  "earned rewards": stakingInfo
+                  "earned rewards": stakingInfo && tokenInfo
                     ? formatBN(
                         stakingInfo.rewardDistributed,
                         tokenInfo.decimals,
@@ -217,7 +217,7 @@ function GlobalData() {
               label="LOCKED"
               data={[
                 {
-                  locked: lockInfo
+                  locked: lockInfo && tokenInfo
                     ? formatBN(lockInfo.lockAmount, tokenInfo.decimals)
                     : "Loading...",
                 },
@@ -254,7 +254,8 @@ function GlobalData() {
                   locked:
                     vestingInfo &&
                     vestingInfo.totalVestedAmount &&
-                    vestingInfo.totalWithdrawnAmount
+                    vestingInfo.totalWithdrawnAmount &&
+                    tokenInfo
                       ? formatBN(
                           vestingInfo.totalVestedAmount.sub(
                             vestingInfo.totalWithdrawnAmount,
@@ -265,7 +266,7 @@ function GlobalData() {
                 },
                 {
                   claimable:
-                    vestingInfo && vestingInfo.currentlyClaimableAmount
+                    vestingInfo && vestingInfo.currentlyClaimableAmount && tokenInfo
                       ? formatBN(
                           vestingInfo.currentlyClaimableAmount,
                           tokenInfo.decimals,
