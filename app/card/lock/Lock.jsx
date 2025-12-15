@@ -85,63 +85,18 @@ function Lock({ lockData, lockAddress, onLockClosed }) {
       try {
         const mintString = lockData.tokenMint.toBase58();
 
-        // Try to fetch from Jupiter API first
+        // Fetch from Jupiter API
         const jupiterInfo = await fetchTokenInfo([mintString]);
 
-        // Fetch on-chain metadata
+        // Fetch on-chain mint info for decimals fallback
         const mintPubkey = new PublicKey(mintString);
         const mintInfo = await getMint(connection, mintPubkey);
 
-        // Fetch Metaplex metadata
-        let name = "Unknown Token";
-        let symbol = "N/A";
-
-        try {
-          const metadataPDA = PublicKey.findProgramAddressSync(
-            [
-              Buffer.from("metadata"),
-              new PublicKey(
-                "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",
-              ).toBuffer(),
-              mintPubkey.toBuffer(),
-            ],
-            new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"),
-          )[0];
-
-          const metadataAccount = await connection.getAccountInfo(metadataPDA);
-
-          if (metadataAccount) {
-            // Parse Metaplex metadata
-            const data = metadataAccount.data;
-            // Skip first 1 + 32 + 32 bytes (key + update authority + mint)
-            let offset = 1 + 32 + 32;
-
-            // Read name (first 4 bytes = length, then string)
-            const nameLength = data.readUInt32LE(offset);
-            offset += 4;
-            name = data
-              .slice(offset, offset + nameLength)
-              .toString("utf8")
-              .replace(/\0/g, "");
-            offset += nameLength;
-
-            // Read symbol (first 4 bytes = length, then string)
-            const symbolLength = data.readUInt32LE(offset);
-            offset += 4;
-            symbol = data
-              .slice(offset, offset + symbolLength)
-              .toString("utf8")
-              .replace(/\0/g, "");
-          }
-        } catch (metadataError) {
-          console.log("Metaplex metadata not found, using defaults");
-        }
-
-        // Combine all info
+        // Use Jupiter data (all tokens are on Jupiter)
         setTokenInfo({
           id: mintString,
-          name: jupiterInfo[mintString]?.name || name,
-          symbol: jupiterInfo[mintString]?.symbol || symbol,
+          name: jupiterInfo[mintString]?.name || "Unknown Token",
+          symbol: jupiterInfo[mintString]?.symbol || "N/A",
           decimals: jupiterInfo[mintString]?.decimals || mintInfo.decimals,
           mcap: jupiterInfo[mintString]?.mcap,
           icon: jupiterInfo[mintString]?.icon || "/vest.png",
@@ -459,7 +414,7 @@ function Lock({ lockData, lockAddress, onLockClosed }) {
               (lockData?.unlockTime &&
                 lockData.unlockTime.getTime() > Date.now())
             }
-            className="font-khand mt-0.5 ml-12 rounded-2xl border-2 border-[#6d91df] px-4 text-xl font-bold cursor-pointer transition-opacity hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-40 lg:ml-8 lg:text-2xl xl:ml-12"
+            className="font-khand mt-0.5 ml-12 cursor-pointer rounded-2xl border-2 border-[#6d91df] px-4 text-xl font-bold transition-opacity hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-40 lg:ml-8 lg:text-2xl xl:ml-12"
             style={{
               background: "linear-gradient(90deg, #4274b2 0%, #5d9bea 100%)",
             }}

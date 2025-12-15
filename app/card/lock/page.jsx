@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { PublicKey } from "@solana/web3.js";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useTokens } from "@/contexts/tokens-context";
 import PortfolioTokenGrid from "@/Components/Memes/PortfolioTokenGrid";
@@ -26,9 +27,9 @@ function LockPageContent() {
 
     setLoading(true);
     try {
-      // Fetch all locks and find the one matching the address
-      const allLocks = await lock.fetchAllLocks();
-      const data = allLocks.find((l) => l.address.toBase58() === lockAddress);
+      // Fetch the specific lock by address
+      const lockPubkey = new PublicKey(lockAddress);
+      const data = await lock.fetchLock(lockPubkey);
       setLockData(data);
       console.log("Lock data fetched:", data);
     } catch (error) {

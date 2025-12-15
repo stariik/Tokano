@@ -38,14 +38,13 @@ function StakePageContent() {
       setLoading(true);
       setError(null);
 
-      // Fetch the specific pool and all user stakes
-      const [poolData, allUserStakes] = await Promise.all([
-        staking.fetchStakePool(poolAddress).catch((err) => {
+      // Fetch the specific pool
+      const poolData = await staking
+        .fetchStakePool(poolAddress)
+        .catch((err) => {
           console.error("Error fetching pool:", err);
           return null;
-        }),
-        (staking as any).program.account.userState.all().catch(() => []),
-      ]);
+        });
 
       // Check if pool data is valid
       if (!poolData) {
@@ -54,21 +53,13 @@ function StakePageContent() {
         return;
       }
 
-      // Count unique stakers for this specific pool
-      const uniqueStakers = new Set();
-      allUserStakes.forEach((userStake: any) => {
-        if (userStake.account.poolAddress.toBase58() === poolAddress) {
-          uniqueStakers.add(userStake.account.stakerUser.toBase58());
-        }
-      });
-
       // Fetch token info
       const tokenInfo = await fetchTokenInfo([poolData.tokenMint.toBase58()]);
 
       setPool({
         ...poolData,
         tokenInfo: tokenInfo[poolData.tokenMint.toBase58()],
-        stakersCount: uniqueStakers.size,
+        stakersCount: poolData.totalStakers.toNumber(),
       });
     } catch (err) {
       console.error("Error fetching pool:", err);

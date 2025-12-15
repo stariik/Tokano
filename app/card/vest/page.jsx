@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { PublicKey } from "@solana/web3.js";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useTokens } from "@/contexts/tokens-context";
 import PortfolioTokenGrid from "@/Components/Memes/PortfolioTokenGrid";
@@ -26,11 +27,9 @@ function VestPageContent() {
 
     setLoading(true);
     try {
-      // Fetch all vestings and find the one matching the address
-      const allVestings = await vesting.fetchAllVestings();
-      const data = allVestings.find(
-        (v) => v.address.toBase58() === vestAddress,
-      );
+      // Fetch the specific vesting by address
+      const vestingAddress = new PublicKey(vestAddress);
+      const data = await vesting.fetchVesting(vestingAddress);
       setVestData(data);
       console.log("Vest data fetched:", data);
     } catch (error) {

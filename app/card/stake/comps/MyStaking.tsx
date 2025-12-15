@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useTokano } from "@/contexts/tokano-sdk-context";
+import { transactionListener } from "@/lib/balances";
 import UnifiedStakingTables from "./UnifiedStakingTables";
 
 interface MyStakingProps {
@@ -10,13 +11,12 @@ interface MyStakingProps {
 }
 
 function MyStaking({ pool }: MyStakingProps) {
-  const { publicKey, sendTransaction } = useWallet();
+  const { publicKey, signTransaction } = useWallet();
   const { connection } = useConnection();
   const { staking } = useTokano();
   const [stakingPositions, setStakingPositions] = useState<any[]>([]);
   const [filter, setFilter] = useState<"all" | "staked" | "unstaked">("all");
   const [loading, setLoading] = useState(false);
-  const [rpcLimitError, setRpcLimitError] = useState(false);
   const [popup, setPopup] = useState({
     show: false,
     type: "",
@@ -45,40 +45,19 @@ function MyStaking({ pool }: MyStakingProps) {
 
       setLoading(true);
 
-      // Fetch all user stake accounts with batching to avoid RPC limits
-      let allStakes: any[] = [];
-      try {
-        allStakes = await staking
-          .fetchUserStakeAccounts(publicKey)
-          .catch((err) => {
-            console.error("Error fetching user stake accounts:", err);
-            return [];
-          });
-      } catch (error: any) {
-        // If we hit RPC limits, try fetching individually or with smaller batches
-        if (
-          error?.message?.includes("getMultipleAccounts is limited") ||
-          error?.code === -32615
-        ) {
-          console.warn("RPC limit hit");
-          setRpcLimitError(true);
-          allStakes = [];
-        } else {
-          console.error("Error in fetchUserStakingPositions:", error);
-          allStakes = [];
-        }
-      }
-
       // Ensure pool.poolAddress is a PublicKey
       const poolAddress =
         pool.poolAddress instanceof PublicKey
           ? pool.poolAddress
           : new PublicKey(pool.poolAddress);
 
-      // Filter stakes for this specific pool
-      const poolStakes = allStakes.filter((stake: any) =>
-        stake.poolAddress.equals(poolAddress),
-      );
+      // Fetch user stake accounts for this specific pool directly
+      const poolStakes = await staking
+        .fetchUserStakeAccountsForPool(publicKey, poolAddress)
+        .catch((err) => {
+          console.error("Error fetching user stake accounts for pool:", err);
+          return [];
+        });
 
       setStakingPositions(poolStakes);
     } catch (error) {
@@ -91,7 +70,7 @@ function MyStaking({ pool }: MyStakingProps) {
 
   const handleUnstake = async (positionId: string) => {
     try {
-      if (!publicKey || !staking || !connection) return;
+      if (!publicKey || !staking || !connection || !signTransaction) return;
 
       const position = transformedPositions.find((p) => p.id === positionId);
       if (!position || !position.rawStake) return;
@@ -112,23 +91,37 @@ function MyStaking({ pool }: MyStakingProps) {
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
 
-      // Sign and send transaction with skipPreflight to avoid simulation errors
-      const signature = await sendTransaction(tx, connection, {
-        skipPreflight: true,
-        maxRetries: 3,
+      // Sign and send transaction
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      console.log("Transaction sent: ", txId);
+
+      // Listen for transaction confirmation
+      transactionListener(connection, txId, (completed) => {
+        setProcessing(false);
+        setPopup({
+          show: false,
+          type: "",
+          positionId: null,
+          isLocked: false,
+          remainingTime: "",
+        });
+
+        if (completed) {
+          console.log("Transaction completed");
+          setSuccess("Successfully unstaked tokens!");
+          fetchUserStakingPositions();
+          setTimeout(() => setSuccess(null), 5000);
+        } else {
+          console.log("Transaction failed");
+          setError("Failed to unstake tokens");
+          setTimeout(() => setError(null), 5000);
+        }
       });
-
-      await connection.confirmTransaction(signature, "confirmed");
-
-      setSuccess("Successfully unstaked tokens!");
-      await fetchUserStakingPositions();
-
-      setTimeout(() => setSuccess(null), 5000);
     } catch (error: any) {
       console.error("Error unstaking:", error);
       setError(error?.message || "Failed to unstake tokens");
       setTimeout(() => setError(null), 5000);
-    } finally {
       setProcessing(false);
       setPopup({
         show: false,
@@ -142,7 +135,7 @@ function MyStaking({ pool }: MyStakingProps) {
 
   const handleClaim = async (positionId: string) => {
     try {
-      if (!publicKey || !staking || !connection) return;
+      if (!publicKey || !staking || !connection || !signTransaction) return;
 
       const position = transformedPositions.find((p) => p.id === positionId);
       if (!position || !position.rawStake) return;
@@ -162,23 +155,37 @@ function MyStaking({ pool }: MyStakingProps) {
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
 
-      // Sign and send transaction with skipPreflight to avoid simulation errors
-      const signature = await sendTransaction(tx, connection, {
-        skipPreflight: true,
-        maxRetries: 3,
+      // Sign and send transaction
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      console.log("Transaction sent: ", txId);
+
+      // Listen for transaction confirmation
+      transactionListener(connection, txId, (completed) => {
+        setProcessing(false);
+        setPopup({
+          show: false,
+          type: "",
+          positionId: null,
+          isLocked: false,
+          remainingTime: "",
+        });
+
+        if (completed) {
+          console.log("Transaction completed");
+          setSuccess("Successfully claimed rewards!");
+          fetchUserStakingPositions();
+          setTimeout(() => setSuccess(null), 5000);
+        } else {
+          console.log("Transaction failed");
+          setError("Failed to claim rewards");
+          setTimeout(() => setError(null), 5000);
+        }
       });
-
-      await connection.confirmTransaction(signature, "confirmed");
-
-      setSuccess("Successfully claimed rewards!");
-      await fetchUserStakingPositions();
-
-      setTimeout(() => setSuccess(null), 5000);
     } catch (error: any) {
       console.error("Error claiming rewards:", error);
       setError(error?.message || "Failed to claim rewards");
       setTimeout(() => setError(null), 5000);
-    } finally {
       setProcessing(false);
       setPopup({
         show: false,
@@ -375,18 +382,7 @@ function MyStaking({ pool }: MyStakingProps) {
 
       {/* Two Side-by-Side Tables */}
       <div className="relative">
-        {rpcLimitError ? (
-          <div className="flex flex-col items-center justify-center px-4 py-8">
-            <p className="mb-2 text-center text-sm font-semibold text-yellow-600 dark:text-yellow-400">
-              ⚠️ RPC Limit Reached
-            </p>
-            <p className="text-center text-xs">
-              Your RPC provider limits the number of accounts that can be
-              fetched. Please upgrade your QuickNode plan or use a different RPC
-              provider.
-            </p>
-          </div>
-        ) : loading ? (
+        {loading ? (
           <div className="flex items-center justify-center py-8">
             <p className="text-sm">Loading staking positions...</p>
           </div>
