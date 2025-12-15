@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
@@ -7,14 +7,21 @@ import { LuCopy } from "react-icons/lu";
 import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
 import { useTokens } from "@/contexts/tokens-context";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { useTokano } from "@/contexts/tokano-sdk-context";
+import { transactionListener } from "@/lib/balances";
 
 import { CiPill } from "react-icons/ci";
 
-function Vest({ vestData, vestAddress }) {
+function Vest({ vestData, vestAddress, onVestClosed }) {
   const { resolvedTheme } = useTheme();
   const { fetchTokenInfo } = useTokens();
+  const { publicKey, signTransaction } = useWallet();
+  const { connection } = useConnection();
+  const { vesting } = useTokano();
   const [tokenInfo, setTokenInfo] = useState(null);
   const [copiedField, setCopiedField] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
 
   // Copy to clipboard function
   const copyToClipboard = (text, fieldName) => {
@@ -22,6 +29,51 @@ function Vest({ vestData, vestAddress }) {
     setCopiedField(fieldName);
     setTimeout(() => setCopiedField(null), 2000);
   };
+
+  // Check if the current user is the vesting creator
+  const isCreator = publicKey && vestData?.initializerUser?.equals(publicKey);
+
+  // Handle close vesting
+  const handleCloseVesting = useCallback(async () => {
+    if (!publicKey || !vesting || !signTransaction) return;
+
+    setIsClosing(true);
+    try {
+      const tx = await vesting.closeVesting({
+        walletPk: publicKey,
+        vestingAddress: vestAddress,
+      });
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      console.log("Transaction sent: ", txId);
+
+      transactionListener(connection, txId, (completed) => {
+        setIsClosing(false);
+        if (completed) {
+          console.log("Vesting closed successfully");
+          if (onVestClosed) onVestClosed();
+        } else {
+          console.log("Transaction failed");
+          alert("Failed to close vesting");
+        }
+      });
+    } catch (error) {
+      console.error("Error closing vesting:", error);
+      alert(`Error closing vesting: ${error}`);
+      setIsClosing(false);
+    }
+  }, [
+    publicKey,
+    vesting,
+    connection,
+    signTransaction,
+    vestAddress,
+    onVestClosed,
+  ]);
 
   // Debug logging
   useEffect(() => {
@@ -417,8 +469,27 @@ function Vest({ vestData, vestAddress }) {
         </div>
       </div>
 
-      <div className="font-khand mr-10 text-end text-xl font-medium lg:mr-6 lg:text-2xl xl:mr-10">
-        locked
+      <div className={`flex ${isCreator ? "justify-between" : "justify-end"}`}>
+        {isCreator && (
+          <button
+            onClick={handleCloseVesting}
+            disabled={
+              isClosing ||
+              (vestData?.endTime && vestData.endTime.getTime() > Date.now())
+            }
+            className="font-khand mt-0.5 ml-12 cursor-pointer rounded-2xl border-2 border-[#9b6bda] px-4 text-xl font-bold transition-opacity hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-40 lg:ml-8 lg:text-2xl xl:ml-12"
+            style={{
+              background:
+                "linear-gradient(90deg, rgb(110 59 135) 0%, rgb(150 74 155) 100%)",
+            }}
+          >
+            {isClosing ? "closing..." : "close"}
+          </button>
+        )}
+
+        <div className="font-khand mr-10 text-end text-xl font-medium lg:mr-6 lg:text-2xl xl:mr-10">
+          locked
+        </div>
       </div>
     </div>
   );

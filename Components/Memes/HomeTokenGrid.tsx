@@ -90,36 +90,30 @@ function HomeTokenGrid({
 
       const currentTime = Date.now();
 
-      // Process staking pools - filter out ended pools
-      const processedPools = pools
-        .filter((pool: any) => pool.endTimestamp.getTime() > currentTime)
-        .map((pool: any) => ({
-          ...pool,
-          type: pool.startTimestamp.getTime() > currentTime ? "soon" : "stake",
-          timestamp: pool.startTimestamp.getTime(),
-          tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
-          stakersCount: stakersPerPool[pool.poolAddress.toBase58()]?.size || 0,
-        }));
+      // Process staking pools - show all pools (upcoming, live, and ended)
+      const processedPools = pools.map((pool: any) => ({
+        ...pool,
+        type: pool.startTimestamp.getTime() > currentTime ? "soon" : "stake",
+        timestamp: pool.startTimestamp.getTime(),
+        tokenInfo: tokenInfos[pool.tokenMint.toBase58()],
+        stakersCount: stakersPerPool[pool.poolAddress.toBase58()]?.size || 0,
+      }));
 
-      // Process vestings - filter out ended vestings
-      const processedVestings = vestingData
-        .filter((vest: any) => vest.endTime.getTime() > currentTime)
-        .map((vest: any) => ({
-          ...vest,
-          type: vest.startTime.getTime() > currentTime ? "soon" : "vest",
-          timestamp: vest.startTime.getTime(),
-          tokenInfo: tokenInfos[vest.tokenMint.toBase58()],
-        }));
+      // Process vestings - show all vestings (upcoming, live, and ended)
+      const processedVestings = vestingData.map((vest: any) => ({
+        ...vest,
+        type: vest.startTime.getTime() > currentTime ? "soon" : "vest",
+        timestamp: vest.startTime.getTime(),
+        tokenInfo: tokenInfos[vest.tokenMint.toBase58()],
+      }));
 
-      // Process locks - filter out unlocked locks
-      const processedLocks = lockData
-        .filter((lockItem: any) => lockItem.unlockTime.getTime() > currentTime)
-        .map((lockItem: any) => ({
-          ...lockItem,
-          type: "lock",
-          timestamp: lockItem.unlockTime.getTime(),
-          tokenInfo: tokenInfos[lockItem.tokenMint.toBase58()],
-        }));
+      // Process locks - show all locks (locked and unlocked)
+      const processedLocks = lockData.map((lockItem: any) => ({
+        ...lockItem,
+        type: "lock",
+        timestamp: lockItem.unlockTime.getTime(),
+        tokenInfo: tokenInfos[lockItem.tokenMint.toBase58()],
+      }));
 
       // Sort by timestamp (newest first)
       processedPools.sort((a: any, b: any) => b.timestamp - a.timestamp);

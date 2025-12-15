@@ -116,18 +116,16 @@ function GlobalData() {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        // First fetch token info as staking depends on it
-        const token = await tokenFetch();
-        setTokenInfo(token);
-
-        // Fetch other data in parallel
-        const [staking, unsold, lock, vest] = await Promise.all([
+        // Fetch all data in parallel
+        const [token, staking, unsold, lock, vest] = await Promise.all([
+          tokenFetch(),
           stakingFetch(),
           fetchUnsoldTokens(),
           fetchLock(),
           fetchVest(),
         ]);
 
+        setTokenInfo(token);
         setStakingInfo(staking);
         setUnsoldTokenBalance(unsold);
         setLockInfo(lock);

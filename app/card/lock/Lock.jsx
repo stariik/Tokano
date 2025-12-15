@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
@@ -7,18 +7,23 @@ import { LuCopy } from "react-icons/lu";
 import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
 import { useTokens } from "@/contexts/tokens-context";
-import { useConnection } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { getMint } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
+import { useTokano } from "@/contexts/tokano-sdk-context";
+import { transactionListener } from "@/lib/balances";
 
 import { CiPill } from "react-icons/ci";
 
-function Lock({ lockData, lockAddress }) {
+function Lock({ lockData, lockAddress, onLockClosed }) {
   const { resolvedTheme } = useTheme();
   const { fetchTokenInfo } = useTokens();
   const { connection } = useConnection();
+  const { publicKey, signTransaction } = useWallet();
+  const { lock } = useTokano();
   const [tokenInfo, setTokenInfo] = useState(null);
   const [copiedField, setCopiedField] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
 
   // Copy to clipboard function
   const copyToClipboard = (text, fieldName) => {
@@ -26,6 +31,44 @@ function Lock({ lockData, lockAddress }) {
     setCopiedField(fieldName);
     setTimeout(() => setCopiedField(null), 2000);
   };
+
+  // Check if the current user is the lock creator
+  const isCreator = publicKey && lockData?.initializerUser?.equals(publicKey);
+
+  // Handle close lock
+  const handleCloseLock = useCallback(async () => {
+    if (!publicKey || !lock || !signTransaction) return;
+
+    setIsClosing(true);
+    try {
+      const tx = await lock.closeLock({
+        walletPk: publicKey,
+        lockAddress: lockAddress,
+      });
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      console.log("Transaction sent: ", txId);
+
+      transactionListener(connection, txId, (completed) => {
+        setIsClosing(false);
+        if (completed) {
+          console.log("Lock closed successfully");
+          if (onLockClosed) onLockClosed();
+        } else {
+          console.log("Transaction failed");
+          alert("Failed to close lock");
+        }
+      });
+    } catch (error) {
+      console.error("Error closing lock:", error);
+      alert(`Error closing lock: ${error}`);
+      setIsClosing(false);
+    }
+  }, [publicKey, lock, connection, signTransaction, lockAddress, onLockClosed]);
 
   // Debug logging
   useEffect(() => {
@@ -407,8 +450,27 @@ function Lock({ lockData, lockAddress }) {
         </div>
       </div>
 
-      <div className="font-khand mr-10 text-end text-xl font-medium lg:mr-6 lg:text-2xl xl:mr-10">
-        locked
+      <div className={`flex ${isCreator ? "justify-between" : "justify-end"}`}>
+        {isCreator && (
+          <button
+            onClick={handleCloseLock}
+            disabled={
+              isClosing ||
+              (lockData?.unlockTime &&
+                lockData.unlockTime.getTime() > Date.now())
+            }
+            className="font-khand mt-0.5 ml-12 rounded-2xl border-2 border-[#6d91df] px-4 text-xl font-bold cursor-pointer transition-opacity hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-40 lg:ml-8 lg:text-2xl xl:ml-12"
+            style={{
+              background: "linear-gradient(90deg, #4274b2 0%, #5d9bea 100%)",
+            }}
+          >
+            {isClosing ? "closing..." : "close"}
+          </button>
+        )}
+
+        <div className="font-khand mr-10 text-end text-xl font-medium lg:mr-6 lg:text-2xl xl:mr-10">
+          locked
+        </div>
       </div>
     </div>
   );

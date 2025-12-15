@@ -102,7 +102,7 @@ function Lock({ data, token }) {
         }
       `}</style>
       {/* Token Image */}
-      <div className="relative aspect-[1.1/1] w-full bg-black">
+      <div className="relative w-full h-3/5 bg-black">
         <Image
           src={tokenData.image}
           alt={tokenData.name}

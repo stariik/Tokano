@@ -1,0 +1,48 @@
+diff --git a/node_modules/tokano-sdk/dist/staking.js b/node_modules/tokano-sdk/dist/staking.js
+index 6f34456..074e2fb 100644
+--- a/node_modules/tokano-sdk/dist/staking.js
++++ b/node_modules/tokano-sdk/dist/staking.js
+@@ -256,7 +256,9 @@ class TokanoStaking {
+             ]);
+             const poolAddresses = userStateAccounts.map((userStateAccount) => userStateAccount.account.poolAddress);
+             const poolAccountsMap = yield this.fetchPoolsForAccounts(poolAddresses);
+-            return userStateAccounts.map((userStateAccount) => TokanoStaking.toUserStateStruct(poolAccountsMap.get(userStateAccount.account.poolAddress), userStateAccount.account, userStateAccount.publicKey));
++            return userStateAccounts
++                .map((userStateAccount) => TokanoStaking.toUserStateStruct(poolAccountsMap.get(userStateAccount.account.poolAddress), userStateAccount.account, userStateAccount.publicKey))
++                .filter((userState) => userState !== null);
+         });
+     }
+     /**
+@@ -283,7 +285,9 @@ class TokanoStaking {
+             ]);
+             const poolAddresses = userStateAccounts.map((userStateAccount) => userStateAccount.account.poolAddress);
+             const poolAccountsMap = yield this.fetchPoolsForAccounts(poolAddresses);
+-            return userStateAccounts.map((userStateAccount) => TokanoStaking.toUserStateStruct(poolAccountsMap.get(userStateAccount.account.poolAddress), userStateAccount.account, userStateAccount.publicKey));
++            return userStateAccounts
++                .map((userStateAccount) => TokanoStaking.toUserStateStruct(poolAccountsMap.get(userStateAccount.account.poolAddress), userStateAccount.account, userStateAccount.publicKey))
++                .filter((userState) => userState !== null);
+         });
+     }
+     /**
+@@ -305,6 +309,10 @@ class TokanoStaking {
+         });
+     }
+     static getApproximateRewardTokenStored(poolState) {
++        // Return zero if poolState is null (pool might be closed)
++        if (!poolState) {
++            return new anchor_1.BN(0);
++        }
+         const rewardUpdateTime = anchor_1.BN.min(new anchor_1.BN(Date.now() / 1000), poolState.endTimeStamp);
+         // If no token is staked, does not need to give rewards to users.
+         if (poolState.totalTokenStaked.eq(new anchor_1.BN(0))) {
+@@ -366,6 +374,10 @@ class TokanoStaking {
+      * @private
+      */
+     static toUserStateStruct(poolState, userState, accountAddress) {
++        // Return null if poolState is null (pool might be closed or deleted)
++        if (!poolState) {
++            return null;
++        }
+         return {
+             accountAddress,
+             initializerUser: userState.stakerUser,

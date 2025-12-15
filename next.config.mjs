@@ -12,6 +12,10 @@ const nextConfig = {
         hostname: "images.cdn.aurory.io",
         pathname: "**",
       },
+      {
+        protocol: 'https',
+        hostname: 'images.cdn.aurory.io',
+      },
     ],
   },
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
@@ -7,14 +7,22 @@ import { StarIcon } from "@/Components/icons";
 import { useTheme } from "@/hooks/useTheme";
 import { CiPill } from "react-icons/ci";
 import { PoolState } from "tokano-sdk";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { useTokano } from "@/contexts/tokano-sdk-context";
+import { transactionListener } from "@/lib/balances";
 
 interface StakingCardProps {
   pool: any;
+  onPoolClosed?: () => void;
 }
 
-function StakingCard({ pool }: StakingCardProps) {
+function StakingCard({ pool, onPoolClosed }: StakingCardProps) {
   const { resolvedTheme } = useTheme();
+  const { publicKey, signTransaction } = useWallet();
+  const { connection } = useConnection();
+  const { staking } = useTokano();
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [isClosing, setIsClosing] = useState(false);
 
   // Copy to clipboard function
   const copyToClipboard = (text: string, fieldName: string) => {
@@ -22,6 +30,51 @@ function StakingCard({ pool }: StakingCardProps) {
     setCopiedField(fieldName);
     setTimeout(() => setCopiedField(null), 2000);
   };
+
+  // Check if the current user is the pool creator
+  const isCreator = publicKey && pool.initializer?.equals(publicKey);
+
+  // Handle close pool
+  const handleClosePool = useCallback(async () => {
+    if (!publicKey || !staking || !signTransaction) return;
+
+    setIsClosing(true);
+    try {
+      const tx = await staking.closePool({
+        walletPk: publicKey,
+        poolAddress: pool.poolAddress,
+      });
+      const { blockhash } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      console.log("Transaction sent: ", txId);
+
+      transactionListener(connection, txId, (completed) => {
+        setIsClosing(false);
+        if (completed) {
+          console.log("Pool closed successfully");
+          if (onPoolClosed) onPoolClosed();
+        } else {
+          console.log("Transaction failed");
+          alert("Failed to close pool");
+        }
+      });
+    } catch (error) {
+      console.error("Error closing pool:", error);
+      alert(`Error closing pool: ${error}`);
+      setIsClosing(false);
+    }
+  }, [
+    publicKey,
+    staking,
+    connection,
+    signTransaction,
+    pool.poolAddress,
+    onPoolClosed,
+  ]);
 
   // Format date from timestamp
   const formatDate = (timestamp: Date) => {
@@ -276,9 +329,27 @@ function StakingCard({ pool }: StakingCardProps) {
           {stakersCount}
         </div>
       </div>
+      <div className={`flex ${isCreator ? "justify-between" : "justify-end"}`}>
+        {isCreator && (
+          <button
+            onClick={handleClosePool}
+            disabled={
+              isClosing ||
+              pool.totalTokenStaked > 0 ||
+              pool.endTimestamp.getTime() > Date.now()
+            }
+            className="font-khand ml-12 cursor-pointer rounded-2xl border-2 border-[#6D6FDF] px-4 text-xl font-bold transition-opacity hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-40 lg:ml-8 lg:text-2xl xl:ml-12"
+            style={{
+              background: "linear-gradient(90deg, #3F318E 0%, #644EEA 100%)",
+            }}
+          >
+            {isClosing ? "closing..." : "close"}
+          </button>
+        )}
 
-      <div className="font-khand mr-12 text-end text-xl font-bold lg:mr-8 lg:text-3xl xl:mr-12">
-        stakes
+        <div className="font-khand mr-12 text-end text-xl font-bold lg:mr-8 lg:text-3xl xl:mr-12">
+          stakes
+        </div>
       </div>
     </div>
   );
