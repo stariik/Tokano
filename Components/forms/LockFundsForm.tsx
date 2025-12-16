@@ -197,56 +197,13 @@ export default function LockFundsForm({
       }
 
       // Initialize lock on blockchain
-      const tx = await lock.initializeLock({
+      const { tx, lockAccountAddress } = await lock.initializeLock({
         walletPk: publicKey,
         receiverPk: receiverPk,
         tokenMint: tokenMint,
         lockAmount: amountInSmallestUnit,
         unlockTimestamp: unlockTimestamp,
       });
-
-      // Extract lock address from transaction
-      let lockAddressFromTx: string | null = null;
-      if (tx.instructions && tx.instructions.length > 0) {
-        console.log(
-          "Extracting lock address from transaction with",
-          tx.instructions.length,
-          "instructions",
-        );
-        const instruction = tx.instructions[0];
-        console.log(
-          "First instruction has",
-          instruction.keys.length,
-          "account keys",
-        );
-
-        for (const accountMeta of instruction.keys) {
-          console.log(
-            "Account:",
-            accountMeta.pubkey.toBase58(),
-            "isWritable:",
-            accountMeta.isWritable,
-            "isSigner:",
-            accountMeta.isSigner,
-            "isUserWallet:",
-            accountMeta.pubkey.equals(publicKey),
-          );
-
-          if (
-            accountMeta.isWritable &&
-            !accountMeta.isSigner &&
-            !accountMeta.pubkey.equals(publicKey)
-          ) {
-            lockAddressFromTx = accountMeta.pubkey.toBase58();
-            console.log("Found lock address:", lockAddressFromTx);
-            break;
-          }
-        }
-      }
-
-      if (!lockAddressFromTx) {
-        console.warn("Could not extract lock address from transaction");
-      }
 
       // Get latest blockhash and set fee payer
       const { blockhash } = await connection.getLatestBlockhash();
@@ -268,8 +225,8 @@ export default function LockFundsForm({
         setIsCreating(false);
         if (completed) {
           console.log("Lock created successfully!");
-          if (lockAddressFromTx) {
-            setCreatedLockAddress(lockAddressFromTx);
+          if (lockAccountAddress) {
+            setCreatedLockAddress(lockAccountAddress.toBase58());
           }
           setShowPopup("success");
           setIsClosing(false);

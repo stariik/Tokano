@@ -55,7 +55,7 @@ export const CreateLock = ({ onLockCreated }: CreateLockProps) => {
         selectedToken.decimals,
       );
 
-      const tx: Transaction = await lock.initializeLock({
+      const { tx } = await lock.initializeLock({
         walletPk: publicKey,
         receiverPk: new PublicKey(receiverPk),
         tokenMint: new PublicKey(tokenMint),

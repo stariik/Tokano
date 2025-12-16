@@ -61,7 +61,7 @@ export const CreateVesting = ({ onVestingCreated }: CreateVestingProps) => {
         selectedToken.decimals,
       );
 
-      const tx: Transaction = await vesting.initializeVesting({
+      const { tx } = await vesting.initializeVesting({
         walletPk: publicKey,
         receiverPk: new PublicKey(receiverPk),
         tokenMint: new PublicKey(tokenMint),

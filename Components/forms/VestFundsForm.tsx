@@ -241,7 +241,7 @@ export default function VestFundsForm({
       }
 
       // Initialize vesting on blockchain
-      const tx = await vesting.initializeVesting({
+      const { tx, vestingAccountAddress } = await vesting.initializeVesting({
         walletPk: publicKey,
         receiverPk: receiverPk,
         tokenMint: tokenMint,
@@ -250,49 +250,6 @@ export default function VestFundsForm({
         vestingDuration: vestingDurationInSeconds,
         scheduleType: scheduleType,
       });
-
-      // Extract vest address from transaction
-      let vestAddressFromTx: string | null = null;
-      if (tx.instructions && tx.instructions.length > 0) {
-        console.log(
-          "Extracting vest address from transaction with",
-          tx.instructions.length,
-          "instructions",
-        );
-        const instruction = tx.instructions[0];
-        console.log(
-          "First instruction has",
-          instruction.keys.length,
-          "account keys",
-        );
-
-        for (const accountMeta of instruction.keys) {
-          console.log(
-            "Account:",
-            accountMeta.pubkey.toBase58(),
-            "isWritable:",
-            accountMeta.isWritable,
-            "isSigner:",
-            accountMeta.isSigner,
-            "isUserWallet:",
-            accountMeta.pubkey.equals(publicKey),
-          );
-
-          if (
-            accountMeta.isWritable &&
-            !accountMeta.isSigner &&
-            !accountMeta.pubkey.equals(publicKey)
-          ) {
-            vestAddressFromTx = accountMeta.pubkey.toBase58();
-            console.log("Found vest address:", vestAddressFromTx);
-            break;
-          }
-        }
-      }
-
-      if (!vestAddressFromTx) {
-        console.warn("Could not extract vest address from transaction");
-      }
 
       // Get latest blockhash and set fee payer
       const { blockhash } = await connection.getLatestBlockhash();
@@ -314,8 +271,8 @@ export default function VestFundsForm({
         setIsCreating(false);
         if (completed) {
           console.log("Vesting created successfully!");
-          if (vestAddressFromTx) {
-            setCreatedVestAddress(vestAddressFromTx);
+          if (vestingAccountAddress) {
+            setCreatedVestAddress(vestingAccountAddress.toBase58());
           }
           setShowPopup("success");
           setIsClosing(false);

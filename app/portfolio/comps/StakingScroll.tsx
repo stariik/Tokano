@@ -53,7 +53,7 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
         .catch((err) => {
           console.error("Error fetching user stake accounts:", err);
           return [];
-        });
+        })
 
       // Get all pools to match with stakes
       const pools = await staking.fetchStakePools().catch((err) => {

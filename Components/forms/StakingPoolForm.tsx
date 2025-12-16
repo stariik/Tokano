@@ -244,7 +244,7 @@ export default function StakingPoolForm({
         unstakingDays * 24 * 60 * 60 + unstakingHours * 60 * 60;
 
       // Initialize pool on blockchain
-      const tx = await staking.initializePool({
+      const { tx, poolAddress } = await staking.initializePool({
         walletPk: publicKey,
         tokenMint: tokenMint,
         rewardAmount: amountInSmallestUnit,
@@ -252,53 +252,6 @@ export default function StakingPoolForm({
         lockingPeriodForStakers: lockingPeriodForStakers.toString(),
         startTimeStamp,
       });
-
-      // Extract pool address from transaction (it's typically in the first instruction's accounts)
-      // The pool state PDA is usually one of the writable accounts
-      let poolAddressFromTx: string | null = null;
-      if (tx.instructions && tx.instructions.length > 0) {
-        console.log(
-          "Extracting pool address from transaction with",
-          tx.instructions.length,
-          "instructions",
-        );
-        const instruction = tx.instructions[0];
-        console.log(
-          "First instruction has",
-          instruction.keys.length,
-          "account keys",
-        );
-
-        // The pool address is typically the first or second account in the instruction
-        // We need to find the pool state account (usually a writable non-signer account)
-        for (const accountMeta of instruction.keys) {
-          console.log(
-            "Account:",
-            accountMeta.pubkey.toBase58(),
-            "isWritable:",
-            accountMeta.isWritable,
-            "isSigner:",
-            accountMeta.isSigner,
-            "isUserWallet:",
-            accountMeta.pubkey.equals(publicKey),
-          );
-
-          // Pool state is writable but not a signer, and it's not the user's wallet
-          if (
-            accountMeta.isWritable &&
-            !accountMeta.isSigner &&
-            !accountMeta.pubkey.equals(publicKey)
-          ) {
-            poolAddressFromTx = accountMeta.pubkey.toBase58();
-            console.log("Found pool address:", poolAddressFromTx);
-            break;
-          }
-        }
-      }
-
-      if (!poolAddressFromTx) {
-        console.warn("Could not extract pool address from transaction");
-      }
 
       // Get latest blockhash and set fee payer
       const { blockhash } = await connection.getLatestBlockhash();
@@ -320,8 +273,8 @@ export default function StakingPoolForm({
         setIsCreating(false);
         if (completed) {
           console.log("Pool created successfully!");
-          if (poolAddressFromTx) {
-            setCreatedPoolAddress(poolAddressFromTx);
+          if (poolAddress) {
+            setCreatedPoolAddress(poolAddress.toBase58());
           }
           setShowPopup("success");
           setIsClosing(false);
