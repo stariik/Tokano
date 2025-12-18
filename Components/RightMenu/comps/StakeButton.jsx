@@ -37,15 +37,12 @@ function StakeButton({
         setTokanoPool(pool);
 
         // Check if user has existing stake account
-        const userStakes = await staking
-          .fetchUserStakeAccounts(publicKey)
+        const existingStake = await staking
+          .fetchUserStakeAccountsForPool(publicKey, TOKANO_POOL_ID)
           .catch((err) => {
             console.error("Error fetching user stake accounts:", err);
             return [];
           });
-        const existingStake = userStakes.find(
-          (stake) => stake.poolAddress.toBase58() === TOKANO_POOL_ID,
-        );
         setUserStakeAccount(existingStake || null);
       } catch (error) {
         console.error("Error fetching pool/stake:", error);

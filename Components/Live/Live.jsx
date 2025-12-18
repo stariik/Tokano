@@ -6,9 +6,11 @@ import { useTheme } from "@/hooks/useTheme";
 import { ImFire } from "react-icons/im";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useTokens } from "@/contexts/tokens-context";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 function Live() {
   const { resolvedTheme } = useTheme();
+  const { publicKey } = useWallet();
   const { staking, vesting, lock } = useTokano();
   const { fetchTokenInfo } = useTokens();
   const [stakePools, setStakePools] = useState([]);
@@ -22,27 +24,26 @@ function Live() {
     setLoading(true);
     try {
       // Fetch all data in parallel
-      const [pools, vestingData, lockData, allUserStakes] = await Promise.all([
+      const [pools, vestingData, lockData] = await Promise.all([
         staking.fetchStakePools().catch((err) => {
           console.error("Error fetching stake pools:", err);
           return [];
         }),
         vesting.fetchAllVestings().catch(() => []),
         lock.fetchAllLocks().catch(() => []),
-        staking.program.account.userState.all().catch(() => []),
       ]);
 
-      // Count unique stakers per pool
       const stakersPerPool = {};
-      allUserStakes.forEach((userStake) => {
-        const poolAddress = userStake.account.poolAddress.toBase58();
-        if (!stakersPerPool[poolAddress]) {
-          stakersPerPool[poolAddress] = new Set();
-        }
-        stakersPerPool[poolAddress].add(
-          userStake.account.stakerUser.toBase58(),
-        );
-      });
+      if (publicKey) {
+        const allUserStakes = await staking.fetchUserStakeAccounts(publicKey);
+        allUserStakes.forEach((userStake) => {
+          const poolAddress = userStake.poolAddress.toBase58();
+          if (!stakersPerPool[poolAddress]) {
+            stakersPerPool[poolAddress] = new Set();
+          }
+          stakersPerPool[poolAddress].add(userStake.initializerUser.toBase58());
+        });
+      }
 
       // Collect all unique token mints
       const allMints = [
@@ -121,7 +122,7 @@ function Live() {
     } finally {
       setLoading(false);
     }
-  }, [staking, vesting, lock, fetchTokenInfo]);
+  }, [staking, vesting, lock, fetchTokenInfo, publicKey]);
 
   useEffect(() => {
     fetchAllData();

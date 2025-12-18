@@ -8,6 +8,7 @@ import Stake from "./TokenCards/Stake";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { useTokens } from "@/contexts/tokens-context";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 interface HomeTokenGridProps {
   gridCols?: string;
@@ -43,6 +44,7 @@ function HomeTokenGrid({
   const [sortBy, setSortBy] = useState("time");
   const [showType, setShowType] = useState("all");
   const [showFavorites, setShowFavorites] = useState(false);
+  const { publicKey } = useWallet();
 
   const { staking, vesting, lock } = useTokano();
   const { fetchTokenInfo } = useTokens();
@@ -55,27 +57,27 @@ function HomeTokenGrid({
     setLoading(true);
     try {
       // Fetch all data in parallel
-      const [pools, vestingData, lockData, allUserStakes] = await Promise.all([
+      const [pools, vestingData, lockData] = await Promise.all([
         staking.fetchStakePools().catch((err) => {
           console.error("Error fetching stake pools:", err);
           return [];
         }),
         vesting.fetchAllVestings().catch(() => []),
         lock.fetchAllLocks().catch(() => []),
-        (staking as any).program.account.userState.all().catch(() => []),
       ]);
 
       // Count unique stakers per pool
-      const stakersPerPool: Record<string, Set<string>> = {};
-      allUserStakes.forEach((userStake: any) => {
-        const poolAddress = userStake.account.poolAddress.toBase58();
-        if (!stakersPerPool[poolAddress]) {
-          stakersPerPool[poolAddress] = new Set();
-        }
-        stakersPerPool[poolAddress].add(
-          userStake.account.stakerUser.toBase58(),
-        );
-      });
+      const stakersPerPool = {};
+      if (publicKey) {
+        const allUserStakes = await staking.fetchUserStakeAccounts(publicKey);
+        allUserStakes.forEach((userStake) => {
+          const poolAddress = userStake.poolAddress.toBase58();
+          if (!stakersPerPool[poolAddress]) {
+            stakersPerPool[poolAddress] = new Set();
+          }
+          stakersPerPool[poolAddress].add(userStake.initializerUser.toBase58());
+        });
+      }
 
       // Collect all unique token mints
       const allMints = [
@@ -132,7 +134,7 @@ function HomeTokenGrid({
     } finally {
       setLoading(false);
     }
-  }, [staking, vesting, lock, fetchTokenInfo]);
+  }, [staking, vesting, lock, fetchTokenInfo, publicKey]);
 
   useEffect(() => {
     fetchAllData();

@@ -79,7 +79,6 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
       // Using pool data to get approximate count (demo value)
       const stakesWithStakerCount = tokenStakes.map((stake) => ({
         ...stake,
-        totalStakers: 0, // TODO: Implement when SDK provides method to get all pool stakers
       }));
 
       setUserStakes(stakesWithStakerCount);
