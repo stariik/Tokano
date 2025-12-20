@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { useBalances } from "@/contexts/balances-context";
+import { SOL_MINT } from "@/lib/balances";
 
 const Icon = () => {
   const { resolvedTheme } = useTheme();
@@ -35,30 +37,41 @@ function TokanoToken({
 }) {
   const { publicKey } = useWallet();
   const { connection } = useConnection();
+  const { tokens } = useBalances();
   const [solBalance, setSolBalance] = useState(null);
 
+  // useEffect(() => {
+  //   const fetchBalance = async () => {
+  //     if (!publicKey || !connection) {
+  //       setSolBalance(null);
+  //       return;
+  //     }
+
+  //     try {
+  //       const balance = await connection.getBalance(publicKey);
+  //       setSolBalance(balance / LAMPORTS_PER_SOL);
+  //     } catch (error) {
+  //       console.error("Error fetching SOL balance:", error);
+  //       setSolBalance(null);
+  //     }
+  //   };
+
+  //   fetchBalance();
+
+  //   // Poll for balance updates every 10 seconds
+  //   const interval = setInterval(fetchBalance, 10000);
+  //   return () => clearInterval(interval);
+  // }, [publicKey, connection]);
+
   useEffect(() => {
-    const fetchBalance = async () => {
-      if (!publicKey || !connection) {
-        setSolBalance(null);
-        return;
-      }
-
-      try {
-        const balance = await connection.getBalance(publicKey);
-        setSolBalance(balance / LAMPORTS_PER_SOL);
-      } catch (error) {
-        console.error("Error fetching SOL balance:", error);
-        setSolBalance(null);
-      }
-    };
-
-    fetchBalance();
-
-    // Poll for balance updates every 10 seconds
-    const interval = setInterval(fetchBalance, 10000);
-    return () => clearInterval(interval);
-  }, [publicKey, connection]);
+    const sol = tokens?.[SOL_MINT];
+    console.log("SOL token data:", sol);
+    if (sol) {
+      setSolBalance(sol.rawAmount / LAMPORTS_PER_SOL);
+    } else {
+      setSolBalance(0);
+    }
+  }, [tokens]);
 
   const formatBalance = (balance) => {
     if (balance === null) return "0.0000";

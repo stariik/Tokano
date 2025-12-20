@@ -8,7 +8,7 @@ import { useTokens } from "@/contexts/tokens-context";
 import PortfolioTokenGrid from "@/Components/Memes/PortfolioTokenGrid";
 import Vest from "./Vest";
 import PortfolioRightMenu from "@/Components/RightMenu/PortfolioRightMenu";
-import StakingPositionsTable from "../stake/comps/StakingPositionsTable";
+import VestPositionsTable from "../stake/comps/VestPositionsTable";
 
 function VestPageContent() {
   const searchParams = useSearchParams();
@@ -74,7 +74,10 @@ function VestPageContent() {
           />
         )}
         <div>
-          <StakingPositionsTable pool={{ tokenInfo }} />
+          <VestPositionsTable
+            vestState={{ tokenInfo, ...vestData }}
+            onClaimed={fetchVestData}
+          />
         </div>
       </div>
       <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">

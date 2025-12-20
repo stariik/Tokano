@@ -8,7 +8,7 @@ import { useTokens } from "@/contexts/tokens-context";
 import PortfolioTokenGrid from "@/Components/Memes/PortfolioTokenGrid";
 import Lock from "./Lock";
 import PortfolioRightMenu from "@/Components/RightMenu/PortfolioRightMenu";
-import StakingPositionsTable from "../stake/comps/StakingPositionsTable";
+import LockPositionsTable from "../stake/comps/LockPositionsTable";
 
 function LockPageContent() {
   const searchParams = useSearchParams();
@@ -74,7 +74,10 @@ function LockPageContent() {
           />
         )}
         <div>
-          <StakingPositionsTable pool={{ tokenInfo }} />
+          <LockPositionsTable
+            lockState={{ tokenInfo, ...lockData }}
+            onClaimed={fetchLockData}
+          />
         </div>
       </div>
       <div className="max-w-xs lg:w-full lg:max-w-sm 2xl:max-w-md">

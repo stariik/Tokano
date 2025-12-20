@@ -2,9 +2,11 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { transactionListener } from "@/lib/balances";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { TOKANO_POOL_ID, TOKANO_MINT_ADDRESS } from "@/lib/constants";
 import { UserState } from "tokano-sdk";
+import { PublicKey } from "@solana/web3.js";
 
 interface StakingPosition {
   stakeAmount: string;
@@ -23,7 +25,7 @@ type PopupType = "unstake" | "claim" | null;
 const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
   positions: externalPositions,
 }) => {
-  const { publicKey, sendTransaction } = useWallet();
+  const { publicKey, signTransaction } = useWallet();
   const { connection } = useConnection();
   const { staking } = useTokano();
 
@@ -47,52 +49,40 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
     try {
       setLoading(true);
       const userStakes = await staking
-        .fetchUserStakeAccounts(publicKey)
+        .fetchUserStakeAccountsForPool(publicKey, new PublicKey(TOKANO_POOL_ID))
         .catch((err) => {
           console.error("Error fetching user stake accounts:", err);
           return [];
         });
-      const pools = await staking.fetchStakePools().catch((err) => {
-        console.error("Error fetching stake pools:", err);
-        return [];
-      });
-
-      // Filter for TOKANO pool stakes
-      const tokanoStakes = userStakes.filter((stake) => {
-        const pool = pools.find((p) => p.poolAddress.equals(stake.poolAddress));
-        return pool?.tokenMint.toBase58() === TOKANO_MINT_ADDRESS;
-      });
 
       // Transform to display format
-      const formattedPositions: StakingPosition[] = tokanoStakes.map(
-        (stake) => {
-          const now = Date.now();
-          const releaseTime = stake.releaseTime.getTime();
-          const isLocked = now < releaseTime;
-          const diffMs = releaseTime - now;
+      const formattedPositions: StakingPosition[] = userStakes.map((stake) => {
+        const now = Date.now();
+        const releaseTime = stake.releaseTime.getTime();
+        const isLocked = now < releaseTime;
+        const diffMs = releaseTime - now;
 
-          let lockPeriod = "Unlocked";
-          if (isLocked) {
-            const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(
-              (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-            );
-            lockPeriod = days > 0 ? `${days}d ${hours}h` : `${hours}h`;
-          }
+        let lockPeriod = "Unlocked";
+        if (isLocked) {
+          const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+          );
+          lockPeriod = days > 0 ? `${days}d ${hours}h` : `${hours}h`;
+        }
 
-          return {
-            stakeAmount: (
-              parseFloat(stake.stakedTokenBalance.toString()) / 1e9
-            ).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            lockPeriod,
-            unclaimedRewards: stake.approximateReward.toNumber().toFixed(2),
-            rawStake: stake,
-            isLocked,
-          };
-        },
-      );
+        return {
+          stakeAmount: (
+            parseFloat(stake.stakedTokenBalance.toString()) / 1e9
+          ).toLocaleString(undefined, {
+            maximumFractionDigits: 0,
+          }),
+          lockPeriod,
+          unclaimedRewards: stake.approximateReward.toNumber().toFixed(2),
+          rawStake: stake,
+          isLocked,
+        };
+      });
 
       setPositions(formattedPositions);
     } catch (error) {
@@ -131,7 +121,7 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
       !publicKey ||
       !staking ||
       !connection ||
-      !sendTransaction
+      !signTransaction
     )
       return;
 
@@ -166,18 +156,29 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
 
-      const signature = await sendTransaction(tx, connection, {
-        skipPreflight: true,
-        maxRetries: 3,
-      });
-      await connection.confirmTransaction(signature, "confirmed");
+      // Sign and send transaction using wallet's signTransaction + raw submit
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+      console.log("Transaction sent: ", txId);
 
-      alert(
-        activePopup.type === "unstake"
-          ? "Successfully unstaked!"
-          : "Successfully claimed rewards!",
-      );
-      await fetchStakingPositions();
+      // Listen for transaction confirmation and update UI accordingly
+      transactionListener(connection, txId, async (completed) => {
+        setProcessing(false);
+        setActivePopup(null);
+
+        if (completed) {
+          console.log("Transaction completed");
+          alert(
+            activePopup?.type === "unstake"
+              ? "Successfully unstaked!"
+              : "Successfully claimed rewards!",
+          );
+          await fetchStakingPositions();
+        } else {
+          console.log("Transaction failed");
+          alert(`Failed to ${activePopup?.type}`);
+        }
+      });
     } catch (error: any) {
       console.error(`Error ${activePopup.type}:`, error);
       alert(`Error: ${error?.message || `Failed to ${activePopup.type}`}`);

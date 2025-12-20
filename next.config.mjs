@@ -4,17 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "ipfs.io",
-        pathname: "/ipfs/**",
-      },
-      {
-        protocol: "https",
-        hostname: "images.cdn.aurory.io",
-        pathname: "**",
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.cdn.aurory.io',
+        hostname: "*",
       },
     ],
   },

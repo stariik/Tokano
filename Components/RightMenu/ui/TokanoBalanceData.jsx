@@ -35,25 +35,22 @@ function TokanoBalanceData() {
           return [];
         });
 
-      // Get all pools to match with stakes
-      const pools = await staking.fetchStakePools().catch((err) => {
-        console.error("Error fetching stake pools:", err);
-        return [];
-      });
-
-      // Filter stakes for TOKANO token and sum balances
+      // Filter stakes for TOKANO token using poolState present on each stake
+      // and sum stakedTokenBalance directly from the stake (no separate pool fetch needed)
       const totalStaked = allStakes
-        .map((stake) => {
-          const pool = pools.find((p) =>
-            p.poolAddress.equals(stake.poolAddress),
-          );
-          return { stake, pool };
+        .filter((stake) => {
+          try {
+            return (
+              stake.poolState &&
+              stake.poolState.tokenMint?.toBase58() === TOKANO_MINT_ADDRESS
+            );
+          } catch (e) {
+            // In case poolState or tokenMint is not available or not a PublicKey
+            return false;
+          }
         })
-        .filter(
-          ({ pool }) => pool?.tokenMint.toBase58() === TOKANO_MINT_ADDRESS,
-        )
         .reduce(
-          (sum, { stake }) =>
+          (sum, stake) =>
             sum + parseFloat(stake.stakedTokenBalance.toString()) / 1e9,
           0,
         );

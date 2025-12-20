@@ -6,6 +6,7 @@ import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { TOKANO_POOL_ID } from "@/lib/constants";
 import { toSmallestUnit, transactionListener } from "@/lib/balances";
+import { PublicKey } from "@solana/web3.js";
 
 function StakeButton({
   stakeAmount,
@@ -38,7 +39,7 @@ function StakeButton({
 
         // Check if user has existing stake account
         const existingStake = await staking
-          .fetchUserStakeAccountsForPool(publicKey, TOKANO_POOL_ID)
+          .fetchUserStakeAccountsForPool(publicKey, new PublicKey(TOKANO_POOL_ID))
           .catch((err) => {
             console.error("Error fetching user stake accounts:", err);
             return [];
