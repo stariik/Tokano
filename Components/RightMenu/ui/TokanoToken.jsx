@@ -64,10 +64,10 @@ function TokanoToken({
   // }, [publicKey, connection]);
 
   useEffect(() => {
-    const sol = tokens?.[SOL_MINT];
+    const sol = tokens?.find((t) => t.mintAddress === SOL_MINT);
     console.log("SOL token data:", sol);
     if (sol) {
-      setSolBalance(sol.rawAmount / LAMPORTS_PER_SOL);
+      setSolBalance(sol.amountRaw / LAMPORTS_PER_SOL);
     } else {
       setSolBalance(0);
     }

@@ -5,17 +5,28 @@ import { getAssociatedTokenAddress, getAccount } from "@solana/spl-token";
 import { useTokano } from "@/contexts/tokano-sdk-context";
 import { BN } from "bn.js";
 import RainbowBalance from "./RainbowBalance";
+import { UserState } from "tokano-sdk";
+import { TokenInfo } from "@/contexts/tokens-context";
+import { useBalances } from "@/contexts/balances-context";
 
 interface StakingModuleProps {
   pool?: any;
   onStakeSuccess?: () => void;
 }
 
+interface UserStateWithTokenInfo extends UserState {
+  tokenInfo?: TokenInfo;
+}
+
 function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const { staking } = useTokano();
+  const { tokens } = useBalances();
   const [userBalance, setUserBalance] = useState(0);
+  const [userStakedAccounts, setUserStakedAccounts] = useState<
+    UserStateWithTokenInfo[]
+  >([]);
   const [userStakedAmount, setUserStakedAmount] = useState(0);
   const [stakeAmount, setStakeAmount] = useState("");
   const [isStaking, setIsStaking] = useState(false);
@@ -30,28 +41,12 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
   }, [publicKey, pool]);
 
   const fetchUserBalance = async () => {
-    try {
-      if (!publicKey || !pool?.tokenMint) return;
-
-      // Ensure tokenMint is a PublicKey
-      const tokenMint =
-        pool.tokenMint instanceof PublicKey
-          ? pool.tokenMint
-          : new PublicKey(pool.tokenMint);
-      const userTokenAccount = await getAssociatedTokenAddress(
-        tokenMint,
-        publicKey,
+    const token = tokens?.find((t) => t.mintAddress === pool?.tokenMint);
+    if (token) {
+      setUserBalance(
+        token.amountRaw / Math.pow(10, pool?.tokenInfo?.decimals || 9),
       );
-
-      try {
-        const accountInfo = await getAccount(connection, userTokenAccount);
-        const decimals = pool.tokenInfo?.decimals || 9;
-        setUserBalance(Number(accountInfo.amount) / Math.pow(10, decimals));
-      } catch {
-        setUserBalance(0);
-      }
-    } catch (error) {
-      console.error("Error fetching user balance:", error);
+    } else {
       setUserBalance(0);
     }
   };
@@ -84,7 +79,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
         },
         0,
       );
-
+      setUserStakedAccounts(poolStakes);
       setUserStakedAmount(totalStaked / Math.pow(10, decimals));
     } catch (error) {
       console.error("Error fetching user staked amount:", error);
@@ -126,7 +121,9 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
 
       // Check if user already has a stake account for this pool
       // TODO: Implement checking for existing user stake account
-      const userStakeAccount = undefined; // Will be undefined for first-time stakers
+      const userStakeAccount = userStakedAccounts?.find(
+        (u) => u.poolAddress.toBase58() === poolAddress.toBase58(),
+      );
 
       // Create stake transaction using Tokano SDK
       const tx = await staking.stake({
