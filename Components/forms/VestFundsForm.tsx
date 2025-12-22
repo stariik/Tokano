@@ -246,7 +246,7 @@ export default function VestFundsForm({
         receiverPk: receiverPk,
         tokenMint: tokenMint,
         totalVestingAmount: amountInSmallestUnit,
-        startTimestamp: cliffPeriodInSeconds, // Start after cliff
+        startTimestamp: Math.floor(Date.now() / 1000) + cliffPeriodInSeconds,
         vestingDuration: vestingDurationInSeconds,
         scheduleType: scheduleType,
       });
