@@ -20,9 +20,24 @@ function Soon({ data, token }) {
       }
     : token;
 
-  const poolAddress =
-    poolData.poolAddress?.toBase58() || poolData.address?.toBase58() || "";
-  const poolType = poolData.poolAddress ? "stake" : "vest"; // Determine if it's a pool or vest
+  // Determine the pool type and address
+  let poolType = "vest"; // default
+  let poolAddress = "";
+
+  if (poolData.poolAddress) {
+    // It's a staking pool
+    poolType = "stake";
+    poolAddress = poolData.poolAddress.toBase58();
+  } else if (poolData.address) {
+    // Could be vest or lock - check if there's a type property
+    if (poolData.type === "lock") {
+      poolType = "lock";
+    } else {
+      poolType = "vest";
+    }
+    poolAddress = poolData.address.toBase58();
+  }
+
   const isFav = isFavorite(poolType, poolAddress);
 
   // Calculate countdown
@@ -44,9 +59,11 @@ function Soon({ data, token }) {
   const handleClick = () => {
     if (poolAddress) {
       if (poolType === "stake") {
-        router.push(`/card/soon?type=${poolAddress}`);
-      } else {
-        router.push(`/card/soon?vest=${poolAddress}`);
+        router.push(`/card/soon?type=stake&pool=${poolAddress}`);
+      } else if (poolType === "vest") {
+        router.push(`/card/soon?type=vest&vest=${poolAddress}`);
+      } else if (poolType === "lock") {
+        router.push(`/card/soon?type=lock&lock=${poolAddress}`);
       }
     } else {
       router.push("/card/soon");
