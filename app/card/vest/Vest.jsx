@@ -114,10 +114,13 @@ function Vest({ vestData, vestAddress, onVestClosed }) {
     return `${addrString.slice(0, 4)}...${addrString.slice(-3)}`;
   };
 
-  // Format schedule type to uppercase
-  const formatScheduleType = (scheduleType) => {
-    if (!scheduleType) return "N/A";
-    return scheduleType.toString().toUpperCase();
+  // Get schedule type short form (DA/WE/MO)
+  const getScheduleTypeShort = (scheduleType) => {
+    // VestingSchedule enum: Daily = 3, Weekly = 4, Monthly = 5
+    if (scheduleType === 3) return "DA";
+    if (scheduleType === 4) return "WE";
+    if (scheduleType === 5) return "MO";
+    return "MO";
   };
 
   // Calculate cliff period in days
@@ -135,43 +138,22 @@ function Vest({ vestData, vestAddress, onVestClosed }) {
     return `${diffDays}d`;
   };
 
-  // Calculate vesting steps (completed/total)
-  const getVestingSteps = (startTime, endTime, scheduleType) => {
-    if (!startTime || !endTime || !scheduleType) return "N/A";
-
-    const now = Date.now();
+  // Calculate duration in appropriate units from start/end time (matches VestCard PARTS)
+  const calculateDuration = (startTime, endTime) => {
+    if (!startTime || !endTime) return { value: 0, unit: "months" };
     const startDate =
       startTime instanceof Date ? startTime : new Date(startTime);
     const endDate = endTime instanceof Date ? endTime : new Date(endTime);
-    const startTimestamp = startDate.getTime();
-    const endTimestamp = endDate.getTime();
+    const durationMs = endDate.getTime() - startDate.getTime();
+    const durationDays = Math.floor(durationMs / (1000 * 60 * 60 * 24));
 
-    // Calculate period duration in milliseconds based on schedule type
-    let periodMs;
-    const scheduleStr = scheduleType.toString().toLowerCase();
-    if (scheduleStr === "daily") {
-      periodMs = 24 * 60 * 60 * 1000;
-    } else if (scheduleStr === "weekly") {
-      periodMs = 7 * 24 * 60 * 60 * 1000;
-    } else if (scheduleStr === "monthly") {
-      periodMs = 30 * 24 * 60 * 60 * 1000; // Approximate month
+    // Convert to appropriate unit
+    if (durationDays >= 30) {
+      return { value: Math.floor(durationDays / 30), unit: "months" };
+    } else if (durationDays >= 7) {
+      return { value: Math.floor(durationDays / 7), unit: "weeks" };
     } else {
-      return "N/A";
-    }
-
-    // Total steps
-    const totalDuration = endTimestamp - startTimestamp;
-    const totalSteps = Math.ceil(totalDuration / periodMs);
-
-    // Completed steps
-    if (now < startTimestamp) {
-      return `0/${totalSteps}`;
-    } else if (now >= endTimestamp) {
-      return `${totalSteps}/${totalSteps}`;
-    } else {
-      const elapsed = now - startTimestamp;
-      const completedSteps = Math.floor(elapsed / periodMs);
-      return `${completedSteps}/${totalSteps}`;
+      return { value: durationDays, unit: "days" };
     }
   };
 
@@ -424,7 +406,7 @@ function Vest({ vestData, vestAddress, onVestClosed }) {
               <div>
                 TYPE:{" "}
                 {vestData?.scheduleType
-                  ? formatScheduleType(vestData.scheduleType)
+                  ? getScheduleTypeShort(vestData.scheduleType)
                   : "N/A"}
               </div>
               <div>
@@ -446,12 +428,9 @@ function Vest({ vestData, vestAddress, onVestClosed }) {
             >
               <div>
                 STEPS:{" "}
-                {vestData
-                  ? getVestingSteps(
-                      vestData.startTime,
-                      vestData.endTime,
-                      vestData.scheduleType,
-                    )
+                {vestData?.startTime && vestData?.endTime
+                  ? calculateDuration(vestData.startTime, vestData.endTime)
+                      .value
                   : "N/A"}
               </div>
               <div>
