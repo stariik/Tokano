@@ -67,7 +67,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <Banner src={"banner1.png"} />
 
-          <div className="relative grow pt-12 lg:pt-0">
+          <div className="relative grow pt-16 lg:pt-0">
             <div className="">{children}</div>
             {/* <div className="dark:text-light absolute top-0 right-0 w-1/3 py-18 pr-4 text-black md:py-6 2xl:w-6/19">
               <RightMenu />

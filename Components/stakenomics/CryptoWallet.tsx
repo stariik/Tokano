@@ -112,7 +112,7 @@ function CryptoWallet({
         <div className="grid grid-cols-2 gap-1 md:gap-4">
           {/* Token List - Left Side */}
           <div className="dark:border-secondary border-x-2 border-[#F1F1F1] px-0 pb-1 md:px-2">
-            <div className="dark:[&::-webkit-scrollbar-thumb]:bg-opacity-30 max-h-[140px] space-y-1 overflow-y-auto sm:max-h-[160px] sm:space-y-1.5 md:max-h-[180px] lg:max-h-[200px] xl:max-h-[270px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#190E79] dark:[&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-track]:bg-transparent">
+            <div className="dark:[&::-webkit-scrollbar-thumb]:bg-opacity-30 max-h-[200px] space-y-1 overflow-y-auto sm:space-y-1.5 md:max-h-[240px] xl:max-h-[270px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#190E79] dark:[&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-track]:bg-transparent">
               {loadState === BalanceLoadState.LOADING ? (
                 <div className="p-4 text-center text-sm text-[#190E79] dark:text-white">
                   Loading tokens...

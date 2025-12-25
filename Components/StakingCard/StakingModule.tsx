@@ -357,7 +357,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
             <div className="">ATTENTION!</div>
 
             <div
-              className="flex w-full items-center justify-center gap-2"
+              className="flex w-full items-center justify-center gap-2 text-[#190E79] dark:text-white"
               style={{
                 background:
                   "linear-gradient(90deg, rgba(255, 199, 51, 1) 0%, rgba(249, 44, 157, 1) 40%)",

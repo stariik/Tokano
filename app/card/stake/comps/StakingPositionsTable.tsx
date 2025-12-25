@@ -324,43 +324,6 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
               </tbody>
             </table>
           )}
-
-          {/* Popup Overlay */}
-          {activePopup !== null && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30 dark:bg-black/70">
-              <div
-                className="dark:border-secondary rounded-2xl border-2 border-[#CDCDE9] px-8 py-6"
-                style={{ backgroundColor: "#2A1C78" }}
-              >
-                <p className="mb-4 text-lg text-white">
-                  {activePopup.type === "unstake"
-                    ? "Unstake all tokens?"
-                    : "Claim rewards?"}
-                </p>
-                <div className="flex justify-center gap-4">
-                  <button
-                    onClick={handleConfirm}
-                    disabled={processing}
-                    className="rounded-lg px-6 py-2 text-white hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
-                    style={{ backgroundColor: "#6D6FDF" }}
-                  >
-                    {processing ? "Processing..." : "Yes"}
-                  </button>
-                  <button
-                    onClick={handleCancel}
-                    disabled={processing}
-                    className="rounded-lg border-2 px-6 py-2 text-white hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
-                    style={{
-                      borderColor: "#6D6FDF",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    No
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Footer Section */}
@@ -369,6 +332,47 @@ const StakingPositionsTable: React.FC<StakingPositionsTableProps> = ({
           <span style={{ color: "#E879F9" }}>the lock period</span> has passed
         </div>
       </div>
+
+      {/* Popup Overlay */}
+      {activePopup !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 dark:bg-black/70"
+          onClick={handleCancel}
+        >
+          <div
+            className="dark:border-secondary rounded-2xl border-2 border-[#CDCDE9] px-8 py-6"
+            style={{ backgroundColor: "#2A1C78" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="mb-4 text-lg text-white">
+              {activePopup.type === "unstake"
+                ? "Unstake all tokens?"
+                : "Claim rewards?"}
+            </p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleConfirm}
+                disabled={processing}
+                className="rounded-lg px-6 py-2 text-white hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
+                style={{ backgroundColor: "#6D6FDF" }}
+              >
+                {processing ? "Processing..." : "Yes"}
+              </button>
+              <button
+                onClick={handleCancel}
+                disabled={processing}
+                className="rounded-lg border-2 px-6 py-2 text-white hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
+                style={{
+                  borderColor: "#6D6FDF",
+                  backgroundColor: "transparent",
+                }}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

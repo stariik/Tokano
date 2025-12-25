@@ -149,15 +149,6 @@ const LockPositionsTable: React.FC<LockPositionsTableProps> = ({
                       pageState.currentlyClaimableAmount ?? 0,
                       decimals,
                     )}
-                    <div>
-                      <button
-                        onClick={() => setClaimOpen(true)}
-                        disabled={!belongsToUser}
-                        className="mt-2 rounded bg-green-500 px-3 py-1 text-sm text-white hover:bg-green-600 disabled:bg-gray-400"
-                      >
-                        Claim
-                      </button>
-                    </div>
                   </td>
                 </tr>
                 <tr className="h-full">
@@ -179,8 +170,14 @@ const LockPositionsTable: React.FC<LockPositionsTableProps> = ({
 
       {/* Claim popup overlay (inline handler copied from ClaimLock) */}
       {claimOpen && pageState && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/30">
-          <div className="dark:border-secondary rounded-2xl border-2 border-[#CDCDE9] bg-[#2A1C78] px-8 py-6">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 dark:bg-black/70"
+          onClick={() => setClaimOpen(false)}
+        >
+          <div
+            className="dark:border-secondary rounded-2xl border-2 border-[#CDCDE9] bg-[#2A1C78] px-8 py-6"
+            onClick={(e) => e.stopPropagation()}
+          >
             <p className="mb-4 text-lg text-white">Claim locked funds?</p>
             <div className="flex justify-center gap-4">
               <button

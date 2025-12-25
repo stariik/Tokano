@@ -55,7 +55,7 @@ export default function RainbowBalance({
           );
         })}
       </div>{" "}
-      <div className="absolute -top-1.5 -right-1.5 z-10 flex items-center rounded-l-full py-1.5 pr-1.5 pl-1 dark:bg-[#1a0033]">
+      <div className="absolute -top-1.5 bg-white -right-1.5 z-10 flex items-center rounded-l-full py-1.5 pr-1.5 pl-1 dark:bg-[#1a0033]">
         {resolvedTheme === "dark" ? (
           // 🌙 DARK MODE SVG
           <svg

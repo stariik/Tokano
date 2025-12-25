@@ -320,8 +320,8 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
         <div className="dark:border-secondary border-b-2 border-[#CDCDE9] py-2 pl-10 text-xl">
           YOU ARE STAKING
         </div>
-        <div className="flex justify-between bg-[#fafafa] py-2 pr-8 pl-16 text-lg dark:bg-[#231570]">
-          <div>
+        <div className="flex justify-between bg-[#fafafa] py-2 pr-4 pl-4 text-lg md:pr-6 md:pl-16 dark:bg-[#231570]">
+          <div className="mr-3">
             {selectedToken.info?.symbol || selectedToken.info?.name || "TOKEN"}
           </div>
           <div className="flex gap-2">
