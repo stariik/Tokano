@@ -386,12 +386,17 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
                     // Calculate rewards left (same as StakingModule)
                     const totalRewardGenerated = stake.pool.totalRewardGenerated
-                      ? stake.pool.totalRewardGenerated.toNumber() / Math.pow(10, decimals)
+                      ? stake.pool.totalRewardGenerated.toNumber() /
+                        Math.pow(10, decimals)
                       : 0;
                     const rewardsDistributed = stake.pool.rewardDistributed
-                      ? stake.pool.rewardDistributed.toNumber() / Math.pow(10, decimals)
+                      ? stake.pool.rewardDistributed.toNumber() /
+                        Math.pow(10, decimals)
                       : 0;
-                    const rewards = Math.max(0, totalRewardGenerated - rewardsDistributed);
+                    const rewards = Math.max(
+                      0,
+                      totalRewardGenerated - rewardsDistributed,
+                    );
 
                     return (
                       <div
@@ -430,12 +435,17 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
                     // Calculate rewards left (same as StakingModule)
                     const totalRewardGenerated = pool.totalRewardGenerated
-                      ? pool.totalRewardGenerated.toNumber() / Math.pow(10, decimals)
+                      ? pool.totalRewardGenerated.toNumber() /
+                        Math.pow(10, decimals)
                       : 0;
                     const rewardsDistributed = pool.rewardDistributed
-                      ? pool.rewardDistributed.toNumber() / Math.pow(10, decimals)
+                      ? pool.rewardDistributed.toNumber() /
+                        Math.pow(10, decimals)
                       : 0;
-                    const totalRewards = Math.max(0, totalRewardGenerated - rewardsDistributed);
+                    const totalRewards = Math.max(
+                      0,
+                      totalRewardGenerated - rewardsDistributed,
+                    );
 
                     return (
                       <div
@@ -483,12 +493,16 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
                 // Calculate rewards left (same as StakingModule)
                 const totalRewardGenerated = pool.totalRewardGenerated
-                  ? pool.totalRewardGenerated.toNumber() / Math.pow(10, decimals)
+                  ? pool.totalRewardGenerated.toNumber() /
+                    Math.pow(10, decimals)
                   : 0;
                 const rewardsDistributed = pool.rewardDistributed
                   ? pool.rewardDistributed.toNumber() / Math.pow(10, decimals)
                   : 0;
-                const totalRewards = Math.max(0, totalRewardGenerated - rewardsDistributed);
+                const totalRewards = Math.max(
+                  0,
+                  totalRewardGenerated - rewardsDistributed,
+                );
 
                 return (
                   <div
@@ -530,12 +544,17 @@ function StakingScroll({ selectedTokenIndex }: StakingScrollProps) {
 
               // Calculate rewards left (same as StakingModule)
               const totalRewardGenerated = stake.pool.totalRewardGenerated
-                ? stake.pool.totalRewardGenerated.toNumber() / Math.pow(10, decimals)
+                ? stake.pool.totalRewardGenerated.toNumber() /
+                  Math.pow(10, decimals)
                 : 0;
               const rewardsDistributed = stake.pool.rewardDistributed
-                ? stake.pool.rewardDistributed.toNumber() / Math.pow(10, decimals)
+                ? stake.pool.rewardDistributed.toNumber() /
+                  Math.pow(10, decimals)
                 : 0;
-              const rewards = Math.max(0, totalRewardGenerated - rewardsDistributed);
+              const rewards = Math.max(
+                0,
+                totalRewardGenerated - rewardsDistributed,
+              );
 
               return (
                 <div

@@ -119,7 +119,9 @@ function StakingCard({ pool, onPoolClosed }: StakingCardProps) {
       totalRewards = parseFloat(pool.totalRewardGenerated.toString());
     } else if (pool.rewardRate && pool.startTimestamp && pool.endTimestamp) {
       // Calculate total rewards: rewardRate * duration (in seconds)
-      const duration = Math.floor((pool.endTimestamp.getTime() - pool.startTimestamp.getTime()) / 1000);
+      const duration = Math.floor(
+        (pool.endTimestamp.getTime() - pool.startTimestamp.getTime()) / 1000,
+      );
       totalRewards = parseFloat(pool.rewardRate.toString()) * duration;
     } else {
       return 0;

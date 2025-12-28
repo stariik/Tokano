@@ -83,14 +83,22 @@ function StakePageContent() {
 
       // Try to get the correct staker count - check both snake_case and camelCase
       let stakersCount = 0;
-      if (rawPoolData.totalStakers !== undefined && rawPoolData.totalStakers !== null) {
-        stakersCount = typeof rawPoolData.totalStakers?.toNumber === 'function'
-          ? rawPoolData.totalStakers.toNumber()
-          : Number(rawPoolData.totalStakers);
-      } else if (rawPoolData.total_stakers !== undefined && rawPoolData.total_stakers !== null) {
-        stakersCount = typeof rawPoolData.total_stakers?.toNumber === 'function'
-          ? rawPoolData.total_stakers.toNumber()
-          : Number(rawPoolData.total_stakers);
+      if (
+        rawPoolData.totalStakers !== undefined &&
+        rawPoolData.totalStakers !== null
+      ) {
+        stakersCount =
+          typeof rawPoolData.totalStakers?.toNumber === "function"
+            ? rawPoolData.totalStakers.toNumber()
+            : Number(rawPoolData.totalStakers);
+      } else if (
+        rawPoolData.total_stakers !== undefined &&
+        rawPoolData.total_stakers !== null
+      ) {
+        stakersCount =
+          typeof rawPoolData.total_stakers?.toNumber === "function"
+            ? rawPoolData.total_stakers.toNumber()
+            : Number(rawPoolData.total_stakers);
       }
 
       console.log("🔍 DEBUG - Final stakersCount:", stakersCount);
