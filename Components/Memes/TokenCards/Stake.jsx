@@ -32,7 +32,8 @@ function Stake({ data, token }) {
     return count.toString();
   };
 
-  const stakersCount = poolData.stakersCount || poolData.totalStakers || 0;
+  const stakersCount = poolData.stakersCount ??
+    (poolData.totalStakers?.toNumber ? poolData.totalStakers.toNumber() : 0);
   const isFav = isFavorite("stake", poolAddress);
 
   const handleClick = () => {

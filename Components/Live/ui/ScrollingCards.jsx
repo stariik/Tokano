@@ -26,10 +26,17 @@ function ScrollingCards({ stakePools = [], vestings = [], locks = [] }) {
         const title = `${tokenName} (${tokenSymbol})`;
         const created = pool.tokenMint.toBase58();
         const decimals = pool.tokenInfo?.decimals || 9;
-        const rewardAmount = pool.rewardRate
-          ? (pool.rewardRate.toNumber() / Math.pow(10, decimals)).toFixed(6)
-          : "0";
-        const rewards = `${rewardAmount} ${tokenSymbol}`;
+
+        // Calculate rewards left (same as StakingModule)
+        const totalRewardGenerated = pool.totalRewardGenerated
+          ? pool.totalRewardGenerated.toNumber() / Math.pow(10, decimals)
+          : 0;
+        const rewardsDistributed = pool.rewardDistributed
+          ? pool.rewardDistributed.toNumber() / Math.pow(10, decimals)
+          : 0;
+        const rewardsLeft = Math.max(0, totalRewardGenerated - rewardsDistributed);
+
+        const rewards = `${rewardsLeft.toFixed(2)} ${tokenSymbol}`;
         const wallet = pool.poolAddress.toBase58();
         const tokenImage = pool.tokenInfo?.icon || null;
 

@@ -46,6 +46,21 @@ function StakePageContent() {
           return null;
         });
 
+      // DEBUG: Fetch raw account data directly from the program
+      try {
+        const program = (staking as any).program;
+        if (program) {
+          const rawAccount = await program.account.poolState.fetch(poolAddress);
+          console.log("🔍 DEBUG - Raw Account Data from Program:", {
+            totalStakers_raw: (rawAccount as any).totalStakers,
+            total_stakers_raw: (rawAccount as any).total_stakers,
+            rawAccountKeys: Object.keys(rawAccount),
+          });
+        }
+      } catch (debugErr) {
+        console.error("Debug fetch error:", debugErr);
+      }
+
       // Check if pool data is valid
       if (!poolData) {
         setError("Pool not found or invalid");
@@ -56,10 +71,34 @@ function StakePageContent() {
       // Fetch token info
       const tokenInfo = await fetchTokenInfo([poolData.tokenMint.toBase58()]);
 
+      // Debug: Check totalStakers value and try different field names
+      const rawPoolData = poolData as any;
+      console.log("🔍 DEBUG - Pool Data:", {
+        totalStakers_camel: rawPoolData.totalStakers,
+        totalStakers_snake: rawPoolData.total_stakers,
+        allKeys: Object.keys(rawPoolData),
+        totalStakersToNumber: rawPoolData.totalStakers?.toNumber?.(),
+        poolAddress: poolData.poolAddress.toBase58(),
+      });
+
+      // Try to get the correct staker count - check both snake_case and camelCase
+      let stakersCount = 0;
+      if (rawPoolData.totalStakers !== undefined && rawPoolData.totalStakers !== null) {
+        stakersCount = typeof rawPoolData.totalStakers?.toNumber === 'function'
+          ? rawPoolData.totalStakers.toNumber()
+          : Number(rawPoolData.totalStakers);
+      } else if (rawPoolData.total_stakers !== undefined && rawPoolData.total_stakers !== null) {
+        stakersCount = typeof rawPoolData.total_stakers?.toNumber === 'function'
+          ? rawPoolData.total_stakers.toNumber()
+          : Number(rawPoolData.total_stakers);
+      }
+
+      console.log("🔍 DEBUG - Final stakersCount:", stakersCount);
+
       setPool({
         ...poolData,
         tokenInfo: tokenInfo[poolData.tokenMint.toBase58()],
-        stakersCount: poolData.totalStakers.toNumber(),
+        stakersCount,
       });
     } catch (err) {
       console.error("Error fetching pool:", err);

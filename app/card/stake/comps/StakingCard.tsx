@@ -107,6 +107,36 @@ function StakingCard({ pool, onPoolClosed }: StakingCardProps) {
       : "0.00";
   const rewardsDisplay = `${rewardPercentage}%`;
 
+  // Calculate percentage of rewards left
+  const calculateRewardsLeft = () => {
+    if (!pool) {
+      return 0;
+    }
+
+    // Use totalRewardGenerated if available, otherwise calculate it
+    let totalRewards = 0;
+    if (pool.totalRewardGenerated) {
+      totalRewards = parseFloat(pool.totalRewardGenerated.toString());
+    } else if (pool.rewardRate && pool.startTimestamp && pool.endTimestamp) {
+      // Calculate total rewards: rewardRate * duration (in seconds)
+      const duration = Math.floor((pool.endTimestamp.getTime() - pool.startTimestamp.getTime()) / 1000);
+      totalRewards = parseFloat(pool.rewardRate.toString()) * duration;
+    } else {
+      return 0;
+    }
+
+    const distributed = pool.rewardDistributed
+      ? parseFloat(pool.rewardDistributed.toString())
+      : 0;
+
+    if (totalRewards === 0) return 0;
+
+    const rewardsLeft = totalRewards - distributed;
+    const percentage = (rewardsLeft / totalRewards) * 100;
+
+    return Math.max(0, Math.min(100, percentage));
+  };
+
   // Format market cap with M for millions
   const formatMarketCap = (mcap: number) => {
     if (mcap >= 1000000) {
@@ -172,7 +202,7 @@ function StakingCard({ pool, onPoolClosed }: StakingCardProps) {
 
   return (
     <div
-      className="dark:border-secondary rounded-4xl border-1 border-[#CDCDE9] pb-2 text-[#190E79] xl:pb-2 dark:text-white"
+      className="rounded-4xl pb-2 text-[#190E79] xl:pb-2 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"
@@ -312,15 +342,18 @@ function StakingCard({ pool, onPoolClosed }: StakingCardProps) {
               </div>
             </div>
             <div
-              className="font-khand -z-1 ml-9 w-2/3 rounded-r-full py-0.5 pl-4 font-medium text-black md:pl-10"
+              className="font-khand -z-1 ml-9 rounded-r-full py-0.5 pl-4 font-medium text-white md:pl-10"
               style={{
+                width: `${Number(calculateRewardsLeft()) + 20}%`,
+                minWidth: "fit-content",
+                maxWidth: "70%",
                 background:
                   resolvedTheme === "dark"
-                    ? "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)"
-                    : "linear-gradient(90deg, #6D11B3 10%, #F92C9D 20%, #FFD42A 70%)",
+                    ? "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)"
+                    : "linear-gradient(90deg, rgba(109, 17, 179, 1) 0%, rgba(249, 44, 157, 1) 45%, rgba(255, 212, 42, 1) 100%)",
               }}
             >
-              <div>REWARDS: {rewardsDisplay}</div>
+              <div>LEFT: |{calculateRewardsLeft().toFixed(0)}%</div>
             </div>
           </div>
         </div>

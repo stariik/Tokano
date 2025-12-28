@@ -151,6 +151,37 @@ function Soon() {
     </svg>
   );
 
+  const VestIcon = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 80 80"
+      className="h-full w-[47px] xl:w-[70px]"
+      fill="none"
+    >
+      <circle
+        cx="40"
+        cy="40"
+        r="40"
+        fill="white"
+      />
+
+      <circle
+        cx="40"
+        cy="40"
+        r="27"
+        fill="#2D178D"
+      />
+
+      <path
+        d="M28 34h8v8h8v8h8"
+        stroke="white"
+        strokeWidth="6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8 text-center">
@@ -172,6 +203,41 @@ function Soon() {
   const tokenIcon = tokenInfo?.icon || "/vest.png";
   const address = poolData.poolAddress || poolData.address;
   const launchTime = poolData.startTimestamp || poolData.startTime;
+  const decimals = tokenInfo?.decimals || 9;
+
+  // Calculate pool size based on type
+  const getPoolSize = () => {
+    if (type === "stake") {
+      // For staking, show total reward pool
+      const totalRewards = poolData.totalRewardGenerated
+        ? poolData.totalRewardGenerated.toNumber() / Math.pow(10, decimals)
+        : 0;
+      return formatPoolSize(totalRewards);
+    } else if (type === "vest") {
+      // For vesting, show total vesting amount
+      const vestAmount = poolData.totalAmount
+        ? poolData.totalAmount.toNumber() / Math.pow(10, decimals)
+        : 0;
+      return formatPoolSize(vestAmount);
+    } else if (type === "lock") {
+      // For lock, show locked amount
+      const lockAmount = poolData.amount
+        ? poolData.amount.toNumber() / Math.pow(10, decimals)
+        : 0;
+      return formatPoolSize(lockAmount);
+    }
+    return "0";
+  };
+
+  // Format large numbers with M/K suffix
+  const formatPoolSize = (amount) => {
+    if (amount >= 1000000) {
+      return `${(amount / 1000000).toFixed(1)}M`;
+    } else if (amount >= 1000) {
+      return `${(amount / 1000).toFixed(1)}K`;
+    }
+    return amount.toFixed(2);
+  };
 
   return (
     <div
@@ -226,13 +292,12 @@ function Soon() {
         </div>
 
         <div className="flex">
-          <img
-            src={tokenIcon}
-            className="mb-4 ml-4 h-full w-20 rounded-2xl md:w-24 lg:w-38 lg:rounded-3xl xl:ml-8"
-            onError={(e) => {
-              e.target.src = "/vest.png";
+          <div
+            className="ml-4 h-20 w-20 rounded-2xl bg-cover bg-center md:ml-6 md:h-24 md:w-24 lg:ml-10 lg:rounded-3xl xl:ml-8 xl:h-28 xl:w-28 2xl:h-38 2xl:w-38"
+            style={{
+              backgroundImage: `url('${tokenInfo?.icon || "/vest.png"}')`,
             }}
-          />
+          ></div>
           <div className="font-khand ml-4 font-normal lg:ml-8">
             <h1 className="font-khand text-lg font-semibold md:text-xl lg:text-2xl xl:text-4xl">
               {tokenName} ({tokenSymbol})
@@ -308,8 +373,8 @@ function Soon() {
           </div>
         </div>
         <div className="absolute top-10 right-0">
-          <div className="ml-4 lg:mr-12">
-            <CiPill size={28} />
+          <div className="ml-4 mr-4 lg:mr-6 xl:mr-4 2xl:mr-12">
+            <CiPill className="h-5 w-5 lg:h-5 lg:w-5 xl:h-7 xl:w-7" />
           </div>
 
           <div className="mt-12 mr-4 flex -translate-y-1/2 transform justify-end">
@@ -322,11 +387,11 @@ function Soon() {
             {type === "stake"
               ? "STAKING POOL"
               : type === "vest"
-                ? "VEST"
+                ? "VESTING POOL"
                 : "LOCK"}
           </div>
           <div className="mr-4">
-            <StakeIcon />
+            {type === "vest" ? <VestIcon /> : <StakeIcon />}
           </div>
           <div className="font-khand mx-auto my-auto flex w-full flex-col text-xs font-normal lg:text-sm">
             <div
@@ -358,8 +423,11 @@ function Soon() {
       </div>
 
       <div className="font-khand mt-4 flex justify-center text-end text-xl font-medium lg:text-2xl">
-        {/* Empty space for layout */}
-        POLL SIZE 1.2M FIRED
+        {type === "stake"
+          ? `POOL SIZE ${getPoolSize()} ${tokenSymbol}`
+          : type === "vest"
+            ? `VEST AMOUNT ${getPoolSize()} ${tokenSymbol}`
+            : `LOCKED ${getPoolSize()} ${tokenSymbol}`}
       </div>
     </div>
   );

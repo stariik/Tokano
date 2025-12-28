@@ -324,7 +324,6 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
             </div>
           </div>
           {/* <div className="flex justify-center">You Will Stake:</div> */}
-
           <div className="mt-4 flex w-full flex-col">
             <div className="dark:border-secondary gap- relative flex w-full flex-col items-center rounded-xl border-2 border-[#CDCDE9] bg-gradient-to-t from-[#DEDEDE] to-[#EAE4FF] px-4 py-2 text-[#190E79] dark:from-[#0A0C50] dark:to-[#24068E] dark:text-white">
               {/* Top Row */}
@@ -334,14 +333,39 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
                     enter <br /> amount:
                   </span>
                 </div>
-                <input
-                  type="number"
-                  value={stakeAmount}
-                  onChange={(e) => setStakeAmount(e.target.value)}
-                  placeholder="0.00"
-                  className="font-khand mb-2 w-2/3 border-b border-white bg-transparent text-center text-base font-semibold outline-none md:text-xl 2xl:text-2xl"
-                  disabled={isStaking || !publicKey}
-                />
+                <div className="w-2/3">
+                  <input
+                    type="number"
+                    value={stakeAmount}
+                    onChange={(e) => {
+                      console.log(
+                        "🔍 Input onChange triggered:",
+                        e.target.value,
+                      );
+                      setStakeAmount(e.target.value);
+                    }}
+                    placeholder="0.00"
+                    className="font-khand mb-2 w-full border-b border-white bg-transparent text-center text-base font-semibold outline-none md:text-xl 2xl:text-2xl"
+                    disabled={isStaking || !publicKey}
+                    onFocus={() =>
+                      console.log(
+                        "🔍 Input focused - disabled:",
+                        isStaking || !publicKey,
+                        { isStaking, publicKey: publicKey?.toBase58() },
+                      )
+                    }
+                  />
+                  {!publicKey && (
+                    <div className="text-center text-xs text-red-400">
+                      Connect wallet to stake
+                    </div>
+                  )}
+                  {publicKey && isStaking && (
+                    <div className="text-center text-xs text-yellow-400">
+                      Staking in progress...
+                    </div>
+                  )}
+                </div>
                 {/* <div className="hidden md:block absolute bottom-5 right-0 h-[1px] bg-white/40 w-38" /> */}
               </div>
               {/* Rainbow Balance Component */}
@@ -398,7 +422,7 @@ function StakingModule({ pool, onStakeSuccess }: StakingModuleProps) {
       <div className="font-khand dark:border-secondary flex items-center justify-between border-t-2 border-[#CDCDE9] bg-gradient-to-r from-[#341E6D] to-[#9B7ADE] px-6 py-4 text-xs font-semibold text-white md:text-base dark:from-[#330E79] dark:to-[#7837F4]">
         <div className="flex-1"></div>
         <div className="flex-1 text-center">
-          You are Staking: {formatNumber(userStakedAmount)}
+          You are Staking: {formatNumber(parseFloat(stakeAmount) || 0)}
         </div>
         <div className="flex flex-1 justify-end">
           <button

@@ -227,7 +227,7 @@ function Vest({ vestData, vestAddress, onVestClosed }) {
 
   return (
     <div
-      className="dark:border-secondary rounded-4xl border-1 border-[#CDCDE9] pb-4 text-[#190E79] sm:mx-4 lg:mx-0 lg:pb-2 dark:text-white"
+      className="rounded-4xl pb-4 text-[#190E79] sm:mx-4 lg:mx-0 lg:pb-2 dark:text-white"
       style={{
         background:
           resolvedTheme === "dark"

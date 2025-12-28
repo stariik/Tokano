@@ -53,12 +53,25 @@ function StakeCard({
 
   // Calculate percentage of rewards left
   const calculateRewardsLeft = () => {
-    if (!poolData || !poolData.rewardRate || !poolData.rewardDistributed) {
+    if (!poolData) {
       return "0";
     }
 
-    const totalRewards = parseFloat(poolData.rewardRate.toString());
-    const distributed = parseFloat(poolData.rewardDistributed.toString());
+    // Use totalRewardGenerated if available, otherwise calculate it
+    let totalRewards = 0;
+    if (poolData.totalRewardGenerated) {
+      totalRewards = parseFloat(poolData.totalRewardGenerated.toString());
+    } else if (poolData.rewardRate && poolData.startTimestamp && poolData.endTimestamp) {
+      // Calculate total rewards: rewardRate * duration (in seconds)
+      const duration = Math.floor((poolData.endTimestamp.getTime() - poolData.startTimestamp.getTime()) / 1000);
+      totalRewards = parseFloat(poolData.rewardRate.toString()) * duration;
+    } else {
+      return "0";
+    }
+
+    const distributed = poolData.rewardDistributed
+      ? parseFloat(poolData.rewardDistributed.toString())
+      : 0;
 
     if (totalRewards === 0) return "0";
 

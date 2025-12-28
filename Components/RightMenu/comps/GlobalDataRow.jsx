@@ -41,7 +41,7 @@ function GlobalDataRow({ label, data }) {
                   className="flex justify-between whitespace-nowrap"
                 >
                   <span>{key}:</span>
-                  <span className="ml-2">{value}</span>
+                  <span className="ml-0.5 lg:ml-2">{value}</span>
                 </div>
               ))}
             </div>
