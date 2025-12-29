@@ -241,13 +241,14 @@ export default function VestFundsForm({
       }
 
       // Initialize vesting on blockchain
+      // Note: startTimestamp is when vesting begins (NOW), cliff is handled by the contract
       const { tx, vestingAccountAddress } = await vesting.initializeVesting({
         walletPk: publicKey,
         receiverPk: receiverPk,
         tokenMint: tokenMint,
         totalVestingAmount: amountInSmallestUnit,
-        startTimestamp: Math.floor(Date.now() / 1000) + cliffPeriodInSeconds,
-        vestingDuration: vestingDurationInSeconds,
+        startTimestamp: Math.floor(Date.now() / 1000), // Start NOW, not after cliff
+        vestingDuration: vestingDurationInSeconds + cliffPeriodInSeconds, // Add cliff to total duration
         scheduleType: scheduleType,
       });
 
